@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.card-food {
+    width: 86%;
+    height: auto;
+    position: relative !important;
+    margin-bottom: 10%;
+    margin-right: 50%;
+    overflow: hidden;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important;
+  }
+.card-food:hover{
+    transform: scale(1.05);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(187, 32, 32, 0.585) 0px 8px 16px -8px !important;
+
+}
+.food-card-grid{
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    margin-top: 1px !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.food-name-restaurant-view {
+    font-size: 0.95em !important;
+    font-weight: bolder !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.food-hr{
+    width: 90% !important;
+    margin-top: 10px !important;
+}
+.count-buttons{
+    display: flex;
+    align-items: center;
+}
+.food-price{
+    padding: 10px;
+    /* color: #ffa600; */
+    color: #e74c3c;
+    font-size: 0.9em !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-left: -0.5 !important;
+    margin-right: 38% !important;
+    margin-top: auto !important;
+
+}
+.food-h5
+{
+    width: 1.7rem;
+    text-align: center;
+}
+.button__wrapper {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border: none;
+    background-color: white;
+    box-shadow: 0px 0px 10px #ccc;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: 'Montserrat', sans-serif !important;
+    color: inherit;
+    border-radius: 50%;
+    outline: none;
+    height: 1.8rem;
+    width: 1.8rem;
+    cursor: pointer;
+    transition: background-color 250ms ease-in-out, transform 50ms ease-in-out;
+  }
+  
+  .button__wrapper:hover {
+    background-color: #ccc;
+  }
+  
+  .button__wrapper:active {
+    transform: scale(0.9);
+  }
+  
+  .button__wrapper:focus {
+    box-shadow: 0 0 0 2px #9999995c;
+  }
+    
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
+
+@media(max-width: 360px) {
+    .card-food
+    {
+        margin-left: 10%;
+    }
+}
+
+@media(min-width: 360px) and (max-width: 420px){
+    .card-food
+    {
+        margin-left: 25%;
+    }
+}  
+
+@media(min-width: 420px) and (max-width: 500px){
+    .card-food
+    {
+        margin-left: 37%;
+    }
+}
+
+@media(min-width: 500px) and (max-width: 628px){
+    .card-food
+    {
+        margin-left: 50%;
+    }
+}
+
+@media(min-width: 628px) and (max-width: 710px){
+    .card-food
+    {
+        margin-left: 60%;
+    }
+}
+
+@media(min-width: 710px) and (max-width: 775px){
+    .card-food
+    {
+        margin-left: 24%;
+    }
+}
+
+@media(min-width: 775px) and (max-width: 890px){
+    .card-food
+    {
+        margin-left: 40%;
+    }
+}
+
+@media(min-width: 890px) and (max-width: 899px){
+    .card-food
+    {
+        margin-left:100% ;
+    }
+    .my-masonry-grid
+    {
+        margin-top: -80%;
+    }
+
+}
+
+@media(min-width: 899px) and (max-width: 1200px){
+    .card-food
+    {
+        margin-left:22% ;
+    }
+    
+}    
+
+.food-disabled {
+    cursor: default;
+}

@@ -1,0 +1,109 @@
+.restaurant-header-homepage .MuiCardHeader-title{
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: bold;
+}
+.restaurant-header-homepage .MuiCardHeader-subheader{
+    font-size: small;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.css-8u9tfx-MuiButtonBase-root-MuiBottomNavigationAction-root{
+    padding: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+}
+
+.description-restaurant-homepage {
+    margin-bottom: -10px;
+}
+
+.showmore-restaurant-homepage {
+    background-color: bla; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 12px 24px; /* Padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make it a block element */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    cursor: pointer; /* Add a cursor on hover */
+    border-radius: 4px; /* Add rounded corners */
+}
+.showmore-restaurant-homepage:hover {
+background-color: #a44704; /* Dark green on hover */
+}
+
+.card-restaurant-homepage {
+    height: auto;
+    width: 30%;
+    border: none;
+    position: relative;
+    border-radius: 3% !important;
+    margin-left: 15%;
+    margin-right: 40%;
+    box-shadow: #dd9d46  0px 20px 50px -10px !important;
+    /* box-shadow: 0px 20px 30px 10px rgba(38, 57, 77, 0.6) !important; */
+}
+.Container-card{
+    /* border: 1px solid #; */
+    display: flex;
+    
+    width: 30%;
+    height: auto ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    border: none;
+    box-shadow: #dd9d46  0px 20px 50px -10px !important;
+
+    border-radius: 10px;
+}
+/* .Containerwithoutimg{
+    padding: 12px 24px; 
+
+} */
+.img-resturant-card{
+    width: 100%;
+    height: 100px;
+    border: none;
+    border-radius:10px ;
+}
+.nameandrating{
+    padding: 12px 24px;
+    display: flex; 
+    flex-direction: row;
+
+}
+.Desc{
+    padding: 12px 24px; 
+
+}
+.Discountandmore{
+    padding: 12px 24px; 
+    display: flex; 
+    flex-direction: row;
+
+}
+.Discount {
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-top: 5px;
+    background-color:#dd9d46;
+}
+
+.seemore {
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-top: 5px;
+    background-color:#dd9d46;
+    margin-left: 20px;
+}
+
+.hr-homepage {
+    width: 90%;
+    margin: 0 !important;
+    text-align: center;
+    justify-content: center;
+    margin-left: 10px !important;
+}

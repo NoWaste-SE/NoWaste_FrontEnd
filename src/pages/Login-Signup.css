@@ -1,0 +1,339 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.root {
+    height: 100vh;
+    display: flex;
+    background-image: url(/public/10.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+.container {
+    position: relative;
+}   
+.background {
+    width: 32%;
+    height: auto;
+    margin-left: 18%;
+    margin-top: 0%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50%;
+    background-color: rgba(250, 249, 249, 0.8);
+    border-radius: 0px 10px 10px 0px;
+}
+.field {
+    margin-top: 4%;
+    margin-bottom: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+#submit {
+    margin: 7% auto;
+    background-color: rgb(244, 102, 70);
+    border-radius: 70px;
+    margin-bottom: 20px;
+}
+#submit:hover {
+    background-color: #E74C3C;
+}
+.text {
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif !important;
+    text-align: center;
+    margin: 3% auto !important;
+}
+.error {
+    font-size: 0.8em;
+    line-height: 1em;
+    height: 3em;
+}
+.checkbox {
+    height: 25px;
+    margin-top: -2%;
+    float: left;
+    white-space: nowrap;
+    margin-left: 13% !important;
+}
+.already {
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif !important;
+    text-align: center;
+    margin-top: -0% !important;
+    margin-bottom: 5% !important;
+}
+.forgot-title {
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif !important;
+    text-align: center;
+    margin-top: 7% !important;
+    margin-bottom: 7% !important;
+}
+
+.forgetpassword {
+    color: #E74C3C;
+    margin-top: 7%;
+    margin-right: 35% !important;
+    float: right;
+    text-decoration:none;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: small !important;
+}
+.forgetpassword:hover, a:active {
+    text-decoration: underline !important;
+}
+.remember {
+    height: 20px;
+    margin-top: 6%;
+    float: left;
+    margin-left: 13% !important;
+    white-space: nowrap;
+}
+#signupcheck {
+    font-size: 0.9em;
+}
+
+/* ForgotPass */
+.box-forgot{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50%;
+    background-color: rgba(250, 249, 249, 0.8);
+    border-radius: 0px 10px 10px 0px;
+}
+.desktop{
+    width: 45%;
+    height: auto;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-left: 4.99%;
+}
+.link {
+    text-decoration:none;
+    color: #E74C3C;
+}
+.link:hover, a:active {
+    text-decoration:underline !important;
+}
+.error#forget, .error#verify {
+    height: 2em;
+    font-size: 1em;
+}
+.verification {
+    text-align: center;
+    margin-bottom: 5%;
+}
+.alert {
+    margin: -10% 30% 0 25%;
+    position: fixed;
+    height: 5%;
+    width: 40%;
+}
+.alert-error{
+    text-align: left;
+    margin: 5% 15%;
+}
+
+/* loading */
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner .bubble {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #000;
+    animation: spinner 1s ease-in-out infinite;
+}
+
+@keyframes spinner {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+
+@media(max-width: 414px) {
+    .background {
+        display: none;
+    }
+    .box {
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        position: static;
+        width: 80%;
+        margin: 10% 10%;
+        border: 1px solid rgb(197, 120, 58);
+    }
+    .remember {
+        float: none;
+        margin-bottom: 0%;
+        width: 50%;
+    }
+    .forgetpassword {
+        float: right;
+        width: 70%;
+        margin-bottom: 5%;
+    }
+    .error{
+        height: 4em;
+    }
+    .desktop {
+        display: none;
+    }
+    .box-forgot{
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        position: static;
+        width: 70%;
+        margin: 1% 15%;
+        border: 1px solid rgb(197, 120, 58);
+    }
+    .alert {
+        margin: -40% 15% 0 12%;
+        width: 70%;
+    }
+}
+@media(min-width: 415px) and (max-width: 576px){
+    .background {
+        display: none;
+    }
+    .box {
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        position: static;
+        width: 80%;
+        margin: 10% 10%;
+        border: 1px solid rgb(197, 120, 58);
+    }
+    .remember {
+        float: none;
+        margin-bottom: 0%;
+        width: 50%;
+    }
+    .forgetpassword {
+        float: right;
+        width: 70%;
+        margin-bottom: 5%;
+    }
+    .error{
+        height: 4em;
+    }
+    .desktop {
+        display: none;
+    }
+    .box-forgot{
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        position: static;
+        width: 70%;
+        margin: 1% 15%;
+        border: 1px solid rgb(197, 120, 58);
+    }
+    .alert {
+        margin: -30% 15% 0 12%;
+        width: 70%;
+    }
+}
+@media(min-width: 577px) and (max-width: 768px){
+    .remember {
+        float: none;
+        margin-bottom: 0%;
+        width: 60%;
+    }
+    .forgetpassword {
+        float: right;
+        width: 70%;
+        margin-bottom: 5%;
+    }
+    #signupcheck {
+        font-size: 0.9em;
+    }
+    .error{
+        height: 3.2em;
+        font-size: 0.75em;
+    }
+    .desktop {
+        width: 47%;
+        margin-left: 3%;
+    }
+    .box-forgot {
+        width: 45%;
+        margin-left: 50%;
+    }
+    .alert {
+        margin: -22% 15% 0 18%;
+        width: 60%;
+    }
+}
+@media(min-width: 769px) and (max-width: 992px){
+    .remember {
+        float: none;
+        margin-bottom: 0%;
+        width: 60%;
+    }
+    .forgetpassword {
+        float: right;
+        width: 70%;
+        margin-bottom: 2%;
+    }
+    #signupcheck {
+        font-size: 1em;
+    }
+    .alert {
+        margin: -17% 15% 0 18%;
+        width: 60%;
+    }
+}
+@media(min-width: 993px) and (max-width: 1200px){
+    .remember {
+        float: none;
+        margin-bottom: 0%;
+        width: 50%;
+    }
+    .forgetpassword {
+        float: right;
+        width: 75%;
+        margin-bottom: 2%;
+    }
+    .alert {
+        margin: -13% 15% 0 18%;
+        width: 60%;
+    }
+}

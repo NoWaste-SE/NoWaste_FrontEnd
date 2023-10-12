@@ -1,0 +1,106 @@
+.dashboard-grid {
+    width: 100% !important;
+    margin-top: 3% !important;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.dashboard-back {
+    height: 100vh;
+}
+.dashboard-box {
+    width: auto;
+    height: 95%;
+    margin: auto 0% auto 2%;
+    padding: 10px 15px 0 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.dashboard-title-manager {
+    width: 90%;
+    font-weight: bold !important;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif !important;
+    margin: 10px auto !important;
+}
+#order-history-box {
+    height: auto;
+    margin-bottom: 25px !important;
+}
+#favorite-restaurants-box {
+    height: auto;
+    max-height: 200vh !important;
+}
+.div{
+    margin: 20px !important;
+}
+
+.dashboard-restaurant-name {
+    display: flex;
+    text-align: center !important;
+    font-size: x-large !important;
+    flex-wrap: nowrap;
+    align-content: center !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 5% !important;
+    margin-top: 15% !important;
+}
+
+.dashboard-restaurant-box {
+    margin: 7px auto !important;
+    background-color: rgb(249, 244, 244);
+    height: 100px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 96%;
+    border-radius: 5px;
+}
+
+.dashboard-restaurant-box:hover {
+    transform: scale(1.03);
+}
+
+.dashboard-comment-box{
+    border-radius: 20px;
+    border: none !important;
+}
+
+.dashboard-title-show-comments{
+    margin-top: -3% ;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-bottom: 5%;
+}
+
+.dashboard-btn-close{
+    background-color: #000000 !important;
+    color: white !important;
+    margin-left: 82% !important; 
+    text-transform: none !important;
+    font-size: 98% !important;
+    border-radius: 50px !important;
+    margin-bottom: -4% !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.dashboard-btn-submit{
+    background-color: #000000 !important;
+    color: white !important;
+    margin-left: -101% !important;
+    text-transform: none !important;
+    font-size: 98% !important;
+    border-radius: 50px !important;
+    margin-bottom: -4% !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.dashboard-textarea{
+    width: 100%;
+    height: 99px;
+    resize: none;
+    font-size: 132%;
+    margin-bottom: 4%;
+}

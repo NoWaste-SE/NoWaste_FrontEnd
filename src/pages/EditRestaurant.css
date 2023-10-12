@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.edit-back-restaurant{
+    background-color: #f8f8f8;
+}
+.edit-grid-restaurant {
+    width: 100% !important;
+    margin-top: 3% !important;
+    padding-left: 5%;
+    padding-right: 5%;
+    
+}
+.edit-box-restaurant {
+    width: auto;
+    margin: auto 0% auto 2%;
+    padding: 10px 15px 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.edit-title-restaurant{
+    width: 90%;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin: 10px auto !important;
+}
+.edit-root-restaurant {
+    height: 100%;
+}
+.edit-field-restaurant {
+    margin: 1% auto 1% auto !important;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+.edit-error-restaurant {
+    font-size: 0.8em;
+    line-height: 0.8em;
+    height: 0.5em;
+}
+.edit-avatar-restaurant {
+    margin-top: 2px;
+    margin-bottom: 15px;
+    width: 150px !important;
+    transition-duration: 0.4s;
+    height: 150px !important;
+}
+.edit-avatar-restaurant:hover{
+    transform: scale(1.1);
+    transition-duration: 0.4s;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.text-above-upload-restaurant{
+    color: rgb(105, 102, 102);
+    font-size: 11px !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-bottom: 15px !important;
+}
+.image-alert-restaurant{
+    width: 60% !important;
+    margin-bottom: 15px !important;
+    /* font-size: 10px !important; */
+}
+.upload-button-restaurant{
+    width: 70%;
+    background: linear-gradient(to right, #FFA600, #E74C3C);
+    text-transform: none !important;
+    font-size: smaller !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-bottom: 30px !important;
+    border-radius: 70px !important;
+}
+.upload-button-restaurant:hover{
+    transform: scale(1.01);
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+.edit-button-grid-restaurant{
+    justify-content: space-between;
+    width: 92% !important;
+}
+.edit-field-wrapper-restaurant {
+    transition: height 0.5s ease-out;
+    overflow: hidden;
+}
+#edit-button-restaurant {
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15%;
+    text-transform: none;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 70px;
+}
+.edit-discard-button-restaurant {
+    background-color: #E74C3C !important;
+}
+.edit-discard-button-restaurant:hover{
+    transform: scale(1.01);
+}
+.edit-save-changepass-button-restaurant{
+    background-color: #FFA600 !important;
+}
+.edit-save-changepass-button-restaurant:hover{
+    transform: scale(1.01);
+}
+.input-label-restaurant {
+    text-align: center;
+    width: 100%;
+}
+.phone-input-restaurant {
+    color: #E74C3C !important;
+}
+.showmenu-button {
+    width: 30%;
+    /* align-content: center; */
+    margin: auto 35% !important;
+    background-color: #FFA600 !important;
+    color: black !important;
+    border-radius: 70px !important;
+}
+.hidemenu-button {
+    width: 30%;
+    /* align-content: center; */
+    margin: auto 35% !important;
+    background-color: #E74C3C !important;
+    color: black !important;
+    border-radius: 70px !important;
+}
+.food-box {
+    /* border-color: #E74C3C !important; */
+    margin: 20px auto !important;
+    /* border: #E74C3C solid 1px; */
+    background-color: rgb(255, 255, 255);
+    height: 110px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 96%;
+    border-radius: 5px;
+}
+/* .food {
+    margin: 3px 5px !important;
+    margin-top: 5px !important;
+    margin-left: 3px !important;
+    margin-bottom: 5px !important;
+} */
+.menu-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-height: auto;
+    height: 400px !important;
+    overflow-y: auto;
+    /* overflow-x: hidden; */
+    width: 100%;
+    border-radius: 13px;
+    /* border: 1px solid rgb(202, 196, 195); */
+    flex-direction: column;
+    /* background-color: rgba(215, 44, 6, 0.1); */
+    background-color: rgba(117, 115, 111, 0.05);
+}
+.food-image {
+    width: 100%;
+    height: 90px;
+    margin-top: 4px;
+    margin-left: 3px;
+    border-radius: 7px !important;
+    /* margin-bottom: 3px; */
+}
+.food-name {
+    /* font-weight: 900 !important; */
+    font-size: 25px !important;
+}
+.food-type-price {
+    font-size: 20px !important;
+    margin: 20px auto !important;
+}
+.food-ingredient {
+    font-size: 13px !important;
+    color: #524b4a;
+}
+.food-edit{
+    margin: 20px !important;
+    background-color: #FFA600 !important;
+}
+#food-edit-button {
+    justify-content: center;
+    text-transform: none;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 70px;
+}
+.dialog-title {
+    /* justify-content: flex-end !important; */
+    font-size: 14px !important;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+
+    /* width: 30% !important;
+    height: 90% !important; */
+    /* height: auto;
+    width: auto; */
+    /* position: fixed; */
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+}
+.back-text {
+    color: #E74C3C !important;
+    /* margin-top: 2px !important; */
+    margin-left: 20px !important;
+    margin-top: 15px !important;
+    align-items: center;
+    justify-content: center;
+}
+.back-button {
+    padding: 10px !important;
+    color: #E74C3C !important;
+}
+.food-image-button {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 130%;
+    margin: 10px -30px 0px;
+}
+.blur-background {
+    filter: blur(10px);
+  }

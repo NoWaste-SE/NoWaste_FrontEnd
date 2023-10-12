@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Courgette&family=Playball&display=swap');
+
+.grid-homepage-restaurant {
+    margin-top: 2% !important;
+    /* padding-left: 10%; */
+    padding-right: -10% !important;
+    margin-left: 30px !important;
+    margin-right: -200px !important;
+    overflow-x: hidden;
+}
+.home-res-title{
+    text-align: center;
+    font-family: 'Montserrat', sans-serif !important;
+    /* font-family: 'Abril Fatface', cursive !important; */
+    /* font-family: 'Courgette', cursive !important; */
+    /* font-family: 'Playball', cursive !important; */
+    text-shadow: 2px 10px 10px #1f1f1f;
+}
+.delete-restaurant-button{
+    background-color: #E74C3C !important;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15%;
+    text-transform: none;
+    font-size: 12px !important;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 70px !important;
+}
+.delete-restaurant-button:hover{
+    transform: scale(1.01);
+}
+/* .sidebar{
+    color: white !important;
+    background-color: #1D1D1D !important;
+    width: 20%;
+    transition: width 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.close-icon{
+    color: white;
+}
+
+.close-icon:hover{
+    color: #FFA600;
+}
+
+.list-item:hover{
+    background-color: #373737 !important;
+    color: #FFA600;
+}
+
+.list-item:hover .list-icon{
+    fill: #FFA600;
+}
+
+.sidebar-list .MuiListItemIcon-root {
+    color: white;
+    min-width: 30px;
+    margin-right: 10px;
+}
+  
+.sidebar-list .MuiListItemText-primary {
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.sidebar-footer {
+    display: flex;
+    align-items: center;
+    color: rgb(164, 165, 165);
+    font-size: 90%;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.sidebar-footer-icon{
+    margin-right: 5%;
+}
+
+.divider{
+    margin-top: 110% !important;
+} */
+.no-menu-message-container {
+    margin-top: 10%;
+    margin-bottom: 15%;
+    height: 100px; /* Adjust height as needed */
+    /* width: 100px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-menu-message {
+    color: #6d6c6c;
+    font-family: 'Montserrat', sans-serif !important;
+    text-align: center;
+    margin-top: 0.3px;
+}
+
+.add_res_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 58%;
+    background-color: #f8f8f8;
+    border-radius: 5%;
+    box-shadow: 24;
+    padding: 2%;
+}
+.add-title{
+    padding: 3%;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 22px !important;
+    font-weight: bolder !important;
+    margin-top: -4%;
+}
+.phone-input {
+    color: #E74C3C !important;
+    width: 100%;
+}
+
+#add-buttons{
+    text-transform: none;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 70px;
+}
+#cancel-buttons{
+    text-transform: none;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 70px;
+}
+.cancel-button {
+    background-color: #E74C3C !important;
+}
+.cancel-button:hover{
+    transform: scale(1.01);
+}
+
+.add-button{
+    text-align: center;
+    align-items: center;
+    width : 85px !important;
+    background-color: #FFA600 !important;
+}
+.add-button:hover{
+    transform: scale(1.01);
+}
+
+.new-restaurant-button-grid{
+    justify-content: space-between;
+    margin-top: 3% !important;
+}
+.add-restaurant-field{
+    width: 100% !important;
+    margin-top: 10px !important;
+}

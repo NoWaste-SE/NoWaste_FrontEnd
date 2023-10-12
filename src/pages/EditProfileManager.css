@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.edit-back-manager{
+    background-color: #f8f8f8;
+}
+.edit-grid-manager {
+    width: 100% !important;
+    margin-top: 3% !important;
+    padding-left: 5%;
+    padding-right: 5%;
+    
+}
+.edit-box-manager {
+    width: auto;
+    height: 95%;
+    margin: auto 0% auto 2%;
+    padding: 10px 15px 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.edit-title-manager{
+    width: 90%;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin: 10px auto !important;
+}
+.edit-root-manager {
+    height: 100%;
+}
+.edit-field-manager {
+    margin: 1% auto 1% auto !important;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+.edit-error-manager {
+    font-size: 0.8em;
+    line-height: 1em;
+    height: 0.5em;
+}
+.edit-avatar-manager {
+    margin-top: 2px;
+    margin-bottom: 15px;
+    width: 150px !important;
+    transition-duration: 0.4s;
+    height: 150px !important;
+}
+.edit-avatar-manager:hover{
+    transform: scale(1.1);
+    transition-duration: 0.4s;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.text-above-upload-manager{
+    color: rgb(105, 102, 102);
+    font-size: 11px !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-bottom: 15px !important;
+}
+.image-alert-manager{
+    width: 60% !important;
+    margin-bottom: 15px !important;
+    /* font-size: 10px !important; */
+}
+.upload-button-manager{
+    width: 70%;
+    background: linear-gradient(to right, #FFA600, #E74C3C);
+    text-transform: none !important;
+    font-size: smaller !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-bottom: 30px !important;
+    border-radius: 70px !important;
+}
+.upload-button-manager:hover{
+    transform: scale(1.01);
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+.edit-button-grid-manager{
+    justify-content: space-between;
+    width: 92% !important;
+}
+.edit-field-wrapper-manager {
+    transition: height 0.5s ease-out;
+    overflow: hidden;
+}
+#edit-button-manager {
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15%;
+    text-transform: none;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 70px;
+}
+.edit-discard-button-manager {
+    background-color: #E74C3C !important;
+}
+.edit-discard-button-manager:hover{
+    transform: scale(1.01);
+}
+.edit-save-changepass-button-manager{
+    background-color: #FFA600 !important;
+}
+.edit-save-changepass-button-manager:hover{
+    transform: scale(1.01);
+}
+.input-label-manager {
+    text-align: center;
+    width: 100%;
+}
+.phone-input-manager {
+    color: #E74C3C !important;
+}
+.showr-button {
+    width: 30%;
+    /* align-content: center; */
+    margin: auto 35% !important;
+    background-color: #FFA600 !important;
+    color: black !important;
+    border-radius: 70px !important;
+}

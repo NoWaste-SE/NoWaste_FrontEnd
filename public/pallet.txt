@@ -1,0 +1,5 @@
+black #141414
+gray #333333
+red #e74c3c
+yellow #ffa600
+white #f8f8f8
