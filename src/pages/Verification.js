@@ -151,7 +151,6 @@ export default function Verification(){
                         </Typography>
                         <Typography 
                             className="verification"
-                            style={{marginBottom: "5%"}}
                         >
                             Enter the verification code we just sent you on your email address.
                         </Typography>
@@ -196,6 +195,7 @@ export default function Verification(){
                                 id="submit"
                                 disabled={!validInputs}
                                 onClick={handleSubmit}
+                                style={{ marginTop: '-5px'}}
                             >
                                 Verify code
                             </Button>

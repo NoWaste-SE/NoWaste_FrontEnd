@@ -57,6 +57,7 @@
     font-weight: 400;
     font-family: 'Montserrat', sans-serif !important;
     text-align: center;
+    text-wrap: wrap;
     margin: 3% auto !important;
 }
 .error {
@@ -65,11 +66,15 @@
     height: 3em;
 }
 .checkbox {
-    height: 25px;
-    margin-top: -2%;
-    float: left;
+    /* height: 25px; */
+    /* margin-top: -2%; */
+    float: none;
     white-space: nowrap;
-    margin-left: 13% !important;
+    width: 70% !important;
+    justify-content: center;   
+    align-items: center; 
+    align-content: center; 
+    /* margin-left: 13% !important; */
 }
 .already {
     font-weight: 400;
@@ -88,12 +93,12 @@
 
 .forgetpassword {
     color: #E74C3C;
-    margin-top: 7%;
-    margin-right: 35% !important;
-    float: right;
+    margin-top: 10px !important;
+    float: none;
+    align-items: center;
     text-decoration:none;
     font-family: 'Montserrat', sans-serif !important;
-    font-size: small !important;
+    font-size: medium;
 }
 .forgetpassword:hover, a:active {
     text-decoration: underline !important;
@@ -107,6 +112,7 @@
 }
 #signupcheck {
     font-size: 0.9em;
+    margin: -15px auto !important;
 }
 
 /* ForgotPass */
@@ -141,8 +147,11 @@
     font-size: 1em;
 }
 .verification {
+    width: 80% !important;
+    display: flex;
+    justify-content: center !important;
     text-align: center;
-    margin-bottom: 5%;
+    margin: auto auto 10px !important;
 }
 .alert {
     margin: -10% 30% 0 25%;
@@ -207,9 +216,9 @@
         width: 50%;
     }
     .forgetpassword {
-        float: right;
-        width: 70%;
-        margin-bottom: 5%;
+        /* float: right;
+        width: 70%; */
+        /* margin-bottom: 5%; */
     }
     .error{
         height: 4em;
@@ -228,6 +237,9 @@
     .alert {
         margin: -40% 15% 0 12%;
         width: 70%;
+    }
+    #signupcheck{
+        margin-top: -30px !important;
     }
 }
 @media(min-width: 415px) and (max-width: 576px){
@@ -248,9 +260,10 @@
         width: 50%;
     }
     .forgetpassword {
-        float: right;
-        width: 70%;
-        margin-bottom: 5%;
+        /* float: right;
+        width: 70%; */
+        /* margin: 10px auto 10px !important; */
+        /* margin-bottom: 5%; */
     }
     .error{
         height: 4em;
@@ -270,6 +283,9 @@
         margin: -30% 15% 0 12%;
         width: 70%;
     }
+    #signupcheck{
+        margin-top: -30px !important;
+    }
 }
 @media(min-width: 577px) and (max-width: 768px){
     .remember {
@@ -278,13 +294,14 @@
         width: 60%;
     }
     .forgetpassword {
-        float: right;
-        width: 70%;
-        margin-bottom: 5%;
+        /* float: right;
+        width: 70%; */
+        /* margin-bottom: 5%; */
     }
-    #signupcheck {
-        font-size: 0.9em;
-    }
+    /* #signupcheck {
+        margin-bottom: -5px !important;
+        margin-top: -15px !important;
+    } */
     .error{
         height: 3.2em;
         font-size: 0.75em;
@@ -309,17 +326,21 @@
         width: 60%;
     }
     .forgetpassword {
-        float: right;
-        width: 70%;
-        margin-bottom: 2%;
+        /* float: right; */
+        /* width: 70%; */
+        /* margin-bottom: 2%; */
     }
     #signupcheck {
-        font-size: 1em;
+        margin-bottom: 5px;
+        /* font-size: 1em; */
     }
     .alert {
         margin: -17% 15% 0 18%;
         width: 60%;
     }
+    /* .text{
+        text-wrap: nowrap;
+    } */
 }
 @media(min-width: 993px) and (max-width: 1200px){
     .remember {
@@ -328,12 +349,20 @@
         width: 50%;
     }
     .forgetpassword {
-        float: right;
-        width: 75%;
-        margin-bottom: 2%;
+        /* float: right; */
+        /* width: 75%;
+        margin-bottom: 2%; */
     }
     .alert {
         margin: -13% 15% 0 18%;
         width: 60%;
+    }
+}
+@media(min-width: 1200px){
+    .text {
+        text-wrap: nowrap;
+    }
+    .checkbox{
+        width: 75% !important;
     }
 }
