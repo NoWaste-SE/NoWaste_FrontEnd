@@ -38,26 +38,23 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import '../components/OwnRestaurantCard.css';
 import '../components/OwnRestaurantCard.css';
-// import Drawer from '@mui/material/Drawer';
-// import List from '@mui/material/List';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import MenuIcon from '@mui/icons-material/Menu';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-// import Divider from '@mui/material/Divider';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-// import PermPhoneMsgIcon from '@mui/icons-material/PermPhoneMsg';
-// import InfoIcon from '@mui/icons-material/Info';
-// import PersonIcon from '@mui/icons-material/Person';
 import Fab from '@mui/material/Fab';
-// import AddIcon from '@mui/icons-material/Add';
 import Modal from '@mui/material/Modal';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Map from "../components/Map/Map";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddPagination from '../components/Pagination';
+import Pagination from '@mui/material/Pagination';
+
+const useStyles = makeStyles({
+    ul: {
+        "& .MuiPaginationItem-root": {
+            color: "#ffa600"
+        }
+    }
+});
 
 const theme = createTheme({
     palette: {
@@ -214,23 +211,16 @@ function HomepageRestaurant(props){
     const [newDiscount, setNewDiscount] = useState('');
     const [newType, setNewType] = useState('');
     const [newDescription, setNewDescription] = useState('');
-    const [restaurants, setRestaurants] = useState();
+    const [restaurants, setRestaurants] = useState([]);
     const [openNetwork, setOpenNetwork] = useState(null);
     const id = localStorage.getItem('id');
     const token = localStorage.getItem('token');
     const history = useHistory();
-    // const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertSeverity, setAlertSeverity] = useState('');
-
-    // const handleSidebarOpen = () => {
-    //     setOpen(!open);
-    // };
-    
-    // const handleSidebarClose = () => {
-    //     setOpen(false);
-    // };
-
+    const classesStyle = useStyles();
+    const [page, setPage] = useState(1);
+    const PER_PAGE = 6;
     const handleShow = (res) => {
         history.push(`edit-restaurant/${id}/restaurants/${res.id}`);
     };
@@ -323,6 +313,11 @@ function HomepageRestaurant(props){
         })
         .catch((error) => console.log(error));
     },[]);
+    const _DATA = AddPagination(restaurants, PER_PAGE);
+    const handlePagination = (e, p) => {
+        setPage(p);
+        _DATA.jump(p);
+    };
 
     const handleAddName = (e) => {
         setNewName(e.target.value);
@@ -543,7 +538,7 @@ function HomepageRestaurant(props){
                 {/* <Grid item md={12}> */}
                 {restaurants && restaurants.length > 0 ? ( 
                     <Masonry style={{paddingLeft: "0%", marginLeft: "5%"}} breakpointCols={breakpoints}>
-                        {restaurants && restaurants.map((res, index) => (
+                        {_DATA.currentData() && _DATA.currentData().map((res, index) => (
                             <div key={index} onClick={() => handleEdit(res)}>
                                 <Card className='homepage-restaurant-card-restaurant' sx={{ backgroundColor: '#f5f2f2' }} >
                                     <CardActionArea >
@@ -634,8 +629,17 @@ function HomepageRestaurant(props){
                         <h2 className="no-menu-message">No restaurant is added yet.</h2>
                         </div>        
                     )}     
-                {/* </Grid>
-            </Grid> */}
+                <Box justifyContent='center' alignItems='center' display='flex' 
+                    sx={{
+                    position: "fixed",
+                    bottom: "0",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "100%",
+                    marginBottom: "2%",
+                }}>
+                    <Pagination count={Math.ceil(restaurants.length / PER_PAGE)} onChange={handlePagination} variant="outlined" classes={{ ul: classesStyle.ul }} />
+                </Box>
         </ThemeProvider>
     );
 }

@@ -39,6 +39,8 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 import {InputBase} from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import AddPagination from '../components/Pagination';
+import Pagination from '@mui/material/Pagination';
 
 const theme = createTheme({
     palette: {
@@ -119,6 +121,11 @@ const useStyles = makeStyles({
         width: '0 !important',
         height: '0 !important',
     },
+    ul: {
+        "& .MuiPaginationItem-root": {
+            color: "#ffa600"
+        }
+    }
 });
 const rateMarks = [
     {
@@ -186,6 +193,9 @@ const HomepageCustomer = () => {
 
     const [restaurant, setRestaurant] = useState([]); 
     const [fields, setFields] = useState([]); 
+    const [page, setPage] = useState(1);
+    const PER_PAGE = 6;
+    
     useEffect(()=>{
         axios.get(`http://188.121.124.63/restaurant/restaurant-search/`,
         {headers: {
@@ -201,7 +211,11 @@ const HomepageCustomer = () => {
             console.log(error.response);
             });
     },[])
-    
+    const _DATA = AddPagination(restaurant, PER_PAGE);
+    const handlePaginationRestaurant = (e, p) => {
+        setPage(p);
+        _DATA.jump(p);
+    };
 
     const handleClickSearch = (e) => {
         setMySearch(e.target.value);
@@ -419,23 +433,18 @@ const HomepageCustomer = () => {
             console.log(response.data);
             setFields(response.data);
             setRestaurant([]);
-            // console.log(response.data);
-            // console.log("fielesds: "+response.data.fields);
         })
         .catch((error) => {
             console.log(error.response);
         });
     };
+    const _DATA_FILD = AddPagination(fields, PER_PAGE);
+    const handlePaginationFields = (e, p) => {
+        setPage(p);
+        _DATA_FILD.jump(p);
+    };
 
-    // const clickIranian =()=> {
-    //     setType(type === "Iranian" ? "" : "Iranian");
-    //     console.log("Iranian");
-    // };
 
-    // const clickForeign =()=> {
-    //     setType(type === "Foreign" ? "" : "Foreign");
-    //     console.log(type);
-    // };
     const handleSelectType = (event, newValue) => {
         setType(newValue);
     };
@@ -652,20 +661,16 @@ const HomepageCustomer = () => {
                                 breakpointCols={breakpoints}
                                 // className="homepage-my-masonry-grid"
                             >
-                                {/* {restaurant && restaurant.map((res, index) => (
-                                    <div key={index} style={{ width: index % 3 === 0 ? '100%' : '' }}>
-                                        <RestaurantCard name={res.name} rate={res.rate} discount={res.discount} id={res.id}/>
-                                    </div>
-                                ))} */}
+                                
                                 {restaurant.length==1 ? (<RestaurantCard name={restaurant[0].name} rate={restaurant[0].rate} discount={restaurant[0].discount} id={restaurant[0].id} description={restaurant[0].description} isSingleResult={true}/>) :
-                                (restaurant && restaurant.map((res, index) => (
+                                (_DATA.currentData() && _DATA.currentData().map((res, index) => (
                                     <div key={index} style={{ width: index % 3 === 0 ? '100%' : '' }}>
                                         <RestaurantCard name={res.name} rate={res.rate} discount={res.discount} id={res.id} number={res.number} address={res.address} restaurant_image={res.restaurant_image}/>
                                     </div>
                                 )))}
                                 
                                 {fields.length==1 ? (<RestaurantCard name={fields.fields[0].name} rate={fields.fields[0].rate} discount={fields.fields[0].discount} id={fields.fields[0].id} description={fields.fields[0].description} isSingleResult={true}/>) :
-                                (fields && fields.map((res, index) => (
+                                (_DATA_FILD.currentData() && _DATA_FILD.currentData().map((res, index) => (
                                     <div key={index} style={{ width: index % 3 === 0 ? '100%' : '' }}>
                                         <RestaurantCard name={res.fields.name} rate={res.fields.rate} discount={res.fields.discount} id={res.pk} number={res.fields.number} address={res.fields.address} restaurant_image={res.fields.restaurant_image}/>
                                     </div>
@@ -676,6 +681,11 @@ const HomepageCustomer = () => {
                 </Grid>
             <BackToTop/>
             </Grid>
+            
+            <Box justifyContent='center' alignItems='center' display='flex' sx={{margin:'20px 0px'}}>
+                { restaurant.length!=0 ? <Pagination count={Math.ceil(restaurant.length / PER_PAGE)} onChange={handlePaginationRestaurant} variant="outlined" classes={{ ul: classes.ul }} /> :
+                <Pagination count={Math.ceil(fields.length / PER_PAGE)} onChange={handlePaginationFields} variant="outlined" classes={{ ul: classes.ul }} />}
+            </Box>
         <Footer/>
         </ThemeProvider>
     );
