@@ -45,6 +45,7 @@
     margin-left: -0.5 !important;
     margin-right: 38% !important;
     margin-top: auto !important;
+    animation: fade-in 1s ease-in-out !important;
 
 }
 .food-h5
@@ -163,4 +164,21 @@
 
 .food-disabled {
     cursor: default;
+}
+
+.food-animation{
+    animation: fade-in 1s ease-in-out !important;
+} 
+
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

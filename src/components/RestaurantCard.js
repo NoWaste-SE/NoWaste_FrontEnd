@@ -37,7 +37,13 @@ const RestaurantCard = (props) => {
     const history = useHistory();
     const [rateValue, setRateValue] = React.useState(2.5);
     const [discount, setDiscount] = useState(20);
-    // localStorage.setItem('restaurantId', props.id);
+
+    // const [animationClass, setAnimationClass] = useState('');
+
+    // useEffect(() => {
+    // // When the component mounts, add the 'appear' class to trigger the animation.
+    // setAnimationClass('appear');
+    // }, []);
 
 
 
@@ -46,6 +52,7 @@ const RestaurantCard = (props) => {
     }
     console.log(props.isSingleResult);
     return ( 
+        // <div className={`animation ${animationClass}`}>
         <div>
         {/* <Card className= 'homepage-custumer-card-restaurant' onClick={handleShow}> */}
         <Card className={`homepage-custumer-card-restaurant${props.isSingleResult ? '-single' : ''}`} onClick={handleShow} style={{borderRadius: '15px'}}>
@@ -69,12 +76,13 @@ const RestaurantCard = (props) => {
                         height: '20px',
                         fontSize: '20px'
                         }}
+                        className='restaurant-card-animation'
                     >
                         {/* {discount + "%"} */}
                         {props.discount *100 + "%"}
                     </div>
                 </div>
-                <CardContent sx={{ height: 130}}>
+                <CardContent sx={{ height: 130}} className='restaurant-card-animation'>
                     <Grid container spacing={2}>
                         <Grid item>
                             <Typography gutterBottom className='restaurant-name-hemepage-customer'>
@@ -83,27 +91,12 @@ const RestaurantCard = (props) => {
                         </Grid>
                         <Grid item sx={{ display: 'flex', alignItems: 'center', mt: '-5px' }}>
                             <Rating defaultValue={props.rate} precision={0.5} readOnly size="small" />
-                            {/* <Typography 
-                            // style={{marginLeft: '75%', marginTop: '-10%', fontSize: '1em'}}
-                                sx={{
-                                    marginLeft: 'auto',
-                                    fontSize: '1.5em',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                  }}
-                            >
-                                {props.rate}
-                                <StarRateIcon className='startIcon-homepage' style={{ color: '#faaf00', }} />
-                            </Typography> */}
                         </Grid>
                     </Grid>
-                    {/* <Typography className="description-homepage-customer" color="text.secondary">{props.description}</Typography>  */}
                     <Typography className="description-homepage-customer" color="text.secondary">{props.number}</Typography>
                     <Typography className="description-homepage-customer" color="text.secondary">{props.address}</Typography>
                 </CardContent>
             </CardActionArea>
-            {/* <CardActions>
-            </CardActions> */}
         </Card>
     </div>
     );

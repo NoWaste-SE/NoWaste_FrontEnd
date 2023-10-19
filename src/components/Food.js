@@ -227,7 +227,7 @@ const Food = (props) => {
                         image={food.food_pic}
                         title={food.Type}
                     />
-                    <CardContent sx={{ height: 25}}>
+                    <CardContent sx={{ height: 25}} className='food-animation'>
                         <Typography gutterBottom className='food-name-restaurant-view'>{food.name}</Typography>
                         <Typography variant="body2" color="text.secondary">{food.ingredients}</Typography>
                         <Typography variant="body2" color="#ffa600">remaining: {remainder}</Typography>
@@ -236,7 +236,7 @@ const Food = (props) => {
                     </CardContent>
                     </CardActionArea>
                 <CardActions>
-                    <Grid container spacing={3.5} className='food-card-grid'>
+                    <Grid container spacing={3.5} className='food-card-grid' >
                         <Grid item>
                             <Typography className='food-price'>${parseInt(food.price)}</Typography>
                         </Grid>
