@@ -524,7 +524,7 @@ function Edit(props){
                                 } */}
                                 <input
                                     accept="image/*"
-                                    id="photoInput"
+                                    id="contained-button-file-customer"
                                     type="file"
                                     hidden      
                                     MAX_FILE_SIZE={MAX_FILE_SIZE}  
@@ -537,8 +537,8 @@ function Edit(props){
                                         setOpenImg(true);
                                       }}                 
                                 />
-                                <label htmlFor="photoInput" className="input-label">
-                                    <Button className="upload-button"  component="span">
+                                <label htmlFor="contained-button-file-customer" className="input-label">
+                                    <Button className="upload-button" component="span">
                                         Upload new image
                                     </Button>
                                 </label>
@@ -624,7 +624,7 @@ function Edit(props){
                                 >
                                     Account Details 
                                 </Typography>
-                                <FormControl className="edit-field">
+                                {/* <FormControl > */}
                                     <Grid container spacing={2}>
                                         {openNetwork && 
                                                 <Grid item lg={12} sm={12} md={12}>
@@ -649,7 +649,8 @@ function Edit(props){
                                                 color="secondary"
                                                 value={fullname}
                                                 onChange={handleFullname}
-                                                style={{width: '100%'}}
+                                                className="item"
+                                                // style={{width: '100%', marginBottom: '10px'}}
                                                 error={fullnameError}
                                                 InputLabelProps={{ shrink: true }} 
                                                 helperText={
@@ -668,8 +669,9 @@ function Edit(props){
                                                 onChange={handlePhoneChange}
                                                 InputLabelProps={{ shrink: true }} 
                                                 inputClass={classes.field}
-                                                className="phone-input"
-                                                style={{width: '100%'}}
+                                                className="phone-input item"
+                                                // className="edit-field"
+                                                // style={{width: '100%', marginBottom: '10px'}}
                                                 variant="outlined"
                                                 // focused={true}
                                                 inputProps={{
@@ -678,21 +680,29 @@ function Edit(props){
                                             />
                                         </Grid>
                                     </Grid>
-                                </FormControl>
-                                <FormControl className="edit-field">
-                                    <TextField
-                                        label="Email address"
-                                        variant="outlined"
-                                        color="secondary"
-                                        value={data.email}
-                                        InputLabelProps={{ shrink: true }}  
-                                        // disabled                          
-                                        InputProps={{
-                                            readOnly: true
-                                        }}
-                                    />
-                                </FormControl>
-                                <FormControl className="edit-field">
+                                {/* </FormControl> */}
+                                {/* <FormControl > */}
+                                                
+                                    <Grid container className="edit-field">
+                                        <Grid item md={12} sm={12} xs={12}>
+                                            <TextField
+                                                label="Email address"
+                                                variant="outlined"
+                                                // style={{width: '100%'}}
+                                                className="item"
+                                                color="secondary"
+                                                value={data.email}
+                                                InputLabelProps={{ shrink: true }}  
+                                                // disabled                          
+                                                InputProps={{
+                                                    readOnly: true
+                                                }}
+                                            />
+
+                                        </Grid>
+                                    </Grid>
+                                {/* </FormControl> */}
+                                {/* <FormControl> */}
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} sm={6} md={6}>
                                             <TextField
@@ -703,7 +713,8 @@ function Edit(props){
                                                 value={gender}
                                                 InputLabelProps={{ shrink: true }}
                                                 // style= {{textAlign: 'left', width:'100%'}}
-                                                style={{width: '100%'}}
+                                                style={{marginTop: '8px'}}
+                                                className="item"
                                                 onChange={handleGender}
                                             >
                                                 <MenuItem value="select" disabled>
@@ -717,14 +728,20 @@ function Edit(props){
                                                 </MenuItem>
                                             </TextField>
                                         </Grid>
-                                        <Grid item xs={12} sm={6} md={6} style={{paddingTop: '0'}}>
-                                            <LocalizationProvider dateAdapter={AdapterDayjs} style={{width: '150%'}}
-                                            InputLabelProps={{ shrink: true }}
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <LocalizationProvider 
+                                                dateAdapter={AdapterDayjs} 
+                                                // style={{width: '150%'}}
+                                                // sx={{marginTop: '20px'}}
+                                                // className="item"
+                                                InputLabelProps={{ shrink: true }}
                                             >
                                                 <DemoContainer components={['DatePicker']} >
                                                     <DatePicker
+                                                    
                                                         label="Date of birth"
                                                         views={['year', 'month', 'day']}
+                                                        // sx={{width: '100%', marginTop: '-5px'}}
                                                         sx={{width: '100%'}}
                                                         maxDate={dayjs()}
                                                         onChange={handleBirthdate}
@@ -734,9 +751,9 @@ function Edit(props){
                                             </LocalizationProvider>
                                         </Grid>
                                     </Grid>
-                                </FormControl>
-                                <FormControl className="edit-field">
-                                    <Grid container spacing={2}>
+                                {/* </FormControl> */}
+                                {/* <FormControl className="edit-field"> */}
+                                    <Grid container spacing={2} style={{marginTop: '10px'}}>
                                         <Grid item xs={12} sm={6} md={6}>
                                             <TextField
                                                 select
@@ -745,13 +762,13 @@ function Edit(props){
                                                 color="secondary"
                                                 value={country}
                                                 InputLabelProps={{ shrink: true }}
-                                                style={{width: '100%'}}
+                                                className="item"
                                                 onChange={handleCountry}
                                                 SelectProps={{
                                                     MenuProps: {
                                                     PaperProps: {
                                                         style: {
-                                                        maxHeight: '238px', // Set your desired max height here
+                                                        maxHeight: '238px',
                                                         },
                                                     },
                                                     },
@@ -772,14 +789,15 @@ function Edit(props){
                                                 variant="outlined"
                                                 color="secondary"
                                                 value={city}
+                                                className="item"
                                                 InputLabelProps={{ shrink: true }}
-                                                style={{width: '100%'}}
+                                                // style={{width: '100%'}}
                                                 onChange={handleCity}
                                                 SelectProps={{
                                                     MenuProps: {
                                                     PaperProps: {
                                                         style: {
-                                                        maxHeight: '238px', // Set your desired max height here
+                                                            maxHeight: '238px',
                                                         },
                                                     },
                                                     },
@@ -794,15 +812,15 @@ function Edit(props){
                                             </TextField>
                                         </Grid>
                                     </Grid>
-                                </FormControl>
-                                <FormControl className="edit-field">
+                                {/* </FormControl> */}
+                                {/* <FormControl className="edit-field"> */}
                                     <TextField
                                         label="Address"
                                         variant="outlined"
                                         color="secondary"
                                         multiline
                                         value = {address?address:""}
-
+                                        className="item"
                                         onChange={handleAddress}
                                         InputProps={{
                                             endAdornment: (
@@ -818,13 +836,14 @@ function Edit(props){
                                     <Modal open={showMap} onClose={handleCloseMap}>
                                         <Map location = {mylocation}/>
                                     </Modal>
-                                </FormControl>
+                                {/* </FormControl> */}
                                     {show && <>
-                                    <FormControl className="edit-field">
+                                    {/* <FormControl className="edit-field"> */}
                                         <TextField
                                             label="Current passsword"
                                             variant="outlined"
                                             color="secondary"
+                                            className="item"
                                             onChange={handlePassword}
                                             type= {showCurrentPassword ? 'text' : 'password'}
                                             InputProps={{
@@ -849,15 +868,16 @@ function Edit(props){
                                             }}
 
                                         />
-                                    </FormControl>
+                                    {/* </FormControl> */}
 
-                                    <FormControl className="edit-field">
+                                    {/* <FormControl className="edit-field"> */}
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} sm={6} md={6}>
                                         <TextField
                                             label="New password"
                                             variant="outlined"
-                                            style={{width: '100%'}}
+                                            // style={{width: '100%'}}
+                                            className="item"
                                             color="secondary"
                                             onChange={handlenewPassword}
                                             type= {showNewPassword ? 'text' : 'password'}
@@ -893,7 +913,8 @@ function Edit(props){
                                             <TextField
                                                 label="Confirm new password"
                                                 variant="outlined"
-                                                style={{width: '100%'}}
+                                                // style={{width: '100%'}}
+                                                className="item"
                                                 color="secondary"
                                                 onChange={handleConfirmPassword}
                                                 error={newPasswordMatch === false}
@@ -926,28 +947,32 @@ function Edit(props){
                                                 />
                                         </Grid>
                                         </Grid>
-                                    </FormControl>
+                                    {/* </FormControl> */}
                                     </>
                                     }
                                 <Grid container spacing={2} className="edit-button-grid" wrap="nowrap">
                                     <Grid item>
-                                        <Button className="edit-save-changepass-button"  id="edit-button" variant="contained" onClick={() => setShow(prev => !prev)}>Change password </Button>
+                                        <Button className="edit-save-changepass-button edit-button" variant="contained" onClick={() => setShow(prev => !prev)}>Change password </Button>
                                     </Grid>
                                     <Grid item container lg={5} md={6} sm={12}
                                     // style={{marginRight: "-10px"}}
-                                    justifyContent="flex-end"
+                                        justifyContent="flex-end"
                                     >
-                                        <Grid item style={{paddingRight: '5px'}}>
-                                            <Button className="edit-discard-button" id="edit-button" variant="contained" onClick={handleDiscard}
+                                        <Grid item style={{paddingRight: '5px'}} >
+                                            <Button className="edit-discard-button edit-button"  variant="contained" onClick={handleDiscard}
                                                 // style={{marginRight: "2%"}}
                                                 // style={{backgroundColor: '#E74C3C'}}
-                                            >Discard</Button>
+                                            >
+                                                Discard
+                                            </Button>
                                         </Grid>
                                         <Grid item>
-                                            <Button className="edit-save-changepass-button" id="edit-button" variant="contained" onClick={handleUpdate}
+                                            <Button className="edit-save-changepass-button edit-button"  variant="contained" onClick={handleUpdate}
                                                 disabled={!validInputs}
                                                 // style={{marginRight: "-2%"}}
-                                            >Save changes</Button>
+                                            >
+                                                Save changes
+                                            </Button>
                                         </Grid>
                                     </Grid>
                                 </Grid>

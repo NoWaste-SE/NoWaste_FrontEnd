@@ -108,11 +108,11 @@ export default function Login(){
     const handleClose = () => {
         setOpen(false);
         setHeight();
-    }
+    };
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
         setHeight();
-    }
+    };
 
     useEffect(() => {
         setHeight();
@@ -250,8 +250,8 @@ export default function Login(){
                                         </Typography>
                                     }
                             /> */}
-                            <Link to="/forgot-password" className="forgetpassword">
-                                <Typography style={{ Family: 'Montserrat, sfontans-serif',  fontSize: '1.08em'}}>
+                            <Link to="/forgot-password" >
+                                <Typography className="forgetpassword" >
                                     Forgot password?
                                 </Typography>
                             </Link>

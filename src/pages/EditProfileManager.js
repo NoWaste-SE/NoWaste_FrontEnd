@@ -1,16 +1,11 @@
-import React, { useEffect, useState ,  useCallback} from "react";
-import { Avatar, Box, Button, createTheme, Divider, FormControl, Grid, Icon, IconButton, InputAdornment, MenuItem, TextField, ThemeProvider, Typography, withStyles } from "@material-ui/core";
-import './EditProfileManager.css';
+import React, { useEffect, useState } from "react";
+import { Avatar, Box, Button, createTheme, FormControl, Grid, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
+import './EditProfile.css';
 import HeaderRestaurant from '../components/HeaderRestaurant';
 import './Login-Signup.css';
 import './Restaurant-View.css';
 import PhoneInput from 'material-ui-phone-number';
 import 'react-phone-input-2/lib/style.css';
-import { DatePicker } from '@mui/x-date-pickers'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import LockIcon from '@mui/icons-material/Lock';
@@ -18,7 +13,6 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Footer from "../components/Footer";
 import { Alert, AlertTitle } from "@mui/material";
-import ClearIcon from '@mui/icons-material/Clear';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../components/cropImage";
@@ -362,295 +356,148 @@ const EditProfileManager = () => {
     }
     return ( 
         <ThemeProvider theme={theme}>
-            <div className="edit-back-manager">
+            <div className="edit-back">
                 <HeaderRestaurant/>
-                <Grid container spacing={2} className="edit-grid-manager">
+                <div>
                     <div >
                         <ToastContainer />
                     </div>
-                    <Grid item md={3} sm={12} xs={12}>
-                        <Box className="edit-box-manager">
-                            <Typography variant="h5" 
-                                color="textPrimary"
-                                gutterBottom
-                                className="edit-title-manager"
-                                // style={{fontWeight: 'bold', fontSize: '30px'}}
-                            >
-                                Profile Picture
-                            </Typography>
-                            <Avatar
-                                className="edit-avatar-manager"
-                                style={{backgroundColor: color, fontSize:"40px"}}
-                                src={croppedImage}
-                            >
-                                {firstChar}
-                            </Avatar>
-                            {/* <Typography className="text-above-upload-manager">
-                                JPG or PNG no larger than 5 MB
-                            </Typography>
-                            {open && <Alert severity="error" open={open} onClose={handleClose} className="image-alert-manager" variant="outlined" >
-                                        File size is too large.
-                                    </Alert>
-                            } */}
-                            <input
-                                accept="image/*"
-                                id="photoInput"
-                                type="file"
-                                hidden      
-                                MAX_FILE_SIZE={MAX_FILE_SIZE}        
-                                onClick={(e) => {
-                                    onClose();
-                                  }}
-                                  onChange={(e) => {
-                                    const [file] = e.target.files;
-                                    setImg(file);
-                                    setOpenImg(true);
-                                  }}                  
-                            />
-                            <label htmlFor="photoInput" className="input-label-manager">
-                                <Button className="upload-button-manager"  component="span">
-                                    Upload new image
-                                </Button>
-                            </label>
-                        </Box>
-                    </Grid>
-                    <Modal
-                open={openImg}
-                onClose={handleCloseImg}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                sx={{ margin: 10 }}
-              >
-                <Box sx={style}>
-                  <div className="App">
-                    <div className="crop-container">
-                      <Cropper
-                        image={img ? URL.createObjectURL(img) : null}
-                        crop={crop}
-                        zoom={zoom}
-                        aspect={1}
-                        onCropChange={setCrop}
-                        onCropComplete={onCropComplete}
-                        onZoomChange={setZoom}
-                      />
-                    </div>
-                  </div>
-
-                  <Divider
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      position: "absolute",
-                      width: "100%",
-                      top: 50,
-                    }}
-                  ></Divider>
-                  <Divider
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      position: "absolute",
-                      width: "100%",
-                      bottom: 50,
-                    }}
-                  ></Divider>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      position: "absolute",
-                      bottom: 5,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      left: "50%",
-                      transform: "translate(-50%, 0%)",
-                      width: "90%",
-                    }}
-                  >
-                    <Button
-                      onClick={showCroppedImage}
-                      variant="contained"
-                      style={{ backgroundColor: 'green' , fontFamily:'Montserrat' , fontWeight:'bold'}}
-                    >
-                      Apply cutting
-                    </Button>
-                    <Button
-                      onClick={onClose}
-                      variant="contained"
-                      style={{ backgroundColor: 'red' , marginLeft:'3%' , fontFamily:'Montserrat', fontWeight:'bold'}}
-                    >
-                      dissuassion
-                    </Button>
-                  </div>
-                </Box>
-              </Modal>
-                    <Grid item md={9} sm={12} xs={12}>
-                        <Box className="edit-box-manager">
-                            <Typography variant="h5" 
-                                color="textPrimary"
-                                gutterBottom
-                                className="edit-title-manager"
-                                // style={{fontWeight: 'bold', fontSize: '30px'}}
-                            >
-                                Account Details 
-                            </Typography>
-                            <FormControl className="edit-field-manager">
-                                <Grid container spacing={2}>
-                                    {/* {openNetwork && 
-                                            <Grid item lg={12} sm={12} md={12}>
-                                                {openNetwork && <Alert severity="error" onClose={handleCloseNetwork} variant="outlined"> 
-                                                                    Network error!
-                                                                </Alert>
-                                                }
-                                            </Grid> 
-                                    } */}
-                                    {/* {openWrongPass && 
-                                        <Grid item lg={12} sm={12} md={12}>
-                                                {openWrongPass && <Alert severity="error" onClose={handleCloseWrongPass} variant="outlined">
-                                                                    Current password is wrong!
-                                                                </Alert> 
-                                                }                                        
-                                        </Grid>    
-                                    } */}
-                                    <Grid item xs={12} sm={6} md={6}>
-                                        <TextField
-                                            label="Full name"
-                                            variant="outlined"
-                                            color="secondary"
-                                            value={fullname}
-                                            onChange={handleFullname}
-                                            style={{width: '100%'}}
-                                            error={fullnameError}
-                                            InputLabelProps={{ shrink: true }} 
-                                            helperText={
-                                                <div className="edit-error-manager">
-                                                    {fullnameError && 'Your full name should have at least two words.'}
-                                                </div>
-                                            }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={6}>
-                                        <PhoneInput
-                                            label="Phone number"
-                                            value={data.number}
-                                            defaultCountry="ir"
-                                            color="secondary"
-                                            onChange={handlePhoneChange}
-                                            InputLabelProps={{ shrink: true }} 
-                                            // inputClass={classes.field}
-                                            className="phone-input-manager"
-                                            style={{width: '100%'}}
-                                            variant="outlined"
-                                            // focused={true}
-                                            inputProps={{
-                                                maxLength: 13
-                                            }}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </FormControl>
-                            <FormControl className="edit-field-manager">
-                                <TextField
-                                    label="Email address"
-                                    variant="outlined"
-                                    color="secondary"
-                                    value={data.email}
-                                    InputLabelProps={{ shrink: true }}  
-                                    // disabled                          
-                                    InputProps={{
-                                        readOnly: true
-                                    }}
+                    <Grid container spacing={2} className="edit-grid">
+                        <Grid item md={3} sm={12} xs={12}>
+                            <Box className="edit-box">
+                                <Typography variant="h5" 
+                                    color="textPrimary"
+                                    gutterBottom
+                                    className="edit-title"
+                                    // style={{fontWeight: 'bold', fontSize: '30px'}}
+                                >
+                                    Profile Picture
+                                </Typography>
+                                <Avatar
+                                    className="edit-avatar"
+                                    style={{backgroundColor: color, fontSize:"40px"}}
+                                    src={profileImg}
+                                >
+                                    {firstChar}
+                                </Avatar>
+                                <Typography className="text-above-upload">
+                                    JPG or PNG no larger than 5 MB
+                                </Typography>
+                                {open && <Alert severity="error" open={open} onClose={handleClose} className="image-alert" variant="outlined" >
+                                            File size is too large.
+                                        </Alert>
+                                }
+                                <input
+                                    accept="image/*"
+                                    id="contained-button-file-manager"
+                                    type="file"
+                                    onChange={handleProfileImg}
+                                    hidden      
+                                    MAX_FILE_SIZE={MAX_FILE_SIZE}                   
                                 />
-                            </FormControl>
-                                {show && <>
-                                <FormControl className="edit-field-manager">
-                                    <TextField
-                                        label="Current passsword"
-                                        variant="outlined"
-                                        color="secondary"
-                                        onChange={handlePassword}
-                                        type= {showCurrentPassword ? 'text' : 'password'}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <Icon>
-                                                        <LockIcon />
-                                                    </Icon> 
-                                                </InputAdornment>
-                                            ),
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton 
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowCurrentPassword}
-                                                        onMouseDown={handleMouseDownCurrentPassword}
-                                                    >
-                                                        {showCurrentPassword ? <Visibility /> : <VisibilityOff />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-
-                                    />
-                                </FormControl>
-
-                                <FormControl className="edit-field-manager">
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={6} md={6}>
-                                    <TextField
-                                        label="New password"
-                                        variant="outlined"
-                                        style={{width: '100%'}}
-                                        color="secondary"
-                                        onChange={handlenewPassword}
-                                        type= {showNewPassword ? 'text' : 'password'}
-                                        error={newPasswordError}
-                                        helperText= {
-                                            <div className="edit-error-manager">
-                                                {newPasswordError && 'Password must be mixture of letters and numbers.'}
-                                            </div>
+                                <label htmlFor="contained-button-file-manager" className="input-label">
+                                    <Button className="upload-button"  component="span">
+                                        Upload new image
+                                    </Button>
+                                </label>
+                            </Box>
+                        </Grid>
+                        <Grid item md={9} sm={12} xs={12}>
+                            <Box className="edit-box">
+                                <Typography variant="h5" 
+                                    color="textPrimary"
+                                    gutterBottom
+                                    className="edit-title"
+                                    // style={{fontWeight: 'bold', fontSize: '30px'}}
+                                >
+                                    Account Details 
+                                </Typography>
+                                {/* <FormControl className="edit-field-manager"> */}
+                                    <Grid container spacing={2}>
+                                        {openNetwork && 
+                                                <Grid item lg={12} sm={12} md={12}>
+                                                    {openNetwork && <Alert severity="error" onClose={handleCloseNetwork} variant="outlined"> 
+                                                                        Network error!
+                                                                    </Alert>
+                                                    }
+                                                </Grid> 
                                         }
+                                        {openWrongPass && 
+                                            <Grid item lg={12} sm={12} md={12}>
+                                                    {openWrongPass && <Alert severity="error" onClose={handleCloseWrongPass} variant="outlined">
+                                                                        Current password is wrong!
+                                                                    </Alert> 
+                                                    }                                        
+                                            </Grid>    
+                                        }
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <TextField
+                                                label="Full name"
+                                                variant="outlined"
+                                                color="secondary"
+                                                value={fullname}
+                                                onChange={handleFullname}
+                                                // style={{width: '100%'}}
+                                                className="item"
+                                                error={fullnameError}
+                                                InputLabelProps={{ shrink: true }} 
+                                                helperText={
+                                                    <div className="edit-error">
+                                                        {fullnameError && 'Your full name should have at least two words.'}
+                                                    </div>
+                                                }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <PhoneInput
+                                                label="Phone number"
+                                                value={data.number}
+                                                defaultCountry="ir"
+                                                color="secondary"
+                                                onChange={handlePhoneChange}
+                                                InputLabelProps={{ shrink: true }} 
+                                                // inputClass={classes.field}
+                                                className="phone-input item"
+                                                // style={{width: '100%'}}
+                                                variant="outlined"
+                                                // focused={true}
+                                                inputProps={{
+                                                    maxLength: 13
+                                                }}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                {/* </FormControl> */}
+                                {/* <FormControl className="edit-field-manager"> */}
+                                <Grid container className="edit-field">
+                                    <TextField
+                                        label="Email address"
+                                        variant="outlined"
+                                        className="item"
+                                        color="secondary"
+                                        value={data.email}
+                                        InputLabelProps={{ shrink: true }}  
+                                        // disabled                          
                                         InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <Icon>
-                                                        <LockIcon />
-                                                    </Icon> 
-                                                </InputAdornment>
-                                            ),
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton 
-                                                        aria-label="toggle password visibility"
-                                                        onClick={handleClickShowNewPassword}
-                                                        onMouseDown={handleMouseDownnewPassword}
-                                                    >
-                                                        {showNewPassword ? <Visibility /> : <VisibilityOff />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
+                                            readOnly: true
                                         }}
                                     />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={6}>
+                                </Grid>
+                                {/* </FormControl> */}
+                                    {show && <>
+                                    {/* <FormControl className="edit-field-manager"> */}
                                         <TextField
-                                            label="Confirm new password"
+                                            label="Current passsword"
                                             variant="outlined"
-                                            style={{width: '100%'}}
                                             color="secondary"
-                                            onChange={handleConfirmPassword}
-                                            error={newPasswordMatch === false}
-                                            helperText={
-                                                <div className="edit-error-manager">
-                                                    {!newPasswordMatch && 'Password do not match!'}
-                                                </div>
-                                            }
-                                            type= {showConfirmPassword ? 'text' : 'password'}
+                                            className="item"
+                                            onChange={handlePassword}
+                                            type= {showCurrentPassword ? 'text' : 'password'}
                                             InputProps={{
                                                 startAdornment: (
                                                     <InputAdornment position="start">
                                                         <Icon>
-                                                            <LockOpenIcon />
+                                                            <LockIcon />
                                                         </Icon> 
                                                     </InputAdornment>
                                                 ),
@@ -658,46 +505,129 @@ const EditProfileManager = () => {
                                                     <InputAdornment position="end">
                                                         <IconButton 
                                                             aria-label="toggle password visibility"
-                                                            onClick={handleClickShowConfirmPassword}
-                                                            onMouseDown={handleMouseDownconfirmPassword}
+                                                            onClick={handleClickShowCurrentPassword}
+                                                            onMouseDown={handleMouseDownCurrentPassword}
                                                         >
-                                                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                                                            {showCurrentPassword ? <Visibility /> : <VisibilityOff />}
                                                         </IconButton>
                                                     </InputAdornment>
                                                 )
                                             }}
-                                            />
-                                    </Grid>
-                                    </Grid>
-                                </FormControl>
-                                </>
-                                }
-                            <Grid container spacing={2} className="edit-button-grid-manager" wrap="nowrap">
-                                <Grid item>
-                                    <Button className="edit-save-changepass-button"  id="edit-button" variant="contained" onClick={() => setShow(prev => !prev)}>Change password </Button>
-                                </Grid>
-                                <Grid item container lg={5} md={6} sm={12}
-                                // style={{marginRight: "-10px"}}
-                                justifyContent="flex-end"
-                                >
-                                    <Grid item style={{paddingRight: '5px'}}>
-                                        <Button className="edit-discard-button-manager" id="edit-button" variant="contained" onClick={handleDiscard}
-                                            // style={{marginRight: "2%"}}
-                                            // style={{backgroundColor: '#E74C3C'}}
-                                        >Discard</Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button className="edit-save-changepass-button-manager" id="edit-button" variant="contained" onClick={handleUpdate}
-                                            disabled={!validInputs}
-                                            // style={{marginRight: "-2%"}}
-                                        >Save changes</Button>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
 
-                        </Box>
+                                        />
+                                    {/* </FormControl> */}
+
+                                    {/* <FormControl className="edit-field-manager"> */}
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12} sm={6} md={6}>
+                                        <TextField
+                                            label="New password"
+                                            variant="outlined"
+                                            // style={{width: '100%'}}
+                                            className="item"
+                                            color="secondary"
+                                            onChange={handlenewPassword}
+                                            type= {showNewPassword ? 'text' : 'password'}
+                                            error={newPasswordError}
+                                            helperText= {
+                                                <div className="edit-error">
+                                                    {newPasswordError && 'Password must be mixture of letters and numbers.'}
+                                                </div>
+                                            }
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <Icon>
+                                                            <LockIcon />
+                                                        </Icon> 
+                                                    </InputAdornment>
+                                                ),
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton 
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowNewPassword}
+                                                            onMouseDown={handleMouseDownnewPassword}
+                                                        >
+                                                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                )
+                                            }}
+                                        />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <TextField
+                                                label="Confirm new password"
+                                                variant="outlined"
+                                                // style={{width: '100%'}}
+                                                className="item"
+                                                color="secondary"
+                                                onChange={handleConfirmPassword}
+                                                error={newPasswordMatch === false}
+                                                helperText={
+                                                    <div className="edit-error">
+                                                        {!newPasswordMatch && 'Password do not match!'}
+                                                    </div>
+                                                }
+                                                type= {showConfirmPassword ? 'text' : 'password'}
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <Icon>
+                                                                <LockOpenIcon />
+                                                            </Icon> 
+                                                        </InputAdornment>
+                                                    ),
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton 
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handleClickShowConfirmPassword}
+                                                                onMouseDown={handleMouseDownconfirmPassword}
+                                                            >
+                                                                {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    )
+                                                }}
+                                                />
+                                        </Grid>
+                                        </Grid>
+                                    {/* </FormControl> */}
+                                    </>
+                                    }
+                                <Grid container spacing={2} className="edit-button-grid" wrap="nowrap">
+                                    <Grid item>
+                                        <Button className="edit-save-changepass-button edit-button" variant="contained" onClick={() => setShow(prev => !prev)}>Change password </Button>
+                                    </Grid>
+                                    <Grid item container lg={5} md={6} sm={12}
+                                    // style={{marginRight: "-10px"}}
+                                        justifyContent="flex-end"
+                                    >
+                                        <Grid item style={{paddingRight: '5px'}}>
+                                            <Button className="edit-discard-button edit-button" variant="contained" onClick={handleDiscard}
+                                                // style={{marginRight: "2%"}}
+                                                // style={{backgroundColor: '#E74C3C'}}
+                                            >
+                                                Discard
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button className="edit-save-changepass-button edit-button" variant="contained" onClick={handleUpdate}
+                                                disabled={!validInputs}
+                                                // style={{marginRight: "-2%"}}
+                                            >
+                                                Save changes
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                            </Box>
+                        </Grid>
                     </Grid>
-                </Grid> 
+                </div> 
                 <Footer/>
             </div>
         </ThemeProvider>

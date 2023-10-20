@@ -1,5 +1,5 @@
-import React, { useEffect, useState,  useCallback } from "react";
-import './EditRestaurant.css';
+import React, { useEffect, useState } from "react";
+import './EditProfile.css';
 import HeaderRestaurant from '../components/HeaderRestaurant';
 import axios from "axios";
 import Footer from "../components/Footer";
@@ -327,7 +327,7 @@ function EditRestaurant(props){
         const userData = {
             name: country
         };
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         console.log(userData);
         axios.post("http://188.121.124.63/user/cities-of-country/", userData, {headers:{"Content-Type" : "application/json"}})
         .then((response) => {
@@ -731,45 +731,39 @@ function EditRestaurant(props){
 
     return ( 
         <ThemeProvider theme={theme}>
-            <div className="edit-back-restaurant">
+            <div className="edit-back">
                 <HeaderRestaurant/>
                 <div className={`container ${blurBackground ? 'blur-background' : ''}`}>
-                    {/* <Typography className="back-text">
-                        <IconButton className="back-button" onClick={handleBackButton}>
-                            <ArrowBackIosNewIcon />
-                        </IconButton>
-                        Back to home
-                    </Typography> */}
                     <div >
                         <ToastContainer />
                     </div>
-                    <Grid container spacing={2} className="edit-grid-restaurant">
+                    <Grid container spacing={2} className="edit-grid">
                         <Grid item md={3} sm={12} xs={12}>
-                            <Box className="edit-box-restaurant">
+                            <Box className="edit-box">
                                 <Typography variant="h5" 
                                     color="textPrimary"
                                     gutterBottom
-                                    className="edit-title-restaurant"
+                                    className="edit-title"
                                 >
                                     Profile Picture
                                 </Typography>
                                 <Avatar
-                                    className="edit-avatar-restaurant"
+                                    className="edit-avatar"
                                     style={{backgroundColor: color, fontSize:"40px"}}
                                     src={croppedImage}
                                 >
                                     {firstChar}
                                 </Avatar>
-                                {/* <Typography className="text-above-upload-restaurant">
+                                <Typography className="text-above-upload">
                                     JPG or PNG no larger than 5 MB
                                 </Typography>
-                                {open && <Alert severity="error" open={open} onClose={handleClose} className="image-alert-restaurant" variant="outlined" >
+                                {open && <Alert severity="error" open={open} onClose={handleClose} className="image-alert" variant="outlined" >
                                             File size is too large.
                                         </Alert>
                                 } */}
                                 <input
                                     accept="image/*"
-                                    id="photoInput"
+                                    id="profile-image-input-restaurant"
                                     type="file"
                                     hidden      
                                     MAX_FILE_SIZE={MAX_FILE_SIZE}   
@@ -782,8 +776,8 @@ function EditRestaurant(props){
                                         setOpenImg(true);
                                       }}                   
                                 />
-                                <label htmlFor="photoInput" className="input-label-restaurant">
-                                    <Button className="upload-button-restaurant"  component="span">
+                                <label htmlFor="profile-image-input-restaurant" className="input-label">
+                                    <Button className="upload-button" component="span">
                                         Upload new image
                                     </Button>
                                 </label>
@@ -860,15 +854,15 @@ function EditRestaurant(props){
                             </Box>
                         </Modal>
                         <Grid item md={9} sm={12} xs={12}>
-                            <Box className="edit-box-restaurant">
+                            <Box className="edit-box">
                                 <Typography variant="h5" 
                                     color="textPrimary"
                                     gutterBottom
-                                    className="edit-title-restaurant"
+                                    className="edit-title"
                                 >
                                     Restaurant Details 
                                 </Typography>
-                                <FormControl className="edit-field-restaurant">
+                                {/* <FormControl className="edit-field"> */}
                                     <Grid container spacing={2}>
                                         {/* {openNetwork && 
                                                 <Grid item lg={12} sm={12} md={12}>
@@ -885,11 +879,12 @@ function EditRestaurant(props){
                                                 color="secondary"
                                                 value={fullname}
                                                 onChange={handleFullname}
-                                                style={{width: '100%'}}
+                                                className="item"
+                                                // style={{width: '100%'}}
                                                 error={fullnameError}
                                                 InputLabelProps={{ shrink: true }} 
                                                 helperText={
-                                                    <div className="edit-error-restaurant">
+                                                    <div className="edit-error">
                                                         {fullnameError && 'Name should have at most 256 characters.'}
                                                     </div>
                                                 }
@@ -903,8 +898,8 @@ function EditRestaurant(props){
                                                 color="secondary"
                                                 onChange={handlePhoneChange}
                                                 InputLabelProps={{ shrink: true }} 
-                                                className="phone-input-restaurant"
-                                                style={{width: '100%'}}
+                                                className="phone-input item"
+                                                // style={{width: '100%'}}
                                                 variant="outlined"
                                                 // focused={true}
                                                 inputProps={{
@@ -913,11 +908,13 @@ function EditRestaurant(props){
                                             />
                                         </Grid>
                                     </Grid>
-                                </FormControl>
-                                <FormControl className="edit-field-restaurant">
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={12} sm={6} md={6} lg={6}>
-                                            <LocalizationProvider dateAdapter={AdapterDayjs} style={{width: '150%'}}
+                                {/* </FormControl> */}
+                                {/* <FormControl className="edit-field-restaurant"> */}
+                                    <Grid container spacing={2} className="edit-field">
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <LocalizationProvider 
+                                                dateAdapter={AdapterDayjs}
+                                                // style={{width: '150%'}}
                                                 InputLabelProps={{ shrink: true }}
                                             >
                                                 <DemoContainer components={['DatePicker']} >
@@ -940,13 +937,14 @@ function EditRestaurant(props){
                                                 value={discount}
                                                 onChange={handleDiscount}
                                                 InputLabelProps={{ shrink: true }}  
-                                                style={{width: '100%', marginTop: '8px'}}
+                                                style={{marginTop: '8px'}}
+                                                className="item"
                                             />
                                         </Grid>
                                     </Grid>
-                                </FormControl>
-                                <FormControl className="edit-field-restaurant">
-                                    <Grid container spacing={2}>
+                                {/* </FormControl> */}
+                                {/* <FormControl className="edit-field-restaurant"> */}
+                                    <Grid container spacing={2} style={{marginTop: '10px'}}>
                                         <Grid item xs={12} sm={6} md={6}>
                                             <TextField
                                                 label="Country"
@@ -954,14 +952,15 @@ function EditRestaurant(props){
                                                 color="secondary"
                                                 value={country}
                                                 InputLabelProps={{ shrink: true }}
-                                                style={{width: '100%'}}
+                                                // style={{width: '100%'}}
+                                                className="item"
                                                 onChange={handleCountry}
                                                 select
                                                 SelectProps={{
                                                     MenuProps: {
                                                     PaperProps: {
                                                         style: {
-                                                        maxHeight: '290px', // Set your desired max height here
+                                                            maxHeight: '290px'
                                                         },
                                                     },
                                                     },
@@ -982,7 +981,8 @@ function EditRestaurant(props){
                                                 color="secondary"
                                                 value={city}
                                                 InputLabelProps={{ shrink: true }}
-                                                style={{width: '100%'}}
+                                                // style={{width: '100%'}}
+                                                className="item"
                                                 onChange={handleCity}
                                                 select
                                                 SelectProps={{
@@ -1004,8 +1004,8 @@ function EditRestaurant(props){
                                             </TextField>
                                         </Grid>
                                     </Grid>
-                                </FormControl>
-                                <FormControl className="edit-field-restaurant">
+                                {/* </FormControl> */}
+                                {/* <FormControl className="edit-field-restaurant"> */}
                                     <TextField
                                         label="Address"
                                         variant="outlined"
@@ -1013,6 +1013,7 @@ function EditRestaurant(props){
                                         multiline
                                         value = {address?address:""}
                                         onChange={handleAddress}
+                                        className="item"
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">
@@ -1026,25 +1027,27 @@ function EditRestaurant(props){
                                     <Modal open={showMap} onClose={handleCloseMap}>
                                         <Map location = {mylocation}/>
                                     </Modal>
-                                </FormControl>
-                                <FormControl className="edit-field-restaurant">
+                                {/* </FormControl> */}
+                                {/* <FormControl className="edit-field-"> */}
                                     <TextField
                                         label="Description"
                                         variant="outlined"
                                         color="secondary"
                                         multiline
-                                        value = {description}
+                                        className="item"
+                                        value={description}
                                         onChange={handleDescription}
                                         InputLabelProps={{ shrink: true }}  
                                     />
-                                </FormControl>
+                                {/* </FormControl> */}
 
-                                <FormControl className="edit-field-restaurant">
+                                {/* <FormControl className="edit-field"> */}
                                     {openMenu && 
                                         <Button 
                                             color="secondary"
                                             onClick={handleOpenMenu}
-                                            className="showmenu-button"
+                                            style={{marginBottom: '10px'}}
+                                            className="showmenu-button edit-button"
                                         >
                                             Show Menu
                                         </Button>
@@ -1061,11 +1064,11 @@ function EditRestaurant(props){
                                                 </IconButton>
                                             </Grid>
                                             <StyledDialog open={openAdd} classes={{ paper: classes.dialogRoot }} onClose={handleOpenAdd}>
-                                                <DialogTitle className="dialog-title">Add Food</DialogTitle>
-                                                <FormControl>
+                                                <DialogTitle className="edit-title">Add Food</DialogTitle>
+                                                {/* <FormControl> */}
                                                     <Avatar
-                                                        // className="edit-avatar-restaurant"
-                                                        style={{backgroundColor: color, fontSize: "40px", width: "200px", height: "150px", borderRadius: "5px" }}
+                                                        // className="edit-avatar"
+                                                        style={{backgroundColor: color, fontSize: "40px", width: "220px", height: "150px", borderRadius: "5px"}}
                                                         src={foodPicture}
                                                     >
                                                         {/* {firstChar} */}
@@ -1080,46 +1083,48 @@ function EditRestaurant(props){
                                                         MAX_FILE_SIZE={MAX_FILE_SIZE}                   
                                                     />
                                                     <label htmlFor="food-image-input" className="food-image-button">
-                                                        <Button className="upload-button-restaurant"  component="span">
+                                                        <Button className="upload-button" component="span">
                                                             Upload food image
                                                         </Button>
                                                     </label>
-                                                </FormControl>
-                                                <FormControl className="edit-field-restaurant">
+                                                {/* </FormControl> */}
+                                                {/* <FormControl className="edit-field-restaurant"> */}
                                                     <TextField
                                                         label="Name"
                                                         variant="outlined"
                                                         color="secondary"
+                                                        className="edit-field food"
                                                         required
                                                         value={foodName}
                                                         onChange={handleFoodName}
                                                         error={foodNameError}
                                                         helperText={
-                                                            <div className="edit-error-restaurant">
+                                                            <div className="food-error">
                                                                 {foodNameError && "Name should have at most 256 character."}
                                                             </div>
                                                         }
                                                     />
-                                                </FormControl>
-                                                <FormControl className="edit-field-restaurant">
+                                                {/* </FormControl> */}
+                                                {/* <FormControl className="edit-field-restaurant"> */}
                                                     <TextField
                                                         label="Ingredient"
                                                         variant="outlined"
                                                         color="secondary"
                                                         multiline
                                                         // required
+                                                        className="edit-field food"
                                                         onChange={handleFoodIngredient}
                                                         error={foodIngredientError}
                                                         helperText={
-                                                            <div className="edit-error-restaurant">
+                                                            <div className="food-error">
                                                                 {foodIngredientError && "Ingredients should have at most 256 character."}
                                                             </div>
                                                         }
                                                     />
-                                                </FormControl>
-                                                <FormControl className="edit-field-restaurant">    
-                                                    <Grid container spacing={2}>
-                                                        <Grid item lg={6} md={6} sm={12}>
+                                                {/* </FormControl> */}
+                                                {/* <FormControl className="edit-field-">     */}
+                                                    <Grid container spacing={2} className="edit-field" style={{width: '93%'}}>
+                                                        <Grid item lg={6} md={6} sm={12} xs={12}>
                                                             <TextField
                                                                 label="Remain amount"
                                                                 variant="outlined"
@@ -1127,14 +1132,15 @@ function EditRestaurant(props){
                                                                 value={remainFood}
                                                                 required
                                                                 style={{width: '100%'}}
+                                                                // className="food"
                                                                 onChange={handleRemain}
                                                                 error={remainFoodError}
                                                                 helperText={
-                                                                    <div className="edit-error-restaurant">
+                                                                    <div className="edit-error">
                                                                         {remainFoodError && "Remain amount must be number."}
                                                                     </div>
                                                                 }
-                                                                InputLabelProps={{ shrink: true }}
+                                                                // InputLabelProps={{ shrink: true }}
                                                             >
 
                                                             </TextField>
@@ -1162,21 +1168,22 @@ function EditRestaurant(props){
                                                                 </MenuItem>
                                                             </TextField> */}
                                                         </Grid>
-                                                        <Grid item lg={6} md={6} sm={12}>
+                                                        <Grid item lg={6} md={6} sm={12} xs={12}>
                                                             <TextField
                                                                 label="Price"
                                                                 variant="outlined"
                                                                 color="secondary"
+                                                                // className="food"
+                                                                style={{width: '100%'}}
                                                                 required
                                                                 value={foodPrice}
                                                                 error={foodPriceError}
                                                                 onChange={handleFoodPrice}
                                                                 helperText={
-                                                                    <div className="edit-error-restaurant">
+                                                                    <div className="food-error">
                                                                         {foodPriceError && "Price must be a number."}
                                                                     </div>
                                                                 }
-                                                                style={{width: '100%'}}
                                                                 InputProps={{
                                                                     startAdornment: (
                                                                         <InputAdornment position="start" style={{marginTop:"-3px"}}>$</InputAdornment>
@@ -1185,12 +1192,12 @@ function EditRestaurant(props){
                                                             />
                                                         </Grid>
                                                     </Grid>
-                                                </FormControl>
-                                                <Grid container spacing={2} className="edit-button-grid-restaurant">
+                                                {/* </FormControl> */}
+                                                <Grid container spacing={2} className="food-button-grid">
                                                     <Grid item>
                                                         <Button 
-                                                            className="edit-discard-button-restaurant" 
-                                                            id="edit-button-restaurant" 
+                                                            className="edit-discard-button edit-button" 
+                                                            // id="edit-button-restaurant" 
                                                             variant="contained"
                                                             onClick={handleOpenAdd}
                                                         >
@@ -1199,8 +1206,8 @@ function EditRestaurant(props){
                                                     </Grid>
                                                     <Grid item lg={2} md={2} sm={2} justifyContent="flex-end">
                                                         <Button 
-                                                            className="edit-save-changepass-button-restaurant" 
-                                                            id="edit-button-restaurant" 
+                                                            className="edit-save-changepass-button edit-button" 
+                                                            // id="edit-button-restaurant" 
                                                             variant="contained" 
                                                             style={{width: 'auto'}}
                                                             onClick={hanldeAddNewFood}
@@ -1214,11 +1221,11 @@ function EditRestaurant(props){
                                                 {menu && menu.map((res, index) => (
                                                     <div>
                                                         <Box className="food-box">
-                                                            <Grid container spacing={3}>
-                                                                <Grid item lg={2} md={2} sm={2} className="food">
+                                                            <Grid container spacing={4}>
+                                                                <Grid item lg={3} md={3} sm={3} >
                                                                     <img src={res.food_pic} className="food-image"/>
                                                                 </Grid>
-                                                                <Grid item lg={5} md={5} sm={6}>
+                                                                <Grid item lg={5} md={5} sm={4}>
                                                                     <Typography className="food-name">
                                                                         {res.name}
                                                                     </Typography>
@@ -1226,17 +1233,20 @@ function EditRestaurant(props){
                                                                         {res.ingredients}
                                                                     </Typography>
                                                                 </Grid>
-                                                                <Grid item lg={2} md={1} sm={1}>
+                                                                {/* <Grid item lg={3} md={1} sm={1}>
                                                                     <Typography className="food-type-price">
-                                                                        {res.type}
+                                                                        {res.remainder} remain
                                                                     </Typography>
-                                                                </Grid>
-                                                                <Grid item lg={1} md={1} sm={1}>
-                                                                    <Typography className="food-type-price">
+                                                                </Grid> */}
+                                                                <Grid item lg={2} md={2} sm={2}>
+                                                                    <Typography className="food-price-menu">
                                                                         {res.price}$
                                                                     </Typography>
+                                                                    <Typography className="food-remain-number">
+                                                                        {res.remainder} remain
+                                                                    </Typography>
                                                                 </Grid>
-                                                                <Grid item lg={2} md={3} sm={2}>
+                                                                <Grid item lg={2} md={2} sm={3}>
                                                                     <Button className="food-edit" id="food-edit-button" onClick={() => handleOpenEdit(res.id)}>
                                                                         Edit
                                                                     </Button>
@@ -1244,9 +1254,10 @@ function EditRestaurant(props){
                                                             </Grid>
                                                         </Box>
                                                         <StyledDialog open={openEdit} classes={{ paper: classes.dialogRoot }} onClose={handleOpenEdit}>
-                                                            <DialogTitle  className="dialog-title">Edit Food</DialogTitle>
-                                                            <FormControl>
+                                                            <DialogTitle className="edit-title">Edit Food</DialogTitle>
+                                                            {/* <FormControl> */}
                                                                 <Avatar
+                                                                    // className="edit-avatar"
                                                                     style={{backgroundColor: color, fontSize: "40px", width: "200px", height: "150px", borderRadius: "5px" }}
                                                                     src={foodPicture}
                                                                 >
@@ -1261,92 +1272,70 @@ function EditRestaurant(props){
                                                                     MAX_FILE_SIZE={MAX_FILE_SIZE}                   
                                                                 />
                                                                 <label htmlFor="edit-food-image-input" className="food-image-button">
-                                                                    <Button className="upload-button-restaurant"  component="span">
+                                                                    <Button className="upload-button" component="span">
                                                                         Upload food image
                                                                     </Button>
                                                                 </label>
-                                                            </FormControl>
-                                                            <FormControl className="edit-field-restaurant">
+                                                            {/* </FormControl> */}
+                                                            {/* <FormControl className="edit-field-restaurant"> */}
                                                                 <TextField
                                                                     label="Name"
                                                                     variant="outlined"
                                                                     color="secondary"
                                                                     value={foodName}
                                                                     required
+                                                                    className="edit-field food"
                                                                     onChange={handleFoodName}
                                                                     error={foodNameError}
                                                                     helperText={
-                                                                        <div className="edit-error-restaurant">
+                                                                        <div className="food-error">
                                                                             {foodNameError && "Name should have at most 256 character."}
                                                                         </div>
                                                                     }
                                                                     InputLabelProps={{ shrink: true }}
                                                                 />
-                                                            </FormControl>
-                                                            <FormControl className="edit-field-restaurant">
+                                                            {/* </FormControl> */}
+                                                            {/* <FormControl className="edit-field-restaurant"> */}
                                                                 <TextField
                                                                     label="Ingredient"
                                                                     variant="outlined"
                                                                     color="secondary"
                                                                     value={foodIngredient}
                                                                     multiline
+                                                                    className="edit-field food"
                                                                     onChange={handleFoodIngredient}
                                                                     error={foodIngredientError}
                                                                     helperText={
-                                                                        <div className="edit-error-restaurant">
+                                                                        <div className="food-error">
                                                                             {foodIngredientError && "Ingredients should have at most 256 character."}
                                                                         </div>
                                                                     }
                                                                     InputLabelProps={{ shrink: true }}
                                                                 />
-                                                            </FormControl>
-                                                            <FormControl className="edit-field-restaurant">    
-                                                                <Grid container spacing={2}>
-                                                                    <Grid item lg={6} md={6} sm={12}>
+                                                            {/* </FormControl> */}
+                                                            {/* <FormControl className="edit-field-restaurant">     */}
+                                                                <Grid container spacing={2} className="edit-field" style={{width: '93%'}}>
+                                                                    <Grid item lg={6} md={6} sm={6} xs={12}>
                                                                         <TextField
                                                                             label="Remain amount"
                                                                             variant="outlined"
                                                                             color="secondary"
                                                                             value={remainFood}
                                                                             required
+                                                                            // className="edit-field food"
                                                                             style={{width: '100%'}}
                                                                             onChange={handleRemain}
                                                                             error={remainFoodError}
                                                                             helperText={
-                                                                                <div className="edit-error-restaurant">
+                                                                                <div className="food-error">
                                                                                     {remainFoodError && "Remain amount must be number."}
                                                                                 </div>
                                                                             }
-                                                                            InputLabelProps={{ shrink: true }}
+                                                                            // InputLabelProps={{ shrink: true }}
                                                                         >
                                                                         </TextField>
                                                                     </Grid>
-                                                                    {/* <Grid item lg={6} md={6} sm={12}>
-                                                                        <TextField
-                                                                            select
-                                                                            label="Type"
-                                                                            variant="outlined"
-                                                                            color="secondary"
-                                                                            required
-                                                                            style={{width: '100%'}}
-                                                                            onChange={handleFoodType}
-                                                                            defaultValue={foodType}
-                                                                        >
-                                                                            <MenuItem value="select" disabled>
-                                                                                <em>Select type</em>
-                                                                            </MenuItem>
-                                                                            <MenuItem value="Iranian">
-                                                                                Iranian
-                                                                            </MenuItem>
-                                                                            <MenuItem value="Foreign">
-                                                                                Foreign
-                                                                            </MenuItem>
-                                                                            <MenuItem value="Drink">
-                                                                                Drink
-                                                                            </MenuItem>
-                                                                        </TextField>
-                                                                    </Grid> */}
-                                                                    <Grid item lg={6} md={6} sm={12}>
+                                                                    <Grid item lg={6} md={6} sm={6} xs={12}>
                                                                         <TextField
                                                                             label="Price"
                                                                             variant="outlined"
@@ -1354,6 +1343,7 @@ function EditRestaurant(props){
                                                                             onChange={handleFoodPrice}
                                                                             value={foodPrice}
                                                                             required
+                                                                            // className="edit-field food"
                                                                             style={{width: '100%'}}
                                                                             InputProps={{
                                                                                 startAdornment: (
@@ -1363,23 +1353,23 @@ function EditRestaurant(props){
                                                                         />
                                                                     </Grid>
                                                                 </Grid>
-                                                            </FormControl>
-                                                            <Grid container spacing={2} className="edit-button-grid-restaurant">
+                                                            {/* </FormControl> */}
+                                                            <Grid container spacing={2} className="food-button-grid">
                                                                 <Grid item>
                                                                     <Button 
-                                                                        className="edit-discard-button-restaurant" 
-                                                                        id="edit-button-restaurant" 
+                                                                        className="edit-discard-button edit-button" 
+                                                                        // id="edit-button-restaurant" 
                                                                         variant="contained"
                                                                         onClick={handleDelete}
                                                                     >
                                                                         Delete
                                                                     </Button>
                                                                 </Grid>
-                                                                <Grid item container lg={6} md={6} sm={8} justifyContent="flex-end">
+                                                                <Grid item container lg={5} md={5} sm={8} justifyContent="flex-end">
                                                                     <Grid item style={{paddingRight: '5px'}}>
                                                                         <Button 
-                                                                            className="edit-discard-button-restaurant" 
-                                                                            id="edit-button-restaurant" 
+                                                                            className="edit-discard-button edit-button" 
+                                                                            // id="edit-button-restaurant" 
                                                                             variant="contained"
                                                                             onClick={handleOpenEdit}
                                                                         >
@@ -1388,8 +1378,8 @@ function EditRestaurant(props){
                                                                     </Grid>
                                                                     <Grid item>
                                                                         <Button 
-                                                                            className="edit-save-changepass-button-restaurant" 
-                                                                            id="edit-button-restaurant" 
+                                                                            className="edit-save-changepass-button edit-button" 
+                                                                            // id="edit-button-restaurant" 
                                                                             variant="contained" 
                                                                             style={{width: 'auto'}}
                                                                             onClick={() => handleEditThisFood()}
@@ -1405,12 +1395,12 @@ function EditRestaurant(props){
                                             </Box>
                                         </div>
                                     }
-                                </FormControl>
-                                <Grid container spacing={2} className="edit-button-grid-restaurant" wrap="nowrap">
+                                {/* </FormControl> */}
+                                <Grid container spacing={2} className="edit-button-grid" wrap="nowrap">
                                     <Grid item>
                                         <Button 
-                                            className="edit-discard-button-restaurant" 
-                                            id="edit-button-restaurant" 
+                                            className="edit-discard-button edit-button" 
+                                            // id="edit-button-restaurant" 
                                             variant="contained" 
                                             onClick={handleDeleteRestaurant}
                                             // onClick={handleDiscard}
@@ -1422,8 +1412,8 @@ function EditRestaurant(props){
                                     <Grid item container lg={5} md={6} sm={12} justifyContent="flex-end">
                                         <Grid item style={{paddingRight: '5px'}}>
                                             <Button 
-                                                className="edit-discard-button-restaurant" 
-                                                id="edit-button-restaurant" 
+                                                className="edit-discard-button edit-button" 
+                                                // id="edit-button-restaurant" 
                                                 variant="contained" 
                                                 onClick={handleDiscard}
                                             >
@@ -1432,8 +1422,8 @@ function EditRestaurant(props){
                                         </Grid>
                                         <Grid item>
                                             <Button 
-                                                className="edit-save-changepass-button-restaurant" 
-                                                id="edit-button-restaurant" 
+                                                className="edit-save-changepass-button edit-button" 
+                                                // id="edit-button-restaurant" 
                                                 variant="contained" 
                                                 onClick={handleUpdate}
                                                 disabled={!validInputs}

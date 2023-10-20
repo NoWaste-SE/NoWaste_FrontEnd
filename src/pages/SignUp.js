@@ -1,4 +1,4 @@
-import { Box, Button, Container, createTheme, FormControlLabel, Icon, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
+import { Box, Button, Container, createTheme, FormControlLabel, Grid, Icon, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
@@ -7,6 +7,7 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import './Login-Signup.css';
 import axios from "axios";
 import Checkbox from '@mui/material/Checkbox';
+// import { Grid } from '@mui/material';
 import { SpinningBubbles } from "react-loading";
 import { Alert} from "@mui/material";
 
@@ -298,17 +299,32 @@ export default function SignUp(){
                                     )
                                 }}
                             />
-                            
-                            <FormControlLabel className='checkbox' onClick={() => setRole("restaurant")}
+                            <FormControlLabel className='checkbox' onClick={() => setRole("restaurant")} id="signupcheck"
                                 control={<Checkbox 
-                                            sx={{color: '#f18b72', '&.Mui-checked': {color: '#E74C3C',},}}
+                                            sx={{color: '#f18b72', '&.Mui-checked': {color: '#E74C3C'}}}
                                         />}
                                 label={
-                                <Typography className="text" id="signupcheck"
-                                        >
-                                    Sign up as restaurant manager
-                                </Typography>
-                            }/>
+                                    <Typography className="text" >
+                                        Sign up as restaurant manager
+                                    </Typography>
+                                }   
+                                // labelPlacement="end"  
+                                // style={{ alignItems: 'left' }}  
+                            />
+                            
+                            {/* <Grid  container spacing={2} style={{width: '80%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                                <Grid item md={1} sm={1} xs={1} style={{ display: 'flex', alignItems: 'center' }}> 
+                                    <Checkbox sx={{color: '#f18b72', '&.Mui-checked': {color: '#E74C3C'}}} />
+                                </Grid>
+                                <Grid item md={11} sm={11} xs={10}>
+                                    <Typography 
+                                    // className="text" 
+                                    id="signupcheck"
+                                    >
+                                        Sign up as restaurant manager
+                                    </Typography>
+                                </Grid>
+                            </Grid> */}
                             <Button 
                                 variant="contained" 
                                 type="submit" 

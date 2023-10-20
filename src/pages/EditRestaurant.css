@@ -133,10 +133,8 @@
     color: black !important;
     border-radius: 70px !important;
 }
-.food-box {
-    /* border-color: #E74C3C !important; */
+/* .food-box {
     margin: 20px auto !important;
-    /* border: #E74C3C solid 1px; */
     background-color: rgb(255, 255, 255);
     height: 110px !important;
     display: flex;
@@ -144,7 +142,7 @@
     align-items: center;
     width: 96%;
     border-radius: 5px;
-}
+} */
 /* .food {
     margin: 3px 5px !important;
     margin-top: 5px !important;
