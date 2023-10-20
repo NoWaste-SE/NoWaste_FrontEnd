@@ -934,8 +934,8 @@ function EditRestaurant(props){
                                                 <DialogTitle className="edit-title">Add Food</DialogTitle>
                                                 {/* <FormControl> */}
                                                     <Avatar
-                                                        className="edit-avatar"
-                                                        style={{backgroundColor: color, fontSize: "40px"}}
+                                                        // className="edit-avatar"
+                                                        style={{backgroundColor: color, fontSize: "40px", width: "220px", height: "150px", borderRadius: "5px"}}
                                                         src={foodPicture}
                                                     >
                                                         {/* {firstChar} */}
@@ -949,7 +949,7 @@ function EditRestaurant(props){
                                                         hidden      
                                                         MAX_FILE_SIZE={MAX_FILE_SIZE}                   
                                                     />
-                                                    <label htmlFor="food-image-input" className="input-label">
+                                                    <label htmlFor="food-image-input" className="food-image-button">
                                                         <Button className="upload-button" component="span">
                                                             Upload food image
                                                         </Button>
@@ -1088,11 +1088,11 @@ function EditRestaurant(props){
                                                 {menu && menu.map((res, index) => (
                                                     <div>
                                                         <Box className="food-box">
-                                                            <Grid container spacing={3}>
-                                                                <Grid item lg={2} md={2} sm={2} className="food">
+                                                            <Grid container spacing={4}>
+                                                                <Grid item lg={3} md={3} sm={3} >
                                                                     <img src={res.food_pic} className="food-image"/>
                                                                 </Grid>
-                                                                <Grid item lg={5} md={5} sm={6}>
+                                                                <Grid item lg={5} md={5} sm={4}>
                                                                     <Typography className="food-name">
                                                                         {res.name}
                                                                     </Typography>
@@ -1100,17 +1100,20 @@ function EditRestaurant(props){
                                                                         {res.ingredients}
                                                                     </Typography>
                                                                 </Grid>
-                                                                <Grid item lg={2} md={1} sm={1}>
+                                                                {/* <Grid item lg={3} md={1} sm={1}>
                                                                     <Typography className="food-type-price">
-                                                                        {res.type}
+                                                                        {res.remainder} remain
                                                                     </Typography>
-                                                                </Grid>
-                                                                <Grid item lg={1} md={1} sm={1}>
-                                                                    <Typography className="food-type-price">
+                                                                </Grid> */}
+                                                                <Grid item lg={2} md={2} sm={2}>
+                                                                    <Typography className="food-price-menu">
                                                                         {res.price}$
                                                                     </Typography>
+                                                                    <Typography className="food-remain-number">
+                                                                        {res.remainder} remain
+                                                                    </Typography>
                                                                 </Grid>
-                                                                <Grid item lg={2} md={3} sm={2}>
+                                                                <Grid item lg={2} md={2} sm={3}>
                                                                     <Button className="food-edit" id="food-edit-button" onClick={() => handleOpenEdit(res.id)}>
                                                                         Edit
                                                                     </Button>
@@ -1118,11 +1121,11 @@ function EditRestaurant(props){
                                                             </Grid>
                                                         </Box>
                                                         <StyledDialog open={openEdit} classes={{ paper: classes.dialogRoot }} onClose={handleOpenEdit}>
-                                                            <DialogTitle  className="edit-title">Edit Food</DialogTitle>
+                                                            <DialogTitle className="edit-title">Edit Food</DialogTitle>
                                                             {/* <FormControl> */}
                                                                 <Avatar
-                                                                    className="edit-avatar"
-                                                                    style={{backgroundColor: color, fontSize: "40px" }}
+                                                                    // className="edit-avatar"
+                                                                    style={{backgroundColor: color, fontSize: "40px", width: "200px", height: "150px", borderRadius: "5px" }}
                                                                     src={foodPicture}
                                                                 >
                                                                     F
@@ -1135,7 +1138,7 @@ function EditRestaurant(props){
                                                                     hidden      
                                                                     MAX_FILE_SIZE={MAX_FILE_SIZE}                   
                                                                 />
-                                                                <label htmlFor="edit-food-image-input" className="input-label">
+                                                                <label htmlFor="edit-food-image-input" className="food-image-button">
                                                                     <Button className="upload-button" component="span">
                                                                         Upload food image
                                                                     </Button>
