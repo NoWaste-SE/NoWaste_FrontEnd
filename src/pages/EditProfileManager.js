@@ -15,6 +15,22 @@ import Footer from "../components/Footer";
 import { Alert, AlertTitle } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import getCroppedImg from "../components/cropImage";
+import Cropper from "react-easy-crop";
+import Modal from '@mui/material/Modal';
+
+const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: "76%",
+    width: "90%",
+    bgcolor: "background.paper",
+    border: "3px solid #fff",
+    borderRadius: 1,
+    boxShadow: 24,
+};
 
 const styles = theme => ({
     field: {
@@ -71,7 +87,46 @@ const EditProfileManager = () => {
     const [openWrongPass, setOpenWrongPass] = useState(false);
     const [validInputs, setValidInputs] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
-    const [alertSeverity, setAlertSeverity] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('');const [openImg, setOpenImg] = React.useState(false);
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [img, setImg] = useState(undefined);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [croppedImage, setCroppedImage] = useState(null);
+    const showCroppedImage = useCallback(async () => {
+        try {
+          setOpenImg(false);
+          const croppedImage = await getCroppedImg(
+            URL.createObjectURL(img),
+            croppedAreaPixels,
+            0
+        );
+        setCroppedImage(croppedImage);
+        setUpdate({...update, manager_image: croppedImage});
+        console.log(croppedImage);
+        } catch (e) {
+          console.error(e);
+        }
+      }, [croppedAreaPixels]);
+      const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+      }, []);
+    
+      const onClose = useCallback(() => {
+        setCroppedAreaPixels(null);
+        setCroppedImage(null);
+        setOpenImg(false);
+        setImg(undefined);
+        document.getElementById("photoInput").value = null;
+      }, []);
+    
+      const handleCloseImg = (event, reason) => {
+        if (reason === "clickaway") {
+          return;
+        }
+        onClose();
+      };
+
 
 
     const handleFullname = (e) => {

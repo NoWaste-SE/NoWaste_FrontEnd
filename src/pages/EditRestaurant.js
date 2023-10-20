@@ -27,6 +27,22 @@ import Map from "../components/Map/Map";
 import Modal from '@mui/material/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import getCroppedImg from "../components/cropImage";
+import Cropper from "react-easy-crop";
+
+
+const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: "76%",
+    width: "90%",
+    bgcolor: "background.paper",
+    border: "3px solid #fff",
+    borderRadius: 1,
+    boxShadow: 24,
+};
 
 const styles = theme => ({
     field: {
@@ -146,6 +162,46 @@ function EditRestaurant(props){
     let role = localStorage.getItem("role");
     role = role.replace(/"/g, "");
     const mylocation = [lat, lng, idR, role];
+    const [openImg, setOpenImg] = React.useState(false);
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [img, setImg] = useState(undefined);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [croppedImage, setCroppedImage] = useState(null);
+    const showCroppedImage = useCallback(async () => {
+        try {
+          setOpenImg(false);
+          const croppedImage = await getCroppedImg(
+            URL.createObjectURL(img),
+            croppedAreaPixels,
+            0
+        );
+        setCroppedImage(croppedImage);
+        setUpdate({...update, restaurant_image: croppedImage});
+        console.log(croppedImage);
+        } catch (e) {
+          console.error(e);
+        }
+      }, [croppedAreaPixels]);
+      const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+      }, []);
+    
+      const onClose = useCallback(() => {
+        setCroppedAreaPixels(null);
+        setCroppedImage(null);
+        setOpenImg(false);
+        setImg(undefined);
+        document.getElementById("photoInput").value = null;
+      }, []);
+    
+      const handleCloseImg = (event, reason) => {
+        if (reason === "clickaway") {
+          return;
+        }
+        onClose();
+      };
+
 
     const handleFullname = (e) => {
         setFullname(e.target.value);
@@ -694,7 +750,7 @@ function EditRestaurant(props){
                                 <Avatar
                                     className="edit-avatar"
                                     style={{backgroundColor: color, fontSize:"40px"}}
-                                    src={profileImg}
+                                    src={croppedImage}
                                 >
                                     {firstChar}
                                 </Avatar>
@@ -704,14 +760,21 @@ function EditRestaurant(props){
                                 {open && <Alert severity="error" open={open} onClose={handleClose} className="image-alert" variant="outlined" >
                                             File size is too large.
                                         </Alert>
-                                }
+                                } */}
                                 <input
                                     accept="image/*"
                                     id="profile-image-input-restaurant"
                                     type="file"
-                                    onChange={handleProfileImg}
                                     hidden      
-                                    MAX_FILE_SIZE={MAX_FILE_SIZE}                   
+                                    MAX_FILE_SIZE={MAX_FILE_SIZE}   
+                                    onClick={(e) => {
+                                        onClose();
+                                      }}
+                                      onChange={(e) => {
+                                        const [file] = e.target.files;
+                                        setImg(file);
+                                        setOpenImg(true);
+                                      }}                   
                                 />
                                 <label htmlFor="profile-image-input-restaurant" className="input-label">
                                     <Button className="upload-button" component="span">
@@ -720,6 +783,76 @@ function EditRestaurant(props){
                                 </label>
                             </Box>
                         </Grid>
+                        <Modal
+                            open={openImg}
+                            onClose={handleCloseImg}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                            sx={{ margin: 10 }}
+                        >
+                            <Box sx={style}>
+                            <div className="App">
+                                <div className="crop-container">
+                                <Cropper
+                                    image={img ? URL.createObjectURL(img) : null}
+                                    crop={crop}
+                                    zoom={zoom}
+                                    aspect={1}
+                                    onCropChange={setCrop}
+                                    onCropComplete={onCropComplete}
+                                    onZoomChange={setZoom}
+                                />
+                                </div>
+                            </div>
+
+                            <Divider
+                                sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                position: "absolute",
+                                width: "100%",
+                                top: 50,
+                                }}
+                            ></Divider>
+                            <Divider
+                                sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                position: "absolute",
+                                width: "100%",
+                                bottom: 50,
+                                }}
+                            ></Divider>
+                            <div
+                                style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                position: "absolute",
+                                bottom: 5,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                left: "50%",
+                                transform: "translate(-50%, 0%)",
+                                width: "90%",
+                                }}
+                            >
+                                <Button
+                                onClick={showCroppedImage}
+                                variant="contained"
+                                style={{ backgroundColor: 'green' , fontFamily:'Montserrat' , fontWeight:'bold'}}
+                                >
+                                Apply cutting
+                                </Button>
+                                <Button
+                                onClick={onClose}
+                                variant="contained"
+                                style={{ backgroundColor: 'red' , marginLeft:'3%' , fontFamily:'Montserrat', fontWeight:'bold'}}
+                                >
+                                dissuassion
+                                </Button>
+                            </div>
+                            </Box>
+                        </Modal>
                         <Grid item md={9} sm={12} xs={12}>
                             <Box className="edit-box">
                                 <Typography variant="h5" 
