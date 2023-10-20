@@ -553,7 +553,7 @@ function HomepageRestaurant(props){
                                                 </div>
                                             </Grid>
                                             <Grid item md={6}>
-                                                <CardContent>
+                                                <CardContent className='home-restaurant-animation'>
                                                     <Grid container style={{color: "black"}}>
                                                         <Grid item>
                                                             <Typography className='restaurant-name-hemepage-restaurant' gutterBottom>
