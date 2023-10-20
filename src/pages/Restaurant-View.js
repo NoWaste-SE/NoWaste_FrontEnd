@@ -41,9 +41,19 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
 import { createTheme } from '@material-ui/core';
-import { Avatar, Grid, ThemeProvider } from '@mui/material';
+import { Avatar, Grid, ThemeProvider  } from '@mui/material';
 import { deepOrange, deepPurple,grey } from '@mui/material/colors';
+import AddPagination from '../components/Pagination';
+import Pagination from '@mui/material/Pagination';
+import {makeStyles } from '@mui/styles';
 
+const useStyles = makeStyles({
+    ul: {
+        "& .MuiPaginationItem-root": {
+            color: "#ffa600"
+        }
+    }
+});
 
 const theme = createTheme({
     palette: {
@@ -142,6 +152,9 @@ const RestaurantView = (props: Props) =>
     const [list_fav, setList_Fav] = useState(localStorage.getItem('list_of_favorites_res'));
     const customer_id = localStorage.getItem('id');
     const [managerId,setManagerId] = useState('');
+    const classes = useStyles();
+    const [page, setPage] = useState(1);
+    const PER_PAGE = 6;
 
     useEffect ( ()=>{
         console.log("restaurant is :" + restaurant);
@@ -207,6 +220,11 @@ const RestaurantView = (props: Props) =>
         };
         fetchData();
       }, []);
+        const _DATA = AddPagination(menu, PER_PAGE);
+        const handlePagination = (e, p) => {
+            setPage(p);
+            _DATA.jump(p);
+        };
 
         const handleColor = () => {
         setColor(!color);
@@ -398,35 +416,6 @@ const RestaurantView = (props: Props) =>
                         
                         <Box sx={style} className="comment-box">
                             <h2 className='title-show-comments'>Comments</h2>
-
-                            {/* <div className="comment-details-div">
-                                {comments && comments.length > 0 ? (
-                                    <div>
-                                        {comments.map((res,index)=>(
-                                        <div>
-                                            <Stack direction="row" spacing={2} >
-                                                <Avatar sx={{ bgcolor: grey[900] }} className='comment-avatar'>{res.writer_username[0]}</Avatar>
-                                                <Stack direction="column" spacing={2} >
-                                                    <Typography variant="h6" className='comment-stack'>
-                                                        {res.writer_username}
-                                                    </Typography>
-                                                    <h8 className='comment-date'>{res.created_at_date}</h8>
-                                                </Stack>
-                                            </Stack>
-                                            <Typography className='comment-text' id="modal-modal-description" sx={{ mt: 2 }}>
-                                                {res.text}
-                                            </Typography>
-                                            <hr className='comment-hr'></hr>
-                                        </div>
-                                        ))}
-                                    </div>
-                                    ) :
-                                    (
-                                        <div className="no-comment-message-container">
-                                        <h3 className="no-comment-message">No comment is available.</h3>
-                                        </div>
-                                    )}
-                            </div> */}
                             <div className="comment-details-div">
                                 <Stack direction="row" spacing={2} >
                                     <Avatar sx={{ bgcolor: grey[900] }} className='comment-avatar'>H</Avatar>
@@ -538,7 +527,7 @@ const RestaurantView = (props: Props) =>
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column"
             >
-                {menu.map((food, index) => (
+                {_DATA.currentData().map((food, index) => (
                         <div key={index} className="my-masonry-grid_column" style={{ width: index % 3 === 0 ? '100%' : '' }}>
                             <Food food={food} />
                         </div>
@@ -555,6 +544,9 @@ const RestaurantView = (props: Props) =>
             <BackToTop/>
         </MU.Grid>
         <Chat reciever={managerId} sender={customer_id} restaurant={restaurant}/>
+        <Box justifyContent='center' alignItems='center' display='flex' sx={{margin:'20px 0px'}}>
+            <Pagination count={Math.ceil(menu.length / PER_PAGE)} onChange={handlePagination} variant="outlined" classes={{ ul: classes.ul }} />
+        </Box>
         <Footer/>
 
     </div>
