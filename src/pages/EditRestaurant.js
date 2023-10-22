@@ -370,7 +370,7 @@ function EditRestaurant(props){
     }, [data.date_of_establishment]);
 
     useEffect(() => {
-        setProfileImg(data.restaurant_image);
+        setCroppedImage(data.restaurant_image);
     },[data.restaurant_image]);
 
     useEffect(() => {
