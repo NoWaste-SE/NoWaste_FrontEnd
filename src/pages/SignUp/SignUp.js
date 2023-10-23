@@ -7,10 +7,8 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import './Login-Signup.css';
 import axios from "axios";
 import Checkbox from '@mui/material/Checkbox';
-// import { Grid } from '@mui/material';
 import { SpinningBubbles } from "react-loading";
 import { Alert} from "@mui/material";
-
 
 const theme = createTheme({
     palette: {
@@ -31,10 +29,9 @@ const theme = createTheme({
             }
         }
     }
-})
+});
 
 export default function SignUp(){
-
     const [showPassword, setShowPassword] = useState(false);
     const [role, setRole] = useState('customer');
     const [email, setEmail] = useState('');
@@ -90,14 +87,15 @@ export default function SignUp(){
         setConfirmPassword(value);
     };
 
-        const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
         setHeight();
-    }
+    };
+    
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
         setHeight();
-    }
+    };
 
     useEffect(() => {
         setPasswordMatch(password === confirmPassword);
@@ -114,7 +112,7 @@ export default function SignUp(){
         const boxHeight = box.offsetHeight;
         const image = document.querySelector('.background');
         image.style.height = `${boxHeight}px`;
-    }
+    };
     
     useEffect(() => {
         setHeight(); 
@@ -131,6 +129,7 @@ export default function SignUp(){
     useEffect(() => {
         setHeight();
     }, [open]);
+
     useEffect(() => {
         setHeight();
     }, [openNetwork]);
@@ -142,26 +141,23 @@ export default function SignUp(){
             name: fullname,
             email: email
         };
-        axios.post("http://188.121.124.63/user/signup/", userData, {headers:{"Content-Type" : "application/json"}})
-        .then((response) => {
-            console.log(response);
+        axios.post("http://188.121.124.63/user/signup/", 
+                    userData, 
+                    {headers:{"Content-Type" : "application/json"}}
+        )
+        .then(() => {
             history.push("/verification");
         })
         .catch((error) => {
             if (error.response) {
-                console.log(error.response);
-                console.log("server responded");
                 setOpen(true);
-                console.log(error);
             } 
             else if (error.request) {
                 setOpenNetwork(true);
-                console.log("network error");
             } 
-            // else {
-            // setOpen(true);
-            // console.log(error);
-            // }
+            else {
+                setOpen(true);
+            }
         });
     };
 
@@ -180,7 +176,7 @@ export default function SignUp(){
                 <Container className="container">
                     <img
                         className="background"
-                        src="/3.jpg"
+                        src="/Signup-Login.jpg"
                         alt="NoWaste"
                     />
                     <Box className="box">
@@ -188,16 +184,34 @@ export default function SignUp(){
                             color="textPrimary"
                             gutterBottom
                             className="text"
-                            style={{fontWeight: '600', fontSize: '30px'}}
+                            id="signup"
                         >
                             Sign Up 
                         </Typography>
-                        <form noValidate autoComplete="off" style={{textAlign: 'center'}}>
-                            {open && <Alert severity="error" open={open} onClose={handleClose} variant="outlined" className="alert-error filed">
+                        <form 
+                            noValidate 
+                            autoComplete="off" 
+                            className="form"
+                        >
+                            {open && 
+                                <Alert 
+                                    severity="error" 
+                                    open={open} 
+                                    onClose={handleClose} 
+                                    variant="outlined" 
+                                    className="alert-error"
+                                >
                                     Email is invalid or already taken!
                                 </Alert>
                             } 
-                            {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error filed">
+                            {openNetwork && 
+                                <Alert 
+                                    severity="error" 
+                                    open={openNetwork} 
+                                    onClose={handleCloseNetwork} 
+                                    variant="outlined" 
+                                    className="alert-error"
+                                >
                                     Network error!
                                 </Alert>
                             } 
@@ -299,7 +313,10 @@ export default function SignUp(){
                                     )
                                 }}
                             />
-                            <FormControlLabel className='checkbox' onClick={() => setRole("restaurant")} id="signupcheck"
+                            <FormControlLabel 
+                                className='checkbox' 
+                                onClick={() => setRole("restaurant")} 
+                                id="signupcheck"
                                 control={<Checkbox 
                                             sx={{color: '#f18b72', '&.Mui-checked': {color: '#E74C3C'}}}
                                         />}
@@ -308,23 +325,7 @@ export default function SignUp(){
                                         Sign up as restaurant manager
                                     </Typography>
                                 }   
-                                // labelPlacement="end"  
-                                // style={{ alignItems: 'left' }}  
                             />
-                            
-                            {/* <Grid  container spacing={2} style={{width: '80%', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-                                <Grid item md={1} sm={1} xs={1} style={{ display: 'flex', alignItems: 'center' }}> 
-                                    <Checkbox sx={{color: '#f18b72', '&.Mui-checked': {color: '#E74C3C'}}} />
-                                </Grid>
-                                <Grid item md={11} sm={11} xs={10}>
-                                    <Typography 
-                                    // className="text" 
-                                    id="signupcheck"
-                                    >
-                                        Sign up as restaurant manager
-                                    </Typography>
-                                </Grid>
-                            </Grid> */}
                             <Button 
                                 variant="contained" 
                                 type="submit" 
@@ -338,10 +339,9 @@ export default function SignUp(){
                             </Button>
                         </form> 
                         <Typography
-                            style={{fontSize: '0.9em', marginTop:'-20%'}}
                             className="already"
                         >
-                            Already have an account? <Link to="/login" className="link" id="login">Log in</Link>
+                            Already have an account? <Link to="/login" className="link">Log in</Link>
                         </Typography>
                     </Box>
                 </Container>

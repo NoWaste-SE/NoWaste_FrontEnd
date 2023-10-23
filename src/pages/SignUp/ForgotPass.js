@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import './Login-Signup.css'
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -30,69 +30,65 @@ const theme = createTheme({
             }
         }
     }
-})
+});
 
 export default function ForgotPass(){
-
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [token, setToken] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [validInputs, setValidInputs] = useState(false);
     const [open, setOpen] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [openNetwork, setOpenNetwork] = useState(null);
-
-
+    const history = useHistory();
+    
     const handleEmail = (e) => {
         setEmail(e.target.value);
         if(!/\S+@\S+\.\S+/.test(e.target.value) || e.target.value.trim().length === 0)   {
             setEmailError(true);
-        } else{
+        } else {
             setEmailError(false);
         }
     };
-
 
     const handleNewPassword = (e) => {
         setNewPassword(e.target.value);
     };
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
+
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
         
     const handleClose = () => {
         setOpen(false);
-    }
+    };
 
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
         setHeight();
-    }
+    };
 
     useEffect(() => {
         setHeight();
     }, [open]);
+
     useEffect(() => {
         setHeight();
     }, [openNetwork]);
 
-    const [validInputs, setValidInputs] = useState(false);
     useEffect(() => {
         let isValid = email.trim().length > 0 && !emailError && newPassword.trim().length >0;
         setValidInputs(isValid);
     }, [email, newPassword]);
     
-
-    function setHeight() {
-        // const box = document.querySelector('.box-forgot');
-        
+    function setHeight() {        
         const box = document.querySelector('.box');
         const boxHeight = box.offsetHeight;
-        // const image = document.querySelector('.desktop');
         
         const image = document.querySelector('.background');
         image.style.height = `${boxHeight}px`;
@@ -102,11 +98,11 @@ export default function ForgotPass(){
         setHeight(); 
         window.addEventListener('resize', setHeight);
         window.onpopstate = () => {
-          setHeight();
+            setHeight();
         };
         return () => {
-          window.removeEventListener('resize', setHeight);
-          window.onpopstate = null;
+            window.removeEventListener('resize', setHeight);
+            window.onpopstate = null;
         };
     }, []);
 
@@ -114,26 +110,24 @@ export default function ForgotPass(){
         localStorage.setItem('token', JSON.stringify(token));
         localStorage.setItem('email', JSON.stringify(email));
     }, [token, email]);
-
-    const history = useHistory();
     
     useEffect(() => {
         if(alertMessage !== "" && alertSeverity !== ""){
             if(alertSeverity === "success"){
                 toast.success(alertMessage, {
-                            position: toast.POSITION.TOP_CENTER,
-                            title: "Success",
-                            autoClose: 7000,
-                            pauseOnHover: true,
-                        });
+                                position: toast.POSITION.TOP_CENTER,
+                                title: "Success",
+                                autoClose: 7000,
+                                pauseOnHover: true
+                            });
             } else {
                 toast.error(alertMessage, {
-                            position: toast.POSITION.TOP_CENTER,
-                            title: "Error",
-                            autoClose: 3000,
-                            pauseOnHover: true
-                        });
-            }
+                                position: toast.POSITION.TOP_CENTER,
+                                title: "Error",
+                                autoClose: 3000,
+                                pauseOnHover: true
+                            });
+            };
             setAlertMessage("");
             setAlertSeverity("");
         }
@@ -143,63 +137,54 @@ export default function ForgotPass(){
         e.preventDefault();
         const userData = {
             email: email
-            };
-            axios.post("http://188.121.124.63/user/forgot-password/", userData, {headers:{"Content-Type" : "application/json"}})
-            .then((response) => {
-                console.log(response);
-                    setAlertMessage("We've just sent you an email including your new password. Enter your new password to continue.");
-                    setAlertSeverity("success");
-            })
-            .catch((error) => {
-                setAlertMessage("An error occured. Please try agian later.");
-                setAlertSeverity("error");
-                if (error.response) {
-                    console.log(error.response);
-                    console.log("server responded");
-                } 
-                else if (error.request) {
-                    console.log("network error");
-                    console.log(error);
-                } 
-                else {
-                    console.log(error);
-                }
-            });
+        };
+        axios.post("http://188.121.124.63/user/forgot-password/", 
+            userData, 
+            {headers:{"Content-Type" : "application/json"}}
+        )
+        .then(() => {
+            setAlertMessage("We've just sent you an email including your new password. Enter your new password to continue.");
+            setAlertSeverity("success");
+        })
+        .catch((error) => {
+            setAlertMessage("An error occured. Please try agian later.");
+            setAlertSeverity("error");
+            if (error.response) {
+                setOpen(true);
+            } 
+            else if (error.request) {
+                setOpenNetwork(true);
+            } 
+            else {
+                console.log(error);
+            }
+        });
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const userData = {
             code: newPassword,
             email: email
         };
-        console.log(userData);
-        axios.post("http://188.121.124.63/user/fp-verify/", userData, {headers:{"Content-Type" : "application/json"}})
+        axios.post("http://188.121.124.63/user/fp-verify/", 
+            userData, 
+            {headers:{"Content-Type" : "application/json"}}
+        )
         .then((response) => {
-            console.log(response);
-            console.log(response.data.token);
             setToken(response.data.token);
-            console.log(token);
             history.push('./new-password')
         })
         .catch((error) => {
-            console.log(newPassword);
-            console.log(email);
             if (error.response) {
-                console.log(error.response);
-                console.log("server responded");
                 setOpen(true);
-                console.log(error);
             } 
             else if (error.request) {
                 setOpenNetwork(true);
-                console.log("network error");
             } 
-            // else {
-            //     setOpen(true);
-            //     console.log(error);
-            // }
         });    
     };
+
     return ( 
         <ThemeProvider theme={theme}>
             <div className="root">
@@ -207,30 +192,44 @@ export default function ForgotPass(){
                     <div >
                         <ToastContainer />
                     </div>
-
                     <img
-                        // className="desktop"
                         className="background"
-                        src="/ff.jpg"
+                        src="/Reset-Pass.jpg"
                         alt="NoWaste"
                     />
-                    <Box className="box"
-                    // className="box-forgot"
-                    >
-                        <Typography variant="h5" 
+                    <Box className="box">
+                        <Typography 
+                            variant="h5" 
                             color="textPrimary"
                             gutterBottom
-                            className="forgot-title"
-                            style={{fontWeight: 'bold', fontSize: '23px'}}
+                            className="text"
+                            id="forgotpassword"
                         >
                             Forgot Your Password?
                         </Typography>
-                        <form noValidate autoComplete="off" style={{textAlign: 'center'}}>
-                            {open && <Alert severity="error" open={open} onClose={handleClose} className="alert-error" variant="outlined">
+                        <form 
+                            noValidate 
+                            className="form"
+                        >
+                            {open && 
+                                <Alert 
+                                    className="alert-error" 
+                                    variant="outlined"
+                                    severity="error" 
+                                    open={open} 
+                                    onClose={handleClose} 
+                                >
                                     Incorrect code!
                                 </Alert>
                             }
-                            {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error filed">
+                            {openNetwork && 
+                                <Alert 
+                                    className="alert-error" 
+                                    variant="outlined" 
+                                    severity="error" 
+                                    open={openNetwork} 
+                                    onClose={handleCloseNetwork} 
+                                >
                                     Network error!
                                 </Alert>
                             } 
@@ -244,21 +243,31 @@ export default function ForgotPass(){
                                 onChange={handleEmail}
                                 error={emailError}
                                 helperText={ 
-                                    <div className="error" id="forget">
+                                    <div 
+                                        className="error" 
+                                        id="forget"
+                                    >
                                         {emailError && "Email is invalid!"}
                                     </div>
                                 }
                                 InputProps={{
                                     startAdornment: (
-                                        <InputAdornment position="start">
+                                        <InputAdornment 
+                                            position="start"
+                                        >
                                             <Icon>
                                                 <EmailIcon />
                                             </Icon> 
                                         </InputAdornment>
                                     ),
                                     endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton onClick={handleClick} disabled={emailError || email.length ===0}>
+                                        <InputAdornment 
+                                            position="end"
+                                        >
+                                            <IconButton 
+                                                onClick={handleClick} 
+                                                disabled={emailError || email.length ===0}
+                                            >
                                                 <SendIcon />
                                             </IconButton>
                                         </InputAdornment>
@@ -276,14 +285,18 @@ export default function ForgotPass(){
                                 type= {showPassword ? 'text' : 'password'}
                                 InputProps={{
                                     startAdornment: (
-                                        <InputAdornment position="start">
+                                        <InputAdornment 
+                                            position="start"
+                                        >
                                             <Icon>
                                                 <SyncLockIcon />
                                             </Icon> 
                                         </InputAdornment>
                                     ),
                                     endAdornment: (
-                                        <InputAdornment position="end">
+                                        <InputAdornment 
+                                            position="end"
+                                        >
                                             <IconButton 
                                                 aria-label="toggle password visibility"
                                                 onClick={handleClickShowPassword}
@@ -308,14 +321,18 @@ export default function ForgotPass(){
                             </Button>
                         </form> 
                         <Typography 
-                            style={{fontSize: '0.9em'}}
                             className="already"
                         >
-                        <Link to="/login" className="link">Back to login</Link>
+                            <Link 
+                                to="/login" 
+                                className="link"
+                            >
+                                Back to login
+                            </Link>
                         </Typography>
                     </Box>
                 </Container>
             </div>
         </ThemeProvider>
     )
-}
+};

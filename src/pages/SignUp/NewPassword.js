@@ -26,10 +26,9 @@ const theme = createTheme({
             }
         }
     }
-})
+});
 
 export default function NewPassword(){
-
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -37,6 +36,7 @@ export default function NewPassword(){
     const [passwordError, setPasswordError] = useState(false);
     const [validInputs, setValidInputs] = useState(false);
     const [openNetwork, setOpenNetwork] = useState(null);
+    const history = useHistory();
 
     const handleChangePassword = (e) => {
         setPassword(e.target.value);
@@ -46,44 +46,45 @@ export default function NewPassword(){
             setPasswordError(false)
         }
     };
+
     const handleChangeConfirmPass = (e) => {
         const value = e.target.value;
         setConfirmPassword(value);
     };
+    
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
         setHeight();
-    }
+    };
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         const userData = {
             password: password,
             email: JSON.parse(localStorage.getItem('email'))
         };
-        console.log(userData);
-        axios.post("http://188.121.124.63/user/fp-newpassword/", userData, {headers:{"Content-Type" : "application/json"}})
-        .then((response) => {
-            console.log(response);
-            console.log(response.data.token);
+
+        axios.post("http://188.121.124.63/user/fp-newpassword/", 
+                    userData, 
+                    {headers:{"Content-Type" : "application/json"}}
+        )
+        .then(() => {
             history.push('./login')
         })
         .catch((error) => {
-            if (error.response) {
-                console.log(error.response);
-                console.log("server responded");
-            } 
-            else if (error.request) {
+            if (error.request) {
                 setOpenNetwork(true);
-                console.log("network error");
             } 
             else {
                 console.log(error);
             }
         });   
-    }
+    };
+
     useEffect(() => {
         setPasswordMatch(password === confirmPassword);
     }, [confirmPassword]);
+
     useEffect(() => {
         setHeight();
     }, [openNetwork]);
@@ -92,16 +93,14 @@ export default function NewPassword(){
         let isValid = !passwordError && passwordMatch && password.trim().length > 0 && confirmPassword.trim().length > 0;
         setValidInputs(isValid);
     }, [passwordError, passwordMatch, password, confirmPassword]);
-    function setHeight() {
-        // const box = document.querySelector('.box-forgot');
-        
+
+    function setHeight() {        
         const box = document.querySelector('.box');
         const boxHeight = box.offsetHeight;
-        // const image = document.querySelector('.desktop');
         
         const image = document.querySelector('.background');
         image.style.height = `${boxHeight}px`;
-    }
+    };
 
     useEffect(() => {
         setHeight(); 
@@ -114,7 +113,6 @@ export default function NewPassword(){
           window.onpopstate = null;
         };
     }, []);
-    const history = useHistory();
 
     return ( 
         <ThemeProvider theme={theme}>
@@ -122,20 +120,34 @@ export default function NewPassword(){
                 <Container className="container">
                     <img
                         className="background"
-                        src="/ff.jpg"
+                        src="/Reset-Pass.jpg"
                         alt="NoWaste"
                     />
-                    <Box className="box">
-                        <Typography variant="h5" 
+                    <Box 
+                        className="box"
+                    >
+                        <Typography 
+                            variant="h5" 
                             color="textPrimary"
                             gutterBottom
                             className="text"
-                            style={{fontWeight: 'bold', padding:'10px'}}
+                            id="reset-pass"
                         >
                             Reset your password
                         </Typography>
-                        <form noValidate autoComplete="off" style={{textAlign: 'center'}}>
-                            {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error filed">
+                        <form 
+                            noValidate 
+                            autoComplete="off" 
+                            className="form"
+                        >
+                            {openNetwork && 
+                                <Alert 
+                                    severity="error" 
+                                    open={openNetwork} 
+                                    onClose={handleCloseNetwork} 
+                                    variant="outlined" 
+                                    className="alert-error"
+                                >
                                     Network error!
                                 </Alert>
                             } 
@@ -186,7 +198,7 @@ export default function NewPassword(){
                                                 <LockOpenIcon />
                                             </Icon> 
                                         </InputAdornment>
-                                    ),
+                                    )
                                 }}
                             />
                             <Button 
@@ -194,14 +206,12 @@ export default function NewPassword(){
                                 type="submit"
                                 required
                                 className="field"
-                                // style={{marginTop : '5%'}}
-                                id = "submit"
+                                id="submit"
                                 disabled={!validInputs}
                                 onClick={handleSubmit}
                             >
                                 Save
                             </Button>
-
                         </form>
                     </Box>
                 </Container>

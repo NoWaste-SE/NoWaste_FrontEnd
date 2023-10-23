@@ -27,10 +27,9 @@ const theme = createTheme({
             }
         }
     }
-})
+});
 
 export default function Login(){
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
@@ -42,6 +41,7 @@ export default function Login(){
     const [validInputs, setValidInputs] = useState(false);
     const [open, setOpen] = useState(null);
     const [openNetwork, setOpenNetwork] = useState(null);
+    const history = useHistory();
     
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -66,7 +66,7 @@ export default function Login(){
         const boxHeight = box.offsetHeight;
         const image = document.querySelector('.background');
         image.style.height = `${boxHeight}px`;
-    }
+    };
 
     useEffect(() => {
         setHeight(); 
@@ -84,22 +84,27 @@ export default function Login(){
         localStorage.setItem('token', JSON.stringify(token));
         console.log(token);
     }, [token]);
+
     useEffect(() => {
         localStorage.setItem('email', JSON.stringify(email));
         console.log(email);
     }, [email]);
+
     useEffect(() => {
         localStorage.setItem('id', JSON.stringify(id));
         console.log(id);
     }, [id]);
+
     useEffect(() => {
         localStorage.setItem('wallet_balance', JSON.stringify(wallet_balance));
         console.log(wallet_balance);
     }, [wallet_balance]);
+
     useEffect(() => {
         localStorage.setItem('role', JSON.stringify(role));
         console.log(role);
     }, [role]);
+
     useEffect(() => {
         localStorage.setItem('list_of_favorites_res', JSON.stringify(list_of_favorites_res));
         console.log(list_of_favorites_res);
@@ -117,50 +122,42 @@ export default function Login(){
     useEffect(() => {
         setHeight();
     }, [open]);
+
     useEffect(() => {
         setHeight();
     }, [openNetwork]);
 
-    const history = useHistory();
     const handleSubmit = (e) => {
         e.preventDefault();
         const userData = {
             password: password,
             email: email
-            };
-            console.log(userData);
-            axios.post("http://188.121.124.63/user/login/", userData, {headers:{"Content-Type" : "application/json"}})
-            .then((response) => {
-                console.log(response);
-                setToken(response.data.token);
-                setId(response.data.id);
-                setWallet_balance(response.data.wallet_balance);
-                setRole(response.data.role);
-                setList_of_favorites_res(response.data.list_of_favorites_res);
-                console.log(token);
-                console.log(id);
-                if (response.data.role === "customer")
-                    history.push("/homepage-customer");
-                else
-                    history.push("/homepage-restaurant");
-            })
-            .catch((error) => {
-                if (error.response) {
-                    console.log(error.response);
-                    console.log("server responded");
-                    setOpen(true);
-                    console.log(error);
-                } 
-                else if (error.request) {
-                    setOpenNetwork(true);
-                    console.log("network error");
-                } 
-                // else {
-                //     setOpen(true);
-                //     console.log(error);
-                // }
-            });
         };
+        axios.post("http://188.121.124.63/user/login/", 
+                    userData, 
+                    {headers:{"Content-Type" : "application/json"}}
+        )
+        .then((response) => {
+            setToken(response.data.token);
+            setId(response.data.id);
+            setWallet_balance(response.data.wallet_balance);
+            setRole(response.data.role);
+            setList_of_favorites_res(response.data.list_of_favorites_res);
+            if (response.data.role === "customer")
+                history.push("/homepage-customer");
+            else
+                history.push("/homepage-restaurant");
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response);
+                setOpen(true);
+            } 
+            else if (error.request) {
+                setOpenNetwork(true);
+            }
+        });
+    };
     
     return ( 
         <ThemeProvider theme={theme}>
@@ -168,7 +165,7 @@ export default function Login(){
                 <Container className="container">
                     <img
                         className="background"
-                        src="/3.jpg"
+                        src="/Signup-Login.jpg"
                         alt="NoWaste"
                         borderRadius="25px"
                     />
@@ -177,16 +174,34 @@ export default function Login(){
                             color="textPrimary"
                             gutterBottom
                             className="text"
-                            style={{fontWeight: 'bold', fontSize: '30px', marginTop:'20%'}}
+                            id="login"
                         >
                             Login 
                         </Typography>
-                        <form noValidate autoComplete="off" style={{textAlign: 'center'}}>
-                            {open && <Alert severity="error" open={open} onClose={handleClose} variant="outlined" className="alert-error filed">
+                        <form 
+                            noValidate 
+                            autoComplete="off" 
+                            className="form"
+                        >
+                            {open && 
+                                <Alert 
+                                    severity="error" 
+                                    open={open} 
+                                    onClose={handleClose} 
+                                    variant="outlined" 
+                                    className="alert-error"
+                                >
                                     Incorrect email address or password!
                                 </Alert>
                             } 
-                            {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error filed">
+                            {openNetwork && 
+                                <Alert 
+                                    severity="error" 
+                                    open={openNetwork} 
+                                    onClose={handleCloseNetwork} 
+                                    variant="outlined" 
+                                    className="alert-error"
+                                >
                                     Network error!
                                 </Alert>
                             } 
@@ -198,7 +213,6 @@ export default function Login(){
                                 className="field"
                                 value={email}
                                 onChange={handleEmail}
-                                
                                 style={{marginBottom: '10%'}}
                                 InputProps={{
                                     startAdornment: (
@@ -258,7 +272,6 @@ export default function Login(){
                             <Button 
                                 variant="contained" 
                                 type="submit" 
-                                // color="primary"
                                 className="field"
                                 id="submit"
                                 onClick={handleSubmit}
@@ -268,10 +281,9 @@ export default function Login(){
                             </Button>
                         </form> 
                         <Typography 
-                            style={{marginBottom: '5%', fontSize: '0.9em'}}
                             className="already"
                         >
-                            Don't have an account? <Link to="/sign-up" className="link" id="signup">Sign up</Link>
+                            Don't have an account? <Link to="/sign-up" className="link">Sign up</Link>
                         </Typography>
                     </Box>
                 </Container>

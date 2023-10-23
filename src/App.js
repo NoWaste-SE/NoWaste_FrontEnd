@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Route} from 'react-router-dom'
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
-import ForgotPass from './pages/ForgotPass'
-import Verification from './pages/Verification';
+import Login from './pages/SignUp/Login';
+import SignUp from './pages/SignUp/SignUp';
+import ForgotPass from './pages/SignUp/ForgotPass'
+import Verification from './pages/SignUp/Verification';
+import NewPassword from './pages/SignUp/NewPassword';
 import HomePage  from './pages/Homepage';
 import Landing from './pages/Landing/Landing';
 import { SpinningBubbles } from "react-loading";
 import { useEffect, useState } from 'react';
 import RestaurantView from './pages/Restaurant-View';
 import EditProfile from './pages/EditProfile';
-import NewPassword from './pages/NewPassword';
 import HomepageCustomer from './pages/HomepageCustomer';
 import OrderPage from './pages/OrderPage';
 import EditRestaurant from './pages/EditRestaurant';

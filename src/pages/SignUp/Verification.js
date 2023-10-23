@@ -6,7 +6,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Alert } from "@mui/material";
 
-
 const theme = createTheme({
     palette: {
         primary: {
@@ -29,14 +28,13 @@ const theme = createTheme({
 })
 
 export default function Verification(){
-
     const [code, setCode] = useState('');
     const [codeError, setCodeError] = useState(false);
     const [email, setEmail] = useState([]);
     const [validInputs, setValidInputs] = useState(false);
     const [open, setOpen] = useState(null);
     const [openNetwork, setOpenNetwork] = useState(null);
-
+    const history = useHistory();
 
     const handleCode = (e) => {
         setCode(e.target.value);
@@ -45,7 +43,7 @@ export default function Verification(){
         } else {
             setCodeError(false);
         }
-    }
+    };
 
     useEffect(() => {
         let isValid = !codeError;
@@ -57,16 +55,16 @@ export default function Verification(){
         const boxHeight = box.offsetHeight;
         const image = document.querySelector('.background');
         image.style.height = `${boxHeight}px`;
-    }
+    };
 
     const handleClose = () => {
         setOpen(false);
-    }
+    };
 
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
         setHeight();
-    }
+    };
 
     useEffect(() => {
         setHeight();
@@ -76,17 +74,13 @@ export default function Verification(){
         setHeight();
     }, [openNetwork]);
 
-    const history = useHistory();
-
     useEffect(() => {
         const email = JSON.parse(localStorage.getItem('email'));
         if (email) {
             setEmail(email);
             console.log(email);
-        }
-    }, []);
+        };
 
-    useEffect(() => {
         setHeight(); 
         window.addEventListener('resize', setHeight);
         window.onpopstate = () => {
@@ -107,27 +101,20 @@ export default function Verification(){
             role: JSON.parse(localStorage.getItem("role")),
             password: JSON.parse(localStorage.getItem("password"))
         };
-        axios.post("http://188.121.124.63/user/verify-email/", userData, {headers:{"Content-Type" : "application/json"}})
-        .then((response) => {
-            console.log(response);
+        axios.post("http://188.121.124.63/user/verify-email/", 
+                    userData, 
+                    {headers:{"Content-Type" : "application/json"}}
+        )
+        .then(() => {
             history.push("/homepage-customer");
         })
         .catch((error) => {
             if (error.response) {
-                console.log(error.response);
-                console.log("server responded");
                 setOpen(true);
-                console.log(error);
             } 
             else if (error.request) {
                 setOpenNetwork(true);
-                console.log("network error");
-                console.log(error);
             } 
-            // else {
-            //     setOpen(true);
-            //     console.log(error);
-            // }
         });
     };
 
@@ -137,7 +124,7 @@ export default function Verification(){
                 <Container className="container">
                     <img
                         className="background"
-                        src="/f2.jpg"
+                        src="/Verification.jpg"
                         alt="NoWaste"
                     />
                     <Box className="box">
@@ -145,21 +132,38 @@ export default function Verification(){
                             color="textPrimary"
                             gutterBottom
                             className="text"
-                            style={{fontWeight: 'bold', fontSize: '30px'}}
+                            id="verification"
                         >
                             Verification
                         </Typography>
                         <Typography 
-                            className="verification"
+                            className="verification-detail"
                         >
                             Enter the verification code we just sent you on your email address.
                         </Typography>
-                        <form noValidate autoComplete="off" style={{textAlign: 'center'}}>
-                            {open && <Alert severity="error" open={open} onClose={handleClose} className="alert-error" variant="outlined">
+                        <form 
+                            noValidate 
+                            className="form"
+                        >
+                            {open && 
+                                <Alert 
+                                    severity="error" 
+                                    open={open} 
+                                    onClose={handleClose} 
+                                    className="alert-error" 
+                                    variant="outlined"
+                                >
                                     Incorrect code!
                                 </Alert>
                             }
-                            {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error filed">
+                            {openNetwork && 
+                                <Alert 
+                                    severity="error" 
+                                    open={openNetwork} 
+                                    onClose={handleCloseNetwork} 
+                                    className="alert-error"
+                                    variant="outlined" 
+                                >
                                     Network error!
                                 </Alert>
                             } 
@@ -199,13 +203,7 @@ export default function Verification(){
                             >
                                 Verify code
                             </Button>
-                        </form> 
-                        <Typography 
-                            style={{fontSize: '1em'}}
-                            className="text"
-                        >
-                        {/* <Link to="/" className="link-pass">Resend code?</Link> */}
-                        </Typography>
+                        </form>
                     </Box>
                 </Container>
             </div>
