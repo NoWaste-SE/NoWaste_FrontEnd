@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import './EditProfile.css';
 import HeaderRestaurant from '../components/HeaderRestaurant';
 import axios from "axios";
@@ -760,7 +760,7 @@ function EditRestaurant(props){
                                 {open && <Alert severity="error" open={open} onClose={handleClose} className="image-alert" variant="outlined" >
                                             File size is too large.
                                         </Alert>
-                                } */}
+                                } 
                                 <input
                                     accept="image/*"
                                     id="profile-image-input-restaurant"
