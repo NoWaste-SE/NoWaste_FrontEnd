@@ -147,7 +147,7 @@ function Map(props) {
         <Button className='confirm-btn' onClick={handleSaveClick}>Confirm</Button>
       </div>
       {open && <Alert severity="error" open={open} onClose={handleClose} className="alert-error" variant="outlined"> An error occurde!</Alert>}
-      {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error filed"> Network error! </Alert>} 
+      {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error"> Network error! </Alert>} 
     </div>
   );
 }
