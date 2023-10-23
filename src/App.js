@@ -6,7 +6,7 @@ import SignUp from './pages/SignUp';
 import ForgotPass from './pages/ForgotPass'
 import Verification from './pages/Verification';
 import HomePage  from './pages/Homepage';
-import Landing from './pages/Landing';
+import Landing from './pages/Landing/Landing';
 import Routing from './pages/Routing';
 import { SpinningBubbles } from "react-loading";
 import { useEffect, useState } from 'react';
