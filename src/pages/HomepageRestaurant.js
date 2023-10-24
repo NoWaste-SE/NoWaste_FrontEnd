@@ -47,6 +47,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddPagination from '../components/Pagination';
 import Pagination from '@mui/material/Pagination';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const useStyles = makeStyles({
     ul: {
@@ -221,6 +222,8 @@ function HomepageRestaurant(props){
     const classesStyle = useStyles();
     const [page, setPage] = useState(1);
     const PER_PAGE = 6;
+    const [loading, setLoading] = useState(false);
+
     const handleShow = (res) => {
         history.push(`edit-restaurant/${id}/restaurants/${res.id}`);
     };
@@ -297,7 +300,7 @@ function HomepageRestaurant(props){
     }, [newAddress, newName, newDiscount, newPhone]);
 
     useEffect(() =>{
-        console.log("i'm here to get the restaurants.");
+        setLoading(true);
         axios.get(
             `http://188.121.124.63/restaurant/managers/${id}/restaurants/` , 
             {headers :{
@@ -310,9 +313,13 @@ function HomepageRestaurant(props){
         .then((response) => {
             console.log(response);
             setRestaurants(response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
-    },[]);
+        .catch((error) => {
+            console.log(error.response);
+            setLoading(false);
+        });
+        },[])
     const _DATA = AddPagination(restaurants, PER_PAGE);
     const handlePagination = (e, p) => {
         setPage(p);
@@ -534,9 +541,15 @@ function HomepageRestaurant(props){
                     </Box>
                 </Modal>
             </div>      
-            {/* <Grid container spacing={1} sx={{ paddingBottom:"1px"}} className='grid-homepage-restaurant'> */}
-                {/* <Grid item md={12}> */}
-                {restaurants && restaurants.length > 0 ? ( 
+            
+            {loading ? (
+                <PulseLoader
+                type="bars"
+                color="black"
+                speedMultiplier={1}
+                className="spinner"
+                />
+                ) : restaurants.length > 0 ? ( 
                     <Masonry style={{paddingLeft: "0%", marginLeft: "5%"}} breakpointCols={breakpoints}>
                         {_DATA.currentData() && _DATA.currentData().map((res, index) => (
                             <div key={index} onClick={() => handleEdit(res)}>
@@ -628,7 +641,7 @@ function HomepageRestaurant(props){
                         <img src='/oops!.png' alt="No menu available" className="food-image-restaurant-view" />
                         <h2 className="no-menu-message">No restaurant is added yet.</h2>
                         </div>        
-                    )}     
+                    )} 
                 <Box justifyContent='center' alignItems='center' display='flex' 
                     sx={{
                     position: "fixed",
