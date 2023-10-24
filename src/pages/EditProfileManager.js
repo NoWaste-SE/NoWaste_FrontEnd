@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Avatar, Box, Button, createTheme, FormControl, Grid, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
 import './EditProfile.css';
 import HeaderRestaurant from '../components/HeaderRestaurant';
-import './Login-Signup.css';
+import './SignUp/Login-Signup.css';
 import './Restaurant-View.css';
 import PhoneInput from 'material-ui-phone-number';
 import 'react-phone-input-2/lib/style.css';
