@@ -90,7 +90,7 @@ const RestaurantCard = (props) => {
                             </Typography>
                         </Grid>
                         <Grid item sx={{ display: 'flex', alignItems: 'center', mt: '-5px' }}>
-                            <Rating defaultValue={props.rate} precision={0.5} readOnly size="small" />
+                            <Rating value={props.rate} precision={0.5} readOnly size="small" />
                         </Grid>
                     </Grid>
                     <Typography className="description-homepage-customer" color="text.secondary">{props.number}</Typography>
