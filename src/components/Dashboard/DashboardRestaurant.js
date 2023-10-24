@@ -244,7 +244,7 @@ export default function DashboardRestaurant(){
                                                 </>
                                             )}
                                         </TableCell>
-                                        <TableCell onClick={() => handleSort('customer-name')}>
+                                        <TableCell onClick={() => handleSort('customer_name')}>
                                             Customer name
                                             {sortConfig.field === 'customer-name' && (
                                                 <>
