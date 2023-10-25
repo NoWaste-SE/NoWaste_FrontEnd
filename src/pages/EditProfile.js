@@ -1,16 +1,14 @@
 import React, { useEffect, useState,  useCallback } from "react";
-import { Avatar, Box, Button, createTheme, Divider, FormControl, Grid, Icon, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField, ThemeProvider, Typography, withStyles } from "@material-ui/core";
+import { Avatar, Box, Button, createTheme, Divider, Grid, Icon, IconButton, InputAdornment, MenuItem, TextField, ThemeProvider, Typography, withStyles } from "@material-ui/core";
 import './EditProfile.css';
 import HeaderCustomer from '../components/HeaderCustomer';
 import './SignUp/Login-Signup.css';
 import './Restaurant-View.css';
-// import PhoneInput from 'react-phone-input-2';
 import PhoneInput from 'material-ui-phone-number';
 import 'react-phone-input-2/lib/style.css';
 import { DatePicker } from '@mui/x-date-pickers'
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import AdapterDayjs from '@date-io/dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import axios from "axios";
@@ -19,16 +17,14 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Footer from "../components/Footer";
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert } from "@mui/material";
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Map from "../components/Map/Map";
 import Modal from '@mui/material/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CloseIcon from '@mui/icons-material/Close';
 import getCroppedImg from "../components/cropImage";
 import Cropper from "react-easy-crop";
-
 
 const style = {
     position: "absolute",
@@ -52,7 +48,7 @@ const styles = theme => ({
       ...theme.typography.body1,
       width : "100px",
     },
-  });
+});
 const theme = createTheme({
     palette: {
         primary: {
@@ -61,29 +57,20 @@ const theme = createTheme({
         secondary: {
             main: '#a44704',
         }
-    },
-    // overrides: {
-    //     MuiFormLabel: {
-    //         asterisk: {
-    //             color: '#db3131',
-    //             '&$error': {
-    //             color: '#db3131'
-    //             }
-    //         }
-    //     }
-    // }
+    }
 })
+
 function getRandomColor() {
     const colors = ['#FFA600', '#fff2bf', '#ffe480', '#a2332a' , '#E74C3C' , '#690000' , '#595959', '#3e3e3e' , '#C6C6C6', '#ABABAB', '#B9B9B9'];
     return colors[Math.floor(Math.random() * colors.length)];
 }
+
 function Edit(props){
     const { value, defaultCountry, onChange, classes } = props;
     const [fullname, setFullname] = useState('');
     const [fullnameError, setFullnameError] = useState(false);
     const [gender, setGender] = useState('');
     const [dob, setDob] = useState(null);
-    // const [emailError, setEmailError] = useState(false);
     const [color, setColor] = useState(localStorage.getItem('avatarColor') || getRandomColor());
     const [update, setUpdate] = useState('');
     const [phone, setPhone] = useState('');
@@ -124,6 +111,10 @@ function Edit(props){
     const [img, setImg] = useState(undefined);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [croppedImage, setCroppedImage] = useState(null);
+    const history = useHistory();
+    const [showMap, setShowMap] = useState(false);
+    const [blurBackground, setBlurBackground] = useState(false);
+
     const showCroppedImage = useCallback(async () => {
         try {
           setOpenImg(false);
@@ -139,6 +130,7 @@ function Edit(props){
           console.error(e);
         }
       }, [croppedAreaPixels]);
+
       const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
       }, []);
@@ -151,12 +143,12 @@ function Edit(props){
         document.getElementById("photoInput").value = null;
       }, []);
     
-      const handleCloseImg = (event, reason) => {
+    const handleCloseImg = (event, reason) => {
         if (reason === "clickaway") {
-          return;
+            return;
         }
         onClose();
-      };
+    };
 
     const handleFullname = (e) => {
         setFullname(e.target.value);
@@ -167,14 +159,7 @@ function Edit(props){
             setFullnameError(false);
         }
     };
-    // const handleEmail = (e) => {
-    //     // setData({...data, email: e.target.value})
-    //     if(!/[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(e.target.value)) {
-    //         setEmailError(true);
-    //     } else{
-    //         setEmailError(false);
-    //     }
-    // }
+
     useEffect(() => {
         if(!localStorage.getItem('avatarColor')) {
             localStorage.setItem('avatarColor', color);
@@ -184,26 +169,30 @@ function Edit(props){
     useEffect(() => {
         localStorage.setItem('lat', lat);
         localStorage.setItem('long', lng);
-    }, [lat,lng])
+    }, [lat,lng]);
 
     const handlePhoneChange = (value) => {
         setUpdate({...update, phone_number : value});
         localStorage.setItem('phone', value);
         setPhone(value);
     };
+
     const handleBirthdate = (date) => {
         setDob(date);
         console.log(data.date_of_birth);
         const formattedDate = dayjs(date).format('YYYY-MM-DD');
         setUpdate({...update, date_of_birth : formattedDate});
     };
+
     const handleGender = (e) => {
         setGender(e.target.value);
         setUpdate({...update, gender: e.target.value});
     };
+
     const handleCity = (e) => {
         setCity(e.target.value);
     };
+
     const handleCountry = (e) => {
         setCountry(e.target.value);
         
@@ -212,9 +201,11 @@ function Edit(props){
     const handleAddress = (e) => {
         setAddress(e.target.value);
     };
+
     const handlePassword = (e) => {
         setPassword(e.target.value);
     };
+
     const handlenewPassword = (e) => {
         setNewPassword(e.target.value);
         if(e.target.value.length < 8 || !/[a-zA-Z]+/.test(e.target.value)){
@@ -223,12 +214,15 @@ function Edit(props){
             setNewPasswordError(false);
         }
     };
+
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value);
     };
+
     useEffect(() => {
         setNewPasswordMatch(newPassword === confirmPassword);
     }, [newPassword, confirmPassword]);
+
     useEffect(() => {
         const temp = address + ',' + city + ',' + country;
         setUpdate({...update, address : temp})
@@ -239,7 +233,7 @@ function Edit(props){
     };
 
     useEffect(() => {
-        if(alertMessage !== "" && alertSeverity !== ""){
+        if(alertMessage !== "" && alertSeverity !== "") {
             if(alertSeverity === "success"){
                 toast.success(alertMessage, {
                             position: toast.POSITION.BOTTOM_LEFT,
@@ -295,7 +289,7 @@ function Edit(props){
     //getting the lt and lng of map
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/${id}/lat_long/` , 
+            `http://188.121.124.63/user/${id}/lat_long/`, 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -304,9 +298,7 @@ function Edit(props){
             }}
         )
         .then((response) => {
-            console.log("got Lat and Lng!");
             const data = response.data;
-            console.log(data);
             setLat(data.lat);
             setLng(data.lon);
         })
@@ -317,12 +309,12 @@ function Edit(props){
         const userData = {
             name: country
         };
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        console.log(userData);
-        axios.post("http://188.121.124.63/user/cities-of-country/", userData, {headers:{"Content-Type" : "application/json"}})
+        axios.post(
+            "http://188.121.124.63/user/cities-of-country/", 
+            userData, 
+            {headers:{"Content-Type" : "application/json"}}
+        )
         .then((response) => {
-            console.log("Here to add cities");
-            console.log(response);
             setCities(response.data);
         })
         .catch((error) => console.log(error));
@@ -330,37 +322,27 @@ function Edit(props){
     
     useEffect(() => {
         setFullname(data.name);
-    }, [data.name]);
-
-    useEffect(() => {
         setProfileImg(data.customer_img);
-    }, [data.customer_img]);
-
-    useEffect(() => {
         setGender(data.gender);
-    }, [data.gender]);
-
-    useEffect(() => {
         setDob(data.date_of_birth);
-    }, [data.date_of_birth]);
-
-    useEffect(() => {
         const arr = data?.address?data?.address.split(","):"";
         setCountry(arr[2])
         setCity(arr[1]);
         setAddress(arr[0]);
-    }, [data.address]);
+    }, [data]);
 
-    const history = useHistory();
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
     };
+
     const handleCloseWrongPass = () => {
         setOpenWrongPass(false);
     };
+
     const handleClose = () => {
         setOpen(false);
     };
+
     const handleProfileImg = (e) => {
         const file = e.target.files[0];
         const fileSize = file.size;
@@ -368,45 +350,45 @@ function Edit(props){
             setOpen(true);
             e.target.value = null;
             setProfileImg(null);
-            console.log("bish az max");
             return;
         } else{
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = () => {
                 setProfileImg(reader.result);
-                console.log("the result image is :   " + reader.result);
-                console.log("ok")
-                console.log(profileImg);
-                console.log("profile image is" + profileImg);
                 setUpdate({...update, customer_img: reader.result});
             };
         }
-        // console.log(profileImg);
-        // console.log("profile image is" + profileImg);
-        // setUpdate({...update, customer_img: profileImg});
     };
     
     useEffect(() => {
         let valid = !fullnameError && !newPasswordError && newPasswordMatch
-                    // && password.trim().length > 0 && newPassword.trim().length > 0 && confirmPassword.trim().length > 0;
         setValidInputs(valid);
     }, [fullnameError, password, newPasswordError, confirmPasswordError, newPasswordMatch]);
 
-    const handleClickShowCurrentPassword = () => setShowCurrentPassword(!showCurrentPassword);
+    const handleClickShowCurrentPassword = () => 
+        setShowCurrentPassword(!showCurrentPassword);
+
     const handleMouseDownCurrentPassword = (event) => {
         event.preventDefault();
     };
-    const handleClickShowNewPassword = () => setShowNewPassword(!showNewPassword);
+
+    const handleClickShowNewPassword = () => 
+        setShowNewPassword(!showNewPassword);
+
     const handleMouseDownnewPassword = (event) => {
         event.preventDefault();
     };
-    const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
+    const handleClickShowConfirmPassword = () => 
+        setShowConfirmPassword(!showConfirmPassword);
+
     const handleMouseDownconfirmPassword = (event) => {
         event.preventDefault();
     };
 
     const firstChar = data?.name?data.name.charAt(0) : "UN";
+
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
@@ -418,21 +400,15 @@ function Edit(props){
                 'Authorization' : "Token " + token.slice(1,-1)   
             }}
         )
-        .then((response)=> {
-            console.log(response);
-            console.log("succesfully updated");
+        .then(()=> {
             setAlertMessage("Profile updated successfully!");
             setAlertSeverity("success");
-            // window.location.reload(false);
         })
         .catch((error) => {
-            console.log(error)
             if (error.request) {
-                // setOpenNetwork(true);
                 setAlertMessage("Network error! Please try again later.");
                 setAlertSeverity("error");
-                console.log("network error");
-            }else{
+            } else {
                 setAlertMessage("A problem has been occured! Please try again later.");
                 setAlertSeverity("error");
             }
@@ -440,10 +416,10 @@ function Edit(props){
 
         if(newPassword && password && confirmPassword)
         {
-            console.log("coming");
             e.preventDefault();
             axios.patch(
-                `http://188.121.124.63/user/change_password/${id}/`, {"old_password": password, "password": newPassword, "password2": confirmPassword},
+                `http://188.121.124.63/user/change_password/${id}/`, 
+                {"old_password": password, "password": newPassword, "password2": confirmPassword},
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
@@ -451,38 +427,27 @@ function Edit(props){
                     'Authorization' : "Token " + token.slice(1,-1)   
                 }}
             )
-            .then((response)=> {
-                console.log(response);
-                console.log("succesfully updated password");
+            .then(()=> {
                 window.location.reload(false);
             })
             .catch((error) => {
-                console.log(error);
                 if (error.response) {
                     setOpenWrongPass(true);
-                    console.log("wrong password");
                 } else if (error.request){
                     setOpenNetwork(true);
-                    console.log("network error");
                 }
             });
         }
-    }
+    };
 
     const handleDiscard = () => {
         window.location.reload(false);
-    }
-
-    const [showMap, setShowMap] = useState(false);
-    const [blurBackground, setBlurBackground] = useState(false);
+    };
     
     const handleOpenMap = () => {
         setShowMap(true);
         setBlurBackground(true);
-        console.log(mylocation);
-        console.log(id);
-        console.log(role);
-      };
+    };
           
     const handleCloseMap = () => {
         setShowMap(false);
@@ -493,35 +458,41 @@ function Edit(props){
         <ThemeProvider theme={theme}>
             <div className="edit-back">
                 <HeaderCustomer/>
-                <div className={`container ${blurBackground ? 'blur-background' : ''}`}>
+                <div 
+                    className={`container ${blurBackground ? 'blur-background' : ''}`}
+                >
                     <div>
                         <ToastContainer />
                     </div>
-                    <Grid container spacing={2} className="edit-grid">
+                    <Grid container spacing={2} 
+                        className="edit-grid"
+                    >
                         <Grid item md={3} sm={12} xs={12}>
-                            <Box className="edit-box">
-                                <Typography variant="h5" 
+                            <Box 
+                                className="edit-box"
+                            >
+                                <Typography 
+                                    variant="h5" 
                                     color="textPrimary"
                                     gutterBottom
                                     className="edit-title"
-                                    // style={{fontWeight: 'bold', fontSize: '30px'}}
                                 >
                                     Profile Picture
                                 </Typography>
                                 <Avatar
                                     className="edit-avatar"
-                                    style={{backgroundColor: color, fontSize:"40px"}}
+                                    style={{backgroundColor: color}}
                                     src={croppedImage}
                                 >
                                     {firstChar}
                                 </Avatar>
-                                {/* <Typography className="text-above-upload">
+                                <Typography className="text-above-upload">
                                     JPG or PNG no larger than 5 MB
-                                </Typography> */}
-                                {/* {openImg && <Alert severity="error" open={openImg} onClose={handleCloseImg} className="image-alert" variant="outlined" >
+                                </Typography>
+                                {openImg && <Alert severity="error" open={openImg} onClose={handleCloseImg} className="image-alert" variant="outlined" >
                                             File size is too large.
                                         </Alert>
-                                } */}
+                                }
                                 <input
                                     accept="image/*"
                                     id="contained-button-file-customer"
@@ -530,15 +501,21 @@ function Edit(props){
                                     MAX_FILE_SIZE={MAX_FILE_SIZE}  
                                     onClick={(e) => {
                                         onClose();
-                                      }}
-                                      onChange={(e) => {
+                                    }}
+                                    onChange={(e) => {
                                         const [file] = e.target.files;
                                         setImg(file);
                                         setOpenImg(true);
-                                      }}                 
+                                    }}                 
                                 />
-                                <label htmlFor="contained-button-file-customer" className="input-label">
-                                    <Button className="upload-button" component="span">
+                                <label 
+                                    htmlFor="contained-button-file-customer" 
+                                    className="input-label"
+                                >
+                                    <Button 
+                                        className="upload-button" 
+                                        component="span"
+                                    >
                                         Upload new image
                                     </Button>
                                 </label>
@@ -552,66 +529,47 @@ function Edit(props){
                             sx={{ margin: 10 }}
                         >
                             <Box sx={style}>
-                            <div className="App">
-                                <div className="crop-container">
-                                <Cropper
-                                    image={img ? URL.createObjectURL(img) : null}
-                                    crop={crop}
-                                    zoom={zoom}
-                                    aspect={1}
-                                    onCropChange={setCrop}
-                                    onCropComplete={onCropComplete}
-                                    onZoomChange={setZoom}
-                                />
+                                <div className="App">
+                                    <div className="crop-container">
+                                        <Cropper
+                                            image={img ? URL.createObjectURL(img) : null}
+                                            crop={crop}
+                                            zoom={zoom}
+                                            aspect={1}
+                                            onCropChange={setCrop}
+                                            onCropComplete={onCropComplete}
+                                            onZoomChange={setZoom}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-
-                            <Divider
-                                sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                position: "absolute",
-                                width: "100%",
-                                top: 50,
-                                }}
-                            ></Divider>
-                            <Divider
-                                sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                position: "absolute",
-                                width: "100%",
-                                bottom: 50,
-                                }}
-                            ></Divider>
-                            <div
-                                style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                position: "absolute",
-                                bottom: 5,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                left: "50%",
-                                transform: "translate(-50%, 0%)",
-                                width: "90%",
-                                }}
-                            >
-                                <Button
-                                onClick={showCroppedImage}
-                                variant="contained"
-                                style={{ backgroundColor: 'green' , fontFamily:'Montserrat' , fontWeight:'bold'}}
+                                <Divider
+                                    className="crop-divider"
+                                    id="top"
+                                />
+                                <Divider
+                                    className="crop-divider"
+                                    id="bottom"
+                                />
+                                <div
+                                    className="crop-buttons"
                                 >
-                                Apply cutting
-                                </Button>
-                                <Button
-                                onClick={onClose}
-                                variant="contained"
-                                style={{ backgroundColor: 'red' , marginLeft:'3%' , fontFamily:'Montserrat', fontWeight:'bold'}}
-                                >
-                                dissuassion
-                                </Button>
-                            </div>
+                                    <Button
+                                        onClick={showCroppedImage}
+                                        variant="contained"
+                                        className="edit-save-changepass-button edit-button crop"
+                                        // style={{ backgroundColor: 'green' , fontFamily:'Montserrat' , fontWeight:'bold'}}
+                                    >
+                                        Apply cutting
+                                    </Button>
+                                    <Button
+                                        onClick={onClose}
+                                        variant="contained"
+                                        className="edit-discard-button edit-button crop"
+                                        // style={{ backgroundColor: 'red' , marginLeft:'3%' , fontFamily:'Montserrat', fontWeight:'bold'}}
+                                    >
+                                        Discard
+                                    </Button>
+                                </div>
                             </Box>
                         </Modal>
                         <Grid item md={9} sm={12} xs={12}>
@@ -967,9 +925,11 @@ function Edit(props){
                                             </Button>
                                         </Grid>
                                         <Grid item>
-                                            <Button className="edit-save-changepass-button edit-button"  variant="contained" onClick={handleUpdate}
+                                            <Button 
+                                                className="edit-save-changepass-button edit-button"  
+                                                variant="contained" 
+                                                onClick={handleUpdate}
                                                 disabled={!validInputs}
-                                                // style={{marginRight: "-2%"}}
                                             >
                                                 Save changes
                                             </Button>

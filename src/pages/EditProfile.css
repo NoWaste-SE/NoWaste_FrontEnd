@@ -71,6 +71,7 @@
     width: 150px !important;
     transition-duration: 0.4s;
     height: 150px !important;
+    font-size: 40px !important;
 }
 .edit-avatar:hover{
     transform: scale(1.1);
@@ -263,6 +264,36 @@
 /* .css-1hg4bil-MuiInputBase-root-MuiOutlinedInput-root{
     color: #E74C3C !important;
 } */
+.crop-divider {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 100% !important;
+}
+
+.crop-divider#top {
+    top: 50 !important;
+}
+
+.edit-button.crop {
+    margin-bottom: -60px !important;
+    width: 40% !important;
+}
+.crop-divider#bottom {
+    bottom: 50 !important;
+}
+
+.crop-buttons {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 5px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    left: 50% !important;
+    transform: translate(-50%, 0) !important;
+    width: 90% !important;
+}
 @media (max-width: 600px) {
     /* .MuiDatePicker-root {
         margin-top: 0;
