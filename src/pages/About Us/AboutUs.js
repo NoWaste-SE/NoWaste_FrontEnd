@@ -7,12 +7,10 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Footer from '../components/Footer';
-import Stack from '@mui/material/Stack';
+import Footer from '../../components/Footer';
 import "./AboutUs.css";
-import HeaderCustomer from "../components/HeaderCustomer";
+import HeaderCustomer from "../../components/HeaderCustomer";
 import { Grid } from "@material-ui/core";
-import { useEffect } from "react";
 
 const steps = [
     {

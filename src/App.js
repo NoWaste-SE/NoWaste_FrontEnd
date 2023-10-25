@@ -19,7 +19,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import DashboardRestaurant from './components/Dashboard/DashboardRestaurant';
 import Map from './components/Map/Map';
 import Chat from './pages/RestaurantChats';
-import AboutUs from './pages/AboutUs';
+import AboutUs from './pages/About Us/AboutUs';
 
 function App() {
   const [loading, setLoading] = useState(true);
