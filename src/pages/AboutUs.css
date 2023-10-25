@@ -1,9 +1,36 @@
-.custom-step-icon,
-.custom-step-icon-active {
+.about-us-title {
+    color: #E74C3C;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: bolder !important;
+    text-align: center !important;
+    margin: 20px 0 !important;
+}
+
+.about-us-description {
+    display: flex;
+    justify-content: space-around !important; 
+    margin: 0 5vw !important;
+    width: auto !important;
+}
+
+.about-us-description .image {
+    width: 110% !important;
+    height: auto !important;
+    border-radius: 7%;
+    margin-left: 10px !important;
+}
+
+.about-us-steps {
+    margin: auto;
+    max-width: 350px !important;
+}
+
+.custom-step-icon {
     color: #FFA600 !important;
 }
 
-.about-us-continue-button{
+.about-us-button {
     background-color: #E74C3C !important;
     text-transform: none !important;
     font-size: 14px;
@@ -12,125 +39,35 @@
     border-radius: 70px;
     color: black !important;
 }
-.about-us-continue-button:hover{
+
+.about-us-continue-button:hover {
     transform: scale(1.01);
 }
-.about-us-title{
-    color: #E74C3C;
-    font-family: 'Montserrat', sans-serif !important;
-    margin: 2%;
+
+.about-us-member {
+    height: 100% !important;
+    margin: -100px auto 50px !important;
 }
 
-
-.about-us-image-title{
-    width: 37%;
-    height: 50%;
-    margin-left: 7%;
-    border-radius: 7%;
+.about-us-member .link {
+    display: block;
+    margin-top: -25%;
+    text-align: center;
+    color: #000;
+    text-decoration: none;
 }
 
-.about-us-team-top{
-    display: flex;
-    justify-content: space-around !important; 
-    justify-content: center;
-    margin-top: 2%;
-    margin-bottom: -23%;
+.about-us-member .link:hover {
+    color: #FFA600 !important;
+    text-decoration: none !important; 
 }
 
-.about-us-team-bottom{
-    display: flex;
-    justify-content: space-around !important; 
-    justify-content: center;
-    margin-top: 2%;
-    margin-bottom: -10%;
-}
-
-.about-us-helia{
-    width: 97%;
-    height: 41%;
-    border-radius: 50%;
-}
-
-.about-us-setareh{
-    width: 97%;
-    height: 41%;
-    clip-path: ellipse(35% 49% at 62% 49%);
-    margin-left: -22%;
-}
-
-.about-us-haniye{
-    width: 97%;
+.about-us-member img {
+    width: 100%;
     height: 40%;
-    border-radius: 50%;
+    clip-path: ellipse(30% 30%);
 }
 
-.about-us-negin{
-    width: 97%;
-    height: 49%;
-    border-radius: 50%;
-    margin-left: 21%;
+.niyayesh {
+    clip-path: ellipse(30% 29%) !important;
 }
-
-.about-us-link-negin{
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    color: #000;
-    text-decoration: none;
-    margin-left: 37%;
-}
-
-.about-us-niayesh{
-    width: 97%;
-    height: 49%;
-    border-radius: 50%;
-    /* clip-path: ellipse(35% 49% at 62% 49%); */
-}
-
-.about-us-golbarg{
-    width: 97%;
-    height: 49%;
-    clip-path: ellipse(35% 49% at 62% 49%);
-}
-
-.about-us-link-golbarg{
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    color: #000;
-    text-decoration: none;
-    margin-left: 21%;
-}
-
-.about-us-image-container {
-    text-align: center;
-    margin-bottom: -10%;
-}
-
-/* .about-us-helia {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-  } */
-
-.about-us-link {
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    color: #000;
-    text-decoration: none;
-}
-
-.about-us-link:hover{
-    color: #FFA600;
-}
-
-.about-us-stack{
-    display: flex;
-    justify-content: space-around !important; 
-    margin-left: 3%;
-    margin-right: 3%;
-    margin-bottom: -26%;
-}
-
