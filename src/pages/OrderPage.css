@@ -178,4 +178,10 @@
 .blur-background {
     filter: blur(4px);
 }
-  
+
+.spinner-orderpage {
+    display: flex !important;
+    justify-content: center ;
+    align-items: center ;
+    margin: auto !important;
+}

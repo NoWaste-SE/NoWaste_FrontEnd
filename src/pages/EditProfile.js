@@ -28,6 +28,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import getCroppedImg from "../components/cropImage";
 import Cropper from "react-easy-crop";
+import PulseLoader from "react-spinners/PulseLoader";
 
 
 const style = {
@@ -124,6 +125,7 @@ function Edit(props){
     const [img, setImg] = useState(undefined);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [croppedImage, setCroppedImage] = useState(null);
+    const [loading, setLoading] = useState(true);
     const showCroppedImage = useCallback(async () => {
         try {
           setOpenImg(false);
@@ -274,8 +276,12 @@ function Edit(props){
         .then((response) => {
             console.log(response);
             setData(response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            setLoading(true);
+            console.log(error);
+        });
     },[]);
 
     useEffect(() =>{
@@ -497,6 +503,15 @@ function Edit(props){
                     <div>
                         <ToastContainer />
                     </div>
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="edit-spinner"
+                        
+                        />
+                    ) : ( 
                     <Grid container spacing={2} className="edit-grid">
                         <Grid item md={3} sm={12} xs={12}>
                             <Box className="edit-box">
@@ -980,6 +995,7 @@ function Edit(props){
                             </Box>
                         </Grid>
                     </Grid>
+                    )}
                 </div>
                 <Footer/>
             </div>

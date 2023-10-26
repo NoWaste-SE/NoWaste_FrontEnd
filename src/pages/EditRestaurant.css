@@ -233,3 +233,10 @@
 .blur-background {
     filter: blur(10px);
   }
+
+.edit-spinner-restaurant {
+    display: flex !important;
+    justify-content: center ;
+    align-items: center ;
+    margin: auto !important;
+}

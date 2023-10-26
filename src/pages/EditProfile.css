@@ -254,6 +254,13 @@
 .phone-input {
     color: #E74C3C !important;
 }
+
+.edit-spinner{
+    display: flex !important;
+    justify-content: center ;
+    align-items: center ;
+    margin: auto !important;
+}
 /* .MuiFormLabel-colorSecondary.Mui-focused {
     color: #E74C3C !important;
 } */
