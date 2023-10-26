@@ -192,7 +192,10 @@ function EditRestaurant(props){
         setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
-        document.getElementById("photoInput").value = null;
+        const photoInput = document.getElementById("photoInput");
+        if (photoInput) {
+            photoInput.value = null;
+        }
       }, []);
     
       const handleCloseImg = (event, reason) => {
@@ -370,7 +373,7 @@ function EditRestaurant(props){
     }, [data.date_of_establishment]);
 
     useEffect(() => {
-        setProfileImg(data.restaurant_image);
+        setCroppedImage(data.restaurant_image);
     },[data.restaurant_image]);
 
     useEffect(() => {
