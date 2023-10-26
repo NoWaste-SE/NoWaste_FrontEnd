@@ -214,7 +214,7 @@ const HomepageCustomer = () => {
             })
             .catch((error) => {
                 console.log(error.response);
-                setLoading(false);
+                setLoading(true);
             });
     },[])
     const _DATA = AddPagination(restaurant, PER_PAGE);
@@ -245,7 +245,7 @@ const HomepageCustomer = () => {
                 })
                 .catch((error) => {
                     console.log(error.response);
-                    setLoading(false);
+                    setLoading(true);
                 });
         }
         else {
@@ -264,7 +264,7 @@ const HomepageCustomer = () => {
                 })
                 .catch((error) => {
                     console.log(error.response);
-                    setLoading(false);
+                    setLoading(true);
                 });
         }
     }, [mysearch]);
@@ -298,7 +298,7 @@ const HomepageCustomer = () => {
         })
         .catch((error) => {
             console.log(error.response);
-            setLoading(false);
+            setLoading(true);
         });
     };         
     
@@ -367,7 +367,7 @@ const HomepageCustomer = () => {
         })
         .catch((error) => {
             console.log(error.response);
-            setLoading(false);
+            setLoading(true);
         });
     };
 
@@ -392,7 +392,7 @@ const HomepageCustomer = () => {
         })
         .catch((error) => {
             console.log(error.response);
-            setLoading(false);
+            setLoading(true);
         });
     };
 
@@ -417,7 +417,7 @@ const HomepageCustomer = () => {
         })
         .catch((error) => {
             console.log(error.response);
-            setLoading(false);
+            setLoading(true);
         });
     };
 
@@ -442,7 +442,7 @@ const HomepageCustomer = () => {
         })
         .catch((error) => {
             console.log(error.response);
-            setLoading(false);
+            setLoading(true);
         });
     };
 
@@ -465,7 +465,7 @@ const HomepageCustomer = () => {
         })
         .catch((error) => {
             console.log(error.response);
-            setLoading(false);
+            setLoading(true);
         });
     };
     const _DATA_FILD = AddPagination(fields, PER_PAGE);

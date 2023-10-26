@@ -317,7 +317,7 @@ function HomepageRestaurant(props){
         })
         .catch((error) => {
             console.log(error.response);
-            setLoading(false);
+            setLoading(true);
         });
         },[])
     const _DATA = AddPagination(restaurants, PER_PAGE);
