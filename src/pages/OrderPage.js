@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import {useHistory } from "react-router-dom";
 import MoneyIcon from '@mui/icons-material/Money';
 import { useParams } from 'react-router-dom';
+import PulseLoader from "react-spinners/PulseLoader";
 
 
 const theme = createTheme({
@@ -48,6 +49,7 @@ export default function OrderPage(){
     role = role.replace(/"/g, "");
     const id = localStorage.getItem("id");
     const mylocation = [lat, lng, parseInt(id), role];
+    const [loading, setLoading] = useState(true);
 
     //getting the lt and lng of map
     useEffect(() =>{
@@ -104,10 +106,12 @@ export default function OrderPage(){
                 setPrices(response.data[0].Subtotal_Grandtotal_discount);
                 console.log("prices", response.data[0].Subtotal_Grandtotal_discount);
                 setOrderId(response.data[0].id);
+                setLoading(false);
             
             })
             .catch((error) => {
             console.log(error.response);
+            setLoading(true);
             });
     },[]);
 
@@ -212,6 +216,14 @@ export default function OrderPage(){
             <div className={`container ${blurBackground ? 'blur-background' : ''}`}>
                 <ToastContainer />
                 <Grid container spacing={2} sx={{paddingBottom: "1%"}} className="orderpage-root">
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="spinner-orderpage"
+                        />
+                    ) : (
                     <Grid item lg={4} md={4} sm={12} style={{paddingLeft: "3%"}}>
                         <Box className="orderpage-box" style={{justifyContent: 'space-between'}}>
                             <Typography variant="h5"
@@ -271,6 +283,7 @@ export default function OrderPage(){
                             </Button>
                         </Box>
                     </Grid>
+                    )}
                     <Grid item lg={8} md={8} sm={12} style={{paddingLeft: "2%"}}>
                         <Box className="orderpage-box">
                             <Typography variant="h5"

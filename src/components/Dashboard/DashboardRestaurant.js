@@ -15,6 +15,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const theme = createTheme({
     palette: {
@@ -53,6 +54,7 @@ export default function DashboardRestaurant(){
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const ordersToShow = rowsWithIndex.slice(indexOfFirstOrder, indexOfLastOrder);
     const totalPages = Math.ceil(rowsWithIndex.length / ordersPerPage);
+    const [loading, setLoading] = useState(true);
 
     const [sortConfig, setSortConfig] = useState({ field: null, direction: 'asc' });
     const handleSort = (field) => {
@@ -93,8 +95,12 @@ export default function DashboardRestaurant(){
             console.log(response.data);
             setOrderHistory(response.data);
             console.log("length" + response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            setLoading(true);
+            console.log(error);
+        });
     }, []);
 
     useEffect(() => {
@@ -217,6 +223,15 @@ export default function DashboardRestaurant(){
             <div className="dashboard-back">
                 <HeaderRestaurant />
                 <h1 className='dashboard-title'>Dashboard</h1>
+                {loading ? (
+                    <PulseLoader
+                    type="bars"
+                    color="black"
+                    speedMultiplier={1}
+                    className="dashboard-spinner-manager"
+                    
+                    />
+                ) : (
                 <Grid container spacing={2} className="dashboard-grid">
                     <Grid item lg={12} md={12} sm={12} xs={12}>
                         <Box className="dashboard-box" id="order-history-box">
@@ -285,6 +300,7 @@ export default function DashboardRestaurant(){
                                         </TableCell>
                                     </TableRow>
                                     </TableHead>
+
                                     <TableBody>
                                     {sortedData.map((row) => (
                                         <TableRow key={row.order_id}
@@ -328,6 +344,7 @@ export default function DashboardRestaurant(){
                         </Box>
                     </Grid>
                 </Grid>
+                )}
                 <Footer />
             </div>
         </ThemeProvider>

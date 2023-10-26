@@ -46,6 +46,7 @@ import { deepOrange, deepPurple,grey } from '@mui/material/colors';
 import AddPagination from '../components/Pagination';
 import Pagination from '@mui/material/Pagination';
 import {makeStyles } from '@mui/styles';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const useStyles = makeStyles({
     ul: {
@@ -155,6 +156,7 @@ const RestaurantView = (props: Props) =>
     const classes = useStyles();
     const [page, setPage] = useState(1);
     const PER_PAGE = 6;
+    const [loading, setLoading] = useState(true);
 
     useEffect ( ()=>{
         console.log("restaurant is :" + restaurant);
@@ -191,9 +193,17 @@ const RestaurantView = (props: Props) =>
         .then((response) => {
             console.log("food",response);
             setMenu(response.data);
-        })
+            setLoading(false);
+
+        }).catch((error) => {
+            console.log(error);
+            setLoading(true);
+        });
+
+
+
         const fetchData = async () => {
-          try {
+        try {
             axios.get("http://188.121.124.63/restaurant/restaurant_view/" + id + '/',
             {headers: {
                 'Content-Type' : 'application/json',
@@ -361,6 +371,15 @@ const RestaurantView = (props: Props) =>
     return (
     <div className='myback'>
         <HeaderCustomer />
+        {loading ? (
+            <PulseLoader
+            type="bars"
+            color="black"
+            speedMultiplier={1}
+            className="spinner"
+            />
+        ) : (
+        <>
         <MU.Grid container spacing={2} sx={{
             paddingTop:"2%",
         }}>
@@ -540,13 +559,21 @@ const RestaurantView = (props: Props) =>
                 <h2 className="no-menu-message">No menu is available.</h2>
                 </div>
             )}
+            
+            
             </MU.Grid>
+            
             <BackToTop/>
         </MU.Grid>
+        
         <Chat reciever={managerId} sender={customer_id} restaurant={restaurant}/>
+        
         <Box justifyContent='center' alignItems='center' display='flex' sx={{margin:'20px 0px'}}>
             <Pagination count={Math.ceil(menu.length / PER_PAGE)} onChange={handlePagination} variant="outlined" classes={{ ul: classes.ul }} />
         </Box>
+        </>
+        )}
+        
         <Footer/>
 
     </div>

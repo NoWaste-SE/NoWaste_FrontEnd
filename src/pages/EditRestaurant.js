@@ -29,7 +29,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../components/cropImage";
 import Cropper from "react-easy-crop";
-
+import PulseLoader from "react-spinners/PulseLoader";
 
 const style = {
     position: "absolute",
@@ -104,6 +104,7 @@ function EditRestaurant(props){
     const [fullnameError, setFullnameError] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openButton = Boolean(anchorEl);
+    const [loading, setLoading] = useState(true);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };   
@@ -547,9 +548,13 @@ function EditRestaurant(props){
         )
         .then((response) => {
             console.log(response);
-            setData(response.data)
+            setData(response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            setLoading(true);
+            console.log(error);
+        });
     },[]);
 
     const firstChar = data?.name?data.name.charAt(0) : "UN";
@@ -740,6 +745,15 @@ function EditRestaurant(props){
                     <div >
                         <ToastContainer />
                     </div>
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="edit-spinner-restaurant"
+                        
+                        />
+                    ) : (
                     <Grid container spacing={2} className="edit-grid">
                         <Grid item md={3} sm={12} xs={12}>
                             <Box className="edit-box">
@@ -1440,6 +1454,7 @@ function EditRestaurant(props){
                             </Box>
                         </Grid>
                     </Grid> 
+                    )}
                 {/* <Chat customer={3} restaurant={idR} sender={idR}/> */}
                 </div>
                 <Footer/>

@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../components/cropImage";
 import Cropper from "react-easy-crop";
 import Modal from '@mui/material/Modal';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const style = {
     position: "absolute",
@@ -92,6 +93,7 @@ const EditProfileManager = () => {
     const [zoom, setZoom] = useState(1);
     const [img, setImg] = useState(undefined);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [croppedImage, setCroppedImage] = useState(null);
     const showCroppedImage = useCallback(async () => {
         try {
@@ -190,9 +192,13 @@ const EditProfileManager = () => {
         )
         .then((response) => {
             console.log(response);
-            setData(response.data)
+            setData(response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            setLoading(true);
+            console.log(error);
+        });
     },[]);
     
     useEffect(() => {
@@ -365,6 +371,15 @@ const EditProfileManager = () => {
                     <div >
                         <ToastContainer />
                     </div>
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="edit-spinner"
+                        
+                        />
+                    ) : ( 
                     <Grid container spacing={2} className="edit-grid">
                         <Grid item md={3} sm={12} xs={12}>
                             <Box className="edit-box">
@@ -630,6 +645,7 @@ const EditProfileManager = () => {
                             </Box>
                         </Grid>
                     </Grid>
+                    )}
                 </div> 
                 <Footer/>
             </div>
