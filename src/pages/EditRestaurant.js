@@ -192,7 +192,10 @@ function EditRestaurant(props){
         setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
-        document.getElementById("photoInput").value = null;
+        const photoInput = document.getElementById("photoInput");
+        if (photoInput) {
+            photoInput.value = null;
+        }
       }, []);
     
       const handleCloseImg = (event, reason) => {
