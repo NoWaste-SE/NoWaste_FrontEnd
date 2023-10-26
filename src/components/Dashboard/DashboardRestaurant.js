@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Box, createTheme, Grid, IconButton, Tooltip, ThemeProvider, Typography} from "@material-ui/core";
 import '../../pages/Edit Profile/EditProfile.css';
 import HeaderRestaurant from '../HeaderRestaurant';
-import '../../pages/EditRestaurant.css';
+// import '../../pages/Edit Profile/EditRestaurant.css';
 import 'react-phone-input-2/lib/style.css';
 import axios from "axios";
 import { useHistory } from "react-router-dom";

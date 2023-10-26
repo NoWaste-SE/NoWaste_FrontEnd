@@ -179,8 +179,8 @@
 }
 
 .showmenu-button {
-    width: 30%;
-    margin: 10% 35% !important;
+    width: 30% !important;
+    margin: 10px auto !important;
     background-color: #FFA600 !important;
     color: black !important;
     border-radius: 70px !important;
