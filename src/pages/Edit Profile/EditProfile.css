@@ -4,16 +4,18 @@
 .blur-background {
     filter: blur(10px);
 }
-.edit-back{
+
+.edit-back {
     background-color: #f8f8f8;
 }
+
 .edit-grid {
     width: 100% !important;
     margin-top: 3% !important;
     padding-left: 5%;
     padding-right: 5%;
-    
 }
+
 .edit-box {
     width: auto;
     margin: auto 0% auto 2%;
@@ -25,26 +27,29 @@
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
 }
-.edit-title{
+
+.edit-title {
     width: 90%;
     font-weight: bold !important;
     font-family: 'Montserrat', sans-serif !important;
     margin: 10px auto !important;
 }
+
 .edit-root {
     height: 100%;
 }
 .edit-field {
-    /* margin: 10px auto 10px auto !important; */
-    /* display: flex; */
-    /* flex-direction: column; */
     width: 100% ;
 }
-.item{
+
+.edit-field#email, .item.address {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.item {
     width: 100% !important;
-    /* margin-top: 10px !important; */
     margin-bottom: 1em !important;
-    /* margin-top: 1em !important; */
 }
 
 .edit-error {
@@ -53,18 +58,21 @@
     height: 1em;
     text-wrap: nowrap;
 }
+
 .food-error {
     font-size: 0.8em;
     line-height: 1em;
     height: 2em;
     text-wrap: nowrap;
 }
-.food-button-grid{
+
+.food-button-grid {
     justify-content: space-between;
     width: 90% !important;
     margin-top: 1% !important;
     margin-bottom: 2% !important;
 }
+
 .edit-avatar {
     margin-top: 2px;
     margin-bottom: 15px;
@@ -73,24 +81,27 @@
     height: 150px !important;
     font-size: 40px !important;
 }
-.edit-avatar:hover{
+
+.edit-avatar:hover {
     transform: scale(1.1);
     transition-duration: 0.4s;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 20px, rgba(0, 0, 0, 0.05) 0px 1px 1px;
 }
-.text-above-upload{
+
+.text-above-upload {
     color: rgb(105, 102, 102);
     font-size: 11px !important;
     font-weight: bold !important;
     font-family: 'Montserrat', sans-serif !important;
     margin-bottom: 15px !important;
 }
+
 .image-alert{
     width: 60% !important;
     margin-bottom: 15px !important;
-    /* font-size: 10px !important; */
 }
-.upload-button{
+
+.upload-button {
     width: 70%;
     background: linear-gradient(to right, #FFA600, #E74C3C);
     text-transform: none !important;
@@ -100,20 +111,24 @@
     margin-bottom: 30px !important;
     border-radius: 70px !important;
 }
-.upload-button:hover{
+
+.upload-button:hover {
     transform: scale(1.01);
     box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 }
-.edit-button-grid{
+
+.edit-button-grid {
     justify-content: space-between;
     width: 100% !important;
     margin-top: 1% !important;
     margin-bottom: 2% !important;
 }
+
 .edit-field-wrapper {
     transition: height 0.5s ease-out;
     overflow: hidden;
-  }
+}
+
 .edit-button {
     justify-content: space-between;
     width: 100%;
@@ -124,36 +139,49 @@
     font-family: 'Montserrat', sans-serif !important;
     border-radius: 70px !important;
 }
+
+#discard {
+    background-color: #E74C3C !important;
+}
+
 .edit-discard-button {
     background-color: #E74C3C !important;
 }
-.edit-discard-button:hover{
+
+.edit-discard-button:hover {
     transform: scale(1.01);
 }
-.edit-save-changepass-button{
+
+#save, #change-pass {
     background-color: #FFA600 !important;
 }
-.edit-save-changepass-button:hover{
+
+.edit-save-changepass-button {
+    background-color: #FFA600 !important;
+}
+
+.edit-save-changepass-button:hover {
     transform: scale(1.01);
 }
+
 .showmenu-button {
     width: 30%;
-    /* align-content: center; */
     margin: 10% 35% !important;
     background-color: #FFA600 !important;
     color: black !important;
     border-radius: 70px !important;
-    /* margin-bottom: 25px !important; */
 }
+
 .showmenu-button:hover {
     transform: scale(1.01);
 }
+
 .dialog-title {
-    /* justify-content: flex-end !important; */
     font-size: 14px !important;
     font-weight: bold !important;
     font-family: 'Montserrat', sans-serif !important;
 }
+
 .food-image-button {
     display: flex;
     align-items: center;
@@ -162,10 +190,9 @@
     width: 80% !important;
     margin: 10px -30px 0px;
 }
+
 .food-box {
-    /* border-color: #E74C3C !important; */
     margin: 20px auto !important;
-    /* border: #E74C3C solid 1px; */
     background-color: rgb(255, 255, 255);
     height: auto !important;
     display: flex;
@@ -174,7 +201,8 @@
     width: 96% !important;
     border-radius: 5px;
 }
-.upload-button{
+
+.upload-button {
     width: 70% !important;
     background: linear-gradient(to right, #FFA600, #E74C3C);
     text-transform: none !important;
@@ -184,36 +212,35 @@
     margin-bottom: 30px !important;
     border-radius: 70px !important;
 }
-.upload-button:hover{
+
+.upload-button:hover {
     transform: scale(1.01);
 }
+
 .hidemenu-button {
     width: 30%;
-    /* align-content: center; */
     margin: auto 35% !important;
     background-color: #E74C3C !important;
     color: black !important;
     border-radius: 70px !important;
 }
+
 .food {
     width: 90% !important;
 }
+
 .menu-box {
     margin: 20px auto !important;
-    /* margin-top: 20px;
-    margin-bottom: 20px; */
     max-height: auto;
     height: 400px !important;
     overflow-y: auto;
-    /* overflow-x: hidden; */
     width: 100% !important;
     border-radius: 13px;
     justify-content: center !important;
-    /* border: 1px solid rgb(202, 196, 195); */
     flex-direction: column;
-    /* background-color: rgba(215, 44, 6, 0.1); */
     background-color: rgba(117, 115, 111, 0.05);
 }
+
 .food-image {
     width: 90% !important;
     height: 90px !important;
@@ -222,24 +249,27 @@
     border-radius: 7px !important;
     margin-bottom: 3px;
 }
+
 .food-name {
-    /* font-weight: 900 !important; */
     width: 100% !important;
     font-size: 25px !important;
 }
+
 .food-price-menu {
     font-size: 25px !important;
-    /* margin: 20px auto !important; */
 }
+
 .food-ingredient, .food-remain-number {
     font-size: 13px !important;
     color: #524b4a;
     width: 100% !important;
 }
-.food-edit{
+
+.food-edit {
     margin: 20px !important;
     background-color: #FFA600 !important;
 }
+
 #food-edit-button {
     justify-content: center;
     text-transform: none;
@@ -248,22 +278,16 @@
     font-family: 'Montserrat', sans-serif !important;
     border-radius: 70px;
 }
+
 .input-label {
     text-align: center;
     width: 100%;
 }
+
 .phone-input {
     color: #E74C3C !important;
 }
-/* .MuiFormLabel-colorSecondary.Mui-focused {
-    color: #E74C3C !important;
-} */
-/* .MuiTextField-colorSecondary.Mui-focused{
-    color: #E74C3C !important;
-} */
-/* .css-1hg4bil-MuiInputBase-root-MuiOutlinedInput-root{
-    color: #E74C3C !important;
-} */
+
 .crop-divider {
     display: flex;
     flex-direction: row;
@@ -279,6 +303,7 @@
     margin-bottom: -60px !important;
     width: 40% !important;
 }
+
 .crop-divider#bottom {
     bottom: 50 !important;
 }
@@ -294,29 +319,56 @@
     transform: translate(-50%, 0) !important;
     width: 90% !important;
 }
-@media (max-width: 600px) {
-    /* .MuiDatePicker-root {
-        margin-top: 0;
-    } */
+@media (max-width: 576px) {
     .edit-error {
         font-size: 1em;
         line-height: 1em;
         height: 0em;
     }
+
     .item {
         margin-bottom: 0.5em !important;
         margin-top: 0.5em !important;
     }
+
+    .edit-field#email {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .item.address {
+        margin-top: 20px !important;
+    }
 }
+
 @media(min-width: 577px) and (max-width: 768px){
     .input-label {
         text-align: center;
         width: 80%;
     }    
+
+    .edit-field#email {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    .item.address {
+        margin-top: 10px !important;
+    }
 }
+
 @media(min-width: 756px) and (max-width: 960px){
     .input-label {
         text-align: center;
         width: 60%;
+    }
+
+    .edit-field#email {
+        margin-top: 0px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .item.address {
+        margin-top: 10px !important;
     }
 }

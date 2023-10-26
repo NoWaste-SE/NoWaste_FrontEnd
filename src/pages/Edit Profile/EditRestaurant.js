@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import './EditProfile.css';
-import HeaderRestaurant from '../components/HeaderRestaurant';
+import HeaderRestaurant from '../../components/HeaderRestaurant';
 import axios from "axios";
-import Footer from "../components/Footer";
+import Footer from "../../components/Footer";
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Link, useParams } from 'react-router-dom';
@@ -21,13 +21,13 @@ import { Avatar, Box, Button, createTheme, DialogContent, DialogTitle, Divider, 
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import Chat from "../components/Chat";
+import Chat from "../../components/Chat";
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import Map from "../components/Map/Map";
+import Map from "../../components/Map/Map";
 import Modal from '@mui/material/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import getCroppedImg from "../components/cropImage";
+import getCroppedImg from "../../components/cropImage";
 import Cropper from "react-easy-crop";
 
 
