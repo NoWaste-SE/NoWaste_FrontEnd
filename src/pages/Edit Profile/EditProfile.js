@@ -485,12 +485,21 @@ function Edit(props){
                                 >
                                     {firstChar}
                                 </Avatar>
-                                <Typography className="text-above-upload">
+                                <Typography 
+                                    className="text-above-upload"
+                                >
                                     JPG or PNG no larger than 5 MB
                                 </Typography>
-                                {openImg && <Alert severity="error" open={openImg} onClose={handleCloseImg} className="image-alert" variant="outlined" >
-                                            File size is too large.
-                                        </Alert>
+                                {openImg && 
+                                    <Alert 
+                                        className="image-alert" 
+                                        variant="outlined" 
+                                        severity="error" 
+                                        open={openImg} 
+                                        onClose={handleCloseImg} 
+                                    >
+                                        File size is too large.
+                                    </Alert>
                                 }
                                 <input
                                     accept="image/*"
@@ -528,8 +537,12 @@ function Edit(props){
                             sx={{ margin: 10 }}
                         >
                             <Box sx={style}>
-                                <div className="App">
-                                    <div className="crop-container">
+                                <div 
+                                    className="App"
+                                >
+                                    <div 
+                                        className="crop-container"
+                                    >
                                         <Cropper
                                             image={img ? URL.createObjectURL(img) : null}
                                             crop={crop}
@@ -555,14 +568,16 @@ function Edit(props){
                                     <Button
                                         onClick={showCroppedImage}
                                         variant="contained"
-                                        className="edit-save-changepass-button edit-button crop"
+                                        className="edit-button crop"
+                                        id="save"
                                     >
-                                        Apply cutting
+                                        Apply 
                                     </Button>
                                     <Button
                                         onClick={onClose}
                                         variant="contained"
-                                        className="edit-discard-button edit-button crop"
+                                        className="edit-button crop"
+                                        id="discard"
                                     >
                                         Discard
                                     </Button>
@@ -645,7 +660,6 @@ function Edit(props){
                                 <Grid container spacing={1} 
                                     className="edit-field"
                                     id="email"
-                                    // style={{marginTop: '10px'}}
                                 >
                                     <Grid item md={12} sm={12} xs={12}>
                                         <TextField
@@ -729,12 +743,12 @@ function Edit(props){
                                             onChange={handleCountry}
                                             SelectProps={{
                                                 MenuProps: {
-                                                PaperProps: {
-                                                    style: {
-                                                    maxHeight: '238px',
-                                                    },
-                                                },
-                                                },
+                                                    PaperProps: {
+                                                        style: {
+                                                            maxHeight: '238px',
+                                                        }
+                                                    }
+                                                }
                                             }}
                                         > 
                                             <MenuItem value="select" disabled>
@@ -742,9 +756,16 @@ function Edit(props){
                                                     Select Country
                                                 </em>
                                             </MenuItem>
-                                            {countries && countries.map((c, index) => (
-                                                <MenuItem style={{height: '40px' }} value={c}>{c}</MenuItem>
-                                            ))}
+                                            {countries && 
+                                                countries.map((c, index) => (
+                                                    <MenuItem 
+                                                        style={{height: '40px' }} 
+                                                        value={c}
+                                                    >
+                                                        {c}
+                                                    </MenuItem>
+                                                )
+                                            )}
                                         </TextField>
                                     </Grid>
                                     <Grid item xs={12} sm={6} md={6}>
@@ -783,7 +804,8 @@ function Edit(props){
                                                     >
                                                         {c}
                                                     </MenuItem>
-                                            ))}
+                                                )
+                                            )}
                                         </TextField>
                                     </Grid>
                                 </Grid>
@@ -940,7 +962,7 @@ function Edit(props){
                                     <Grid item container lg={5} md={6} sm={12}
                                         justifyContent="flex-end"
                                     >
-                                        <Grid item  >
+                                        <Grid item>
                                             <Button 
                                                 className="edit-button" 
                                                 id="discard"

@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Avatar, Box, Button, createTheme, FormControl, Grid, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
+import { Avatar, Box, Button, createTheme, Grid, Divider, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography, withStyles } from "@material-ui/core";
 import './EditProfile.css';
 import HeaderRestaurant from '../../components/HeaderRestaurant';
-// import './SignUp/Login-Signup.css';
-// import './Restaurant-View.css';
 import PhoneInput from 'material-ui-phone-number';
 import 'react-phone-input-2/lib/style.css';
 import axios from "axios";
@@ -12,7 +10,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Footer from "../../components/Footer";
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../../components/cropImage";
@@ -34,14 +32,15 @@ const style = {
 
 const styles = theme => ({
     field: {
-    margin: '10px 0',
-    width : "100px",
+        margin: '10px 0',
+        width : "100px",
     },
     countryList: {
-    ...theme.typography.body1,
-    width : "100px",
-    },
+        ...theme.typography.body1,
+        width : "100px",
+    }
 });
+
 const theme = createTheme({
     palette: {
         primary: {
@@ -51,19 +50,19 @@ const theme = createTheme({
             main: '#a44704',
         }
     }
-})
+});
+
 function getRandomColor() {
     const colors = ['#FFA600', '#fff2bf', '#ffe480', '#a2332a' , '#E74C3C' , '#690000' , '#595959', '#3e3e3e' , '#C6C6C6', '#ABABAB', '#B9B9B9'];
     return colors[Math.floor(Math.random() * colors.length)];
-}
+};
 
-const EditProfileManager = () => {
-    // const { value, defaultCountry, onChange, classes } = props;
+const EditProfileManager = (props) => {
+    const { value, defaultCountry, onChange, classes } = props;
     const [fullname, setFullname] = useState('');
     const [fullnameError, setFullnameError] = useState(false);
     const [gender, setGender] = useState('');
     const [dob, setDob] = useState(null);
-    // const [emailError, setEmailError] = useState(false);
     const [color, setColor] = useState(localStorage.getItem('avatarColor') || getRandomColor());
     const [update, setUpdate] = useState('');
     const [phone, setPhone] = useState('');
@@ -93,41 +92,42 @@ const EditProfileManager = () => {
     const [img, setImg] = useState(undefined);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [croppedImage, setCroppedImage] = useState(null);
+    const history = useHistory();
+
     const showCroppedImage = useCallback(async () => {
         try {
-          setOpenImg(false);
-          const croppedImage = await getCroppedImg(
-            URL.createObjectURL(img),
-            croppedAreaPixels,
-            0
-        );
-        setCroppedImage(croppedImage);
-        setUpdate({...update, manager_image: croppedImage});
-        console.log(croppedImage);
-        } catch (e) {
-          console.error(e);
-        }
-      }, [croppedAreaPixels]);
-      const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+            setOpenImg(false);
+            const croppedImage = await getCroppedImg(
+                URL.createObjectURL(img),
+                croppedAreaPixels,
+                0
+            );
+            setCroppedImage(croppedImage);
+            setUpdate({...update, manager_image: croppedImage});
+            console.log(croppedImage);
+            } catch (e) {
+            console.error(e);
+            }
+        }, [croppedAreaPixels]);
+
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
-      }, []);
+    }, []);
     
-      const onClose = useCallback(() => {
+    const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
         setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         document.getElementById("photoInput").value = null;
-      }, []);
+    }, []);
     
-      const handleCloseImg = (event, reason) => {
+    const handleCloseImg = (event, reason) => {
         if (reason === "clickaway") {
-          return;
+            return;
         }
         onClose();
-      };
-
-
+    };
 
     const handleFullname = (e) => {
         setFullname(e.target.value);
@@ -138,28 +138,23 @@ const EditProfileManager = () => {
             setFullnameError(false);
         }
     };
-    // const handleEmail = (e) => {
-    //     // setData({...data, email: e.target.value})
-    //     if(!/[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(e.target.value)) {
-    //         setEmailError(true);
-    //     } else{
-    //         setEmailError(false);
-    //     }
-    // }
+
     useEffect(() => {
         if(!localStorage.getItem('avatarColor')) {
             localStorage.setItem('avatarColor', color);
         }
-    }, [])
+    }, []);
 
     const handlePhoneChange = (value) => {
         setUpdate({...update, phone_number : value});
         localStorage.setItem('phone', value);
         setPhone(value);
     };
+
     const handlePassword = (e) => {
         setPassword(e.target.value);
     };
+
     const handlenewPassword = (e) => {
         setNewPassword(e.target.value);
         if(e.target.value.length < 8 || !/[a-zA-Z]+/.test(e.target.value)){
@@ -168,9 +163,11 @@ const EditProfileManager = () => {
             setNewPasswordError(false);
         }
     };
+
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value);
     };
+
     useEffect(() => {
         setNewPasswordMatch(newPassword === confirmPassword);
     }, [newPassword, confirmPassword]);
@@ -186,7 +183,6 @@ const EditProfileManager = () => {
             }}
         )
         .then((response) => {
-            console.log(response);
             setData(response.data)
         })
         .catch((error) => console.log(error));
@@ -194,21 +190,11 @@ const EditProfileManager = () => {
     
     useEffect(() => {
         setFullname(data.name);
-    }, [data.name]);
-
-    useEffect(() => {
         setProfileImg(data.manager_image);
-    }, [data.manager_image])
-
-    useEffect(() => {
         setGender(data.gender);
-    }, [data.gender]);
-
-    useEffect(() => {
         setDob(data.date_of_birth);
-    }, [data.date_of_birth]);
+    }, [data]);
 
-    const history = useHistory();
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
     };
@@ -234,27 +220,31 @@ const EditProfileManager = () => {
                 setUpdate({...update, manager_image: reader.result});
             };
         }
-        // console.log(profileImg);
     };
     
     useEffect(() => {
-        let valid = !fullnameError && !newPasswordError && newPasswordMatch
-                    // && password.trim().length > 0 && newPassword.trim().length > 0 && confirmPassword.trim().length > 0;
+        let valid = !fullnameError && !newPasswordError && newPasswordMatch;
         setValidInputs(valid);
     }, [fullnameError, password, newPasswordError, confirmPasswordError, newPasswordMatch]);
 
     const handleClickShowCurrentPassword = () => setShowCurrentPassword(!showCurrentPassword);
+
     const handleMouseDownCurrentPassword = (event) => {
         event.preventDefault();
     };
+
     const handleClickShowNewPassword = () => setShowNewPassword(!showNewPassword);
+    
     const handleMouseDownnewPassword = (event) => {
         event.preventDefault();
     };
+
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
     const handleMouseDownconfirmPassword = (event) => {
         event.preventDefault();
     };
+
     const handleReloadPage = () => {
         window.location.reload();
     };
@@ -283,6 +273,7 @@ const EditProfileManager = () => {
     }, [alertMessage, alertSeverity]);
 
     const firstChar = data?.name?data.name.charAt(0) : "UN";
+
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
@@ -294,21 +285,16 @@ const EditProfileManager = () => {
                 'Authorization' : "Token " + token.slice(1,-1)   
             }}
         )
-        .then((response)=> {
-            console.log(response);
-            console.log("succesfully updated");
+        .then(()=> {
             setAlertMessage("Profile updated successfully!");
             setAlertSeverity("success");
-            // window.location.reload(false);
         })
         .catch((error) => {
-            console.log(error)
             if (error.request) {
                 setOpenNetwork(true);
-                console.log("network error");
                 setAlertMessage("Network error! Please try again later.");
                 setAlertSeverity("error");
-            } else{
+            } else {
                 setAlertMessage("A problem has been occured! Please try again later.");
                 setAlertSeverity("error");
             }
@@ -316,7 +302,6 @@ const EditProfileManager = () => {
 
         if(newPassword && password && confirmPassword)
         {
-            console.log("coming");
             e.preventDefault();
             axios.patch(
                 `http://188.121.124.63/user/change_password/${id}/`, {"old_password": password, "password": newPassword, "password2": confirmPassword},
@@ -327,33 +312,26 @@ const EditProfileManager = () => {
                     'Authorization' : "Token " + token.slice(1,-1)   
                 }}
             )
-            .then((response)=> {
-                console.log(response);
-                console.log("succesfully updated password");
-                // window.location.reload(false);
+            .then(()=> {
                 setAlertMessage("Your password changed successfully!");
                 setAlertSeverity("success");
             })
             .catch((error) => {
-                console.log(error);
                 if (error.response) {
-                    // setOpenWrongPass(true);
                     setAlertMessage("Your current password is wrong! Please try again later.");
                     setAlertSeverity("error");
-                    console.log("wrong password");
-                } else if (error.request){
-                    // setOpenNetwork(true);
+                } else if (error.request) {
                     setAlertMessage("Network error! Please try again later.");
                     setAlertSeverity("error");
-                    console.log("network error");
                 }
             });
         }
-    }
+    };
 
     const handleDiscard = () => {
         window.location.reload(false);
-    }
+    };
+
     return ( 
         <ThemeProvider theme={theme}>
             <div className="edit-back">
@@ -362,130 +340,216 @@ const EditProfileManager = () => {
                     <div >
                         <ToastContainer />
                     </div>
-                    <Grid container spacing={2} className="edit-grid">
+                    <Grid container spacing={2} 
+                        className="edit-grid"
+                    >
                         <Grid item md={3} sm={12} xs={12}>
-                            <Box className="edit-box">
-                                <Typography variant="h5" 
+                            <Box 
+                                className="edit-box"
+                            >
+                                <Typography 
+                                    variant="h5" 
                                     color="textPrimary"
                                     gutterBottom
                                     className="edit-title"
-                                    // style={{fontWeight: 'bold', fontSize: '30px'}}
                                 >
                                     Profile Picture
                                 </Typography>
                                 <Avatar
                                     className="edit-avatar"
-                                    style={{backgroundColor: color, fontSize:"40px"}}
-                                    src={profileImg}
+                                    style={{backgroundColor: color}}
+                                    src={croppedImage}
                                 >
                                     {firstChar}
                                 </Avatar>
-                                <Typography className="text-above-upload">
+                                <Typography 
+                                    className="text-above-upload"
+                                >
                                     JPG or PNG no larger than 5 MB
                                 </Typography>
-                                {open && <Alert severity="error" open={open} onClose={handleClose} className="image-alert" variant="outlined" >
-                                            File size is too large.
-                                        </Alert>
+                                {open && 
+                                    <Alert 
+                                        className="image-alert" 
+                                        variant="outlined" 
+                                        severity="error" 
+                                        open={open} 
+                                        onClose={handleClose} 
+                                    >
+                                        File size is too large.
+                                    </Alert>
                                 }
                                 <input
                                     accept="image/*"
                                     id="contained-button-file-manager"
                                     type="file"
-                                    onChange={handleProfileImg}
                                     hidden      
-                                    MAX_FILE_SIZE={MAX_FILE_SIZE}                   
+                                    MAX_FILE_SIZE={MAX_FILE_SIZE}    
+                                    onClick={(e) => {
+                                        onClose();
+                                    }}
+                                    onChange={(e) => {
+                                        const [file] = e.target.files;
+                                        setImg(file);
+                                        setOpenImg(true);
+                                    }}                  
                                 />
-                                <label htmlFor="contained-button-file-manager" className="input-label">
-                                    <Button className="upload-button"  component="span">
+                                <label 
+                                    htmlFor="contained-button-file-manager" 
+                                    className="input-label"
+                                >
+                                    <Button 
+                                        className="upload-button" 
+                                        component="span"
+                                    >
                                         Upload new image
                                     </Button>
                                 </label>
                             </Box>
                         </Grid>
+                        <Modal
+                            open={openImg}
+                            onClose={handleCloseImg}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                            sx={{ margin: 10 }}
+                        >
+                            <Box sx={style}>
+                                <div className="App">
+                                    <div className="crop-container">
+                                        <Cropper
+                                            image={img ? URL.createObjectURL(img) : null}
+                                            crop={crop}
+                                            zoom={zoom}
+                                            aspect={1}
+                                            onCropChange={setCrop}
+                                            onCropComplete={onCropComplete}
+                                            onZoomChange={setZoom}
+                                        />
+                                    </div>
+                                </div>
+                                <Divider
+                                    className="crop-divider"
+                                    id="top"
+                                />
+                                <Divider
+                                    className="crop-divider"
+                                    id="bottom"
+                                />
+                                <div
+                                    className="crop-buttons"
+                                >
+                                    <Button
+                                        onClick={showCroppedImage}
+                                        variant="contained"
+                                        className="edit-button crop"
+                                        id="save"
+                                    >
+                                        Apply
+                                    </Button>
+                                    <Button
+                                        onClick={onClose}
+                                        variant="contained"
+                                        className="edit-button crop"
+                                        id="discard"
+                                    >
+                                        Discard
+                                    </Button>
+                                </div>
+                            </Box>
+                        </Modal>
                         <Grid item md={9} sm={12} xs={12}>
-                            <Box className="edit-box">
-                                <Typography variant="h5" 
+                            <Box 
+                                className="edit-box"
+                            >
+                                <Typography 
+                                    variant="h5" 
                                     color="textPrimary"
                                     gutterBottom
                                     className="edit-title"
-                                    // style={{fontWeight: 'bold', fontSize: '30px'}}
                                 >
                                     Account Details 
                                 </Typography>
-                                {/* <FormControl className="edit-field-manager"> */}
-                                    <Grid container spacing={2}>
-                                        {openNetwork && 
-                                                <Grid item lg={12} sm={12} md={12}>
-                                                    {openNetwork && <Alert severity="error" onClose={handleCloseNetwork} variant="outlined"> 
-                                                                        Network error!
-                                                                    </Alert>
-                                                    }
-                                                </Grid> 
-                                        }
-                                        {openWrongPass && 
-                                            <Grid item lg={12} sm={12} md={12}>
-                                                    {openWrongPass && <Alert severity="error" onClose={handleCloseWrongPass} variant="outlined">
-                                                                        Current password is wrong!
-                                                                    </Alert> 
-                                                    }                                        
-                                            </Grid>    
-                                        }
-                                        <Grid item xs={12} sm={6} md={6}>
-                                            <TextField
-                                                label="Full name"
-                                                variant="outlined"
-                                                color="secondary"
-                                                value={fullname}
-                                                onChange={handleFullname}
-                                                // style={{width: '100%'}}
-                                                className="item"
-                                                error={fullnameError}
-                                                InputLabelProps={{ shrink: true }} 
-                                                helperText={
-                                                    <div className="edit-error">
-                                                        {fullnameError && 'Your full name should have at least two words.'}
-                                                    </div>
-                                                }
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} sm={6} md={6}>
-                                            <PhoneInput
-                                                label="Phone number"
-                                                value={data.number}
-                                                defaultCountry="ir"
-                                                color="secondary"
-                                                onChange={handlePhoneChange}
-                                                InputLabelProps={{ shrink: true }} 
-                                                // inputClass={classes.field}
-                                                className="phone-input item"
-                                                // style={{width: '100%'}}
-                                                variant="outlined"
-                                                // focused={true}
-                                                inputProps={{
-                                                    maxLength: 13
-                                                }}
-                                            />
-                                        </Grid>
+                                <Grid container spacing={2}>
+                                    {openNetwork && 
+                                        <Grid item lg={12} sm={12} md={12}>
+                                            {openNetwork && 
+                                                <Alert 
+                                                    severity="error" 
+                                                    onClose={handleCloseNetwork} 
+                                                    variant="outlined"
+                                                > 
+                                                    Network error!
+                                                </Alert>
+                                            }
+                                        </Grid> 
+                                    }
+                                    {openWrongPass && 
+                                        <Grid item lg={12} sm={12} md={12}>
+                                                {openWrongPass && 
+                                                    <Alert 
+                                                        severity="error" 
+                                                        onClose={handleCloseWrongPass} 
+                                                        variant="outlined"
+                                                    >
+                                                        Current password is wrong!
+                                                    </Alert> 
+                                                }                                        
+                                        </Grid>    
+                                    }
+                                    <Grid item xs={12} sm={6} md={6}>
+                                        <TextField
+                                            label="Full name"
+                                            variant="outlined"
+                                            color="secondary"
+                                            value={fullname}
+                                            onChange={handleFullname}
+                                            className="item"
+                                            error={fullnameError}
+                                            InputLabelProps={{ shrink: true }} 
+                                            helperText={
+                                                <div className="edit-error">
+                                                    {fullnameError && 'Your full name should have at least two words.'}
+                                                </div>
+                                            }
+                                        />
                                     </Grid>
-                                {/* </FormControl> */}
-                                {/* <FormControl className="edit-field-manager"> */}
-                                <Grid container className="edit-field">
-                                    <TextField
-                                        label="Email address"
-                                        variant="outlined"
-                                        className="item"
-                                        color="secondary"
-                                        value={data.email}
-                                        InputLabelProps={{ shrink: true }}  
-                                        // disabled                          
-                                        InputProps={{
-                                            readOnly: true
-                                        }}
-                                    />
+                                    <Grid item xs={12} sm={6} md={6}>
+                                        <PhoneInput
+                                            label="Phone number"
+                                            value={data.number}
+                                            defaultCountry="ir"
+                                            color="secondary"
+                                            onChange={handlePhoneChange}
+                                            InputLabelProps={{ shrink: true }} 
+                                            inputClass={classes.field}
+                                            className="phone-input item"
+                                            variant="outlined"
+                                            inputProps={{
+                                                maxLength: 13
+                                            }}
+                                        />
+                                    </Grid>
                                 </Grid>
-                                {/* </FormControl> */}
-                                    {show && <>
-                                    {/* <FormControl className="edit-field-manager"> */}
+                                <Grid container spacing={1}
+                                    className="edit-field"
+                                    id="email"
+                                >
+                                    <Grid item md={12} sm={12} xs={12}>
+                                        <TextField
+                                            label="Email address"
+                                            variant="outlined"
+                                            className="item"
+                                            color="secondary"
+                                            value={data.email}
+                                            InputLabelProps={{ shrink: true }}  
+                                            InputProps={{
+                                                readOnly: true
+                                            }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                {show && 
+                                    <>
                                         <TextField
                                             label="Current passsword"
                                             variant="outlined"
@@ -513,117 +577,123 @@ const EditProfileManager = () => {
                                                     </InputAdornment>
                                                 )
                                             }}
-
                                         />
-                                    {/* </FormControl> */}
-
-                                    {/* <FormControl className="edit-field-manager"> */}
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={12} sm={6} md={6}>
-                                        <TextField
-                                            label="New password"
-                                            variant="outlined"
-                                            // style={{width: '100%'}}
-                                            className="item"
-                                            color="secondary"
-                                            onChange={handlenewPassword}
-                                            type= {showNewPassword ? 'text' : 'password'}
-                                            error={newPasswordError}
-                                            helperText= {
-                                                <div className="edit-error">
-                                                    {newPasswordError && 'Password must be mixture of letters and numbers.'}
-                                                </div>
-                                            }
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment position="start">
-                                                        <Icon>
-                                                            <LockIcon />
-                                                        </Icon> 
-                                                    </InputAdornment>
-                                                ),
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton 
-                                                            aria-label="toggle password visibility"
-                                                            onClick={handleClickShowNewPassword}
-                                                            onMouseDown={handleMouseDownnewPassword}
-                                                        >
-                                                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                        />
-                                        </Grid>
-                                        <Grid item xs={12} sm={6} md={6}>
-                                            <TextField
-                                                label="Confirm new password"
-                                                variant="outlined"
-                                                // style={{width: '100%'}}
-                                                className="item"
-                                                color="secondary"
-                                                onChange={handleConfirmPassword}
-                                                error={newPasswordMatch === false}
-                                                helperText={
-                                                    <div className="edit-error">
-                                                        {!newPasswordMatch && 'Password do not match!'}
-                                                    </div>
-                                                }
-                                                type= {showConfirmPassword ? 'text' : 'password'}
-                                                InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <Icon>
-                                                                <LockOpenIcon />
-                                                            </Icon> 
-                                                        </InputAdornment>
-                                                    ),
-                                                    endAdornment: (
-                                                        <InputAdornment position="end">
-                                                            <IconButton 
-                                                                aria-label="toggle password visibility"
-                                                                onClick={handleClickShowConfirmPassword}
-                                                                onMouseDown={handleMouseDownconfirmPassword}
-                                                            >
-                                                                {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                                                            </IconButton>
-                                                        </InputAdornment>
-                                                    )
-                                                }}
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12} sm={6} md={6}>
+                                                <TextField
+                                                    label="New password"
+                                                    variant="outlined"
+                                                    className="item"
+                                                    color="secondary"
+                                                    onChange={handlenewPassword}
+                                                    type= {showNewPassword ? 'text' : 'password'}
+                                                    error={newPasswordError}
+                                                    helperText= {
+                                                        <div className="edit-error">
+                                                            {newPasswordError && 'Password must be mixture of letters and numbers.'}
+                                                        </div>
+                                                    }
+                                                    InputProps={{
+                                                        startAdornment: (
+                                                            <InputAdornment position="start">
+                                                                <Icon>
+                                                                    <LockIcon />
+                                                                </Icon> 
+                                                            </InputAdornment>
+                                                        ),
+                                                        endAdornment: (
+                                                            <InputAdornment position="end">
+                                                                <IconButton 
+                                                                    aria-label="toggle password visibility"
+                                                                    onClick={handleClickShowNewPassword}
+                                                                    onMouseDown={handleMouseDownnewPassword}
+                                                                >
+                                                                    {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                                                                </IconButton>
+                                                            </InputAdornment>
+                                                        )
+                                                    }}
                                                 />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} md={6}>
+                                                <TextField
+                                                    label="Confirm new password"
+                                                    variant="outlined"
+                                                    className="item"
+                                                    color="secondary"
+                                                    onChange={handleConfirmPassword}
+                                                    error={newPasswordMatch === false}
+                                                    helperText={
+                                                        <div className="edit-error">
+                                                            {!newPasswordMatch && 'Password do not match!'}
+                                                        </div>
+                                                    }
+                                                    type= {showConfirmPassword ? 'text' : 'password'}
+                                                    InputProps={{
+                                                        startAdornment: (
+                                                            <InputAdornment position="start">
+                                                                <Icon>
+                                                                    <LockOpenIcon />
+                                                                </Icon> 
+                                                            </InputAdornment>
+                                                        ),
+                                                        endAdornment: (
+                                                            <InputAdornment position="end">
+                                                                <IconButton 
+                                                                    aria-label="toggle password visibility"
+                                                                    onClick={handleClickShowConfirmPassword}
+                                                                    onMouseDown={handleMouseDownconfirmPassword}
+                                                                >
+                                                                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                                                                </IconButton>
+                                                            </InputAdornment>
+                                                        )
+                                                    }}
+                                                    />
+                                            </Grid>
                                         </Grid>
-                                        </Grid>
-                                    {/* </FormControl> */}
                                     </>
-                                    }
-                                <Grid container spacing={2} className="edit-button-grid" wrap="nowrap">
+                                }
+                                <Grid container spacing={2} 
+                                    className="edit-button-grid" 
+                                    wrap="nowrap"
+                                >
                                     <Grid item>
-                                        <Button className="edit-save-changepass-button edit-button" variant="contained" onClick={() => setShow(prev => !prev)}>Change password </Button>
+                                        <Button 
+                                            className="edit-button" 
+                                            id="change-pass"
+                                            variant="contained" 
+                                            onClick={() => setShow(prev => !prev)}
+                                        >
+                                            Change password 
+                                        </Button>
                                     </Grid>
                                     <Grid item container lg={5} md={6} sm={12}
-                                    // style={{marginRight: "-10px"}}
                                         justifyContent="flex-end"
                                     >
-                                        <Grid item style={{paddingRight: '5px'}}>
-                                            <Button className="edit-discard-button edit-button" variant="contained" onClick={handleDiscard}
-                                                // style={{marginRight: "2%"}}
-                                                // style={{backgroundColor: '#E74C3C'}}
+                                        <Grid item>
+                                            <Button 
+                                                className="edit-button" 
+                                                id="discard"
+                                                variant="contained" 
+                                                onClick={handleDiscard}
                                             >
                                                 Discard
                                             </Button>
                                         </Grid>
                                         <Grid item>
-                                            <Button className="edit-save-changepass-button edit-button" variant="contained" onClick={handleUpdate}
+                                            <Button 
+                                                className="edit-button" 
+                                                id="save"
+                                                variant="contained" 
+                                                onClick={handleUpdate}
                                                 disabled={!validInputs}
-                                                // style={{marginRight: "-2%"}}
                                             >
                                                 Save changes
                                             </Button>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-
                             </Box>
                         </Grid>
                     </Grid>
@@ -631,7 +701,7 @@ const EditProfileManager = () => {
                 <Footer/>
             </div>
         </ThemeProvider>
-
-    );
+    )
 }
-export default EditProfileManager;
+
+export default withStyles(styles)(EditProfileManager);

@@ -38,8 +38,13 @@
 .edit-root {
     height: 100%;
 }
+
 .edit-field {
     width: 100% ;
+}
+
+.edit-field.remain-price {
+    width: 93% !important;
 }
 
 .edit-field#email, .item.address {
@@ -47,6 +52,9 @@
     margin-bottom: 10px !important;
 }
 
+.remain-price .remain, .remain-price .price {
+    width: 100% !important;
+}
 .item {
     width: 100% !important;
     margin-bottom: 1em !important;
@@ -67,7 +75,7 @@
 }
 
 .food-button-grid {
-    justify-content: space-between;
+    justify-content: space-between !important;
     width: 90% !important;
     margin-top: 1% !important;
     margin-bottom: 2% !important;
@@ -80,6 +88,12 @@
     transition-duration: 0.4s;
     height: 150px !important;
     font-size: 40px !important;
+}
+.food-avatar {
+    font-size: 40px !important;
+    width: 220px !important;
+    height: 150px !important;
+    border-radius: 5px !important;
 }
 
 .edit-avatar:hover {
@@ -174,6 +188,19 @@
 
 .showmenu-button:hover {
     transform: scale(1.01);
+}
+
+.menu {
+    justify-content: flex-end !important;
+    padding: 1px !important;
+}
+
+.menu > .add {
+    color: green !important;
+}
+
+.menu > .hide {
+    color: red !important;
 }
 
 .dialog-title {
