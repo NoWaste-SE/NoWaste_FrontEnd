@@ -8,7 +8,7 @@ import HomePage  from './pages/Homepage';
 import Landing from './pages/Landing/Landing';
 import { SpinningBubbles } from "react-loading";
 import { useEffect, useState } from 'react';
-import RestaurantView from './pages/Restaurant-View';
+import RestaurantView from './pages/Restaurant view/Restaurant-View';
 import EditProfile from './pages/Edit Profile/EditProfile';
 import HomepageCustomer from './pages/Homepage Customer/HomepageCustomer';
 import OrderPage from './pages/OrderPage';

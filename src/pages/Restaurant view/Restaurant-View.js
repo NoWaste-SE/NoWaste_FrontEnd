@@ -9,19 +9,19 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Masonry from 'react-masonry-css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import Food from '../components/Food';
-import BackToTop from '../components/BackToTop';
-import Footer from '../components/Footer';
+import Food from '../../components/Food';
+import BackToTop from '../../components/BackToTop';
+import Footer from '../../components/Footer';
 import { useHistory, useParams } from "react-router-dom";
-import HeaderCustomer from '../components/HeaderCustomer';
-import ShowComments from '../components/ShowComments';
+import HeaderCustomer from '../../components/HeaderCustomer';
+import ShowComments from '../../components/ShowComments';
 import MdPhone from '@mui/icons-material/Phone';
 import PlaceIcon from '@mui/icons-material/Place';
 import DoneIcon from '@mui/icons-material/Done';
-import Chat from '../components/Chat';
+import Chat from '../../components/Chat';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { createTheme } from '@material-ui/core';
-import AddPagination from '../components/Pagination';
+import AddPagination from '../../components/Pagination';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
