@@ -10,7 +10,7 @@ import { SpinningBubbles } from "react-loading";
 import { useEffect, useState } from 'react';
 import RestaurantView from './pages/Restaurant-View';
 import EditProfile from './pages/Edit Profile/EditProfile';
-import HomepageCustomer from './pages/HomepageCustomer';
+import HomepageCustomer from './pages/Homepage Customer/HomepageCustomer';
 import OrderPage from './pages/OrderPage';
 import EditRestaurant from './pages/Edit Profile/EditRestaurant';
 import HomepageRestaurant from './pages/HomepageRestaurant';
