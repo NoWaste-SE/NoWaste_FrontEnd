@@ -13,7 +13,7 @@ import EditProfile from './pages/Edit Profile/EditProfile';
 import HomepageCustomer from './pages/Homepage Customer/HomepageCustomer';
 import OrderPage from './pages/OrderPage';
 import EditRestaurant from './pages/Edit Profile/EditRestaurant';
-import HomepageRestaurant from './pages/HomepageRestaurant';
+import HomepageRestaurant from './pages/Homepage restaurant/HomepageRestaurant';
 import EditProfileManager from './pages/Edit Profile/EditProfileManager';
 import Dashboard from './components/Dashboard/Dashboard';
 import DashboardRestaurant from './components/Dashboard/DashboardRestaurant';
