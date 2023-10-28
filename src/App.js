@@ -4,14 +4,13 @@ import SignUp from './pages/SignUp/SignUp';
 import ForgotPass from './pages/SignUp/ForgotPass'
 import Verification from './pages/SignUp/Verification';
 import NewPassword from './pages/SignUp/NewPassword';
-import HomePage  from './pages/Homepage';
 import Landing from './pages/Landing/Landing';
 import { SpinningBubbles } from "react-loading";
 import { useEffect, useState } from 'react';
 import RestaurantView from './pages/Restaurant view/Restaurant-View';
 import EditProfile from './pages/Edit Profile/EditProfile';
 import HomepageCustomer from './pages/Homepage Customer/HomepageCustomer';
-import OrderPage from './pages/OrderPage';
+import OrderPage from './pages/Order/OrderPage';
 import EditRestaurant from './pages/Edit Profile/EditRestaurant';
 import HomepageRestaurant from './pages/Homepage restaurant/HomepageRestaurant';
 import EditProfileManager from './pages/Edit Profile/EditProfileManager';
@@ -53,9 +52,6 @@ function App() {
           </Route>
           <Route path="/verification">
               <Verification />
-          </Route>
-          <Route exact path="/homepage">
-              <HomePage />
           </Route>
           <Route exact path="/">
               <Landing/>
