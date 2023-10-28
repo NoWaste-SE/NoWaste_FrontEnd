@@ -57,8 +57,13 @@ export default function Dashboard(){
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const ordersToShow = rowsWithIndex.slice(indexOfFirstOrder, indexOfLastOrder);
     const totalPages = Math.ceil(rowsWithIndex.length / ordersPerPage);
-
     const [sortConfig, setSortConfig] = useState({ field: null, direction: 'asc' });
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [restaurantId, setRestaurantId] = useState('');
+    const [restaurantName, setRestaurantName] = useState('');
+    const [text, setText] = useState('');
+
+
     const handleSort = (field) => {
         const newSortConfig = { field, direction: 'asc' };
         if (sortConfig.field === field && sortConfig.direction === 'asc') {
@@ -66,14 +71,15 @@ export default function Dashboard(){
         }
         setSortConfig(newSortConfig);
     };
+
     const sortedData = useMemo(() => {
         if (sortConfig.field) {
             const compareFunction = (a, b) => {
                 if (a[sortConfig.field] < b[sortConfig.field]) {
-                return sortConfig.direction === 'asc' ? -1 : 1;
+                    return sortConfig.direction === 'asc' ? -1 : 1;
                 }
                 if (a[sortConfig.field] > b[sortConfig.field]) {
-                return sortConfig.direction === 'asc' ? 1 : -1;
+                    return sortConfig.direction === 'asc' ? 1 : -1;
                 }
                 return 0;
             };
@@ -83,24 +89,23 @@ export default function Dashboard(){
         }, 
     [sortConfig, ordersToShow]);
 
-
     useEffect(() => {
         console.log("favs");
         console.log(favoriteRestaurant);
     }, []);
 
     useEffect(() => {
-        axios.get(`http://188.121.124.63/restaurant/customer/${id}/orderview/`, {
-            headers: {
+        axios.get(
+            `http://188.121.124.63/restaurant/customer/${id}/orderview/`, 
+            {headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET,PATCH',
                 Authorization: 'Token ' + token.slice(1, -1),
-            },
-        })
+            }}
+        )
         .then((response) => {
-        setOrderHistory(response.data);
-        console.log('order got successfully');
+            setOrderHistory(response.data);
         })
         .catch((error) => console.log(error));
     }, []);
@@ -147,15 +152,12 @@ export default function Dashboard(){
 
     const showCancelIcon = (status) => {
         return status === 'notOrdered';
-    }
+    };
 
     const handleShowFavoriteRestaurant = (id) => {
         history.push("./restaurant-view/"+ id);
-    }
+    };
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [restaurantId, setRestaurantId] = useState('');
-    const [restaurantName, setRestaurantName] = useState('');
     const handleRowClick = (row) => {
         if (row.status === 'Completed') {
             setRestaurantId(row.restaurant_id);
@@ -176,10 +178,8 @@ export default function Dashboard(){
         p: 4,
     };
 
-    const [text, setText] = useState('');
     const handleAddtext = (e) => {
         setText(e.target.value);
-        console.log(text);
     };
     
     const handleAdd = (e) => {
@@ -187,45 +187,43 @@ export default function Dashboard(){
         const userDataComment = {
             text: text
         };
+
         const userDataRate={
             rate: value,
             name: restaurantName
         };
-        const commentPromise = axios.post(
-            `http://188.121.124.63/restaurant/comment/user_id/${id}/restaurant_id/${restaurantId}/`,
-            userDataComment,
-            {
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${token.slice(1, -1)}`
-                }
-            }
+
+        const commentPromise = 
+            axios.post(
+                `http://188.121.124.63/restaurant/comment/user_id/${id}/restaurant_id/${restaurantId}/`,
+                userDataComment,
+                {headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Token ${token.slice(1, -1)}`
+                }}
         );
 
-        const ratingPromise = axios.post(
-            `http://188.121.124.63/user/rate-restaurant/`,
-            userDataRate,
-            {
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${token.slice(1, -1)}`
-                }
-            }
+        const ratingPromise = 
+            axios.post(
+                `http://188.121.124.63/user/rate-restaurant/`,
+                userDataRate,
+                {headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Token ${token.slice(1, -1)}`
+                }}
         );
 
         Promise.all([commentPromise, ratingPromise])
             .then((responses) => {
                 const commentResponse = responses[0];
                 const ratingResponse = responses[1];
-                console.log("comment",commentResponse);
-                console.log("rating",ratingResponse);
                 window.location.reload(false);
-                })
-                .catch((error) => {
-                    if (error.response) {
+            })
+            .catch((error) => {
+                if (error.response) {
                     console.log(error.response);
-                    }
-                });
+                }
+            });
     };
 
     const handleStatus = (status) => {
@@ -240,15 +238,17 @@ export default function Dashboard(){
         const userData = {
             status:"Cancled"
         }
-        axios.put(`http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, userData,
-        {headers :{
-            'Content-Type' : 'application/json',
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Allow-Methods" : "GET,PATCH",
-            'Authorization' : "Token " + token.slice(1,-1)
-        }})
+        axios.put(
+            `http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
+            userData,
+            {headers :{
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET,PATCH",
+                'Authorization' : "Token " + token.slice(1,-1)
+            }}
+        )
         .then((response) => {
-            console.log(response);
             window.location.reload(false);
         })
         .catch((error) => {
@@ -260,12 +260,23 @@ export default function Dashboard(){
 
     return (
         <ThemeProvider theme={theme}>
-            <div className="dashboard-back">
+            <div 
+                className="dashboard-back"
+            >
                 <HeaderCustomer />
-                <h1 className='dashboard-title'>Dashboard</h1>
-                <Grid container spacing={2} className="dashboard-grid">
+                <h1 
+                    className='dashboard-title'
+                >
+                    Dashboard
+                </h1>
+                <Grid container spacing={2} 
+                    className="dashboard-grid"
+                >
                     <Grid item lg={4} md={12} sm={12} xs={12}>
-                        <Box className="dashboard-box" id="favorite-restaurants-box">
+                        <Box 
+                            className="dashboard-box" 
+                            id="favorite-restaurants-box"
+                        >
                             <Typography
                                 variant="h5" 
                                 color="textPrimary"
@@ -275,13 +286,21 @@ export default function Dashboard(){
                                 Favorite Restaurants
                             </Typography>
                             {favoriteRestaurant && favoriteRestaurant.map((res, index) => (
-                                <Box className="dashboard-restaurant-box" onClick={() => handleShowFavoriteRestaurant(res.id)}>
+                                <Box 
+                                    className="dashboard-restaurant-box" 
+                                    onClick={() => handleShowFavoriteRestaurant(res.id)}
+                                >
                                     <Grid container spacing={2}>
                                         <Grid item lg={5} md={3} sm={4} xs={4} >
-                                            <img src={res.restaurant_image} className="favorite-restaurant-image"/>
+                                            <img 
+                                                src={res.restaurant_image} 
+                                                className="favorite-restaurant-image"
+                                            />
                                         </Grid>
                                         <Grid item lg={7} md={7} sm={8} xs={8}>
-                                            <Typography className="dashboard-restaurant-name">
+                                            <Typography 
+                                                className="dashboard-restaurant-name"
+                                            >
                                                 {res.name}
                                             </Typography>
                                         </Grid>
@@ -291,7 +310,10 @@ export default function Dashboard(){
                         </Box>
                     </Grid>
                     <Grid item lg={8} md={12} sm={12} xs={12}>
-                        <Box className="dashboard-box" id="order-history-box">
+                        <Box 
+                            className="dashboard-box" 
+                            id="order-history-box"
+                        >
                             <Typography
                                 variant="h5" 
                                 color="textPrimary"
@@ -301,120 +323,178 @@ export default function Dashboard(){
                                 Order History
                             </Typography>
                             <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <Table 
+                                    sx={{ minWidth: 650 }} 
+                                    aria-label="simple table"
+                                >
                                     <TableHead>
                                     <TableRow>
-                                        <TableCell onClick={() => handleSort('name')}>
+                                        <TableCell 
+                                            onClick={() => handleSort('name')}
+                                        >
                                             Restaurant name
                                             {sortConfig.field === 'name' && (
                                                 <>
-                                                {sortConfig.direction === 'asc' ? (
-                                                    <KeyboardArrowUp style={{ fontSize: '16px', verticalAlign: 'middle' }} />
-                                                ) : (
-                                                    <KeyboardArrowDown style={{ fontSize: '16px', verticalAlign: 'middle' }} />
-                                                )}
+                                                    {sortConfig.direction === 'asc' ? (
+                                                        <KeyboardArrowUp 
+                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                        />
+                                                    ) : (
+                                                        <KeyboardArrowDown 
+                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                        />
+                                                    )}
                                                 </>
                                             )}
                                         </TableCell>
-                                        <TableCell align="left" >
+                                        <TableCell 
+                                            align="left"
+                                        >
                                             Order
                                         </TableCell>
-                                        <TableCell align="left" onClick={() => handleSort('price')}>
+                                        <TableCell 
+                                            align="left" 
+                                            onClick={() => handleSort('price')}
+                                        >
                                             Price
                                             {sortConfig.field === 'price' && (
-                                            <>
-                                            {sortConfig.direction === 'asc' ? (
-                                                <KeyboardArrowUp style={{ fontSize: '16px', verticalAlign: 'middle' }} />
-                                            ) : (
-                                                <KeyboardArrowDown style={{ fontSize: '16px', verticalAlign: 'middle' }} />
+                                                <>
+                                                    {sortConfig.direction === 'asc' ? (
+                                                        <KeyboardArrowUp 
+                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                        />
+                                                    ) : (
+                                                        <KeyboardArrowDown 
+                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }}
+                                                        />
+                                                    )}
+                                                </>
                                             )}
-                                            </>
-                                        )}
                                         </TableCell>
-                                        <TableCell align="left">
+                                        <TableCell 
+                                            align="left"
+                                        >
                                             Date
                                         </TableCell>
-                                        <TableCell align="left" onClick={() => handleSort('status')}>
+                                        <TableCell 
+                                            align="left" 
+                                            onClick={() => handleSort('status')}
+                                        >
                                             Status
                                             {sortConfig.field === 'status' && (
-                                            <>
-                                            {sortConfig.direction === 'asc' ? (
-                                                <KeyboardArrowUp style={{ fontSize: '16px', verticalAlign: 'middle' }} />
-                                            ) : (
-                                                <KeyboardArrowDown style={{ fontSize: '16px', verticalAlign: 'middle' }} />
+                                                <>
+                                                    {sortConfig.direction === 'asc' ? (
+                                                        <KeyboardArrowUp 
+                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                        />
+                                                    ) : (
+                                                        <KeyboardArrowDown 
+                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                        />
+                                                    )}
+                                                </>
                                             )}
-                                            </>
-                                        )}
                                         </TableCell>
                                     </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                    {sortedData.map((row) => (
-                                        <TableRow key={row.order_id}
-                                            // sx={{ cursor: row.status === 'Completed' ? 'pointer' : 'default',}}
-                                            tabIndex={-1}
-                                            style={{backgroundColor: getRowColor(row.status)}}
-                                            // onClick={() => handleRowClick(row)}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                            {row.name}
-                                            </TableCell>
-                                            <TableCell align="left">{row.order}</TableCell>
-                                            <TableCell align="left">{row.price}</TableCell>
-                                            <TableCell align="left">{row.date}</TableCell>
-                                            <TableCell align="left">
-                                                {handleStatus(row.status)}
-                                                {showCancelIcon(row.status) && 
-                                                    <IconButton onClick={() => handleCancleOrdering(row.order_id, row.restaurant_id)} title="Cancel order">
-                                                        <ClearIcon style={{color:'red'}}/>
-                                                    </IconButton>
-                                                }
-                                                {row.status === 'Completed' && (
-                                                <Tooltip title="Add Comment">
-                                                <IconButton onClick={(e) => {
-                                                    handleRowClick(row);
-                                                }}>
-                                                    <CommentIcon />
-                                                </IconButton>
-                                                </Tooltip>
-                                                )}
-                                            </TableCell>
-                                        </TableRow>
-                                        ))}
+                                        {sortedData.map((row) => (
+                                            <TableRow 
+                                            key={row.order_id}
+                                                tabIndex={-1}
+                                                style={{backgroundColor: getRowColor(row.status)}}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell align="left">{row.order}</TableCell>
+                                                <TableCell align="left">{row.price}</TableCell>
+                                                <TableCell align="left">{row.date}</TableCell>
+                                                <TableCell align="left">
+                                                    {handleStatus(row.status)}
+                                                    {showCancelIcon(row.status) && 
+                                                        <IconButton 
+                                                            onClick={() => handleCancleOrdering(row.order_id, row.restaurant_id)} 
+                                                            title="Cancel order"
+                                                        >
+                                                            <ClearIcon 
+                                                                style={{color:'red'}}
+                                                            />
+                                                        </IconButton>
+                                                    }
+                                                    {row.status === 'Completed' && (
+                                                        <Tooltip title="Add Comment">
+                                                            <IconButton 
+                                                                onClick={(e) => handleRowClick(row)}
+                                                            >
+                                                                <CommentIcon />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                            ))}
                                     </TableBody>
                                 </Table>
-                                {/* Pagination controls */}
-                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                                    <Pagination count={totalPages} page={currentPage} onChange={(event, page) => setCurrentPage(page)} shape="rounded"/>
+                                <div 
+                                    style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}
+                                >
+                                    <Pagination 
+                                        count={totalPages} 
+                                        page={currentPage} 
+                                        onChange={(event, page) => setCurrentPage(page)} 
+                                        shape="rounded"
+                                    />
                                 </div>
                             </TableContainer>
                         </Box>
                     </Grid>
                 </Grid>
-                <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-                    
-                    <Box sx={style} className="dashboard-comment-box">
-                    <h2 className='dashboard-title-show-comments'>Add Comment And Rate</h2>
-                    <Rating
-                        name="simple-controlled"
-                        precision={0.5}
-                        value={value}
-                        className='dashboard-rate'
-                        size="large"
-                        onChange={(event, newValue) => {
-                        setValue(newValue);
-                        }}
-                    />
-                    {/* <Rating name="read-only" value={2.5} precision={0.5} readOnly /> */}
-                    <textarea className='dashboard-textarea' onChange={handleAddtext}></textarea>
-                    <Stack direction="row" >
-                        <Button onClick={() => setIsModalOpen(false)} variant="contained" className='dashboard-btn-close'>
-                            Close
-                        </Button>
-                        <Button variant="contained" className='dashboard-btn-submit' onClick={handleAdd}>
-                            Submit
-                        </Button>
-                    </Stack>
+                <Modal 
+                    open={isModalOpen} 
+                    onClose={() => setIsModalOpen(false)} 
+                    aria-labelledby="modal-modal-title" 
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box 
+                        sx={style} 
+                        className="dashboard-comment-box"
+                    >
+                        <h2 
+                            className='dashboard-title-show-comments'
+                        >
+                            Add Comment And Rate
+                        </h2>
+                        <Rating
+                            name="simple-controlled"
+                            precision={0.5}
+                            value={value}
+                            className='dashboard-rate'
+                            size="large"
+                            onChange={(event, newValue) => setValue(newValue)}
+                        />
+                        <textarea 
+                            className='dashboard-textarea' 
+                            onChange={handleAddtext}
+                        />
+                        <Stack 
+                            direction="row"
+                        >
+                            <Button 
+                                onClick={() => setIsModalOpen(false)} 
+                                variant="contained" 
+                                className='dashboard-btn-close'
+                            >
+                                Close
+                            </Button>
+                            <Button 
+                                variant="contained" 
+                                className='dashboard-btn-submit' 
+                                onClick={handleAdd}
+                            >
+                                Submit
+                            </Button>
+                        </Stack>
                     </Box>
                 </Modal>
                 <Footer />
