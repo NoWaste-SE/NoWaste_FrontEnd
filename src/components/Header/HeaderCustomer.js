@@ -1,6 +1,6 @@
 import React, { useState, memo, useEffect } from 'react';
 import { AppBar, Toolbar, styled, Menu, Modal } from '@mui/material';
-import {useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Box, IconButton, MenuItem } from '@material-ui/core';
 import PersonIcon from '@mui/icons-material/Person';
 import './Header.css';
@@ -122,11 +122,11 @@ const HeaderCustomer = memo(() => {
     return ( 
         <>
             <AppBar 
-                sx={{position:"sticky", width:'fixed', padding: '0 !important'}} 
-                className="header-restaurant-view"
+                sx={{position:"sticky", width:'fixed', padding: '0'}} 
+                className="header"
             >
                 <Toolbar 
-                    className='toolbar-restaurant-view'
+                    className='header-toolbar'
                 >
                     <img 
                         className='logo'
@@ -161,7 +161,7 @@ const HeaderCustomer = memo(() => {
                                 aria-haspopup="true"
                                 onClick={handleMenu}
                                 color="inherit"
-                                className='last-icon-restaurant-view'
+                                className='last-icon-header'
                             >
                                 <PersonIcon 
                                     fontSize="normal"
