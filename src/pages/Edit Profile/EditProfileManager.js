@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Avatar, Box, Button, createTheme, Grid, Divider, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography, withStyles } from "@material-ui/core";
 import './EditProfile.css';
-import HeaderRestaurant from '../../components/HeaderRestaurant';
+import HeaderRestaurant from '../../components/Header/HeaderRestaurant';
 import PhoneInput from 'material-ui-phone-number';
 import 'react-phone-input-2/lib/style.css';
 import axios from "axios";

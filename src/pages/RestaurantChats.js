@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Box, TextField, Button, Typography, Avatar, Grid, Paper } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Header from "../components/Header";
+import HeaderRestaurant from "../components/Header/HeaderRestaurant";
 // import HeaderCustomer from "../components/HeaderCustomer";
-import HeaderRestaurant from "../components/HeaderRestaurant"
+// import HeaderRestaurant from "../components/HeaderRestaurant"
 import ReactScrollToBottom from "react-scroll-to-bottom";
 import './RestaurantChats.css';
 import '../components/Chat.css';

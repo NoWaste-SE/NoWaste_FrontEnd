@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Footer from '../../components/Footer';
 import "./AboutUs.css";
-import HeaderCustomer from "../../components/HeaderCustomer";
+import HeaderCustomer from "../../components/Header/HeaderCustomer";
 import { Grid } from "@material-ui/core";
 
 const steps = [

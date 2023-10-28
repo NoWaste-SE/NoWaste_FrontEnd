@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Box, Grid, Typography, createTheme, Checkbox, Modal, ThemeProvider } from "@material-ui/core";
 import './OrderPage.css';
-import HeaderCustomer from "../../components/HeaderCustomer";
+import HeaderCustomer from "../../components/Header/HeaderCustomer";
 import Footer from "../../components/Footer";
 import PlaceIcon from '@mui/icons-material/Place';
 import WalletIcon from '@mui/icons-material/Wallet';

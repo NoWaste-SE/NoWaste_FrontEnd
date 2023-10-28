@@ -7,7 +7,7 @@ import { ExpandMore, ExpandLess} from '@mui/icons-material';
 import Masonry from 'react-masonry-css';
 import BackToTop from '../../components/BackToTop';
 import Footer from '../../components/Footer';
-import HeaderCustomer from '../../components/HeaderCustomer';
+import HeaderCustomer from '../../components/Header/HeaderCustomer';
 import { ThemeProvider, makeStyles } from '@mui/styles';
 import "./HomepageCustomer.css";
 import RestaurantCard from '../../components/RestaurantCard';

@@ -13,7 +13,7 @@ import Food from '../../components/Food';
 import BackToTop from '../../components/BackToTop';
 import Footer from '../../components/Footer';
 import { useHistory, useParams } from "react-router-dom";
-import HeaderCustomer from '../../components/HeaderCustomer';
+import HeaderCustomer from '../../components/Header/HeaderCustomer';
 import ShowComments from '../../components/ShowComments';
 import MdPhone from '@mui/icons-material/Phone';
 import PlaceIcon from '@mui/icons-material/Place';

@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AccountCircle } from '@material-ui/icons';
 import PersonIcon from '@mui/icons-material/Person';
 import { useState } from 'react';
-import '../components/Header.css';
+import './Header.css';
 import Avatar from '@mui/material/Avatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';

@@ -3,7 +3,7 @@ import Masonry from 'react-masonry-css';
 import { Button, withStyles, ThemeProvider, Typography, TextField, Box, Grid, createTheme, MenuItem} from '@material-ui/core';
 import { Card, CardActionArea, CardMedia, CardContent, Chip, Rating, Modal } from '@mui/material';
 import { useHistory } from "react-router-dom";
-import HeaderRestaurant from '../../components/HeaderRestaurant';
+import HeaderRestaurant from '../../components/Header/HeaderRestaurant';
 import axios from 'axios';
 import { makeStyles } from '@mui/styles';
 import "./HomepageRestaurant.css";

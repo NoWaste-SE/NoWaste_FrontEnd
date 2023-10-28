@@ -17,7 +17,7 @@ import { Button, Card } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {useHistory } from "react-router-dom";
-import Header from '../components/Header';
+// import Header from '../components/Header';
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import PropTypes from 'prop-types';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState,  useCallback } from "react";
 import { Avatar, Box, Button, createTheme, Divider, Grid, Icon, IconButton, InputAdornment, MenuItem, TextField, ThemeProvider, Typography, withStyles } from "@material-ui/core";
 import './EditProfile.css';
-import HeaderCustomer from '../../components/HeaderCustomer';
+import HeaderCustomer from '../../components/Header/HeaderCustomer';
 import PhoneInput from 'material-ui-phone-number';
 import 'react-phone-input-2/lib/style.css';
 import { DatePicker } from '@mui/x-date-pickers'
