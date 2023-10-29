@@ -15,14 +15,14 @@ const BackToTop = () => {
                 setBackToTopButton(false);
             }
         })
-    }, [])
+    }, []);
 
     const scrollUp = () => {
         window.scrollTo({
             top:0,
             behavior: "smooth"
         })
-    }
+    };
     
     return ( 
         <div>
@@ -30,7 +30,6 @@ const BackToTop = () => {
                 <button
                     className="back-to-top"
                     onClick={scrollUp} 
-                    style={{position: "fixed", bottom: "20px", right: "20px", height: "40px", width: "40px"}}
                 >
                     <KeyboardArrowUpIcon/>
                 </button>

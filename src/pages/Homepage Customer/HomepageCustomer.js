@@ -5,7 +5,7 @@ import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import { ExpandMore, ExpandLess} from '@mui/icons-material';
 import Masonry from 'react-masonry-css';
-import BackToTop from '../../components/BackToTop';
+import BackToTop from '../../components/Back to top/BackToTop';
 import Footer from '../../components/Footer';
 import HeaderCustomer from '../../components/Header/HeaderCustomer';
 import { ThemeProvider, makeStyles } from '@mui/styles';
