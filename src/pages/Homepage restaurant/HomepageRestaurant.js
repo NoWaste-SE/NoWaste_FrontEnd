@@ -15,7 +15,7 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import Fab from '@mui/material/Fab';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AddPagination from '../../components/Pagination';
+import AddPagination from '../../components/Pagination/Pagination';
 import Pagination from '@mui/material/Pagination';
 
 const useStyles = makeStyles({

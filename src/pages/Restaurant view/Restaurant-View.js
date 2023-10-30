@@ -21,7 +21,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import Chat from '../../components/Customer chat/Chat';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { createTheme } from '@material-ui/core';
-import AddPagination from '../../components/Pagination';
+import AddPagination from '../../components/Pagination/Pagination';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({

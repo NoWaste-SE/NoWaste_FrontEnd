@@ -12,7 +12,7 @@ import { ThemeProvider, makeStyles } from '@mui/styles';
 import "./HomepageCustomer.css";
 import RestaurantCard from '../../components/RestaurantCard';
 import StarRateIcon from '@mui/icons-material/StarRate';
-import AddPagination from '../../components/Pagination'
+import AddPagination from '../../components/Pagination/Pagination'
 
 const theme = createTheme({
     palette: {
