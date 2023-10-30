@@ -3,7 +3,7 @@ import { Avatar, Box, Button, createTheme, DialogTitle, Divider, Grid, IconButto
 import './EditProfile.css';
 import HeaderRestaurant from '../../components/Header/HeaderRestaurant';
 import axios from "axios";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Footer/Footer";
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Link, useParams } from 'react-router-dom';

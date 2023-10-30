@@ -4,7 +4,7 @@ import {Box, createTheme, Grid, IconButton, Tooltip, ThemeProvider, Typography} 
 import HeaderRestaurant from '../Header/HeaderRestaurant';
 import 'react-phone-input-2/lib/style.css';
 import axios from "axios";
-import Footer from "../Footer";
+import Footer from "../Footer/Footer";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import './Dashboard.css';
 import { useMemo } from "react";

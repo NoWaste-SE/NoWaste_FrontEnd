@@ -11,7 +11,7 @@ import Masonry from 'react-masonry-css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Food from '../../components/Food card/Food';
 import BackToTop from '../../components/Back to top/BackToTop';
-import Footer from '../../components/Footer';
+import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams } from "react-router-dom";
 import HeaderCustomer from '../../components/Header/HeaderCustomer';
 import ShowComments from '../../components/ShowComments';

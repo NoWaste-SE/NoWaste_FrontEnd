@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Footer/Footer";
 import { Alert } from "@mui/material";
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Map from "../../components/Map/Map";

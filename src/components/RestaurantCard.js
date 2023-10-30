@@ -11,7 +11,7 @@ import Masonry from 'react-masonry-css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import Food from '../components/Food';
 // import BackToTop from '../components/BackToTop';
-import Footer from '../components/Footer';
+import Footer from './Footer/Footer';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import { Button, Card } from '@material-ui/core';
 import Typography from '@mui/material/Typography';

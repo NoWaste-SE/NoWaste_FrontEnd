@@ -6,7 +6,7 @@ import HeaderCustomer from '../Header/HeaderCustomer';
 import 'react-phone-input-2/lib/style.css';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Footer from "../Footer";
+import Footer from "../Footer/Footer";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from "@mui/material";
 import './Dashboard.css';
 import { useMemo } from "react";

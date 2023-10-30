@@ -7,7 +7,7 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Footer from '../../components/Footer';
+import Footer from '../../components/Footer/Footer';
 import "./AboutUs.css";
 import HeaderCustomer from "../../components/Header/HeaderCustomer";
 import { Grid } from "@material-ui/core";

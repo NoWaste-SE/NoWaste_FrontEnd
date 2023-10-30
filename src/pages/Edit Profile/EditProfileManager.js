@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Footer/Footer";
 import { Alert } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
