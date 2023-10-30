@@ -10,7 +10,7 @@ import Footer from '../../components/Footer/Footer';
 import HeaderCustomer from '../../components/Header/HeaderCustomer';
 import { ThemeProvider, makeStyles } from '@mui/styles';
 import "./HomepageCustomer.css";
-import RestaurantCard from '../../components/RestaurantCard';
+import RestaurantCard from '../../components/Restaurant card/RestaurantCard';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import AddPagination from '../../components/Pagination/Pagination'
 
