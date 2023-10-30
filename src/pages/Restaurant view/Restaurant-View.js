@@ -14,7 +14,7 @@ import BackToTop from '../../components/Back to top/BackToTop';
 import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams } from "react-router-dom";
 import HeaderCustomer from '../../components/Header/HeaderCustomer';
-import ShowComments from '../../components/ShowComments';
+import ShowComments from '../../components/Comment/ShowComments';
 import MdPhone from '@mui/icons-material/Phone';
 import PlaceIcon from '@mui/icons-material/Place';
 import DoneIcon from '@mui/icons-material/Done';
