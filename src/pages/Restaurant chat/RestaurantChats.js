@@ -8,7 +8,7 @@ import './RestaurantChats.css';
 import '../../components/Customer chat/Chat.css';
 import Divider from '@material-ui/core/Divider';
 import axios from "axios";
-import { useEffectOnce } from "../../components/useEffectOnce";
+import { useEffectOnce } from "../../components/Restaurant chat/useEffectOnce";
 
 const theme = createTheme({
     palette: {

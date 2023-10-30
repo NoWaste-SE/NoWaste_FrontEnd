@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
 export const useEffectOnce = ( effect )=> {
-
     const destroyFunc = useRef();
     const effectCalled = useRef(false);
     const renderAfterCalled = useRef(false);
@@ -11,20 +10,16 @@ export const useEffectOnce = ( effect )=> {
         renderAfterCalled.current = true;
     }
 
-    useEffect( ()=> {
-  
-        // only execute the effect first time around
+    useEffect(()=> {
         if (!effectCalled.current) { 
-          destroyFunc.current = effect();
-          effectCalled.current = true;
+            destroyFunc.current = effect();
+            effectCalled.current = true;
         }
     setVal(val => val + 1);
 
       return ()=> {
-        // if the comp didn't render since the useEffect was called,
-        // we know it's the dummy React cycle
-        if (!renderAfterCalled.current) { return; }
-        if (destroyFunc.current) { destroyFunc.current(); }
+          if (!renderAfterCalled.current) { return; }
+          if (destroyFunc.current) { destroyFunc.current(); }
       };
-  }, []);
+    }, []);
 }
