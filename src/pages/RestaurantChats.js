@@ -7,7 +7,7 @@ import HeaderRestaurant from "../components/Header/HeaderRestaurant";
 // import HeaderRestaurant from "../components/HeaderRestaurant"
 import ReactScrollToBottom from "react-scroll-to-bottom";
 import './RestaurantChats.css';
-import '../components/Chat.css';
+import '../components/Customer chat/Chat.css';
 import Divider from '@material-ui/core/Divider';
 import axios from "axios";
 import { useEffectOnce } from "../components/useEffectOnce";

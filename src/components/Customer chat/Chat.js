@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Fab from '@mui/material/Fab';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import './Chat.css'
@@ -10,15 +10,10 @@ import Typography from '@mui/material/Typography';
 import SendIcon from '@mui/icons-material/Send';
 import { Grid } from '@mui/material';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import CloseIcon from '@mui/icons-material/Close';
-// import {w3websocket} from "websocket";
-import {useRef } from "react";
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ReactScrollToBottom from "react-scroll-to-bottom";
-import { useEffectOnce } from './useEffectOnce';
+import { useEffectOnce } from '../useEffectOnce';
 import axios from 'axios';
 import { Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -41,24 +36,23 @@ const Chat = (props) => {
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [data, setData] = useState('');
+    const [client, setClient] = useState(null);
     const manager_id = props.reciever;
     const customer_id = props.sender;
     console.log("manager id is as shw" + manager_id + " " + customer_id);
     let room_name = customer_id + "_" + manager_id;
 
     useEffect(() => {
-        console.log(`link is http://188.121.124.63/chat/room/${customer_id}/${manager_id}/`);
-        console.log(manager_id);
-        axios.get(`http://188.121.124.63/chat/room/${customer_id}/${manager_id}/`)
+        axios.get(
+            `http://188.121.124.63/chat/room/${customer_id}/${manager_id}/`
+        )
         .then((response) => {
-            console.log(`got from http://188.121.124.63/chat/room/${customer_id}/${manager_id}/`);
             setData(response.data);
         })
         .catch((error) => {
-            console.log(`did not got from http://188.121.124.63/chat/room/${customer_id}/${manager_id}/`);
             console.log(error.response);
         })
-    }, [manager_id]);//
+    }, [manager_id]);
 
     useEffect(() => {
         console.log("here to split data");
@@ -78,8 +72,6 @@ const Chat = (props) => {
         setMessages(messageArray);
     }, [data]);
     
-    const [client, setClient] = useState(null);
-
     const handleClick = (newPlacement) => (event) => {
         setAnchorEl(event.currentTarget);
         setOpen((prev) => placement !== newPlacement || !prev);
@@ -102,7 +94,6 @@ const Chat = (props) => {
         const trimmedMessage = input.trim();
         if (trimmedMessage !== '') {
             const formattedDate = new Date().toISOString();
-            console.log("here t send message");
             console.log(JSON.stringify({
                 message : input,
                 sender_id : parseInt(customer_id),
@@ -126,35 +117,32 @@ const Chat = (props) => {
     const messageOnOpen = (e) => {
         console.log("WebSocket connection opened");
     };
+
     const messageOnMessage = (event) => {
-        console.log("on message func");
         const message = JSON.parse(event.data);
         message.sender = message.sender_id;
         message.date_created = new Date();
-        console.log("new message: ");
-        console.log(message);
         setMessages((e) => [...e, message]);
     };
+
     const messageOnClose = () => {
         console.log("WebSocket connection is closing");
     };
 
     useEffectOnce(() => {
-        console.log(`websocket is : ws://188.121.124.63:4000/chat/room/${room_name}/`)
         const client_1 = new WebSocket(
             `ws://188.121.124.63:4000/chat/room/${room_name}/`
         );
         client_1.onopen = messageOnOpen;
-
         client_1.onmessage = messageOnMessage;
         console.log("close in 171");
         client_1.onclose = messageOnClose;
         setClient(client_1);
     });
+
     useEffect(() => {
         if(client && client.readyState === WebSocket.OPEN){
             client.close();
-            console.log("WebSocket connection closed ");
             const clientCopy = new WebSocket(
                 `ws://188.121.124.63:4000/chat/room/${room_name}/`
             );
@@ -182,26 +170,63 @@ const Chat = (props) => {
 
     return (
         <div>
-            <Popper open={open} anchorEl={anchorEl} placement={placement} transition className='chat-poper'>
+            <Popper 
+                open={open} 
+                anchorEl={anchorEl} 
+                placement={placement} 
+                transition 
+                className='chat-poper'
+            >
             {({ TransitionProps }) => (
-                <Fade {...TransitionProps} timeout={350}>
-                    <List sx={{ width: '100%' }}>  
-                        <Paper className='chatPage'>
-                            <Grid className="chatContainer">
-                                <Grid className="chat-header">
-                                    <h2 className='chat-title'>Support chat</h2>
+                <Fade 
+                    {...TransitionProps} 
+                    timeout={350}
+                >
+                    <List 
+                        sx={{ width: '100%' }}
+                    >  
+                        <Paper 
+                            className='chatPage'
+                        >
+                            <Grid 
+                                className="chatContainer"
+                            >
+                                <Grid 
+                                    className="chat-header"
+                                >
+                                    <h2 
+                                        className='chat-title'
+                                    >
+                                        Support chat
+                                    </h2>
                                 </Grid>
-                                <ReactScrollToBottom className="chatBox">
+                                <ReactScrollToBottom 
+                                    className="chatBox"
+                                >
                                         {messages.map((msg, index) => (
-                                            <Message key={index} message={msg} />
+                                            <Message 
+                                                key={index} 
+                                                message={msg} 
+                                            />
                                         ))}   
                                 </ReactScrollToBottom >
-                                <Grid className="inputBox">
-                                    <textarea onKeyPress={handleKeyPress} onChange={handleMessage} value={input} id="chatInput" rows={1} placeholder="Type a message"/>
+                                <Grid 
+                                    className="inputBox"
+                                >
+                                    <textarea  
+                                        onKeyPress={handleKeyPress} 
+                                        onChange={handleMessage} 
+                                        value={input}
+                                        id="chatInput"
+                                        rows={1} 
+                                        placeholder="Type a message"
+                                    />
                                     <Button 
-                                    // disabled={input.length < 1} 
-                                        onClick={handleSend}>
-                                        <SendIcon className='chat-send'/>
+                                        onClick={handleSend}
+                                    >
+                                        <SendIcon 
+                                            className='chat-send'
+                                        />
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -229,10 +254,26 @@ const Message = ({ message }) => {
     const timeAlign = isRestaurant ? "left" : "right";
 
     return (
-        <ThemeProvider theme={theme}>
-            <Box sx={{ display: "flex", justifyContent: align, mb: 2 }}>
-                <Box sx={{ display: "flex", flexDirection: isRestaurant ? "row" : "row-reverse", alignItems: "end" }} >
-                    <Avatar sx={{ bgcolor: isRestaurant ? "primary.main" : "secondary.main" }}>
+        <ThemeProvider 
+            theme={theme}
+        >
+            <Box 
+                sx={{ 
+                    display: "flex", 
+                    justifyContent: align, 
+                    mb: 2 
+                }}
+            >
+                <Box 
+                    sx={{ 
+                        display: "flex", 
+                        flexDirection: isRestaurant ? "row" : "row-reverse", 
+                        alignItems: "end" 
+                    }} 
+                >
+                    <Avatar 
+                        sx={{ bgcolor: isRestaurant ? "primary.main" : "secondary.main" }}
+                    >
                         {isRestaurant ? "R" : "U"}
                     </Avatar>
                     <Paper
@@ -245,11 +286,19 @@ const Message = ({ message }) => {
                             borderRadius: isRestaurant ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
                         }}
                     >
-                        <Typography variant="body1" sx={{mt:-0.8}}>
+                        <Typography 
+                            variant="body1" 
+                            sx={{mt:-0.8}}
+                        >
                             {message.message}
                         </Typography>
-                        <Box sx={{mt: -0.4, mb:-1.5}}>
-                            <Typography variant="caption" sx={{textAlign: timeAlign}} >
+                        <Box 
+                            sx={{mt: -0.4, mb:-1.5}}
+                        >
+                            <Typography 
+                                variant="caption" 
+                                sx={{textAlign: timeAlign}} 
+                            >
                                 {new Date(message.date_created).toLocaleTimeString([],{ hour: '2-digit', minute: '2-digit'})}
                             </Typography>
                         </Box>
