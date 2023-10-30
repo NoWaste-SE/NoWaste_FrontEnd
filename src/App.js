@@ -17,7 +17,7 @@ import EditProfileManager from './pages/Edit Profile/EditProfileManager';
 import Dashboard from './components/Dashboard/Dashboard';
 import DashboardRestaurant from './components/Dashboard/DashboardRestaurant';
 import Map from './components/Map/Map';
-import Chat from './pages/RestaurantChats';
+import Chat from './pages/Restaurant chat/RestaurantChats';
 import AboutUs from './pages/About Us/AboutUs';
 
 function App() {
