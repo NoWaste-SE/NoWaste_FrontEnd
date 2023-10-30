@@ -9,7 +9,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Masonry from 'react-masonry-css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import Food from '../../components/Food';
+import Food from '../../components/Food card/Food';
 import BackToTop from '../../components/Back to top/BackToTop';
 import Footer from '../../components/Footer';
 import { useHistory, useParams } from "react-router-dom";
