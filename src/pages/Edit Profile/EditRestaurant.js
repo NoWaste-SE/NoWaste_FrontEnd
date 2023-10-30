@@ -21,7 +21,7 @@ import Map from "../../components/Map/Map";
 import Modal from '@mui/material/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import getCroppedImg from "../../components/cropImage";
+import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 
 const style = {

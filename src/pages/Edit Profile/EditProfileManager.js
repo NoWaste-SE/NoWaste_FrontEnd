@@ -13,7 +13,7 @@ import Footer from "../../components/Footer/Footer";
 import { Alert } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import getCroppedImg from "../../components/cropImage";
+import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import Modal from '@mui/material/Modal';
 
