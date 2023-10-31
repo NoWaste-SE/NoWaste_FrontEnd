@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import Modal from '@mui/material/Modal';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const style = {
     position: "absolute",
@@ -92,6 +93,7 @@ const EditProfileManager = (props) => {
     const [img, setImg] = useState(undefined);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [croppedImage, setCroppedImage] = useState(null);
+    const [loading, setLoading] = useState(true);
     const history = useHistory();
 
     const showCroppedImage = useCallback(async () => {
@@ -119,7 +121,10 @@ const EditProfileManager = (props) => {
         setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
-        document.getElementById("photoInput").value = null;
+        const photoInput = document.getElementById("photoInput");
+        if (photoInput) {
+            photoInput.value = null;
+        }
     }, []);
     
     const handleCloseImg = (event, reason) => {
@@ -183,9 +188,14 @@ const EditProfileManager = (props) => {
             }}
         )
         .then((response) => {
-            setData(response.data)
+            setData(response.data);
+            setData(response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            setLoading(true);
+            console.log(error);
+        });
     },[]);
     
     useEffect(() => {
@@ -340,6 +350,15 @@ const EditProfileManager = (props) => {
                     <div >
                         <ToastContainer />
                     </div>
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="edit-spinner"
+                        
+                        />
+                    ) : ( 
                     <Grid container spacing={2} 
                         className="edit-grid"
                     >
@@ -697,6 +716,7 @@ const EditProfileManager = (props) => {
                             </Box>
                         </Grid>
                     </Grid>
+                    )}
                 </div> 
                 <Footer/>
             </div>

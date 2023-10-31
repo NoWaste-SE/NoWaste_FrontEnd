@@ -10,6 +10,7 @@ import Map from "../../components/Map/Map";
 import { ToastContainer, toast } from 'react-toastify';
 import { useHistory, useParams } from "react-router-dom";
 import MoneyIcon from '@mui/icons-material/Money';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const theme = createTheme({
     palette: {
@@ -47,6 +48,7 @@ export default function OrderPage(){
     const userId = localStorage.getItem('id');
     const [showMap, setShowMap] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() =>{
         axios.get(
@@ -90,9 +92,11 @@ export default function OrderPage(){
             setOrderItems(response.data[0].orderItems);
             setPrices(response.data[0].Subtotal_Grandtotal_discount);
             setOrderId(response.data[0].id);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     },[]);
 
@@ -194,6 +198,14 @@ export default function OrderPage(){
                 <Grid container spacing={2} 
                     className="orderpage-root"
                 >
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="spinner-orderpage"
+                        />
+                    ) : (
                     <Grid item lg={4} md={4} sm={12}>
                         <Box 
                             className="orderpage-box" 
@@ -311,6 +323,7 @@ export default function OrderPage(){
                             </Button>
                         </Box>
                     </Grid>
+                    )}
                     <Grid item lg={8} md={8} sm={12}>
                         <Box 
                             className="orderpage-box"

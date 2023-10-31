@@ -23,6 +23,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const style = {
     position: "absolute",
@@ -113,6 +114,7 @@ function Edit(props){
     const history = useHistory();
     const [showMap, setShowMap] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const showCroppedImage = useCallback(async () => {
         try {
@@ -139,7 +141,10 @@ function Edit(props){
         setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
-        document.getElementById("photoInput").value = null;
+        const photoInput = document.getElementById("photoInput");
+        if (photoInput) {
+            photoInput.value = null;
+        }
     }, []);
     
     const handleCloseImg = (event, reason) => {
@@ -267,8 +272,12 @@ function Edit(props){
         .then((response) => {
             console.log(response);
             setData(response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            setLoading(true);
+            console.log(error)
+        });
     },[]);
 
     useEffect(() =>{
@@ -463,6 +472,15 @@ function Edit(props){
                     <div>
                         <ToastContainer />
                     </div>
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="edit-spinner"
+                        
+                        />
+                    ) : ( 
                     <Grid container spacing={2} 
                         className="edit-grid"
                     >
@@ -988,6 +1006,7 @@ function Edit(props){
                             </Box>
                         </Grid>
                     </Grid>
+                    )}
                 </div>
                 <Footer/>
             </div>

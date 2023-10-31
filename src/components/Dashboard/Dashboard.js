@@ -18,6 +18,7 @@ import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
 import CommentIcon from '@mui/icons-material/Comment';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const theme = createTheme({
     palette: {
@@ -57,6 +58,7 @@ export default function Dashboard(){
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const ordersToShow = rowsWithIndex.slice(indexOfFirstOrder, indexOfLastOrder);
     const totalPages = Math.ceil(rowsWithIndex.length / ordersPerPage);
+    const [loading, setLoading] = useState(true);
     const [sortConfig, setSortConfig] = useState({ field: null, direction: 'asc' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [restaurantId, setRestaurantId] = useState('');
@@ -106,8 +108,11 @@ export default function Dashboard(){
         )
         .then((response) => {
             setOrderHistory(response.data);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            setLoading(true);
+            console.log(error)});
     }, []);
 
     useEffect(() => {
@@ -309,6 +314,15 @@ export default function Dashboard(){
                             ))}
                         </Box>
                     </Grid>
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="spinner-dashboard"
+                        
+                        />
+                    ) : (
                     <Grid item lg={8} md={12} sm={12} xs={12}>
                         <Box 
                             className="dashboard-box" 
@@ -449,6 +463,7 @@ export default function Dashboard(){
                             </TableContainer>
                         </Box>
                     </Grid>
+                    )}
                 </Grid>
                 <Modal 
                     open={isModalOpen} 

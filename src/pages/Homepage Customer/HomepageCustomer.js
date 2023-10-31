@@ -13,6 +13,7 @@ import "./HomepageCustomer.css";
 import RestaurantCard from '../../components/Restaurant card/RestaurantCard';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import AddPagination from '../../components/Pagination/Pagination'
+import PulseLoader from "react-spinners/PulseLoader";
 
 const theme = createTheme({
     palette: {
@@ -92,6 +93,7 @@ const HomepageCustomer = () => {
     const _DATA = AddPagination(restaurant, PER_PAGE);
     const [mysearch, setMySearch] = useState('');
     const _DATA_FILD = AddPagination(fields, PER_PAGE);
+    const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
         axios.get(
@@ -105,9 +107,11 @@ const HomepageCustomer = () => {
         )
         .then((response) => {
             setRestaurant(response.data);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     },[]);
 
@@ -122,6 +126,7 @@ const HomepageCustomer = () => {
     
     useEffect(() => {
         if (mysearch) {
+            setLoading(true);
             axios.get(
                 `http://188.121.124.63/restaurant/restaurant-search/?search=${mysearch}`,
                 {headers: {
@@ -133,11 +138,14 @@ const HomepageCustomer = () => {
             )
             .then((response) => {
                 setRestaurant(response.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error.response);
+                setLoading(true);
             });
         } else {
+            setLoading(true);
             axios.get(
                 `http://188.121.124.63/restaurant/restaurant-search/`,
                 {headers: {
@@ -149,9 +157,11 @@ const HomepageCustomer = () => {
             )
             .then((response) => {
                 setRestaurant(response.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error.response);
+                setLoading(true);
             });
         }
     }, [mysearch]);
@@ -161,6 +171,7 @@ const HomepageCustomer = () => {
         const toR = valueR[1].toFixed(1);
         const fromD = valueD[0] * 0.01;
         const toD = valueD[1] * 0.01;
+        setLoading(true);
         axios.get(
             `http://188.121.124.63/restaurant/restaurant-search/?type=${type}&discount__gte=${fromD}&discount__lte=${toD}&rate__lte=${toR}&rate__gte=${fromR}`,
             {headers: {
@@ -172,9 +183,11 @@ const HomepageCustomer = () => {
         )
         .then((response) => {
             setRestaurant(response.data);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     };         
 
@@ -230,6 +243,7 @@ const HomepageCustomer = () => {
         const toR = valueR[1].toFixed(1);
         const fromD = valueD[0] * 0.01;
         const toD = valueD[1] * 0.01;
+        setLoading(true);
         axios.get(
             `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-rate&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
@@ -242,9 +256,11 @@ const HomepageCustomer = () => {
         .then((response) => {
             setRestaurant(response.data);
             setFields([]);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     };
 
@@ -253,6 +269,7 @@ const HomepageCustomer = () => {
         const toR = valueR[1].toFixed(1);
         const fromD = valueD[0] * 0.01;
         const toD = valueD[1] * 0.01;
+        setLoading(true);
         axios.get(
             `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-discount&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
@@ -265,9 +282,11 @@ const HomepageCustomer = () => {
         .then((response) => {
             setRestaurant(response.data);
             setFields([]);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     };
 
@@ -276,6 +295,7 @@ const HomepageCustomer = () => {
         const toR = valueR[1].toFixed(1);
         const fromD = valueD[0] * 0.01;
         const toD = valueD[1] * 0.01;
+        setLoading(true);
         axios.get(
             `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
@@ -288,9 +308,11 @@ const HomepageCustomer = () => {
         .then((response) => {
             setRestaurant(response.data);
             setFields([]);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     };
 
@@ -299,6 +321,7 @@ const HomepageCustomer = () => {
         const toR = valueR[1].toFixed(1);
         const fromD = valueD[0] * 0.01;
         const toD = valueD[1] * 0.01;
+        setLoading(true);
         axios.get(
             `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
@@ -311,15 +334,18 @@ const HomepageCustomer = () => {
         .then((response) => {
             setRestaurant(response.data);
             setFields([]);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     };
 
     const handleClickNearest = () => {
         const lat= localStorage.getItem("lat");
         const long = localStorage.getItem("long");
+        setLoading(true);
         axios.get(
             `http://188.121.124.63/restaurant/nearest_restaurant?origins=${lat},${long}`,
             {headers: {
@@ -332,9 +358,11 @@ const HomepageCustomer = () => {
         .then((response) => {
             setFields(response.data);
             setRestaurant([]);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     };
 
@@ -635,8 +663,15 @@ const HomepageCustomer = () => {
                         <Grid item md={12}>
                             <Masonry
                                 breakpointCols={breakpoints}
-                            >                                
-                                {restaurant.length==1 ? 
+                            > 
+                                {loading ? (
+                                    <PulseLoader
+                                    type="bars"
+                                    color="black"
+                                    speedMultiplier={1}
+                                    className="spinner"
+                                    />
+                                ) : restaurant.length===1 ? 
                                     (
                                         <RestaurantCard 
                                             name={restaurant[0].name} 
@@ -646,8 +681,8 @@ const HomepageCustomer = () => {
                                             description={restaurant[0].description} 
                                             isSingleResult={true}
                                         />
-                                    ) :
-                                    (_DATA.currentData() && _DATA.currentData().map((res, index) => (
+                                    ) : (
+                                    _DATA.currentData() && _DATA.currentData().map((res, index) => (
                                         <div 
                                             key={index} 
                                             style={{ width: index % 3 === 0 ? '100%' : '' }}

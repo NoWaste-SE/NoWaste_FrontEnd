@@ -5,6 +5,13 @@
     filter: blur(10px);
 }
 
+.edit-spinner {
+    display: flex !important;
+    justify-content: center ;
+    align-items: center ;
+    margin: auto !important;
+}
+
 .edit-back {
     background-color: #f8f8f8;
 }
