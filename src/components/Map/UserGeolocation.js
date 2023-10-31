@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-
 const UserGeolocation = () => {
-    console.log("Here to get current location.");
     const [location, setLocation] = useState({
         loaded: false,
         coordinates: {lat: "", lng: ""}
