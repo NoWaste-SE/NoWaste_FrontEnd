@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.MuiAppBar-root.header {
+    background-color: #141414;
+    opacity: 0.97;
+}
+
+.balance {
+    color: #797979;
+    font-size: 12px;
+    margin-left: 60px;
+}
+
+.header-toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-font {
+    color: #4c4b4b !important;
+    font-weight: bold !important;
+    font-size: 80% !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.logout-item {
+    color: red !important;
+}
+
+.logo {
+    width: 200px !important;
+}
+.profile-icons {
+    margin-right: 5%;
+    font-size: 180% !important;
+}
+
+.last-icon-header {
+    margin-left: 10px !important;
+    padding: 0px !important;
+}
+
+.credit-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26%;
+    height: 36%;
+    background-color: #f8f8f8;
+    border-radius: 5%;
+    box-shadow: 24;
+    padding: 2%;
+}
+
+.close-icon {
+    margin-top: -9% !important;
+    margin-left: 96% !important;
+    color: #838383 !important;    
+}
+h2 {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-top: -4%;
+}
+
+.css-1bevcj6 {
+    margin-right: -10% !important;
+}
+
+.blance-header {
+    margin-left: 3.5%;
+    font-size: 0.83em;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.amount-header {
+    font-family: 'Montserrat', sans-serif !important;
+    width: 29.5%;
+    padding: 0px !important;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.item-header {
+    background-color: rgb(239, 239, 239) !important;
+    color: rgb(0, 0, 0) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: bold !important;
+    border-radius: 10px !important;
+}
+
+.item-header:hover {
+    box-shadow: #604108 0px 20px 30px -10px;
+}
+
+.button_wallet {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border: none;
+    background-color: white;
+    color: #ffa600 !important;
+    box-shadow: 0px 0px 10px #ccc;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: 'Montserrat', sans-serif !important;
+    color: inherit;
+    border-radius: 50%;
+    outline: none;
+    height: 1.9rem;
+    width: 1.9rem;
+    cursor: pointer;
+    transition: background-color 250ms ease-in-out, transform 50ms ease-in-out;
+}
+  
+.button_wallet:hover {
+    background-color: #e7e7e7;
+}
+
+.button_wallet:active {
+    transform: scale(0.9);
+}
+
+.button_wallet:focus {
+    box-shadow: 0 0 0 2px #9999995c;
+}
+
+#payment-submit {
+    margin-top: 6%;
+    margin-bottom: 10%;
+    width: 96%;
+    text-transform:none;
+    font-size: 100%;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #ffa600cc;
+}
+
+.payment-submit-enabled {
+    background-color: #ffa600 !important;
+    color: #000000 !important;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+  
+.payment-submit-enabled:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 840%;
+    width: 140%;
+    background: linear-gradient(to right, #ffa600, #e74c3c);
+    transition: all .5s ease-in-out;
+    transform: translateX(-98%) translateY(-25%) rotate(45deg);
+    z-index: -1;
+}
+  
+.payment-submit-enabled:hover:after {
+    transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+@media(max-width: 360px) {
+    .css-1bevcj6 {
+        width: 30% !important;
+    }
+    
+    .css-7mt4h1-MuiInputBase-root {
+        font-size: 0rem !important;
+    }
+
+    .css-1iz4iln {
+        padding: 0.9px !important;
+    }
+
+    .logo {
+        width: 20% !important;
+    }
+}    
+
+@media(min-width: 360px) and (max-width: 412px) {
+    .css-7mt4h1-MuiInputBase-root {
+        font-size: 0.8rem !important;
+    } 
+
+    .css-7mt4h1-MuiInputBase-root .MuiInputBase-input {          /*search */
+        padding-left: calc(0.4em + 30px) !important;      
+    }
+
+    .MuiSvgIcon-root {                         /*svg */
+        width: 0.9em !important;
+    }
+
+    .css-1iz4iln {
+        width: 32%;
+        padding: 4% !important;
+    }
+
+    .css-1bevcj6 {
+        width: 30% !important;
+    }
+
+    .logo {
+        width: 20% !important;
+    }
+}  
+
+@media(min-width: 413px) and (max-width: 768px){
+    .css-1bevcj6 {
+        width: 30% !important;
+    }
+
+    .css-7mt4h1-MuiInputBase-root {
+        font-size: 0.9rem !important;
+    } 
+
+    .logo {
+        width: 15% !important;
+    }
+}
