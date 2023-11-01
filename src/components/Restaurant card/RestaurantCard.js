@@ -65,7 +65,7 @@ const RestaurantCard = (props) => {
                                 sx={{ display: 'flex', alignItems: 'center', mt: '-5px' }}
                             >
                                 <Rating 
-                                    defaultValue={props.rate} 
+                                    value={props.rate} 
                                     precision={0.5} 
                                     readOnly 
                                     size="small" 
