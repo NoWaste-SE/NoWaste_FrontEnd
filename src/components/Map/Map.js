@@ -24,130 +24,152 @@ function Map(props) {
   const [openNetwork, setOpenNetwork] = useState(null);
 
   const handleClose = () => {
-    setOpen(false);
+      setOpen(false);
   }
 
   const handleCloseNetwork = () => {
-    setOpenNetwork(false);
+      setOpenNetwork(false);
   }
   useEffect(() => {
-    if(alertMessage !== "" && alertSeverity !== ""){
-        if(alertSeverity === "success"){
-            toast.success(alertMessage, {
-                        position: toast.POSITION.TOP_CENTER,
-                        title: "Success",
-                        autoClose: 7000,
-                        pauseOnHover: true,
-                    });
-        } else {
-            toast.error(alertMessage, {
-                        position: toast.POSITION.TOP_CENTER,
-                        title: "Error",
-                        autoClose: 3000,
-                        pauseOnHover: true
-                    });
-        }
-        setAlertMessage("");
-        setAlertSeverity("");
-    }
+      if(alertMessage !== "" && alertSeverity !== ""){
+          if(alertSeverity === "success"){
+              toast.success(alertMessage, {
+                          position: toast.POSITION.TOP_CENTER,
+                          title: "Success",
+                          autoClose: 7000,
+                          pauseOnHover: true,
+                      });
+          } else {
+              toast.error(alertMessage, {
+                          position: toast.POSITION.TOP_CENTER,
+                          title: "Error",
+                          autoClose: 3000,
+                          pauseOnHover: true
+                      });
+          }
+          setAlertMessage("");
+          setAlertSeverity("");
+      }
   }, [alertMessage, alertSeverity]);
 
-  // Update the new location
   const handleSaveClick = () => {
-    if (markerRef.current) {
-      const { lat, lng } = markerRef.current.getLatLng();
-      setLat(lat);
-      setLng(lng);
-      console.log('Marker saved position:', lat, lng);
-      const userData = {
-        lat: lat,
-        lon: lng
-      };
+      if (markerRef.current) {
+          const { lat, lng } = markerRef.current.getLatLng();
+          setLat(lat);
+          setLng(lng);
+          const userData = {
+              lat: lat,
+              lon: lng
+          };
 
-      const url = type === "customer"
-        ? `http://188.121.124.63/user/${id}/lat_long/`
-        : `http://188.121.124.63/restaurant/${id}/lat_long`;
-      if(type === "customer")
-      {
-        axios.patch(url, userData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PATCH',
-            'Authorization': 'Token ' + token.slice(1, -1)
-          }
-        })
-        .then((response) => {
-          console.log(response);
-          setAlertMessage("Location saved successfully.");
-          setAlertSeverity("success");
-        })
-        .catch((error) => {
-          setAlertMessage("An error occured. Please try agian later.");
-          setAlertSeverity("error");
-          if (error.response) {
-            console.log(error.response);
-          }
-        });
+        const url = type === "customer"
+            ? `http://188.121.124.63/user/${id}/lat_long/`
+            : `http://188.121.124.63/restaurant/${id}/lat_long`;
+        if(type === "customer") {
+            axios.patch(
+                url, 
+                userData, 
+                {headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET,PATCH',
+                    'Authorization': 'Token ' + token.slice(1, -1)
+                }}
+            )
+            .then((response) => {
+                setAlertMessage("Location saved successfully.");
+                setAlertSeverity("success");
+            })
+            .catch((error) => {
+                setAlertMessage("An error occured. Please try agian later.");
+                setAlertSeverity("error");
+                if (error.response) {
+                    console.log(error.response);
+                }
+            });
+        } else {
+          axios.put(
+              url, 
+              userData, 
+              {headers: {
+                  'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*',
+                  'Access-Control-Allow-Methods': 'GET,PUT',
+                  'Authorization': 'Token ' + token.slice(1, -1)
+              }}
+          )
+          .then((response) => {
+              console.log(response);
+          })
+          .catch((error) => {
+              if (error.response) {
+                  console.log(error.response);
+              }
+          });
+        }
       }
-      else
-      {
-        axios.put(url, userData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT',
-            'Authorization': 'Token ' + token.slice(1, -1)
-          }
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.log(error.response);
-          }
-        });
-      }
-    }
   };
 
   useEffect(() => {
-    // Initialize map
-    const map = L.map(mapRef.current).setView([lat, lng], 13);
+      const map = L.map(mapRef.current).setView([lat, lng], 13);
 
-    // Add tile layer (e.g., OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
 
-    // Create a draggable marker with default icon
-    const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
-    markerRef.current = marker;
+      const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+      markerRef.current = marker;
 
-    // Update marker position on dragend
-    marker.on('dragend', (event) => {
-      const { lat, lng } = event.target.getLatLng();
-      console.log('Marker position:', lat, lng);
-    });
+      marker.on('dragend', (event) => {
+          const { lat, lng } = event.target.getLatLng();
+      });
 
-    // Cleanup function
-    return () => {
-      map.remove();
-    };
+      return () => {
+          map.remove();
+      };
   }, [lat, lng]);
 
   return (
-    <div className="map-container">
-      <div >
+    <div 
+        className="map-container"
+    >
+      <div>
         <ToastContainer />
       </div>
-      <div ref={mapRef} className="leaflet-container" />
-      <div className="edit-location-button">
-        <Button className='confirm-btn' onClick={handleSaveClick}>Confirm</Button>
+      <div 
+          ref={mapRef} 
+          className="leaflet-container" 
+      />
+      <div 
+          className="edit-location-button"
+      >
+        <Button 
+            className='confirm-btn' 
+            onClick={handleSaveClick}
+        >
+            Confirm
+        </Button>
       </div>
-      {open && <Alert severity="error" open={open} onClose={handleClose} className="alert-error" variant="outlined"> An error occurde!</Alert>}
-      {openNetwork && <Alert severity="error" open={openNetwork} onClose={handleCloseNetwork} variant="outlined" className="alert-error filed"> Network error! </Alert>} 
+      {open && 
+          <Alert 
+              severity="error" 
+              open={open} 
+              onClose={handleClose} 
+              className="alert-error" 
+              variant="outlined"
+          > 
+              An error occurde!
+          </Alert>}
+      {openNetwork && 
+          <Alert 
+              severity="error" 
+              open={openNetwork} 
+              onClose={handleCloseNetwork} 
+              variant="outlined" 
+              className="alert-error"
+          > 
+              Network error! 
+          </Alert>} 
     </div>
   );
 }

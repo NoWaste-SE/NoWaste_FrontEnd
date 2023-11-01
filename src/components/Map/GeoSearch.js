@@ -1,4 +1,4 @@
-import { GeoSearchControl, MapBoxProvider, OpenStreetMapProvider } from 'leaflet-geosearch';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { useMap } from 'react-leaflet';
 import "leaflet-geosearch/dist/geosearch.css";
 import { useEffect } from 'react';
@@ -6,16 +6,11 @@ import { useEffect } from 'react';
 const GeoSearchField = () => {
     const map = useMap();
     const provider = new OpenStreetMapProvider({icon: null});
-    // @ts-ignore
     const searchControl = new GeoSearchControl({
         provider: provider,
         searchLabel: "Search in Map",
         notFoundMessage: "No data could be found",
         autoClose: false,
-        // marker: {
-        //     icon: null,
-        //     draggable: false,
-        // },
     });
     
     useEffect(() => {
