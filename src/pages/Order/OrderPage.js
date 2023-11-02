@@ -57,7 +57,7 @@ export default function OrderPage(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                'Authorization' : "Token " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -83,7 +83,7 @@ export default function OrderPage(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -133,7 +133,7 @@ export default function OrderPage(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PUT",
-                'Authorization' : "Token " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -149,7 +149,7 @@ export default function OrderPage(){
                         'Content-Type' : 'application/json',
                         "Access-Control-Allow-Origin" : "*",
                         "Access-Control-Allow-Methods" : "PUT,PATCH",
-                        'Authorization' : "Token " + token.slice(1,-1)   
+                        'Authorization' : "Bearer " + token.slice(1,-1)   
                     }}
                 )
                 .then((response) => {
