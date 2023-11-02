@@ -23,7 +23,7 @@ function TokenRefreshComponent() {
         const tokenRefreshInterval = setInterval(() => {
             refreshAccessToken();
             console.log("Token refresh request sent"); 
-        }, 5 * 60 * 1000);
+        }, 2 * 60 * 1000);
 
         // Clean up the interval when the component unmounts
         return () => {
