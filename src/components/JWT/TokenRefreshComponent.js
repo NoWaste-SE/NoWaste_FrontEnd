@@ -8,7 +8,7 @@ function TokenRefreshComponent() {
     };
     const refreshAccessToken = async () => {
         try {
-            const response = await axios.post('http://188.121.124.63/api/token/refresh/', { sendingData });
+            const response = await axios.post('http://188.121.124.63/api/token/refresh/', sendingData);
             console.log(response.data);
             const newAccessToken = response.data.access;
             console.log("Token refresh successful - New access token: " + newAccessToken);
