@@ -669,7 +669,7 @@ const HomepageCustomer = () => {
                                     type="bars"
                                     color="black"
                                     speedMultiplier={1}
-                                    className="spinner"
+                                    className="spinner-homepage-customer"
                                     />
                                 ) : restaurant.length===1 ? 
                                     (
