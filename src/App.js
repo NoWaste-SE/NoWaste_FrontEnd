@@ -19,9 +19,11 @@ import DashboardRestaurant from './components/Dashboard/DashboardRestaurant';
 import Map from './components/Map/Map';
 import Chat from './pages/Restaurant chat/RestaurantChats';
 import AboutUs from './pages/About Us/AboutUs';
+import TokenRefreshComponent from './components/JWT/TokenRefreshComponent';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const isAuthenticated = localStorage.getItem("token") !== null;
 
   useEffect(() => {
       window.addEventListener("load", () => {
@@ -38,6 +40,7 @@ function App() {
     //     </div>
     //   ) : (
       <Router>
+          {isAuthenticated && <TokenRefreshComponent />}
           <Route path="/sign-up">
               <SignUp />
           </Route>
