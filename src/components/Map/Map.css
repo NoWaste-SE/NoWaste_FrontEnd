@@ -29,7 +29,6 @@
 background-color: beige;
 }
 
-
 .map-container {
     position: relative;
 }
@@ -37,8 +36,8 @@ background-color: beige;
 .leaflet-bar {
     border: 0px !important;
 }
-.leaflet-control-zoom-in
-{
+
+.leaflet-control-zoom-in {
     background-color: #ffa600 !important;
     border-top-left-radius: 20px !important;
     border-top-right-radius: 20px !important;
@@ -47,6 +46,7 @@ background-color: beige;
     transition: background-color 0.3s ease-in-out;
     padding: 3px;
 }
+
 .leaflet-control-zoom-out {
     background-color: #ffa600 !important;
     border-bottom-left-radius: 20px !important;
@@ -56,15 +56,11 @@ background-color: beige;
     padding: 3px;
 }
 
-/* Hover effect */
-.leaflet-control-zoom-in:hover,
-.leaflet-control-zoom-out:hover {
+.leaflet-control-zoom-in:hover, .leaflet-control-zoom-out:hover {
   background-color: #fbae1fcf !important;
 }
 
-/* Active effect */
-.leaflet-control-zoom-in:active,
-.leaflet-control-zoom-out:active {
+.leaflet-control-zoom-in:active, .leaflet-control-zoom-out:active {
   background-color: #e74c3c !important;
 }
 
@@ -78,7 +74,6 @@ background-color: beige;
     font-size: 70% !important;
     font-weight: bolder !important;
     font-family: 'Montserrat', sans-serif !important;
-    /* background-color: #90be6d !important; */
     background-color: #4daa25 !important;
 }
 
@@ -100,7 +95,7 @@ background-color: beige;
     box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
 }
 
-.confirm-btn{
+.confirm-btn {
     cursor: pointer;
     display: inline-block;
     position: relative;
@@ -116,7 +111,7 @@ background-color: beige;
     transition: 0.5s;
 }
 
-.confirm-btn:hover{
+.confirm-btn:hover {
     background-color: #62be11 !important;
     padding-right: 10px;
     padding-left:1px;

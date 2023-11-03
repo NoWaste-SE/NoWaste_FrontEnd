@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900&display=swap');
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 100%;
+    height: 100vh;
+}
+
+.land-back {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    background-image: url(/public/b.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+}  
+
+.land-box {
+    margin-bottom: 7%;
+    margin-right: 48%;
+}
+
+.land-text {
+    color: rgb(0, 0, 0) !important;
+    font-weight: 600;
+    font-family: 'Red Hat Display', sans-serif !important;
+    text-align: left;
+    text-shadow: 5px 5px 5px #908c8c;
+    margin-left: 5% !important;
+}
+
+.land-text#title {
+    font-size: 50px !important;
+}
+
+.land-text#text {
+  font-size: 20px !important;
+}
+
+.button-order {
+    padding: 1em 3em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: rgb(0, 0, 0);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 50px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-top: 5%;
+    margin-left: 5%;
+    font-size: 110%;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif !important;
+    opacity: 0.9;
+}
+  
+.button-order:before {
+    content: "";
+    background: linear-gradient(
+      45deg,
+      #ff0000,
+      #9f2c06,
+      #9b3b07,
+      #ff6f00,
+      #ca7f0d,
+      #deb915,
+      #ff7b00,
+      #d63c1d,
+      #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-order 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 50px;
+  }
+  
+  @keyframes glowing-button-order {
+      0% {
+          background-position: 0 0;
+      }
+      50% {
+          background-position: 400% 0;
+      }
+      100% {
+          background-position: 0 0;
+      }
+}
+  
+.button-order:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    left: 0;
+    top: 0;
+    border-radius: 50px;
+
+}
+  
+.buttonland {
+    border-radius: 500px;
+    border-style: none;
+    box-sizing: border-box;
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Raleway', sans-serif !important;
+    font-size: 14px;
+    font-weight: bolder;
+    height: 45px;
+    line-height: 20px;
+    list-style: none;
+    outline: none;
+    padding: 0em 1.8em;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.buttonland:hover, .buttonland:focus {
+    background-color: #151414c0;
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.signup {
+    margin-right: 47px; ;
+}

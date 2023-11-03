@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.filter-hompage-customer {
+    width: auto;
+    margin: auto;
+    padding: 10px 15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid rgb(202, 196, 195);
+    flex-direction: column;
+    background-color: rgba(117, 115, 111, 0.05);
+}
+
+.hr-tag {
+    width: 90%;
+    margin: 0 !important;
+}
+
+.spinner-homepage-customer {
+    color: black !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: auto !important;
+    margin-top: 50% !important;
+    margin-right: -200% !important;
+
+}
+
+.grid-homepage-customer {
+    width: 100% !important;
+    margin-top: 2% !important;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 1% !important;
+}
+
+.filters-title {
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.filter-type {
+    width: 110px;
+    margin-top: 15px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 90% !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.range-homepage-customer {
+    margin-right: 10px;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    color: #dd9d46 !important;
+}
+
+.MuiSlider-thumb {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.grid {
+    justify-content: space-between;
+    width: 90% !important;
+    padding: 7% 0% 7% 0%;
+    display: flex;
+    align-items: center;
+}
+
+.grid#margin {
+    margin-top: -20px !important;
+    margin-bottom: -10px;
+}
+
+.filter {
+    margin: -10px 5px auto 5px !important;
+}
+
+.filter #discount {
+    margin-top: 20px !important;
+}
+
+.details {
+    font-size: 12px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    margin-top: -10px !important;
+    margin-bottom: -25px !important;
+    padding: 0 !important;
+}
+
+.filter-details {
+    justify-content: space-between !important;
+    width: 100% !important;
+    margin-top: -30px !important;
+    display: flex;
+    align-items: center;
+}
+
+.filter-details .from {
+    margin-right: 0 !important;
+    align-items: center !important;
+}
+
+.filter-details .to {
+    margin-right: -13% !important;
+    align-items: center !important;
+}
+
+.filter-details.discount-slider {
+    margin-bottom: 15px !important;
+}
+
+.star-rate {
+    color: #faaf00 !important;
+    margin-top: 15px !important;
+}
+
+.from .star-rate {
+    margin-left: -100px !important;
+}
+
+.to .star-rate {
+    margin-left: -20px !important;
+}
+
+.css-1tfve6q-MuiSlider-mark {
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.submit {
+    margin: 20px !important;
+    background-color: #FFA600 !important;
+    border-radius: 70px !important;
+    width: 80% !important;
+    font-size: 13px !important;
+}
+
+.submit:hover {
+    background-color: #ffa600d7 !important;
+}
+
+.search-homepage-customer {
+    border-radius: 4px;
+    width: 80%;
+    margin-left: 5%;
+    height: 85%;
+    align-items: center;
+    display: flex;
+    background-color: rgba(117, 115, 111, 0.05) !important;
+}
+
+.formcontrol-sorting {
+    width: 100% !important;
+}
