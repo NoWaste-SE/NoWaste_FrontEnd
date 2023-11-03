@@ -2,18 +2,20 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 function TokenRefreshComponent() {
-    const refresh_token = localStorage.getItem("refresh_token");
+    const refresh_token = JSON.parse(localStorage.getItem("refresh_token"));
     const sendingData = {
         refresh: refresh_token
     };
+    console.log(sendingData);
     const refreshAccessToken = async () => {
         try {
-            const response = await axios.post('http://188.121.124.63/api/token/refresh/', { sendingData });
+            const response = await axios.post('http://188.121.124.63/api/token/refresh/', sendingData);
             console.log(response.data);
             const newAccessToken = response.data.access;
+            
             console.log("Token refresh successful - New access token: " + newAccessToken);
 
-            localStorage.setItem('token', newAccessToken);
+            localStorage.setItem('token', newAccessToken.toString());
         } catch (error) {
             console.error('Token refresh failed:', error);
         }
