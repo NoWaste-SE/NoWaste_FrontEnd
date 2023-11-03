@@ -15,7 +15,7 @@ function TokenRefreshComponent() {
             
             console.log("Token refresh successful - New access token: " + newAccessToken);
 
-            localStorage.setItem('token', newAccessToken.toString());
+            localStorage.setItem('token', JSON.stringify(newAccessToken));
         } catch (error) {
             console.error('Token refresh failed:', error);
         }
