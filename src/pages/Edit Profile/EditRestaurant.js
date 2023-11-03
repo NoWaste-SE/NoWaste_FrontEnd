@@ -136,6 +136,7 @@ function EditRestaurant(props){
     const [foodName, setFoodName] = useState('');
     const [foodNameError, setFoodNameError] = useState(false);
     const [foodPicture, setFoodPicture] = useState('');
+    const [foodPicture2, setFoodPicture2] = useState('');
     const [foodIngredient, setFoodIngredient] = useState('');
     const [foodIngredientError, setFoodIngredientError] = useState(false);
     const [remainFood, setRemainFood] = useState(0);
@@ -146,6 +147,7 @@ function EditRestaurant(props){
     const [openEdit, setOpenEdit] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
     const [updateFoodPic, setUpdateFoodPic] = useState('');
+    const [updateFoodPic2, setUpdateFoodPic2] = useState('');
     const [countries, setCountries] = useState([]);
     const [cities, setCities] = useState();
     const [lat, setLat] = useState();
@@ -162,6 +164,7 @@ function EditRestaurant(props){
     const history = useHistory();
     const [showMap, setShowMap] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
+    const [showSecondImage, setShowSecondImage] = useState(null);
     
     const showCroppedImage = useCallback(async () => {
         try {
@@ -271,7 +274,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                // 'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -376,6 +379,7 @@ function EditRestaurant(props){
         setFoodIngredient(food.ingredients);
         setRemainFood(food.remainder);
         setFoodPicture(food.food_pic);
+        setFoodPicture2(food.food_pic2);
     }, [food]);
 
     const handleClose = () => {
@@ -417,12 +421,30 @@ function EditRestaurant(props){
         }
     };
 
+    const handleFoodPicture2 = (e) => {
+        const file1 = e.target.files[0];
+        const fileSize1 = file1.size;
+        if(fileSize1 > MAX_FILE_SIZE){
+            e.target.value = null;
+            setFoodPicture2(null);
+            return;
+        } else {
+            const reader1 = new FileReader();
+            reader1.readAsDataURL(file1);
+            reader1.onloadend = () => {
+                setFoodPicture2(reader1.result);
+                setUpdateFoodPic2({...updateFoodPic2, food_pic2: reader1.result});
+            };
+        }
+    };
+
     useEffect(() => {
         setFoodName('');
         setFoodIngredient('');
         setFoodPrice('');
         setRemainFood('');
         setFoodPicture('');
+        setFoodPicture2('');
     }, [openAdd]);
 
     const handleFoodName = (e) => {
@@ -474,7 +496,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH,PUT,DELETE",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                // 'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -493,7 +515,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                // 'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then(()=> {
@@ -572,6 +594,7 @@ function EditRestaurant(props){
             price: foodPrice, 
             ingredients: foodIngredient, 
             food_pic: foodPicture,
+            food_pic2: foodPicture2,
             remainder: remainFood,
             restaurant_id: idR
         };
@@ -603,6 +626,7 @@ function EditRestaurant(props){
             price: foodPrice,
             ingredients: foodIngredient,
             food_pic: foodPicture,
+            food_pic2: foodPicture2,
             remainder: remainFood,
             restaurant_id: idR
         };
@@ -612,7 +636,7 @@ function EditRestaurant(props){
             userData, 
             {headers:{
                 "Content-Type" : "application/json", 
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                // 'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then(() => {
@@ -648,6 +672,14 @@ function EditRestaurant(props){
         setShowMap(false);
         setBlurBackground(false);
     };
+
+    const isBase64 = (str) => {
+        try {
+          return btoa(atob(str)) == str;
+        } catch (err) {
+          return false;
+        }
+      };
 
     return ( 
         <ThemeProvider theme={theme}>
@@ -1024,32 +1056,67 @@ function EditRestaurant(props){
                                                 >
                                                     Add Food
                                                 </DialogTitle>
-                                                <Avatar
-                                                    className="food-avatar"
-                                                    style={{backgroundColor: color}}
-                                                    src={foodPicture}
-                                                >
-                                                    F
-                                                </Avatar>
-                                                <input
-                                                    accept="image/*"
-                                                    id="food-image-input"
-                                                    type="file"
-                                                    onChange={handleFoodPicture}
-                                                    hidden      
-                                                    MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                />
-                                                <label 
-                                                    htmlFor="food-image-input" 
-                                                    className="food-image-button"
-                                                >
-                                                    <Button 
-                                                        className="upload-button" 
-                                                        component="span"
-                                                    >
-                                                        Upload food image
-                                                    </Button>
-                                                </label>
+                                                <Grid container spacing={2}>
+                                                    <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                        <Avatar
+                                                        className="food-avatar"
+                                                        style={{backgroundColor: color}}
+                                                        src={foodPicture}
+                                                        >
+                                                            F
+                                                        </Avatar>
+                                                        <input
+                                                            accept="image/*"
+                                                            id="food-image-input"
+                                                            type="file"
+                                                            onChange={handleFoodPicture}
+                                                            hidden      
+                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
+                                                        />
+                                                        <label 
+                                                            htmlFor="food-image-input" 
+                                                            className="food-image-button"
+                                                        >
+                                                            <Button 
+                                                                className="upload-button" 
+                                                                component="span"
+                                                            >
+                                                                Upload the first food image
+                                                            </Button>
+                                                        </label>
+                                                    </Grid>
+                                                    <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                        
+                                                        <Avatar
+                                                        className="food-avatar"
+                                                        style={{backgroundColor: color}}
+                                                        src={foodPicture2}
+                                                        >
+                                                            F
+                                                        </Avatar>
+                                                        <input
+                                                            accept="image/*"
+                                                            id="food-image-input2"
+                                                            type="file"
+                                                            onChange={handleFoodPicture2}
+                                                            hidden      
+                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
+                                                        />
+                                                        <label 
+                                                            htmlFor="food-image-input2" 
+                                                            className="food-image-button"
+                                                        >
+                                                            <Button 
+                                                                className="upload-button" 
+                                                                component="span"
+                                                                disabled={!foodPicture}
+                                                            >
+                                                                Upload the second food image
+                                                            </Button>
+                                                        </label>
+                                                    </Grid>
+
+                                                </Grid>
                                                 <TextField
                                                     label="Name"
                                                     variant="outlined"
@@ -1161,12 +1228,18 @@ function EditRestaurant(props){
                                                         >
                                                             <Grid container spacing={4}>
                                                                 <Grid item lg={3} md={3} sm={3} >
-                                                                    <img 
-                                                                        src={res.food_pic} 
-                                                                        className="food-image"
-                                                                    />
+                                                                    <div
+                                                                        className="food-image-container"
+                                                                        onMouseEnter={() => setShowSecondImage(res.id)}
+                                                                        onMouseLeave={() => setShowSecondImage(null)}
+                                                                    >
+                                                                        <img
+                                                                            src={showSecondImage === res.id && res.food_pic2!=null ? res.food_pic2 : res.food_pic}
+                                                                            className="food-image"
+                                                                        />
+                                                                    </div>
                                                                 </Grid>
-                                                                <Grid item lg={5} md={5} sm={4}>
+                                                                <Grid item lg={5} md={5} sm={4} className='edit-food-grid'>
                                                                     <Typography 
                                                                         className="food-name"
                                                                     >
@@ -1178,7 +1251,7 @@ function EditRestaurant(props){
                                                                         {res.ingredients}
                                                                     </Typography>
                                                                 </Grid>
-                                                                <Grid item lg={2} md={2} sm={2}>
+                                                                <Grid item lg={2} md={2} sm={2} className='edit-food-grid'>
                                                                     <Typography 
                                                                         className="food-price-menu"
                                                                     >
@@ -1190,7 +1263,7 @@ function EditRestaurant(props){
                                                                         {res.remainder} remain
                                                                     </Typography>
                                                                 </Grid>
-                                                                <Grid item lg={2} md={2} sm={3}>
+                                                                <Grid item lg={2} md={2} sm={3} className='edit-food-grid'>
                                                                     <Button 
                                                                         className="food-edit" 
                                                                         id="food-edit-button" 
@@ -1211,32 +1284,69 @@ function EditRestaurant(props){
                                                             >
                                                                 Edit Food
                                                             </DialogTitle>
-                                                            <Avatar
-                                                                className="food-avatar"
-                                                                style={{backgroundColor: color}}
-                                                                src={foodPicture}
-                                                            >
-                                                                F
-                                                            </Avatar>
-                                                            <input
-                                                                accept="image/*"
-                                                                id="edit-food-image-input"
-                                                                type="file"
-                                                                onChange={handleFoodPicture}
-                                                                hidden      
-                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                            />
-                                                            <label 
-                                                                htmlFor="edit-food-image-input" 
-                                                                className="food-image-button"
-                                                            >
-                                                                <Button 
-                                                                    className="upload-button" 
-                                                                    component="span"
-                                                                >
-                                                                    Upload food image
-                                                                </Button>
-                                                            </label>
+                                                            <Grid container spacing={2}>
+                                                                <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                                    <Avatar
+                                                                    className="food-avatar"
+                                                                    style={{backgroundColor: color}}
+                                                                    src={foodPicture}
+                                                                    >
+                                                                        F
+                                                                    </Avatar>
+                                                                    <input
+                                                                        accept="image/*"
+                                                                        id="edit-food-image-input"
+                                                                        type="file"
+                                                                        onChange={handleFoodPicture}
+                                                                        hidden      
+                                                                        MAX_FILE_SIZE={MAX_FILE_SIZE}                   
+                                                                    />
+                                                                    <label 
+                                                                        htmlFor="edit-food-image-input" 
+                                                                        className="food-image-button"
+                                                                    >
+                                                                        <Button 
+                                                                            className="upload-button" 
+                                                                            component="span"
+                                                                        >
+                                                                            Upload the first food image
+                                                                        </Button>
+                                                                    </label>
+                                                                </Grid>
+                                                                <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                                    
+                                                                    <Avatar
+                                                                    className="food-avatar"
+                                                                    style={{backgroundColor: color}}
+                                                                    src={foodPicture2}
+                                                                    >
+                                                                        F
+                                                                    </Avatar>
+                                                                    <input
+                                                                        accept="image/*"
+                                                                        id="edit-food-image-input2"
+                                                                        type="file"
+                                                                        onChange={handleFoodPicture2}
+                                                                        hidden      
+                                                                        MAX_FILE_SIZE={MAX_FILE_SIZE}                   
+                                                                    />
+                                                                    <label 
+                                                                        htmlFor="edit-food-image-input2" 
+                                                                        className="food-image-button"
+                                                                    >
+                                                                        <Button 
+                                                                            className="upload-button" 
+                                                                            component="span"
+                                                                            disabled={foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')}
+                                                                        >
+                                                                            Upload the second food image
+                                                                        </Button>
+                                                                    </label>
+                                                                </Grid>
+
+                                                            </Grid>
+                                                            
+                                                            
                                                             <TextField
                                                                 label="Name"
                                                                 variant="outlined"
