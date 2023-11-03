@@ -4,13 +4,13 @@ import axios from 'axios';
 function TokenRefreshComponent() {
     const refresh_token = localStorage.getItem("refresh_token");
     const sendingData = {
-        access: refresh_token
+        refresh: refresh_token
     };
     const refreshAccessToken = async () => {
         try {
             const response = await axios.post('http://188.121.124.63/api/token/refresh/', { sendingData });
             console.log(response.data);
-            const newAccessToken = response.data.accessToken;
+            const newAccessToken = response.data.access;
             console.log("Token refresh successful - New access token: " + newAccessToken);
 
             localStorage.setItem('token', newAccessToken);
