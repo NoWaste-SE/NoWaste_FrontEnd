@@ -274,7 +274,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                // 'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -496,7 +496,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH,PUT,DELETE",
-                // 'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -515,7 +515,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                // 'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then(()=> {
@@ -636,7 +636,7 @@ function EditRestaurant(props){
             userData, 
             {headers:{
                 "Content-Type" : "application/json", 
-                // 'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then(() => {
