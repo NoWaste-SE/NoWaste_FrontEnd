@@ -6,7 +6,6 @@ function TokenRefreshComponent() {
     const sendingData = {
         refresh: refresh_token
     };
-    console.log(sendingData);
     const refreshAccessToken = async () => {
         try {
             const response = await axios.post('http://188.121.124.63/api/token/refresh/', sendingData);

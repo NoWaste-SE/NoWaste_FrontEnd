@@ -23,12 +23,21 @@ import TokenRefreshComponent from './components/JWT/TokenRefreshComponent';
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const isAuthenticated = localStorage.getItem("token") !== null;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  console.log(isAuthenticated);
 
   useEffect(() => {
-      window.addEventListener("load", () => {
-        setLoading(false);
-      })
+    const token = localStorage.getItem('token');
+    if (token && token.length > 2) {
+      setIsAuthenticated(true);
+    } 
+    else {
+      setIsAuthenticated(false);
+    }
+
+    window.addEventListener('load', () => {
+      setLoading(false);
+    });
   }, []);
 
   return (
