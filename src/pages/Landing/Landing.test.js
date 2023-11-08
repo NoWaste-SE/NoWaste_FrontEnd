@@ -4,8 +4,9 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import Landing from './Landing';
 import { createRoot } from 'react-dom/client';
+import '@testing-library/jest-dom/extend-expect';
 
-test('Renders loading spinner initially', () => {
+it('Renders loading spinner initially', () => {
   const history = createMemoryHistory();
   const root = createRoot(document.createElement('div'));
   root.render(
@@ -15,29 +16,23 @@ test('Renders loading spinner initially', () => {
   );
 });
 
-test('Renders buttons after loading', async () => {
-  const history = createMemoryHistory();
+// test('Renders buttons after loading', async () => {
+//   const history = createMemoryHistory();
 
-  await act(() => {
-    render(
-      <Router history={history}>
-        <Landing />
-      </Router>
-    );
-  });
+//   await act(() => {
+//     render(
+//       <Router history={history}>
+//         <Landing />
+//       </Router>
+//     );
+//   });
 
-  // Wait for the loading spinner to disappear
-  await waitFor(() => {
-    expect(screen.queryByRole('button', { name: 'Log in' })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: 'Sign up' })).toBeInTheDocument();
-  });
+//   await waitFor(() => {
+//     expect(screen.queryByRole('button', { name: 'Log in' })).toBeInTheDocument();
+//     expect(screen.queryByRole('button', { name: 'Sign up' })).toBeInTheDocument();
+//   });
+// });
 
-  const loginButton = screen.getByRole('button', { name: /Log in/i });
-  const signupButton = screen.getByRole('button', { name: /Sign up/i });
-
-  expect(loginButton).toBeInTheDocument();
-  expect(signupButton).toBeInTheDocument();
-});
 test('Clicking login button navigates to the login page', async () => {
   const history = createMemoryHistory();
 
@@ -49,7 +44,6 @@ test('Clicking login button navigates to the login page', async () => {
     );
   });
 
-  // Wait for the loading spinner to disappear
   await waitFor(() => {
     expect(screen.queryByRole('button', { name: 'Log in' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Sign up' })).toBeInTheDocument();
@@ -57,11 +51,34 @@ test('Clicking login button navigates to the login page', async () => {
 
   const loginButton = screen.getByRole('button', { name: /Log in/i });
 
-  // Wrap the click event in act()
   act(() => {
     fireEvent.click(loginButton);
   });
 
-  // Ensure that navigation occurred
   expect(history.location.pathname).toBe('/login');
+});
+
+test('Clicking sign up button navigates to the signup page', async () => {
+  const history = createMemoryHistory();
+
+  await act(() => {
+    render(
+      <Router history={history}>
+        <Landing />
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.queryByRole('button', { name: 'Log in' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Sign up' })).toBeInTheDocument();
+  });
+
+  const signupButton = screen.getByRole('button', { name: /Sign up/i });
+
+  act(() => {
+    fireEvent.click(signupButton);
+  });
+
+  expect(history.location.pathname).toBe('/sign-up');
 });
