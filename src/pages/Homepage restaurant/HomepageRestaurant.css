@@ -1,14 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Courgette&family=Playball&display=swap');
 
-.grid-homepage-restaurant {
-    margin-top: 2% !important;
-    padding-right: -10% !important;
-    margin-left: 30px !important;
-    margin-right: -200px !important;
-    overflow-x: hidden;
-}
-
 .home-res-title {
     text-align: center;
     font-family: 'Montserrat', sans-serif !important;
@@ -118,13 +110,17 @@
 }
 
 .homepage-restaurant-card {
-    height: 200px !important;
-    width: 200px !important;
-    margin: 7% !important;
+    margin-left: 8% !important;
     border-radius: 5px !important;
 }
 
-.homepage-restaurant-card-restaurant .restaurant-phone, .homepage-restaurant-card-restaurant .restaurant-address {
+.homepage-restaurant-grid{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.restaurant-phone, .restaurant-address {
     margin-bottom: 2px !important;
     align-items: center !important;
 }
@@ -133,10 +129,6 @@
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
     margin-bottom: 2% !important;
 }
 
@@ -148,5 +140,20 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 960px) {
+    .homepage-restaurant-card {
+        margin-left: 0 !important;
+    }
+    .home-page-rs-add{
+        width: auto !important;
+    }
+}
+
+@media (min-width: 890px) and (max-width: 899px) {
+    .home-res-title{
+        margin-bottom: 83% !important;
     }
 }

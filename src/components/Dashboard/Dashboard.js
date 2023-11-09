@@ -103,7 +103,7 @@ export default function Dashboard(){
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET,PATCH',
-                Authorization: 'Token ' + token.slice(1, -1),
+                Authorization: 'Bearer ' + token.slice(1, -1),
             }}
         )
         .then((response) => {
@@ -120,10 +120,13 @@ export default function Dashboard(){
             if (orderHistory) {
                 const newRows = orderHistory.map((order) => {
                 const restaurant_name = order.restaurantDetails.name;
+                let price_tmp = 0;
+                let price = 0;
                 let orderText = order.orderDetails.orderItems
                     .map((item) => `${item.quantity}×${item.name_and_price.name}`)
                     .join(', ');
-                const price = order.orderDetails.Subtotal_Grandtotal_discount[1];
+                price_tmp = order.orderDetails.orderItems
+                    .map((item) => price += item.quantity * Number(item.name_and_price.price)); 
                 const date = new Date(order.created_at).toISOString().split('T')[0];
                 const status = order.status;
                 const restaurant_id = order.restaurantDetails.id;
@@ -277,7 +280,7 @@ export default function Dashboard(){
                 <Grid container spacing={2} 
                     className="dashboard-grid"
                 >
-                    <Grid item lg={4} md={12} sm={12} xs={12}>
+                    <Grid item lg={4} md={4} sm={4} xs={12}>
                         <Box 
                             className="dashboard-box" 
                             id="favorite-restaurants-box"
@@ -296,13 +299,13 @@ export default function Dashboard(){
                                     onClick={() => handleShowFavoriteRestaurant(res.id)}
                                 >
                                     <Grid container spacing={2}>
-                                        <Grid item lg={5} md={3} sm={4} xs={4} >
+                                        <Grid item lg={6} md={6} sm={4} xs={4} >
                                             <img 
                                                 src={res.restaurant_image} 
                                                 className="favorite-restaurant-image"
                                             />
                                         </Grid>
-                                        <Grid item lg={7} md={7} sm={8} xs={8}>
+                                        <Grid item lg={6} md={6} sm={8} xs={8}>
                                             <Typography 
                                                 className="dashboard-restaurant-name"
                                             >
@@ -323,7 +326,7 @@ export default function Dashboard(){
                         
                         />
                     ) : (
-                    <Grid item lg={8} md={12} sm={12} xs={12}>
+                    <Grid item lg={8} md={8} sm={8} xs={12}>
                         <Box 
                             className="dashboard-box" 
                             id="order-history-box"
