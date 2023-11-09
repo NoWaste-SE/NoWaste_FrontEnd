@@ -127,6 +127,10 @@
     border-radius: 7px !important;
 }
 
+.favorite-restaurant-image:hover{
+    cursor: pointer;
+}
+
 .dashboard-title {
     text-align: center;
     font-family: 'Montserrat', sans-serif !important;
