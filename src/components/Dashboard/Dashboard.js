@@ -19,6 +19,7 @@ import Pagination from '@mui/material/Pagination';
 import CommentIcon from '@mui/icons-material/Comment';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 import PulseLoader from "react-spinners/PulseLoader";
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 
 const theme = createTheme({
     palette: {
@@ -103,7 +104,7 @@ export default function Dashboard(){
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET,PATCH',
-                Authorization: 'Bearer ' + token.slice(1, -1),
+                // Authorization: 'Bearer ' + token.slice(1, -1),
             }}
         )
         .then((response) => {
@@ -266,6 +267,24 @@ export default function Dashboard(){
         }); 
     }
 
+    const handleClickOnDownloadExel = () => {
+        axios.get(
+            `http://188.121.124.63/restaurant/excel/customer/${restaurantId}/${id}/order-history`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <div 
@@ -296,13 +315,13 @@ export default function Dashboard(){
                             {favoriteRestaurant && favoriteRestaurant.map((res, index) => (
                                 <Box 
                                     className="dashboard-restaurant-box" 
-                                    onClick={() => handleShowFavoriteRestaurant(res.id)}
                                 >
                                     <Grid container spacing={2}>
                                         <Grid item lg={6} md={6} sm={4} xs={4} >
                                             <img 
                                                 src={res.restaurant_image} 
                                                 className="favorite-restaurant-image"
+                                                onClick={() => handleShowFavoriteRestaurant(res.id)}
                                             />
                                         </Grid>
                                         <Grid item lg={6} md={6} sm={8} xs={8}>
@@ -412,6 +431,11 @@ export default function Dashboard(){
                                                 </>
                                             )}
                                         </TableCell>
+                                        <TableCell 
+                                            align="left"
+                                        >
+                                            Download excel
+                                        </TableCell>
                                     </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -448,6 +472,14 @@ export default function Dashboard(){
                                                             </IconButton>
                                                         </Tooltip>
                                                     )}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    <IconButton
+                                                        onClick={handleClickOnDownloadExel}
+                                                        color="inherit"
+                                                    >
+                                                        <SimCardDownloadIcon fontSize="normal"/>
+                                                    </IconButton>
                                                 </TableCell>
                                             </TableRow>
                                             ))}
