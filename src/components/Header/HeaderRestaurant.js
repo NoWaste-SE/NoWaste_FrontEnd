@@ -8,7 +8,6 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EmailIcon from '@mui/icons-material/Email';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const HeaderRestaurant = memo(() => {
     const [auth, setAuth] = useState(true);
@@ -63,26 +62,6 @@ const HeaderRestaurant = memo(() => {
         history.push('/chats');
     };
 
-    const handleClickOnDownloadExel = () => {
-        const manager_id = localStorage.getItem('id');
-        console.log(manager_id);
-        axios.get(
-            `http://188.121.124.63/restaurant/excel/manager/${manager_id}/order-history`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error.response);
-        });
-    };
-
     return ( 
         <>
             <AppBar 
@@ -101,14 +80,6 @@ const HeaderRestaurant = memo(() => {
                     />
                     {auth && (
                         <div >
-                            <IconButton
-                                size='large'
-                                onClick={handleClickOnDownloadExel}
-                                color="inherit"
-                                title='Download excel'
-                            >
-                                <FileDownloadIcon fontSize="normal"/>
-                            </IconButton>
                             <IconButton
                                 size='large'
                                 onClick={handleClickOnChat}

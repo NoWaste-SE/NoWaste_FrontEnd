@@ -24,6 +24,12 @@ import { createTheme } from '@material-ui/core';
 import AddPagination from '../../components/Pagination/Pagination';
 import { makeStyles } from '@mui/styles';
 import PulseLoader from "react-spinners/PulseLoader";
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
+
 
 const useStyles = makeStyles({
     ul: {
@@ -138,6 +144,35 @@ const RestaurantView = (props: Props) => {
     const [openComments, setOpenComments] = React.useState(false);
     const [comments, setComments] = useState([]); 
     const [loading, setLoading] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [placement, setPlacement] = useState();
+    const [checkChat, setCheckChat] = useState(false);
+
+    const handleClickChat = (newPlacement) => (event) => {
+        setAnchorEl(event.currentTarget);
+        setOpen(true);
+        setPlacement(newPlacement);
+        setCheckChat(true);
+    };
+
+    const handleClickOnDownloadExel = () => {
+        axios.get(
+            `http://188.121.124.63/restaurant/excel/customer/${managerId}/${customer_id}/order-history`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    };
 
     useEffect(()=>{
         console.log("restaurant is :" + restaurant);
@@ -624,11 +659,45 @@ const RestaurantView = (props: Props) => {
                     </Grid>
                     <BackToTop/>
                 </Grid>
-                <Chat 
-                    reciever={managerId} 
-                    sender={customer_id} 
-                    restaurant={restaurant}
-                />
+                <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 , position: "fixed", left: "119px", bottom: "20px",zIndex:'1000'}}>
+                    <SpeedDial
+                        ariaLabel="SpeedDial basic example"
+                        sx={{ position: 'absolute', bottom: 16, right: 16}}
+                        icon={<SpeedDialIcon/>}
+                        FabProps={{
+                            sx: {
+                                    bgcolor: '#ffa600',
+                                    '&:hover': {
+                                        bgcolor: '#ffa600',
+                                    }
+                                }
+                            }}
+                    >
+                        <SpeedDialAction
+                            key='exel'
+                            icon={<SimCardDownloadIcon/>}
+                            tooltipTitle='Download Excel Order History'
+                            onClick={handleClickOnDownloadExel}   
+                        />
+                        <SpeedDialAction
+                            key='chat'
+                            icon={<HeadsetMicIcon/>}
+                            tooltipTitle='Chat with Restaurant Manager'
+                            onClick={handleClickChat('right')}   
+                        />
+                    </SpeedDial>
+                    {checkChat &&
+                        <Chat 
+                        reciever={managerId} 
+                        sender={customer_id} 
+                        restaurant={restaurant}
+                        placement={placement}
+                        open={open}
+                        setOpen={setOpen}
+                        anchorEl={anchorEl}
+                        />
+                    }
+                </Box>
                 <Box 
                     justifyContent='center' 
                     alignItems='center' 
