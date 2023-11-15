@@ -39,7 +39,6 @@
     width: 90%;
     font-weight: bold !important;
     font-family: 'Montserrat', sans-serif !important;
-    margin: 10px auto !important;
 }
 
 .edit-root {
@@ -353,6 +352,14 @@
     transform: translate(-50%, 0) !important;
     width: 90% !important;
 }
+
+.edit-food-grid{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+
 @media (max-width: 576px) {
     .edit-error {
         font-size: 1em;
@@ -404,5 +411,27 @@
 
     .item.address {
         margin-top: 10px !important;
+    }
+
+    /* .edit-title {
+        margin-top: 40% !important;
+    } */
+}
+
+@media(min-width: 628px) and (max-width: 960px){
+    .edit-title {
+        margin-top: 40% !important;
+    }
+}
+
+@media(min-width: 508px) and (max-width: 628px){
+    .edit-title {
+        margin-top: 80% !important;
+    }
+}
+
+@media(min-width: 408px) and (max-width: 508px){
+    .edit-title {
+        margin-top: 111% !important;
     }
 }

@@ -83,10 +83,10 @@ const HeaderCustomer = memo(() => {
         axios.post(
             "http://188.121.124.63/user/charge-wallet/", 
             userData,
-            {header: {
+            {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "POST,PATCH",
+                "Access-Control-Allow-Methods" : "POST",
                 'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
@@ -118,7 +118,8 @@ const HeaderCustomer = memo(() => {
     const handleBackToHome = (e) => {
         history.push("/homepage-customer");
     };
-    
+
+
     return ( 
         <>
             <AppBar 

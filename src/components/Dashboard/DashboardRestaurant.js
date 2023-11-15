@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 import PulseLoader from "react-spinners/PulseLoader";
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 
 const theme = createTheme({
     palette: {
@@ -86,7 +87,7 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                // 'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -108,16 +109,18 @@ export default function DashboardRestaurant(){
             const customer_name = order.userDetails.name;
             const customer_email = order.userDetails.email;
             let orderText = "";
+            let price_tmp = 0;
+            let price = 0;
             if (order.orderDetails.orderItems && order.orderDetails.orderItems.length >= 0) {
-            orderText = order.orderDetails.orderItems
-                .map((item) => `${item.quantity}×${item.name_and_price.name}`)
-                .join(', ');
-                
+                orderText = order.orderDetails.orderItems
+                    .map((item) => `${item.quantity}×${item.name_and_price.name}`)
+                    .join(', ');
+                    
+                price_tmp = order.orderDetails.orderItems
+                    .map((item) => price += item.quantity * Number(item.name_and_price.price));  
             } else {
                 orderText = "No item";
             }
-            console.log("order row is: " );
-            const price = order.orderDetails.Subtotal_Grandtotal_discount[1];
             const date = new Date(order.created_at).toISOString().split('T')[0];
             const status = order.status;
             const restaurant_id = order.orderDetails.restaurantDetails.id;
@@ -216,6 +219,24 @@ export default function DashboardRestaurant(){
         }); 
     }
 
+    const handleClickOnDownloadExel = () => {
+        axios.get(
+            `http://188.121.124.63/restaurant/excel/manager/${id}/order-history`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <div 
@@ -243,15 +264,30 @@ export default function DashboardRestaurant(){
                         <Box 
                             className="dashboard-box" 
                             id="order-history-box"
+                            
                         >
-                            <Typography
-                                variant="h5" 
-                                color="textPrimary"
-                                gutterBottom
-                                className="dashboard-title-manager"
-                            >
-                                Order history
-                            </Typography>
+                            <Grid container alignItems="center" justify="center">
+                                <Grid item md={11} xs={10} >
+                                    <Typography
+                                        variant="h5"
+                                        color="textPrimary"
+                                        gutterBottom
+                                        className="dashboard-title-manager"
+                                    >
+                                        Order history
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={1} xs={2} style={{ textAlign: 'right' }}>
+                                    <IconButton
+                                        size='large'
+                                        onClick={handleClickOnDownloadExel}
+                                        color="inherit"
+                                        title='Download Excel Order History'
+                                    >
+                                        <SimCardDownloadIcon fontSize="large"/>
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
                             <TableContainer component={Paper}>
                                 <Table 
                                     sx={{ minWidth: 650 }} 
@@ -260,6 +296,7 @@ export default function DashboardRestaurant(){
                                     <TableHead>
                                     <TableRow>
                                         <TableCell 
+                                            sx={{ minWidth: "110px" }}
                                             onClick={() => handleSort('name')}
                                         >
                                             Restaurant name
@@ -278,7 +315,7 @@ export default function DashboardRestaurant(){
                                             )}
                                         </TableCell>
 
-                                        <TableCell onClick={() => handleSort('customer_name')}>
+                                        <TableCell onClick={() => handleSort('customer_name')} sx={{ minWidth: "110px" }}>
                                             Customer name
                                             {sortConfig.field === 'customer-name' && (
                                                 <>

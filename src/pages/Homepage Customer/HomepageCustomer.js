@@ -96,6 +96,7 @@ const HomepageCustomer = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
+        console.log(token);
         axios.get(
             `http://188.121.124.63/restaurant/restaurant-search/`,
             {headers: {
