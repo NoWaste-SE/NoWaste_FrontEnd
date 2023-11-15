@@ -13,7 +13,6 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const HeaderCustomer = memo(() => {
     const [auth, setAuth] = useState(true);
@@ -119,26 +118,7 @@ const HeaderCustomer = memo(() => {
     const handleBackToHome = (e) => {
         history.push("/homepage-customer");
     };
-    
-    const handleClickOnDownloadExel = () => {
-        const user_id = localStorage.getItem('id');
-        console.log(user_id);
-        axios.get(
-            `http://188.121.124.63/restaurant/excel/customer/${user_id}/order-history`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error.response);
-        });
-    };
+
 
     return ( 
         <>
@@ -165,14 +145,6 @@ const HeaderCustomer = memo(() => {
                                     <ShoppingCartIcon onClick={handleCart}/>
                                 </Badge>
                             </IconButton> */}
-                            <IconButton
-                                size='large'
-                                onClick={handleClickOnDownloadExel}
-                                color="inherit"
-                                title='Download excel'
-                            >
-                                <FileDownloadIcon fontSize="normal"/>
-                            </IconButton>
                             <IconButton
                                 size='large'
                                 onClick={handleDashboard}

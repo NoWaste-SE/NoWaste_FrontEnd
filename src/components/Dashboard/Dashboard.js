@@ -269,7 +269,7 @@ export default function Dashboard(){
 
     const handleClickOnDownloadExel = () => {
         axios.get(
-            `http://188.121.124.63/restaurant/excel/customer/${restaurantId}/${id}/order-history`,
+            `http://188.121.124.63/restaurant/excel/customer/${id}/order-history`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -350,14 +350,28 @@ export default function Dashboard(){
                             className="dashboard-box" 
                             id="order-history-box"
                         >
-                            <Typography
-                                variant="h5" 
-                                color="textPrimary"
-                                gutterBottom
-                                className="dashboard-title-manager"
-                            >
-                                Order History
-                            </Typography>
+                            <Grid container alignItems="center" justify="center">
+                                <Grid item md={11} xs={10} >
+                                    <Typography
+                                        variant="h5"
+                                        color="textPrimary"
+                                        gutterBottom
+                                        className="dashboard-title-manager"
+                                    >
+                                        Order history
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={1} xs={2} style={{ textAlign: 'right' }}>
+                                    <IconButton
+                                        size='large'
+                                        onClick={handleClickOnDownloadExel}
+                                        color="inherit"
+                                        title='Download Excel Order History'
+                                    >
+                                        <SimCardDownloadIcon fontSize="large"/>
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
                             <TableContainer component={Paper}>
                                 <Table 
                                     sx={{ minWidth: 650 }} 
@@ -431,11 +445,6 @@ export default function Dashboard(){
                                                 </>
                                             )}
                                         </TableCell>
-                                        <TableCell 
-                                            align="left"
-                                        >
-                                            Download excel
-                                        </TableCell>
                                     </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -472,14 +481,6 @@ export default function Dashboard(){
                                                             </IconButton>
                                                         </Tooltip>
                                                     )}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    <IconButton
-                                                        onClick={handleClickOnDownloadExel}
-                                                        color="inherit"
-                                                    >
-                                                        <SimCardDownloadIcon fontSize="normal"/>
-                                                    </IconButton>
                                                 </TableCell>
                                             </TableRow>
                                             ))}
