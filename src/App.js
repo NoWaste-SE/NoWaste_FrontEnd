@@ -43,7 +43,7 @@ function App() {
     //       <SpinningBubbles color="#ffffff" />
     //     </div>
     //   ) : (
-      <Router>
+      <Router basename="/nowaste">
           <Route path="/sign-up">
             <SignUp />
           </Route>
