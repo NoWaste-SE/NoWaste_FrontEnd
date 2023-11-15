@@ -1,0 +1,72 @@
+.homepage-custumer-card-restaurant {
+    width: 90%;
+    height: auto;
+    position: relative !important;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 50%;
+    overflow: hidden;
+    border-radius: 5 !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important;
+}
+
+.homepage-custumer-card-restaurant:hover {
+    transform: scale(1.05);
+    transition-duration: 5s !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(187, 32, 32, 0.585) 0px 8px 16px -8px !important;
+}
+
+.restaurant-name-hemepage-customer {
+    font-size: 1.5em !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+h4 {
+    width: 1.7rem;
+    text-align: center;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.homepage-customer-icon{
+    background-color: rgba(0, 0, 0, 0) !important;
+    margin-left: 25%;
+    margin-right: 0%;
+}
+
+.description-homepage-customer {
+    display: flex !important;
+    position: relative !important;
+    margin-top: 3% !important;
+    font-size: 1em !important;
+}
+
+.homepage-custumer-card-restaurant-single {
+    width: 270px;
+    margin-left: 45px !important;
+    margin-top: 13px !important;
+}
+
+.restaurant-card-animation {
+    animation: fade-in 1s ease-in-out !important;
+} 
+
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

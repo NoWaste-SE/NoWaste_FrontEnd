@@ -1,0 +1,70 @@
+.chat-poper {
+    z-index: 2;
+}
+
+.chatPage {
+    width: 25vw;
+    height: 60vh;
+    display: flex;
+    background-color: rgb(239, 235, 229) !important;
+    background-image: url(/public/Chat-background.png);
+    background-size: contain;
+    margin-bottom: 2%;
+    margin-left: 10%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important;
+}
+
+.chatContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.chat-header {
+    background-color:#e74c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.chat-title {
+    font-family: 'Montserrat', sans-serif !important;
+    margin-top: 4% !important;
+}
+
+.inputBox {
+    margin-top: 8%;
+    padding-bottom: -5% !important;
+    box-sizing: border-box;
+    display: flex;
+    border-radius:4% 0 4% 0;
+    background-color: white;
+}
+
+#chatInput{
+    font-size: 114.5%;
+    border-radius: 0 0 0 6%;
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    resize: none;
+    outline: none;
+    font-weight: 600;
+}
+
+.chat-send {
+    color: #ffa600; 
+}
+
+.chatBox{
+    height:70%;
+    box-sizing: border-box;  
+}
+
+.chat-time {
+    font-size: 68%;
+    position: absolute;
+    bottom: -4%;
+    right: 3%;
+}

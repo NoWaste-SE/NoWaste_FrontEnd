@@ -34,10 +34,11 @@
     "mapir-react-component": "^2.0.7",
     "material-ui-phone-number": "^3.0.0",
     "mdb-react-ui-kit": "^6.0.0",
-    "react": "^17.0.1",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-bootstrap-validation": "^0.1.11",
-    "react-dom": "^17.0.1",
+    "react-dom": "^18.2.0",
+    "react-easy-crop": "^5.0.2",
     "react-geolocated": "^4.1.0",
     "react-icons": "^4.8.0",
     "react-leaflet": "^3.2.5",
@@ -72,6 +73,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "web-vitals": "^3.3.0"
   }
 }
