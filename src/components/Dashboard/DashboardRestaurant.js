@@ -253,7 +253,7 @@ export default function DashboardRestaurant(){
                     type="bars"
                     color="black"
                     speedMultiplier={1}
-                    className="dashboard-spinner-manager"
+                    className="spinner-dashboard"
                     
                     />
                 ) : (
