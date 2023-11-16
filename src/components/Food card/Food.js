@@ -193,6 +193,7 @@ const Food = (props) => {
                                 }
                                 onClick={handleAddToCartClick2}
                                 disabled={remainder === "there is no food"}
+                                data-test-id = '+button'
                             >
                                 +
                             </button>
