@@ -10,11 +10,13 @@
     background-image: url(/public/Chat-background.png);
     background-size: contain;
     margin-bottom: 2%;
+    margin-top: -60% !important;
     margin-left: 10%;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important;
 }
 
 .chatContainer {
+    position: relative;
     height: 100%;
     width: 100%;
 }
@@ -29,6 +31,7 @@
 .chat-title {
     font-family: 'Montserrat', sans-serif !important;
     margin-top: 4% !important;
+    margin-left: 8%;
 }
 
 .inputBox {
