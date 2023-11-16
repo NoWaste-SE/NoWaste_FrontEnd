@@ -358,7 +358,7 @@ const RestaurantView = (props: Props) => {
                 type="bars"
                 color="black"
                 speedMultiplier={1}
-                className="spinner"
+                className="spinner-restaurant-view"
                 />
             ) : (
             <>
