@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-.spinner-restaurant-view{
-    color: black !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    margin: auto !important;
-    margin-top: 20% !important;
-}
-
 .restaurant-view-back {
     background-color: #ffffff;
 }
