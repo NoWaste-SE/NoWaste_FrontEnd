@@ -226,12 +226,8 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
-        .then((response) => {
-            console.log(response.data);
-        })
         .catch((error) => {
             console.log(error.response);
         });
