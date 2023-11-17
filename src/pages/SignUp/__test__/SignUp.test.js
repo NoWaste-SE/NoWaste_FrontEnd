@@ -42,7 +42,7 @@ it('should render written text in input ', async() => {
     });
 });
 
-it("displays error messages for invalid inputs", async () => {
+it('displays error messages for invalid inputs', async () => {
     render(
         <MockedSignUp />
     );

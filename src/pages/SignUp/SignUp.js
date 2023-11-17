@@ -335,7 +335,6 @@ export default function SignUp(){
                                 color="primary"
                                 className="field"
                                 id="submit"
-                                data-testid="signup-button"
                                 disabled={!validInputs}
                                 onClick={handleSubmit}
                             >
