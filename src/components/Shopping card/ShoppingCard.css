@@ -2,103 +2,32 @@
     margin: 7px auto!important; 
     margin-left: 10px !important;
     margin-bottom: 7px auto !important;
-    background-color: rgba(222, 220, 220, 0.502);
-    height: 45% !important;
+    background-color: rgba(184, 181, 181, 0.502);
+    height: 30% !important;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     border-color: black;
     width: 97% !important;
-    border: 1px solid transparent; 
-    transition: border-color 0.3s ease; 
-    position:  relative !important;
-}
-
-.shopping-card-restaurant-box:hover {
-  border-color: black; /* Change border color on hover */
+  }
+  .shopping-card-restaurant-box {
+    transform: none;
 }
   
-.shopping-card-image {
-  width: 90% !important;
-  height: 100px !important;
-  margin-top: 4px !important;
-  margin-left: 3px !important;
-  border-radius: 7px !important;
-}
-
-.shopping-card-name {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bolder;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #ffffff; 
-  padding: 8px 20px; 
-  border-radius: 10px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  margin-bottom: 5px !important; 
-  /* margin-top: 5px !important; */
-}
-
-
-.shopping-card-order {
-  font-weight: bold !important;
-  margin-bottom: 8px;
-  font-family: 'Montserrat', sans-serif !important;
-  position: relative;
-  margin-right: 5px !important;
-}
-
-.shopping-card-price {
-  font-weight: bold !important;
-  font-family: 'Montserrat', sans-serif !important;
-  margin-right: 0% !important;
-  position: absolute !important;
-  right: 0;
-}
-
-.line {
-  border-bottom: 1px solid black; 
-  margin-top: 5px; 
-}
-
-.spinner-shopping-card {
-  display: flex !important;
-  text-align: center !important;
-  justify-content: center !important;
-  align-content: center !important;
-  align-items: center !important;
-  height: 100% !important;
-}
-
-.buttons-container-shopping-card {
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  text-align: center !important;
-  padding: 15px 0 !important;
-}
-
-.action-button-shopping-card {
-  padding: 8px 16px !important;
-  color: white;
-  border: none !important;
-  border-radius: 5px !important;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0 10px !important;
-}
-
-.button-1 {
-  background-color: #ffa600;
-}
-
-.button-2 {
-  background-color: #e74c3c;
-}
-
-/* .action-button-shopping-card:hover {
-  background-color: #0056b3;
-} */
+  .shopping-card-image {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .shopping-card-name {
+    display: flex;
+    text-align: center !important;
+    align-content: center !important;
+  }
+  
+  .shopping-card-order-list {
+    /* font-size: 16px;
+    margin-bottom: 8px; */
+  }
+  
