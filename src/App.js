@@ -48,7 +48,7 @@ function App() {
     //       <SpinningBubbles color="#ffffff" />
     //     </div>
     //   ) : (
-      <Router basename="/nowaste">
+      <Router>
           {isAuthenticated && <TokenRefreshComponent />}
           <Route path="/sign-up">
               <SignUp />
