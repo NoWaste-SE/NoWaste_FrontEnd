@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Fab from '@mui/material/Fab';
-import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import './Chat.css'
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
