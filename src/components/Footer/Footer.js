@@ -11,6 +11,7 @@ const Footer = () => {
             bgColor='light' 
             className='wrapper text-center text-lg-start text-muted' 
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)',}}
+            data-testid="footer-component" 
         >
             <br></br>
             <section  >
@@ -88,6 +89,7 @@ const Footer = () => {
                                 <a 
                                     href='https://twitter.com/NoWaste39' 
                                     className='me-2 text-reset'
+                                    data-testid="twitter-link"
                                 >
                                     <MDBIcon 
                                         fab 
@@ -105,6 +107,7 @@ const Footer = () => {
                                         fab 
                                         icon="instagram" 
                                         style={{fontSize: '120%' }}  
+                                        data-testid = "instagram-link"
                                     />
                                 </a>
                                 instagram.com/no_waste39
@@ -116,6 +119,7 @@ const Footer = () => {
             <div 
                 className='text-center p-4' 
                 style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
+                data-testid = "copyright-div"
             >
                 © 2023 Copyright: &nbsp;
                 <a 

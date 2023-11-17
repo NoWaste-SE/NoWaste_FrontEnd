@@ -172,6 +172,7 @@ export default function Verification(){
                                 variant="outlined"
                                 color="secondary"
                                 required
+                                placeholder="Code"
                                 className="field"
                                 value={code}
                                 onChange={handleCode}

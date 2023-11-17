@@ -37,7 +37,7 @@ export default function SignUp(){
     const [email, setEmail] = useState('');
     const [balance, setBalance] = useState(0);
     const [emailError, setEmailError] = useState(false);
-    const [fullname, setFullname] = useState('');
+    const [fullname, setFullname] = useState("");
     const [fullnameError, setFullnameError] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -221,6 +221,8 @@ export default function SignUp(){
                                 variant="outlined"
                                 color="secondary"
                                 required
+                                placeholder="Full name"
+                                data-testid="full-name"
                                 value={fullname}
                                 onChange={handleFullname}
                                 error={fullnameError}
@@ -245,6 +247,7 @@ export default function SignUp(){
                                 variant="outlined"
                                 color="secondary"
                                 required
+                                placeholder="Email address"
                                 value={email}
                                 onChange={handleEmailChange}
                                 error={emailError}
