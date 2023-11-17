@@ -163,19 +163,6 @@ h2 {
     transform: translateX(-9%) translateY(-25%) rotate(45deg);
 }
 
-.shopping-card-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40%;
-    height: 55% !important ;
-    background-color: #f8f8f8;
-    border-radius: 3%;
-    box-shadow: 35;
-    overflow-y: scroll !important;
-}
-
 @media(max-width: 360px) {
     .css-1bevcj6 {
         width: 30% !important;
