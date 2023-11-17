@@ -36,8 +36,7 @@ function ShoppingCard() {
         history.push(`/restaurant-view/${id}/`);
     }
 
-    const handleDeleteShopping = () => {
-        
+    const handleDeleteShopping = () => {  
     }
     return (
         <>
