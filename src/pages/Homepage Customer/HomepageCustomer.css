@@ -18,11 +18,15 @@
     margin: 0 !important;
 }
 
-.spinner {
+.spinner-homepage-customer {
+    color: black !important;
     display: flex !important;
-    justify-content: center ;
-    align-items: center ;
+    justify-content: center !important;
+    align-items: center !important;
     margin: auto !important;
+    margin-top: 50% !important;
+    margin-right: -200% !important;
+
 }
 
 .grid-homepage-customer {

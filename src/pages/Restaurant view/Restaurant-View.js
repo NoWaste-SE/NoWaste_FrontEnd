@@ -171,7 +171,7 @@ const RestaurantView = (props: Props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -190,7 +190,7 @@ const RestaurantView = (props: Props) => {
                         'Content-Type' : 'application/json',
                         "Access-Control-Allow-Origin" : "*",
                         "Access-Control-Allow-Methods" : "PUT,PATCH",
-                        'Authorization' : "Token " + token.slice(1,-1)   
+                        'Authorization' : "Bearer " + token.slice(1,-1)   
                     }}
                 )
                 .then((response) => {
@@ -232,7 +232,7 @@ const RestaurantView = (props: Props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -284,7 +284,7 @@ const RestaurantView = (props: Props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -300,7 +300,7 @@ const RestaurantView = (props: Props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {

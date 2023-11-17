@@ -50,8 +50,8 @@ const styles = theme => ({
 
 const breakpoints = {
     default: 3,
-    1100: 2,
-    700:1
+    1290: 2,
+    490:1
 };
 
 function HomepageRestaurant(props){
@@ -64,7 +64,6 @@ function HomepageRestaurant(props){
     const [newType, setNewType] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [restaurants, setRestaurants] = useState([]);
-    const [openNetwork, setOpenNetwork] = useState(null);
     const id = localStorage.getItem('id');
     const token = localStorage.getItem('token');
     const history = useHistory();
@@ -90,7 +89,7 @@ function HomepageRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then(() => {
@@ -135,18 +134,6 @@ function HomepageRestaurant(props){
         history.push(`edit-restaurant/${id}/restaurants/${res.id}`);
     };
 
-    function setHeight() {
-        const box = document.querySelector('.box');
-        const boxHeight = box.offsetHeight;
-        const image = document.querySelector('.background');
-        image.style.height = `${boxHeight}px`;
-    };
-
-    const handleCloseNetwork = () => {
-        setOpenNetwork(false);
-        setHeight();
-    };
-
     useEffect(() => {
         let valid = false;
         if (!(newAddress || newDiscount || newName || newPhone))
@@ -161,7 +148,7 @@ function HomepageRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                'Authorization' : "Token " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -224,7 +211,7 @@ function HomepageRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then(() => {
@@ -399,81 +386,75 @@ function HomepageRestaurant(props){
                                     className='homepage-restaurant-card-restaurant' 
                                 >
                                     <CardActionArea >
-                                        <Grid container spacing={2}>
-                                            <Grid item md={6}>
-                                                <div 
-                                                    style={{ position: 'relative' }}
-                                                >
-                                                    <CardMedia
-                                                        component="img"
-                                                        className='homepage-restaurant-card'
-                                                        image={res.restaurant_image}
-                                                    />
-                                                </div>
+                                        <Grid container>
+                                            <Grid item md={6} sm={12} xs={12} className='homepage-restaurant-grid'>
+                                                <CardMedia
+                                                    component="img"
+                                                    className='homepage-restaurant-card'
+                                                    image={res.restaurant_image}
+                                                />
                                             </Grid>
-                                            <Grid item md={6}>
+                                            <Grid container item md={6} sm={12} xs={12} className='homepage-restaurant-grid'>
                                                 <CardContent 
                                                     className='home-restaurant-animation'
                                                 >
-                                                    <Grid container>
-                                                        <Grid item>
-                                                            <Typography 
-                                                                className='restaurant-name-hemepage-restaurant' 
-                                                                gutterBottom
-                                                            >
-                                                                {res.name}
-                                                            </Typography>
-                                                        </Grid>
-                                                        <Grid item container 
-                                                            className='restaurant-phone'
+                                                    <Grid item>
+                                                        <Typography 
+                                                            className='restaurant-name-hemepage-restaurant' 
+                                                            gutterBottom
                                                         >
-                                                            <Chip
-                                                                icon={<MdPhone sx={{ fontSize: 20 }}/>}
-                                                                sx={{mb:1, fontSize: "15px"}}
-                                                                label={res.number}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item container 
-                                                            className='restaurant-address'
+                                                            {res.name}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item
+                                                        className='restaurant-phone'
+                                                    >
+                                                        <Chip
+                                                            icon={<MdPhone sx={{ fontSize: 20 }}/>}
+                                                            sx={{mb:1, fontSize: "15px"}}
+                                                            label={res.number}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item
+                                                        className='restaurant-address'
+                                                    >
+                                                        <Chip
+                                                            className='home-page-rs-add'
+                                                            icon={<PlaceIcon sx={{ fontSize: 20 }}/>}
+                                                            sx={{fontSize: "15px",width:"161px"}}
+                                                            label={res.address}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item  
+                                                        alignItems="center" style={{ marginBottom: "15px", width: "auto", marginLeft: "10px"}}
+                                                    >
+                                                        <Typography 
+                                                            style={{marginTop:'2.5%' }}
                                                         >
-                                                            <Chip
-                                                                icon={<PlaceIcon sx={{ fontSize: 20 }}/>}
-                                                                sx={{fontSize: "15px"}}
-                                                                label={res.address}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item container 
-                                                            alignItems="center" 
-                                                            display= 'flex'
+                                                            {res.rate}
+                                                        </Typography>    
+                                                        <Rating 
+                                                            name="half-rating" 
+                                                            defaultValue={res.rate} 
+                                                            precision={0.1} 
+                                                            size="small" 
+                                                            readOnly 
+                                                            style={{marginTop: '2px'}}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item  
+                                                        alignItems="center" style={{ marginBottom: "15px", width: "auto", marginLeft: "10px"}}
+                                                    >
+                                                        <Button
+                                                            variant='contained'
+                                                            className='delete-restaurant-button'
+                                                            onClick={(e) =>{
+                                                                e.stopPropagation();
+                                                                handleDelete(res)}
+                                                            } 
                                                         >
-                                                            <Grid item container 
-                                                                alignItems="center" style={{ marginBottom: "15px", width: "auto", marginLeft: "10px"}}
-                                                            >
-                                                                <Typography 
-                                                                    style={{marginTop:'2.5%' }}
-                                                                >
-                                                                    {res.rate}
-                                                                </Typography>    
-                                                                <Rating 
-                                                                    name="half-rating" 
-                                                                    defaultValue={res.rate} 
-                                                                    precision={0.1} 
-                                                                    size="small" 
-                                                                    readOnly 
-                                                                    style={{marginTop: '2px'}}
-                                                                />
-                                                            </Grid>
-                                                            <Button
-                                                                variant='contained'
-                                                                className='delete-restaurant-button'
-                                                                onClick={(e) =>{
-                                                                    e.stopPropagation();
-                                                                    handleDelete(res)}
-                                                                } 
-                                                            >
-                                                                Delete
-                                                            </Button>
-                                                        </Grid>
+                                                            Delete
+                                                        </Button>
                                                     </Grid>
                                                 </CardContent>
                                             </Grid>

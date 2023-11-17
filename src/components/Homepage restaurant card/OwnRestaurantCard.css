@@ -3,9 +3,10 @@
     margin-bottom: 8% !important;
     margin-left: 5px !important;
     border-radius: 10px !important;
-    height: 230px !important;
+    /* height: 265px !important; */
+    height: auto !important;
     padding: 0;
-    position: relative !important;
+    /* position: relative !important; */
     overflow: hidden;
     font-size: x-large !important;
     background-color: #f5f2f2 !important;

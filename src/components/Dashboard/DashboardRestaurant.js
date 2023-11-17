@@ -86,7 +86,7 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -108,16 +108,18 @@ export default function DashboardRestaurant(){
             const customer_name = order.userDetails.name;
             const customer_email = order.userDetails.email;
             let orderText = "";
+            let price_tmp = 0;
+            let price = 0;
             if (order.orderDetails.orderItems && order.orderDetails.orderItems.length >= 0) {
-            orderText = order.orderDetails.orderItems
-                .map((item) => `${item.quantity}×${item.name_and_price.name}`)
-                .join(', ');
-                
+                orderText = order.orderDetails.orderItems
+                    .map((item) => `${item.quantity}×${item.name_and_price.name}`)
+                    .join(', ');
+                    
+                price_tmp = order.orderDetails.orderItems
+                    .map((item) => price += item.quantity * Number(item.name_and_price.price));  
             } else {
                 orderText = "No item";
             }
-            console.log("order row is: " );
-            const price = order.orderDetails.Subtotal_Grandtotal_discount[1];
             const date = new Date(order.created_at).toISOString().split('T')[0];
             const status = order.status;
             const restaurant_id = order.orderDetails.restaurantDetails.id;
@@ -179,7 +181,7 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -203,7 +205,7 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -260,6 +262,7 @@ export default function DashboardRestaurant(){
                                     <TableHead>
                                     <TableRow>
                                         <TableCell 
+                                            sx={{ minWidth: "110px" }}
                                             onClick={() => handleSort('name')}
                                         >
                                             Restaurant name
@@ -278,7 +281,7 @@ export default function DashboardRestaurant(){
                                             )}
                                         </TableCell>
 
-                                        <TableCell onClick={() => handleSort('customer_name')}>
+                                        <TableCell onClick={() => handleSort('customer_name')} sx={{ minWidth: "110px" }}>
                                             Customer name
                                             {sortConfig.field === 'customer-name' && (
                                                 <>

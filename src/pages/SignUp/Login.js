@@ -33,6 +33,7 @@ export default function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
+    const [refresh_token, setRefresh_token] = useState('');
     const [id, setId] = useState('');
     const [wallet_balance, setWallet_balance] = useState('');
     const [role, setRole] = useState('');
@@ -84,6 +85,10 @@ export default function Login(){
         localStorage.setItem('token', JSON.stringify(token));
         console.log(token);
     }, [token]);
+
+    useEffect(() => {
+    localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
+    }, [refresh_token]);
 
     useEffect(() => {
         localStorage.setItem('email', JSON.stringify(email));
@@ -138,7 +143,8 @@ export default function Login(){
                     {headers:{"Content-Type" : "application/json"}}
         )
         .then((response) => {
-            setToken(response.data.token);
+            setToken(response.data.access_token);
+            setRefresh_token(response.data.refresh_token);
             setId(response.data.id);
             setWallet_balance(response.data.wallet_balance);
             setRole(response.data.role);

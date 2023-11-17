@@ -96,13 +96,14 @@ const HomepageCustomer = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
+        console.log(token);
         axios.get(
             `http://188.121.124.63/restaurant/restaurant-search/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -133,7 +134,7 @@ const HomepageCustomer = () => {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Token " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
             )
             .then((response) => {
@@ -152,7 +153,7 @@ const HomepageCustomer = () => {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Token " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
             )
             .then((response) => {
@@ -178,7 +179,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -250,7 +251,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -276,7 +277,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -302,7 +303,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -328,7 +329,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -352,7 +353,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Token " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -669,7 +670,7 @@ const HomepageCustomer = () => {
                                     type="bars"
                                     color="black"
                                     speedMultiplier={1}
-                                    className="spinner"
+                                    className="spinner-homepage-customer"
                                     />
                                 ) : restaurant.length===1 ? 
                                     (
