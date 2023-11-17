@@ -1,9 +1,7 @@
 import SignUp from '../SignUp';
-
 import React from 'react';
-import { render, screen, act, fireEvent, waitFor, findByLabelText } from '@testing-library/react';
+import { render, screen, act, fireEvent, waitFor, findByLabelText, findByText, getByTestId } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 
 const MockedSignUp = () => {
     return (
@@ -25,49 +23,53 @@ it("Checkk Box", () => {
         <MockedSignUp />
     );
     const restaurantCheckBox = screen.getByLabelText(/Sign up as restaurant manager/i);
-    // expect(restaurantCheckBox).not.toBeChecked
 
     fireEvent.click(restaurantCheckBox);
     expect(restaurantCheckBox).not.toBe;
 });
 
-// it("Check if text is written in the textfield", () => {
-//     render(
-//         <MockedSignUp />
-//     );
-//     const fullName = screen.findByLabelText(/Full name/i);
-//     // expect(fullName).toBeInTheDocument;
-//     userEvent.type(fullName, "Hni Asadi");
-//     // fireEvent.change(fullName, { target: { value: "Hni Asadi"}});
-//     expect(fullName.value).toBe("Hni Asadi");
-// });
-
-// it('should render input ', () => {
-//     const field  = screen.getByText('Full name');
-//     expect(field).toBeInTheDocument();
-
-//     // fireEvent.change(field , {value: 'some text'});
-//     // expect(field.value).toBe('some text');
-// });
-
-test('displays error messages for invalid inputs', async () => {
-    render(<MockedSignUp />);
+it('should render written text in input ', async() => {
+    render(
+        <MockedSignUp />
+    );
     
-    // Use `await` to wait for the Promises to resolve
-    const fullNameInput = screen.getByTestId("full-name");
-    const emailInput = await screen.findAllByText(/Email address/i);
-    const passwordInput = await screen.findAllByText(/Password/i);
-    const confirmPasswordInput = await screen.findAllByText(/Confirm password/i);
-    const submitButton = await screen.findByRole('button', { name: /Sign up/i });
-  
-    fireEvent.click(submitButton);
-    // fireEvent.change(
-    // Use `waitFor` to wait for the assertions
+    const fullNameInput = await screen.getByPlaceholderText("Full name");
+    
+    fireEvent.change(fullNameInput , { target: { value: 'some text' }});
+    
     await waitFor(() => {
-        expect(fullNameInput).toBeInTheDocument;
-    //   expect(screen.getByText(/Your full name should have at least two words/i)).toBeInTheDocument();
-      // expect(screen.getByText(/Invalid email Address/i)).toBeInTheDocument();
-      // expect(screen.getByText(/Password must be mixture of letters and numbers/i)).toBeInTheDocument();
-      // expect(screen.getByText(/Password do not match/i)).toBeInTheDocument();
+        expect(fullNameInput.value).toBe('some text');
     });
+});
+
+it("displays error messages for invalid inputs", async () => {
+    render(
+        <MockedSignUp />
+    );
+    
+    const fullNameInput = await screen.getByPlaceholderText("Full name");
+    const emailInput = await screen.getByPlaceholderText(/Email address/i);
+
+    fireEvent.change(fullNameInput, { target: { value: 'Hanie' }}); // must show error message
+    
+    fireEvent.change(emailInput, { target: { value: 'hniasadi@' }}) // must show error message
+    
+    await waitFor(() => {
+        const fullNameError = screen.getByText("Your full name should have at least two words.");
+        const emailError = screen.findByText(/Invalid email/i);
+        expect(fullNameError).toBeInTheDocument;
+        
+        expect(emailError).toBeInTheDocument;
+    });
+});
+
+it('disabked button when there is no input', () => {
+    render(
+        <MockedSignUp />
+    );
+    
+    const buttonElement = screen.getByRole('button', {
+                                name: /Sign up/i
+                            });
+    expect(buttonElement).toBeDisabled;
 });

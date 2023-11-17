@@ -221,6 +221,7 @@ export default function SignUp(){
                                 variant="outlined"
                                 color="secondary"
                                 required
+                                placeholder="Full name"
                                 data-testid="full-name"
                                 value={fullname}
                                 onChange={handleFullname}
@@ -246,6 +247,7 @@ export default function SignUp(){
                                 variant="outlined"
                                 color="secondary"
                                 required
+                                placeholder="Email address"
                                 value={email}
                                 onChange={handleEmailChange}
                                 error={emailError}
@@ -333,6 +335,7 @@ export default function SignUp(){
                                 color="primary"
                                 className="field"
                                 id="submit"
+                                data-testid="signup-button"
                                 disabled={!validInputs}
                                 onClick={handleSubmit}
                             >
