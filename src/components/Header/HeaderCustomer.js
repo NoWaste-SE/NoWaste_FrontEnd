@@ -12,6 +12,9 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import ShoppingCard from "../Shopping card/ShoppingCard"
 import axios from "axios";
 
 const HeaderCustomer = memo(() => {
@@ -23,6 +26,8 @@ const HeaderCustomer = memo(() => {
     const open = Boolean(anchorEl);
     const [openWallet, setOpenWallet] = useState(false);
     const [selectedAmount, setSelectedAmount] = useState(0);
+    const [showShoppingCard, setShowShoppingCard] = useState(false);
+    const [blurBackground, setBlurBackground] = useState(false);
     const val = JSON.parse(localStorage.getItem('email'));
     const [balance, setBalance] = useState(localStorage.getItem('wallet_balance') || 0);
 
@@ -119,9 +124,38 @@ const HeaderCustomer = memo(() => {
         history.push("/homepage-customer");
     };
 
+    const handleOpenShoppingCard  = () => {
+        setShowShoppingCard(true);
+    };
+
+    const handleCloseShoppingCard  = () => {
+        setShowShoppingCard(false);
+    };
+    
+    const handleClickOnDownloadExel = () => {
+        const user_id = localStorage.getItem('id');
+        console.log(user_id);
+        axios.get(
+            `http://188.121.124.63/restaurant/excel/customer/${user_id}/order-history`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    };
 
     return ( 
-        <>
+        <div
+            className={`container ${blurBackground ? 'blur-background' : ''}`}
+        >
             <AppBar 
                 sx={{position:"sticky", width:'fixed', padding: '0'}} 
                 className="header"
@@ -140,11 +174,32 @@ const HeaderCustomer = memo(() => {
                     />
                     {auth && (
                         <div>
-                            {/* <IconButton color='inherit'>
-                                <Badge badgeContent={1} color='error'>
-                                    <ShoppingCartIcon onClick={handleCart}/>
-                                </Badge>
-                            </IconButton> */}
+                            <IconButton color='inherit'>
+                                {/* <Badge badgeContent={1} color='error'> */}
+                                    <ShoppingCartIcon onClick={handleOpenShoppingCard}/>
+                                    <Modal 
+                                        open={showShoppingCard} 
+                                        onClose={handleCloseShoppingCard}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box
+                                            className="shopping-card-box" 
+                                        >
+                                            <ShoppingCard />
+                                        </Box>
+                                        
+                                    </Modal>
+                                {/* </Badge> */}
+                            </IconButton>
+                            <IconButton
+                                size='large'
+                                onClick={handleClickOnDownloadExel}
+                                color="inherit"
+                                title='Download excel'
+                            >
+                                <FileDownloadIcon fontSize="normal"/>
+                            </IconButton>
                             <IconButton
                                 size='large'
                                 onClick={handleDashboard}
@@ -341,7 +396,7 @@ const HeaderCustomer = memo(() => {
                     )}
                 </Toolbar>
             </AppBar>
-        </>
+        </div>
     );
 });
 export default HeaderCustomer;
