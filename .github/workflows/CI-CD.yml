@@ -7,23 +7,30 @@ on:
     branches: [ master ]
 
 jobs:
-  build-java:
+  build_and_test:
 
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Set up Node.js 19.x # 19.7.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.x # 19.7.0
+        cache: 'npm'
 
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Install dependencies
+      run: npm install --force
+
+    - name: Build project
+      run: CI=false npm run build --if-present
+      # CI=false (treating warnings as errors because process.env.ci = true.)      
 
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
