@@ -25,12 +25,15 @@ jobs:
         node-version: 19.x # 19.7.0
         cache: 'npm'
 
-    - name: Install dependencies
+    - name: Install npm
       run: npm install --force
 
     - name: Build project
       run: CI=false npm run build --if-present
-      # CI=false (treating warnings as errors because process.env.ci = true.)      
+      # CI=false (treating warnings as errors because process.env.ci = true.)  
+
+      - name: Run tests
+        run: npm run test      
 
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
