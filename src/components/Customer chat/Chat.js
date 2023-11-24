@@ -39,7 +39,7 @@ const Chat = (props) => {
     const setOpen = props.setOpen;
     const placement = props.placement;
     const anchorEl = props.anchorEl;
-    console.log("manager id is as shw" + manager_id + " " + customer_id);
+    console.log("manager id is as " + manager_id + " " + customer_id);
     let room_name = customer_id + "_" + manager_id;
 
     useEffect(() => {
@@ -135,7 +135,7 @@ const Chat = (props) => {
 
     useEffectOnce(() => {
         const client_1 = new WebSocket(
-            `ws://188.121.124.63:4000/chat/room/${room_name}/`
+            `ws://188.121.124.63/ws/chat/room/${room_name}/`
         );
         client_1.onopen = messageOnOpen;
         client_1.onmessage = messageOnMessage;
@@ -148,7 +148,7 @@ const Chat = (props) => {
         if(client && client.readyState === WebSocket.OPEN){
             client.close();
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63/ws/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -160,7 +160,7 @@ const Chat = (props) => {
         } 
         if(client && client.readyState === WebSocket.CLOSED){
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63/ws/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
