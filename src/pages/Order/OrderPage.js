@@ -204,6 +204,7 @@ export default function OrderPage(){
                         color="black"
                         speedMultiplier={1}
                         className="spinner-orderpage"
+                        
                         />
                     ) : (
                     <Grid item lg={4} md={4} sm={12}>

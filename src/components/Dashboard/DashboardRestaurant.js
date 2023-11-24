@@ -250,7 +250,6 @@ export default function DashboardRestaurant(){
                     color="black"
                     speedMultiplier={1}
                     className="dashboard-spinner-manager"
-                    
                     />
                 ) : (
                 <Grid container spacing={2} 
