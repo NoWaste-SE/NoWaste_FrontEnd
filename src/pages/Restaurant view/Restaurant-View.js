@@ -29,6 +29,7 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
+import ChatIcon from '@mui/icons-material/Chat';
 
 
 const useStyles = makeStyles({
@@ -163,12 +164,8 @@ const RestaurantView = (props: Props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
-        .then((response) => {
-            console.log(response.data);
-        })
         .catch((error) => {
             console.log(error.response);
         });
@@ -664,7 +661,8 @@ const RestaurantView = (props: Props) => {
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{ position: 'absolute', bottom: 16, right: 16}}
-                        icon={<SpeedDialIcon/>}
+                        icon={<SimCardDownloadIcon/>}
+                        icon={<HeadsetMicIcon/>}
                         FabProps={{
                             sx: {
                                     bgcolor: '#ffa600',
@@ -682,7 +680,7 @@ const RestaurantView = (props: Props) => {
                         />
                         <SpeedDialAction
                             key='chat'
-                            icon={<HeadsetMicIcon/>}
+                            icon={<ChatIcon/>}
                             tooltipTitle='Chat with Restaurant Manager'
                             onClick={handleClickChat('right')}   
                         />

@@ -129,7 +129,7 @@ const Food = (props) => {
                         component="img"
                         sx={{ height: 140 }}
                         className={isHovered ? "food-image" : ""}
-                        image={isHovered ? food.food_pic2 : food.food_pic}
+                        image={isHovered && food.food_pic2 ? food.food_pic2 : food.food_pic}
                         title={food.Type}
                         onMouseEnter={handleChangeFood}
                         onMouseLeave={handleChangeFood}
@@ -193,6 +193,7 @@ const Food = (props) => {
                                 }
                                 onClick={handleAddToCartClick2}
                                 disabled={remainder === "there is no food"}
+                                data-test-id = '+button'
                             >
                                 +
                             </button>

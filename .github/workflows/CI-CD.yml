@@ -1,0 +1,39 @@
+name: CT-CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build_and_test:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js 19.x # 19.7.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.x # 19.7.0
+        cache: 'npm'
+
+    - name: Install npm
+      run: npm install --force
+
+    - name: Build project
+      run: CI=false npm run build --if-present
+      # CI=false (treating warnings as errors because process.env.ci = true.)  
+
+    - name: Run tests
+      run: npm run test      
+
+    - name: Build and Push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v4
+      with:
+        image: helia2080/no-waste
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
