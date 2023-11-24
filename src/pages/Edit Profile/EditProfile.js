@@ -478,7 +478,6 @@ function Edit(props){
                         color="black"
                         speedMultiplier={1}
                         className="edit-spinner"
-                        
                         />
                     ) : ( 
                     <Grid container spacing={2} 
