@@ -47,7 +47,7 @@ function createData(name, order, price, date, status, restaurant_id, order_id) {
 export default function Dashboard(){
     const history = useHistory();
     const favoriteRestaurant = JSON.parse(localStorage.getItem('list_of_favorites_res'));
-    const id = localStorage.getItem('id');
+    const id = JSON.parse(localStorage.getItem('id'));
     const token = localStorage.getItem('token');
     const [orderHistory, setOrderHistory] = useState();
     const [value, setValue] = React.useState(0);
@@ -276,6 +276,10 @@ export default function Dashboard(){
                 "Access-Control-Allow-Methods" : "GET",
             }}
         )
+        .then((response) => {
+            console.log(response);
+            console.log("downloaded-in-dashboard!");
+        })
         .catch((error) => {
             console.log(error.response);
         });
@@ -360,7 +364,7 @@ export default function Dashboard(){
                                 <Grid item md={1} xs={2} style={{ textAlign: 'right' }}>
                                     <IconButton
                                         size='large'
-                                        onClick={handleClickOnDownloadExel}
+                                        onClick={() => handleClickOnDownloadExel()}
                                         color="inherit"
                                         title='Download Excel Order History'
                                     >

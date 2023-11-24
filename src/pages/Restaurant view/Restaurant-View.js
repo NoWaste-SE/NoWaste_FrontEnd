@@ -166,6 +166,10 @@ const RestaurantView = (props: Props) => {
                 "Access-Control-Allow-Methods" : "GET",
             }}
         )
+        .then((response) => {
+            console.log(response);
+            console.log("downloaded-in-restaurnat-view!");
+        })
         .catch((error) => {
             console.log(error.response);
         });
