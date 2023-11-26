@@ -47,7 +47,7 @@ function createData(name, order, price, date, status, restaurant_id, order_id) {
 export default function Dashboard(){
     const history = useHistory();
     const favoriteRestaurant = JSON.parse(localStorage.getItem('list_of_favorites_res'));
-    const id = localStorage.getItem('id');
+    const id = JSON.parse(localStorage.getItem('id'));
     const token = localStorage.getItem('token');
     const [orderHistory, setOrderHistory] = useState();
     const [value, setValue] = React.useState(0);
@@ -268,17 +268,25 @@ export default function Dashboard(){
     }
 
     const handleClickOnDownloadExel = () => {
-        axios.get(
-            `http://188.121.124.63/restaurant/excel/customer/${id}/order-history`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET",
-            }}
-        )
-        .catch((error) => {
-            console.log(error.response);
-        });
+        fetch(`http://188.121.124.63/restaurant/excel/customer/${id}/order-history`, {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Methods" : "GET",
+        },
+        })
+        .then((response) => response.blob())
+        .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'orders-history.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch((error) => console.error('Error downloading file:', error));
     };
 
     return (
