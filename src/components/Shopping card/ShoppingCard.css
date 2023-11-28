@@ -2,43 +2,35 @@
     margin: 7px auto!important; 
     margin-left: 10px !important;
     margin-bottom: 7px auto !important;
-    background-color: rgba(222, 220, 220, 0.502);
-    height: 45% !important;
+    /* background-color: rgba(240, 235, 235, 0.502); */
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
+    height: auto !important;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    border-color: black;
     width: 97% !important;
-    border: 1px solid transparent; 
-    transition: border-color 0.3s ease; 
     position:  relative !important;
-}
-
-.shopping-card-restaurant-box:hover {
-  border-color: black; /* Change border color on hover */
 }
   
 .shopping-card-image {
   width: 90% !important;
   height: 100px !important;
-  margin-top: 4px !important;
-  margin-left: 3px !important;
+  margin-top: 13% !important;
+  margin-left: 2% !important;
   border-radius: 7px !important;
 }
 
 .shopping-card-name {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bolder;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #ffffff; 
-  padding: 8px 20px; 
-  border-radius: 10px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  margin-bottom: 5px !important; 
-  /* margin-top: 5px !important; */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: bolder !important;
+  font-family: 'Montserrat', sans-serif !important;
+  padding: 8px 5px !important; 
+  border-radius: 10px !important; 
+  margin-bottom: 1% !important; 
+  margin-top: 15px !important;
 }
 
 
@@ -53,14 +45,15 @@
 .shopping-card-price {
   font-weight: bold !important;
   font-family: 'Montserrat', sans-serif !important;
-  margin-right: 0% !important;
+  margin-right: 1% !important;
   position: absolute !important;
   right: 0;
 }
 
 .line {
-  border-bottom: 1px solid black; 
-  margin-top: 5px; 
+  border-bottom: 2px solid rgb(206, 203, 203); 
+  margin-top: 5px !important;
+  width: 98% !important;
 }
 
 .spinner-shopping-card {
@@ -73,22 +66,29 @@
 }
 
 .buttons-container-shopping-card {
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 1% !important;
+  margin-bottom: 0% !important;
   width: 100% !important;
-  text-align: center !important;
-  padding: 15px 0 !important;
 }
 
 .action-button-shopping-card {
   padding: 8px 16px !important;
-  color: white;
-  border: none !important;
-  border-radius: 5px !important;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0 10px !important;
+  margin: 0 8px !important;
+  justify-content: space-between;
+  margin-bottom: 3% !important;
+  text-transform: none;
+  font-size: 14px;
+  font-weight: bold !important;
+  font-family: 'Montserrat', sans-serif !important;
+  border-radius: 70px !important;
+  border: none !important;
+}
+
+.action-button-shopping-card:hover {
+  transform: scale(1.01);
 }
 
 .button-1 {
@@ -99,6 +99,23 @@
   background-color: #e74c3c;
 }
 
-/* .action-button-shopping-card:hover {
-  background-color: #0056b3;
-} */
+.no-order-message-container {
+  margin-top: 12%;
+  margin-bottom: 15%;
+  height: 200px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-order-message {
+  color: #6d6c6c;
+  font-family: 'Montserrat', sans-serif !important;
+  text-align: center;
+  margin-top: 0.3px;
+}
+
+.shopping-card-quantity {
+  color: #8a8686 !important;
+}
