@@ -33,6 +33,7 @@ export default function Verification(){
     const [token, setToken] = useState('');
     const [refresh_token, setRefresh_token] = useState('');
     const [id, setId] = useState('');
+    const [role, setRole] = useState('');
     const [list_of_favorites_res, setList_of_favorites_res] = useState('');
     const [email, setEmail] = useState([]);
     const [validInputs, setValidInputs] = useState(false);
@@ -59,7 +60,8 @@ export default function Verification(){
         localStorage.setItem('token', JSON.stringify(token));
         localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
         localStorage.setItem('list_of_favorites_res', JSON.stringify(list_of_favorites_res));
-    }, [id, token, refresh_token, list_of_favorites_res]);
+        localStorage.setItem('role', JSON.stringify(role));
+    }, [id, token, refresh_token, list_of_favorites_res, role]);
     
 
     function setHeight() {
@@ -122,6 +124,7 @@ export default function Verification(){
             setRefresh_token(response.data.refresh_token);
             setId(response.data.id);
             setList_of_favorites_res(response.data.list_of_favorites_res);
+            setRole(response.data.role);
             if (response.data.role === "customer")
                 history.push("/homepage-customer");
             else
