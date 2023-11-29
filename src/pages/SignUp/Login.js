@@ -1,5 +1,5 @@
 import { Box, Button, Container, createTheme, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import LockIcon from '@mui/icons-material/Lock';
 import EmailIcon from '@mui/icons-material/Email';
@@ -7,6 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import './Login-Signup.css'
 import { Alert } from "@mui/material";
+import AuthContext from "../../Context/AuthContext";
 
 const theme = createTheme({
     palette: {
@@ -43,7 +44,8 @@ export default function Login(){
     const [open, setOpen] = useState(null);
     const [openNetwork, setOpenNetwork] = useState(null);
     const history = useHistory();
-    
+    const {user,authTokens,loginUser} = useContext(AuthContext);
+
     const handleEmail = (e) => {
         setEmail(e.target.value);
     };
@@ -138,18 +140,19 @@ export default function Login(){
             password: password,
             email: email
         };
-        axios.post("http://188.121.124.63/user/login/", 
-                    userData, 
-                    {headers:{"Content-Type" : "application/json"}}
-        )
+        // axios.post("http://188.121.124.63/user/login/", 
+        //             userData, 
+        //             {headers:{"Content-Type" : "application/json"}}
+        // )
+        loginUser(userData)
         .then((response) => {
-            setToken(response.data.access_token);
-            setRefresh_token(response.data.refresh_token);
-            setId(response.data.id);
-            setWallet_balance(response.data.wallet_balance);
-            setRole(response.data.role);
-            setList_of_favorites_res(response.data.list_of_favorites_res);
-            if (response.data.role === "customer")
+            setToken(response.access_token);
+            setRefresh_token(response.refresh_token);
+            setId(response.id);
+            setWallet_balance(response.wallet_balance);
+            setRole(response.role);
+            setList_of_favorites_res(response.list_of_favorites_res);
+            if (response.role === "customer")
                 history.push("/homepage-customer");
             else
                 history.push("/homepage-restaurant");
