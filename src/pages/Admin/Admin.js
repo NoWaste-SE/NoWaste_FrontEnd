@@ -1,0 +1,192 @@
+import React, { useEffect, useState } from "react";
+import { Avatar, Box, Button, createTheme, Divider, Grid, Icon, InputAdornment, MenuItem, TextField, ThemeProvider, Typography, withStyles } from "@material-ui/core";
+import './Admin.css';
+import axios from "axios";
+import PulseLoader from "react-spinners/PulseLoader";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import * as MU from '@mui/material';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { Collapse } from "@mui/material";
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#dd9d46',
+        },
+        secondary: {
+            main: '#a44704',
+        }
+    }
+});
+
+interface ExpandMoreProps extends IconButtonProps {
+    expand: boolean;
+}
+
+const ExpandMore = MU.styled((props: ExpandMoreProps) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+    }),
+}));
+function getRandomColor() {
+    const colors = ['#3b5d8c', '#29a666', '#a029a6', '#d5e036', '#e05536', '#e0366c', '#e036c1', '#369fe0', '#36e0bb', '#5ee036', '#e09f36', '#827878'];
+    return colors[Math.floor(Math.random() * colors.length)];
+};
+
+export default function Admin() {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    const [seeRestaurants, setSeeRestaurants] = React.useState(false);
+    const [avatarColors, setAvatarColors] = React.useState([]);
+
+    useEffect(() => {
+        axios.get(
+            'http://188.121.124.63/user/admin-profile/',
+            {headers :{
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET,PATCH",
+            }}
+        )
+        .then((response) => {
+            setData(response.data);
+            console.log(response.data);
+            setLoading(false);
+        })
+        .catch(error => console.log(error));
+    }, []);
+
+    useEffect(() => {
+        for (let i = 0; i < data.length; i++) {
+            const temp = avatarColors;
+            temp.push(getRandomColor());
+            setAvatarColors(temp);
+        }
+    }, [data])
+
+    const handleSeeRestaurants = () => {
+        setSeeRestaurants(!seeRestaurants);
+    };
+
+    return (
+        <ThemeProvider theme={theme}>
+            {loading ? (
+                <PulseLoader
+                    type="bars"
+                    color="black"
+                    speedMultiplier={1}
+                    className="spinner-dashboard"
+                />
+            ) : (
+                <Grid container spacing={3} 
+                    className="grid-container"
+                >
+                    <Grid item md={6}>
+                        {data.map((manager, index) => (
+                            <Box
+                                className="manager-details"
+                                key={index}
+                            >
+                                <Grid container spacing={2}>
+                                    <Grid item md={4}>
+                                        <Avatar
+                                            src={manager.manager_image}
+                                            className="avatar"
+                                            style={{ backgroundColor: avatarColors[index] }}
+                                        >
+                                            
+                                        </Avatar>
+                                    </Grid>
+                                    <Grid item md={8}
+                                        className="info"
+                                    >
+                                        <Typography>
+                                            Name: {manager.name}
+                                        </Typography>
+                                        <Typography>
+                                            Email address: {manager.email}
+                                        </Typography>
+                                        <Typography>
+                                            Phone number: {manager.number != null ? manager.number : "-"}
+                                        </Typography>
+                                        <Typography 
+                                            className="restaurants"
+                                        >
+                                            See restaurants 
+                                            <ExpandMore
+                                                expand={seeRestaurants}
+                                                onClick={handleSeeRestaurants}
+                                                aria-expanded={seeRestaurants}
+                                                aria-label="show more"
+                                            >
+                                                <ExpandMoreIcon />
+                                            </ExpandMore>
+                                        </Typography>
+                                        <Collapse
+                                            in={seeRestaurants}
+                                            timeout='auto'
+                                            unmountOnExit
+                                            key={index}
+                                        >
+                                            {manager.restaurants.map((restaurant, index) => (
+                                                <Box 
+                                                    className="restaurant-box"
+                                                >
+                                                    <Grid container spacing={2}>
+                                                        <Grid item md={4}>
+                                                            <img 
+                                                                className="restaurant-image"
+                                                                src={restaurant.restaurant_image}
+                                                            />
+                                                        </Grid>
+                                                        <Grid item md={8}>
+                                                            <Typography>
+                                                                Name: {restaurant.name}
+                                                            </Typography>
+                                                            <Typography>
+                                                                Address: {restaurant.address}
+                                                            </Typography>
+                                                            <Typography>
+                                                                Phone number: {restaurant.number}
+                                                            </Typography>
+                                                            <Typography>
+                                                                Rate: {restaurant.rate}
+                                                            </Typography>
+                                                            <Typography>
+                                                                Discount: {restaurant.discount*100}%
+                                                            </Typography>
+                                                            <Typography>
+                                                                Establishment date: {restaurant.date_of_establishment}
+                                                            </Typography>
+                                                            <Typography>
+                                                                Description: {restaurant.description}
+                                                            </Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Box>
+                                            ))}
+                                        </Collapse>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        ))}
+                    </Grid>
+                    <Grid item md={1}>
+                        <Divider 
+                            className="divider"
+                            orientation="vertical" 
+                        />
+                    </Grid>
+                    <Grid item md={5}>
+                    <p>hdfjhfl</p>
+                    </Grid>
+                </Grid>
+            )}
+        </ThemeProvider>
+    )
+}

@@ -1,0 +1,45 @@
+.grid-container {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.divider {
+    height: 100% !important;
+}
+
+.manager-details {
+    width: 95% !important;
+    height: auto !important;
+    display: flex;
+    justify-content: center;
+    margin: 2% auto !important;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
+}
+
+.manager-details .avatar {
+    width: 10vw !important;
+    height: 10vw !important;
+    margin: 20px !important;
+}
+
+.manager-details .info {
+    margin-top: 5% !important;
+}
+
+.manager-details .restaurants {
+    text-align: right !important
+}
+
+.info .restaurant-image {
+    width: 8vw !important;
+    height: 6vw !important;
+}
+
+.info .restaurant-box {
+    width: 28vw !important;
+    height: auto;
+    padding: 10px !important;
+    margin: 3% auto !important;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
+}

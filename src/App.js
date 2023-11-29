@@ -19,6 +19,7 @@ import DashboardRestaurant from './components/Dashboard/DashboardRestaurant';
 import Map from './components/Map/Map';
 import Chat from './pages/Restaurant chat/RestaurantChats';
 import AboutUs from './pages/About Us/AboutUs';
+import Admin from './pages/Admin/Admin';
 import TokenRefreshComponent from './components/JWT/TokenRefreshComponent';
 
 function App() {
@@ -103,6 +104,9 @@ function App() {
           </Route>
           <Route path="/chats">
               <Chat />
+          </Route>
+          <Route path="/admin">
+              <Admin />
           </Route>
       </Router>
     //   )}
