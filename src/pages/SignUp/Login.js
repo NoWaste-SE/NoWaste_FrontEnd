@@ -43,7 +43,8 @@ export default function Login(){
     const [open, setOpen] = useState(null);
     const [openNetwork, setOpenNetwork] = useState(null);
     const history = useHistory();
-    
+    const [adminLogin, setAdminLogin] = useState(false);
+
     const handleEmail = (e) => {
         setEmail(e.target.value);
     };
@@ -151,6 +152,8 @@ export default function Login(){
             setList_of_favorites_res(response.data.list_of_favorites_res);
             if (response.data.role === "customer")
                 history.push("/homepage-customer");
+            else if (response.data.role === "admin")
+                history.push("/homepage-admin");
             else
                 history.push("/homepage-restaurant");
         })
@@ -168,7 +171,7 @@ export default function Login(){
     return ( 
         <ThemeProvider theme={theme}>
             <div className="root">
-                <Container className="container">
+            <Container className={`container ${adminLogin ? 'admin-login' : ''}`}>
                     <img
                         className="background"
                         src="/Signup-Login.jpg"
@@ -182,7 +185,7 @@ export default function Login(){
                             className="text"
                             id="login"
                         >
-                            Login 
+                            {adminLogin ? 'Admin Login' : 'Login'}
                         </Typography>
                         <form 
                             noValidate 
@@ -286,11 +289,34 @@ export default function Login(){
                                 Login
                             </Button>
                         </form> 
-                        <Typography 
+                        {!adminLogin? (
+                            <Typography 
+                                className="already"
+                            >
+                                Don't have an account? <Link to="/sign-up" className="link">Sign up</Link>
+                            </Typography>
+                        ) : (
+                            <Typography 
                             className="already"
+                            >
+                                {/* Don't have an account? <Link to="/sign-up" className="link">Sign up</Link> */}
+                            </Typography>
+                        )}
+                        {!adminLogin? (
+                                <Typography 
+                                className="are-you-admin-text"
+                                onClick={() => setAdminLogin(!adminLogin)}
+                            >
+                                Are you admin?
+                            </Typography>
+                        ):(
+                            <Typography 
+                            className="are-you-admin-text"
+                            onClick={() => setAdminLogin(!adminLogin)}
                         >
-                            Don't have an account? <Link to="/sign-up" className="link">Sign up</Link>
-                        </Typography>
+                                Login as user
+                            </Typography>
+                        )}
                     </Box>
                 </Container>
             </div>
