@@ -46,8 +46,8 @@ jobs:
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
         run: |
-          npm install -g @liara/cli@5 --platform=node
-          liara deploy --app="nowaste" --api-token="$LIARA_TOKEN" --no-app-logs
+          npm install -g @liara/cli@5 
+          liara deploy --app="nowaste" --api-token="$LIARA_TOKEN" --no-app-logs --platform=node
 
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v4
