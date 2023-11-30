@@ -1,6 +1,14 @@
-.grid-container {
+.admin-container {
     width: 100% !important;
     height: auto !important;
+}
+
+.admin-container .title {
+    width: 100% !important;
+    margin: 5% auto;
+    font-weight: bold !important;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 .divider {
@@ -8,22 +16,24 @@
 }
 
 .manager-details {
-    width: 95% !important;
+    width: 85% !important;
     height: auto !important;
     display: flex;
     justify-content: center;
     margin: 2% auto !important;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
+    border-radius: 10px !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px
 }
 
 .manager-details .avatar {
-    width: 10vw !important;
-    height: 10vw !important;
-    margin: 20px !important;
+    width: 5vw !important;
+    height: 5vw !important;
+    margin: auto !important;
 }
 
 .manager-details .info {
-    margin-top: 5% !important;
+    margin: 2% auto !important;
+    font-size: larger !important;
 }
 
 .manager-details .restaurants {
@@ -41,5 +51,16 @@
     padding: 10px !important;
     margin: 3% auto !important;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px 5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
+}
+
+.loading {
+    display: flex !important;
+    justify-content: center ;
+    align-items: center ;
+    margin: auto !important;
+}
+
+#requests {
+
 }

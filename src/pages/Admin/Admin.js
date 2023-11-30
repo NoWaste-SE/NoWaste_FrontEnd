@@ -21,7 +21,7 @@ const theme = createTheme({
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
-}
+};
 
 const ExpandMore = MU.styled((props: ExpandMoreProps) => {
     const { expand, ...other } = props;
@@ -33,6 +33,7 @@ const ExpandMore = MU.styled((props: ExpandMoreProps) => {
     duration: theme.transitions.duration.shortest,
     }),
 }));
+
 function getRandomColor() {
     const colors = ['#3b5d8c', '#29a666', '#a029a6', '#d5e036', '#e05536', '#e0366c', '#e036c1', '#369fe0', '#36e0bb', '#5ee036', '#e09f36', '#827878'];
     return colors[Math.floor(Math.random() * colors.length)];
@@ -41,7 +42,7 @@ function getRandomColor() {
 export default function Admin() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const [seeRestaurants, setSeeRestaurants] = React.useState(false);
+    const [seeRestaurants, setSeeRestaurants] = React.useState([]);
     const [avatarColors, setAvatarColors] = React.useState([]);
 
     useEffect(() => {
@@ -67,10 +68,16 @@ export default function Admin() {
             temp.push(getRandomColor());
             setAvatarColors(temp);
         }
-    }, [data])
+        const expand = Array(data.length).fill(false);
+        setSeeRestaurants(expand);
+    }, [data]);
 
-    const handleSeeRestaurants = () => {
-        setSeeRestaurants(!seeRestaurants);
+    const handleSeeRestaurants = (index) => {
+        setSeeRestaurants(prevState => {
+            const temp = [...prevState];
+            temp[index] = !temp[index];
+            return temp;
+          });
     };
 
     return (
@@ -80,29 +87,37 @@ export default function Admin() {
                     type="bars"
                     color="black"
                     speedMultiplier={1}
-                    className="spinner-dashboard"
+                    className="loading"
                 />
             ) : (
                 <Grid container spacing={3} 
-                    className="grid-container"
+                    className="admin-container"
                 >
                     <Grid item md={6}>
+                        <Typography
+                            variant="h4"
+                            color="textPrimary"
+                            gutterBottom
+                            className="title"
+                        >
+                            Managers
+                        </Typography>
                         {data.map((manager, index) => (
                             <Box
                                 className="manager-details"
                                 key={index}
                             >
                                 <Grid container spacing={2}>
-                                    <Grid item md={4}>
+                                    <Grid item md={3}
+                                        className="info"
+                                    >
                                         <Avatar
                                             src={manager.manager_image}
                                             className="avatar"
                                             style={{ backgroundColor: avatarColors[index] }}
-                                        >
-                                            
-                                        </Avatar>
+                                        />                                            
                                     </Grid>
-                                    <Grid item md={8}
+                                    <Grid item md={9}
                                         className="info"
                                     >
                                         <Typography>
@@ -119,16 +134,16 @@ export default function Admin() {
                                         >
                                             See restaurants 
                                             <ExpandMore
-                                                expand={seeRestaurants}
-                                                onClick={handleSeeRestaurants}
-                                                aria-expanded={seeRestaurants}
+                                                expand={seeRestaurants[index]}
+                                                onClick={() => handleSeeRestaurants(index)}
+                                                aria-expanded={seeRestaurants[index]}
                                                 aria-label="show more"
                                             >
                                                 <ExpandMoreIcon />
                                             </ExpandMore>
                                         </Typography>
                                         <Collapse
-                                            in={seeRestaurants}
+                                            in={seeRestaurants[index]}
                                             timeout='auto'
                                             unmountOnExit
                                             key={index}
@@ -182,8 +197,31 @@ export default function Admin() {
                             orientation="vertical" 
                         />
                     </Grid>
-                    <Grid item md={5}>
-                    <p>hdfjhfl</p>
+                    <Grid item md={5}
+                        id="requests"
+                    >
+                        <Typography
+                            variant="h4"
+                            color="textPrimary"
+                            gutterBottom
+                            className="title"
+                        >
+                            Requests
+                        </Typography>
+                        <Box
+                            className="manager-details"
+                        >
+                            <div
+                                className="info"
+                            >
+                                <Typography>
+                                    Full name: Hni asadi
+                                </Typography>
+                                <Typography>
+                                    Email address: Hniasadi214@gmail.com
+                                </Typography>
+                            </div>
+                        </Box>
                     </Grid>
                 </Grid>
             )}
