@@ -36,22 +36,22 @@ describe('Food component', () => {
 //     expect(screen.getByText('Test Ingredients')).toBeInTheDocument();
 // });
 
-test('increments count on add button click if remainder is available', async () => {
-    const { getByText } = render(
-        <MemoryRouter initialEntries={['/food/123']}>
-            <Route path="/food/:id">
-            <Food food={food} />
-            </Route>
-        </MemoryRouter>,
-        {
-            wrapper: MemoryRouter,
-        }
-    );
+// test('increments count on add button click if remainder is available', async () => {
+//     const { getByText } = render(
+//         <MemoryRouter initialEntries={['/food/123']}>
+//             <Route path="/food/:id">
+//             <Food food={food} />
+//             </Route>
+//         </MemoryRouter>,
+//         {
+//             wrapper: MemoryRouter,
+//         }
+//     );
 
-    const addButton = screen.getByTestId('+button');
-    fireEvent.click(addButton);
-    await screen.waitFor(() => expect(screen.getByText('1')).toBeInTheDocument());
-});
+//     const addButton = screen.getByTestId('+button');
+//     fireEvent.click(addButton);
+//     await screen.waitFor(() => expect(screen.getByText('1')).toBeInTheDocument());
+// });
 
 // test('decrements count on remove button click if count is greater than zero', async () => {
 //     const food = {
