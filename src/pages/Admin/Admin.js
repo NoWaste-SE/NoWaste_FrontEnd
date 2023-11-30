@@ -41,7 +41,8 @@ function getRandomColor() {
 
 export default function Admin() {
     const [loading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
+    const [managers, setManagers] = useState([]);
+    const [requests, setRequests] = useState([]);
     const [seeRestaurants, setSeeRestaurants] = React.useState([]);
     const [avatarColors, setAvatarColors] = React.useState([]);
 
@@ -55,22 +56,23 @@ export default function Admin() {
             }}
         )
         .then((response) => {
-            setData(response.data);
+            setManagers(response.data.Managers);
             console.log(response.data);
+            setRequests(response.data.Requests);
             setLoading(false);
         })
         .catch(error => console.log(error));
     }, []);
 
     useEffect(() => {
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < managers.length; i++) {
             const temp = avatarColors;
             temp.push(getRandomColor());
             setAvatarColors(temp);
-        }
-        const expand = Array(data.length).fill(false);
+        };
+        const expand = Array(managers.length).fill(false);
         setSeeRestaurants(expand);
-    }, [data]);
+    }, [managers]);
 
     const handleSeeRestaurants = (index) => {
         setSeeRestaurants(prevState => {
@@ -102,7 +104,7 @@ export default function Admin() {
                         >
                             Managers
                         </Typography>
-                        {data.map((manager, index) => (
+                        {managers.map((manager, index) => (
                             <Box
                                 className="manager-details"
                                 key={index}
@@ -208,20 +210,43 @@ export default function Admin() {
                         >
                             Requests
                         </Typography>
-                        <Box
-                            className="manager-details"
-                        >
-                            <div
-                                className="info"
+                        {requests.map((request, index) => (
+                            <Box
+                                className="request-details requests"
+                                key={index}
                             >
-                                <Typography>
-                                    Full name: Hni asadi
-                                </Typography>
-                                <Typography>
-                                    Email address: Hniasadi214@gmail.com
-                                </Typography>
-                            </div>
-                        </Box>
+                                <Grid container spacing={3}>
+                                    <Grid item md={8} sm={12}
+                                        className="info"
+                                    >
+                                        <Typography>
+                                            Full name: {request.name}
+                                        </Typography>
+                                        <Typography>
+                                            Email address: {request.email}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item md={2}
+                                        className="info"
+                                    >
+                                        <Button
+                                            className="request-button reject"
+                                        >
+                                            Reject
+                                        </Button>
+                                    </Grid>
+                                    <Grid item md={2}
+                                        className="info"
+                                    >
+                                        <Button
+                                            className="request-button accept"
+                                        >
+                                            Accept
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        ))}
                     </Grid>
                 </Grid>
             )}

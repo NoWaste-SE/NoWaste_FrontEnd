@@ -5,7 +5,7 @@
 
 .admin-container .title {
     width: 100% !important;
-    margin: 5% auto;
+    margin: 3vw auto;
     font-weight: bold !important;
     text-align: center;
     font-family: 'Montserrat', sans-serif !important;
@@ -13,9 +13,10 @@
 
 .divider {
     height: 100% !important;
+    margin: auto !important;
 }
 
-.manager-details {
+.manager-details, .request-details {
     width: 85% !important;
     height: auto !important;
     display: flex;
@@ -28,7 +29,7 @@
 .manager-details .avatar {
     width: 5vw !important;
     height: 5vw !important;
-    margin: auto !important;
+    margin: 10% auto !important;
 }
 
 .manager-details .info {
@@ -61,6 +62,24 @@
     margin: auto !important;
 }
 
-#requests {
+.requests {
+    padding: 5% !important;
+}
 
+.request-button {
+    justify-content: space-between;
+    width: 100% !important;
+    text-transform: none;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 70px !important;
+}
+
+.request-button.accept{
+    background-color: #2ea81b !important;
+}
+
+.request-button.reject {
+    background-color: #E74C3C !important;
 }
