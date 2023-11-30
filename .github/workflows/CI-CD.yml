@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build_and_test:
+  CI_version:
 
     runs-on: ubuntu-latest
     
@@ -30,10 +30,30 @@ jobs:
     - name: Run tests
       run: npm run test      
 
+  CD_version:
+    needs: CI_version
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js 19.x # 19.7.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.x # 19.7.0
+        cache: 'npm'
+
+      - name: Update server(liara)
+        env:
+          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+        run: |
+          npm install -g @liara/cli@5
+          liara deploy --app="nowaste" --api-token="$LIARA_TOKEN" --no-app-logs
+
+    
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
       with:
-        image: helia2080/no-waste
+        image: helia2080/no-waste 
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
