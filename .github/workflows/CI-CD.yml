@@ -41,6 +41,9 @@ jobs:
         with:
           node-version: 19.x # 19.7.0
           cache: 'npm'
+          
+      - name: Install npm
+        run: npm install --force    
 
       - name: Update server (liara)
         env:
