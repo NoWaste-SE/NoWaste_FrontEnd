@@ -153,7 +153,7 @@ export default function Login(){
             if (response.data.role === "customer")
                 history.push("/homepage-customer");
             else if (response.data.role === "admin")
-                history.push("/homepage-admin");
+                history.push("/admin");
             else
                 history.push("/homepage-restaurant");
         })

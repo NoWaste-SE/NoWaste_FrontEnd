@@ -50,6 +50,7 @@ export default function Admin() {
     const [avatarColors, setAvatarColors] = React.useState([]);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertSeverity, setAlertSeverity] = useState('');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         axios.get(
@@ -58,6 +59,7 @@ export default function Admin() {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -93,6 +95,7 @@ export default function Admin() {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }})
         .then(() => {
             console.log("rejected successfully");
@@ -121,6 +124,7 @@ export default function Admin() {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "POST,PUT",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
             }})
         .then(() => {
             console.log("accepted successfully");
@@ -175,6 +179,9 @@ export default function Admin() {
 
     return (
         <ThemeProvider theme={theme}>
+            <div>
+                <ToastContainer />
+            </div>
             {loading ? (
                 <PulseLoader
                     type="bars"
