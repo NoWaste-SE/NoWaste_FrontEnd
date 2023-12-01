@@ -38,7 +38,8 @@
 }
 
 .manager-details .restaurants {
-    text-align: right !important
+    text-align: right !important;
+    color: #797979;
 }
 
 .info .restaurant-image {
@@ -69,11 +70,12 @@
 .request-button {
     justify-content: space-between;
     width: 100% !important;
-    text-transform: none;
+    text-transform: none !important;
     font-size: 16px !important;
     font-weight: bold !important;
     font-family: 'Montserrat', sans-serif !important;
     border-radius: 70px !important;
+    text-align: center;
 }
 
 .request-button.accept{
@@ -82,4 +84,12 @@
 
 .request-button.reject {
     background-color: #E74C3C !important;
+}
+
+.info-label{
+    font-weight: bold !important;
+}
+
+.info-text{
+    font-weight: 100 !important;
 }

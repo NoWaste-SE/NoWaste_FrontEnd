@@ -7,6 +7,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import * as MU from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { Collapse } from "@mui/material";
+import { Alert } from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme({
     palette: {
@@ -45,6 +48,8 @@ export default function Admin() {
     const [requests, setRequests] = useState([]);
     const [seeRestaurants, setSeeRestaurants] = React.useState([]);
     const [avatarColors, setAvatarColors] = React.useState([]);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('');
 
     useEffect(() => {
         axios.get(
@@ -82,6 +87,92 @@ export default function Admin() {
           });
     };
 
+    const handleReject = (id) => {
+        axios.get(`http://188.121.124.63/user/temp-manager-reject/${id}`,
+            {headers :{
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET",
+            }})
+        .then(() => {
+            console.log("rejected successfully");
+            setAlertMessage("Manager has been rejected!");
+            setAlertSeverity("success");
+        })
+        .catch((error) => {
+            if (error.request) {
+                setAlertMessage("Network error! Please try again later.");
+                setAlertSeverity("error");
+            } else {
+                setAlertMessage("A problem has been occured! Please try again later.");
+                setAlertSeverity("error");
+            }
+        })
+    };
+
+    const handleAccept = (email, name) => {
+        const userData = {
+            name: name,
+            email: email
+        };
+        axios.post(`http://188.121.124.63/user/temp-manager-confirm/`,
+            userData,
+            {headers :{
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "POST,PUT",
+            }})
+        .then(() => {
+            console.log("accepted successfully");
+            setAlertMessage("Manager has been accepted!");
+            setAlertSeverity("success");
+            setRequests(prevRequests => prevRequests.filter(request => request.email !== email));
+        })
+        .catch((error) => {
+            if (error.request) {
+                setAlertMessage("Network error! Please try again later.");
+                setAlertSeverity("error");
+            } else {
+                setAlertMessage("A problem has been occured! Please try again later.");
+                setAlertSeverity("error");
+            }
+        });
+    };
+
+    function truncateDescription(description, maxLength) {
+        if (description.length > maxLength) {
+          return `${description.substring(0, maxLength)}...`;
+        }
+        return description;
+    }
+    
+    const handleReloadPage = () => {
+        window.location.reload();
+    };
+
+    useEffect(() => {
+        if(alertMessage !== "" && alertSeverity !== "") {
+            if(alertSeverity === "success"){
+                toast.success(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Success",
+                            autoClose: 7000,
+                            pauseOnHover: true,
+                            onClose: handleReloadPage
+                        });
+            } else {
+                toast.error(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Error",
+                            autoClose: 3000,
+                            pauseOnHover: true
+                        });
+            }
+            setAlertMessage("");
+            setAlertSeverity("");
+        }
+    }, [alertMessage, alertSeverity]);
+
     return (
         <ThemeProvider theme={theme}>
             {loading ? (
@@ -92,7 +183,7 @@ export default function Admin() {
                     className="loading"
                 />
             ) : (
-                <Grid container spacing={3} 
+                <Grid container spacing={4} 
                     className="admin-container"
                 >
                     <Grid item md={6}>
@@ -122,27 +213,44 @@ export default function Admin() {
                                     <Grid item md={9}
                                         className="info"
                                     >
-                                        <Typography>
-                                            Name: {manager.name}
+                                        <Typography className="info-text">
+                                            <span className="info-label">Manager Name:</span>{" "}
+                                            {manager.name}
                                         </Typography>
-                                        <Typography>
-                                            Email address: {manager.email}
+                                        <Typography className="info-text">
+                                            <span className="info-label">Email address:</span>{" "}
+                                            {manager.email}
                                         </Typography>
-                                        <Typography>
-                                            Phone number: {manager.number != null ? manager.number : "-"}
+                                        <Typography className="info-text">
+                                            <span className="info-label">Phone number:</span>{" "}
+                                            {manager.number != null ? manager.number : "-"}
                                         </Typography>
-                                        <Typography 
-                                            className="restaurants"
-                                        >
-                                            See restaurants 
-                                            <ExpandMore
-                                                expand={seeRestaurants[index]}
-                                                onClick={() => handleSeeRestaurants(index)}
-                                                aria-expanded={seeRestaurants[index]}
-                                                aria-label="show more"
-                                            >
-                                                <ExpandMoreIcon />
-                                            </ExpandMore>
+                                        <Typography className="restaurants">
+                                            {seeRestaurants[index] ? (
+                                                <>
+                                                Hide restaurants{" "}
+                                                <ExpandMore
+                                                    expand={seeRestaurants[index]}
+                                                    onClick={() => handleSeeRestaurants(index)}
+                                                    aria-expanded={seeRestaurants[index]}
+                                                    aria-label="show more"
+                                                >
+                                                    <ExpandMoreIcon />
+                                                </ExpandMore>
+                                                </>
+                                            ) : (
+                                                <>
+                                                See restaurants{" "}
+                                                <ExpandMore
+                                                    expand={seeRestaurants[index]}
+                                                    onClick={() => handleSeeRestaurants(index)}
+                                                    aria-expanded={seeRestaurants[index]}
+                                                    aria-label="show more"
+                                                >
+                                                    <ExpandMoreIcon />
+                                                </ExpandMore>
+                                                </>
+                                            )}
                                         </Typography>
                                         <Collapse
                                             in={seeRestaurants[index]}
@@ -162,26 +270,33 @@ export default function Admin() {
                                                             />
                                                         </Grid>
                                                         <Grid item md={8}>
-                                                            <Typography>
-                                                                Name: {restaurant.name}
+                                                            <Typography className="info-text">
+                                                                <span className="info-label">Name:</span>{" "}
+                                                                {restaurant.name}
                                                             </Typography>
-                                                            <Typography>
-                                                                Address: {restaurant.address}
+                                                            <Typography className="info-text">
+                                                                <span className="info-label">Address:</span>{" "}
+                                                                {restaurant.address}
                                                             </Typography>
-                                                            <Typography>
-                                                                Phone number: {restaurant.number}
+                                                            <Typography className="info-text">
+                                                                <span className="info-label">Phone number:</span>{" "}
+                                                                {restaurant.number}
                                                             </Typography>
-                                                            <Typography>
-                                                                Rate: {restaurant.rate}
+                                                            <Typography className="info-text">
+                                                                <span className="info-label">Rate:</span>{" "}
+                                                                {restaurant.rate}
                                                             </Typography>
-                                                            <Typography>
-                                                                Discount: {restaurant.discount*100}%
+                                                            <Typography className="info-text">
+                                                                <span className="info-label">Discount:</span>{" "}
+                                                                {restaurant.discount*100}%
                                                             </Typography>
-                                                            <Typography>
-                                                                Establishment date: {restaurant.date_of_establishment}
+                                                            <Typography className="info-text">
+                                                                <span className="info-label">Date:</span>{" "}
+                                                                {restaurant.date_of_establishment}
                                                             </Typography>
-                                                            <Typography>
-                                                                Description: {restaurant.description}
+                                                            <Typography className="info-text">
+                                                                <span className="info-label">Description:</span>{" "}
+                                                                {truncateDescription(restaurant.description, 100)}
                                                             </Typography>
                                                         </Grid>
                                                     </Grid>
@@ -193,13 +308,13 @@ export default function Admin() {
                             </Box>
                         ))}
                     </Grid>
-                    <Grid item md={1}>
+                    {/* <Grid item md={1}>
                         <Divider 
                             className="divider"
                             orientation="vertical" 
                         />
-                    </Grid>
-                    <Grid item md={5}
+                    </Grid> */}
+                    <Grid item md={6}
                         id="requests"
                     >
                         <Typography
@@ -219,11 +334,13 @@ export default function Admin() {
                                     <Grid item md={8} sm={12}
                                         className="info"
                                     >
-                                        <Typography>
-                                            Full name: {request.name}
+                                        <Typography className="info-text">
+                                            <span className="info-label">Name:</span>{" "}
+                                            {request.name}
                                         </Typography>
-                                        <Typography>
-                                            Email address: {request.email}
+                                        <Typography className="info-text">
+                                            <span className="info-label">Email address:</span>{" "}
+                                            {request.email}
                                         </Typography>
                                     </Grid>
                                     <Grid item md={2}
@@ -231,6 +348,7 @@ export default function Admin() {
                                     >
                                         <Button
                                             className="request-button reject"
+                                            onClick={() => handleReject(request.id)}
                                         >
                                             Reject
                                         </Button>
@@ -240,6 +358,7 @@ export default function Admin() {
                                     >
                                         <Button
                                             className="request-button accept"
+                                            onClick={() => handleAccept(request.email, request.name)}
                                         >
                                             Accept
                                         </Button>
