@@ -75,7 +75,7 @@ jobs:
           cache: 'npm' 
 
       - name: Remove unneccessary config files
-        run: find . -type f \( -name "docker-compose.yml" -o -name ".dockerignore" -o -name "Dockerfile" \) -exec rm -f {} +
+        run: find . -type f \( -name "docker-compose.yml" -o -name "Dockerfile" \) -exec rm -f {} +
       - name: Update server and deliver last version
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
