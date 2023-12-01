@@ -21,25 +21,26 @@ import Chat from './pages/Restaurant chat/RestaurantChats';
 import AboutUs from './pages/About Us/AboutUs';
 import Admin from './pages/Admin/Admin';
 import TokenRefreshComponent from './components/JWT/TokenRefreshComponent';
+import { AuthProvider } from './Context/AuthContext';
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  console.log(isAuthenticated);
+//   const [loading, setLoading] = useState(true);
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+//   console.log(isAuthenticated);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token && token.length > 2) {
-      setIsAuthenticated(true);
-    } 
-    else {
-      setIsAuthenticated(false);
-    }
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     if (token && token.length > 2) {
+//       setIsAuthenticated(true);
+//     } 
+//     else {
+//       setIsAuthenticated(false);
+//     }
 
-    window.addEventListener('load', () => {
-      setLoading(false);
-    });
-  }, []);
+//     window.addEventListener('load', () => {
+//       setLoading(false);
+//     });
+//   }, []);
 
   return (
     // <div> 
@@ -50,7 +51,8 @@ function App() {
     //     </div>
     //   ) : (
       <Router>
-          {isAuthenticated && <TokenRefreshComponent />}
+        <AuthProvider>
+          {/* {isAuthenticated && <TokenRefreshComponent />} */}
           <Route path="/sign-up">
               <SignUp />
           </Route>
@@ -108,6 +110,7 @@ function App() {
           <Route path="/admin">
               <Admin />
           </Route>
+        </AuthProvider>
       </Router>
     //   )}
     // </div>
