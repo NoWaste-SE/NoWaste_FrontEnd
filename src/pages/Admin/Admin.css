@@ -3,7 +3,7 @@
     height: auto !important;
 }
 
-.admin-container .title {
+.adimin-title {
     width: 100% !important;
     margin: 3vw auto;
     font-weight: bold !important;
@@ -40,6 +40,18 @@
 .manager-details .restaurants {
     text-align: right !important;
     color: #797979;
+}
+
+.admin-box{
+    max-height: 87vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px
+}
+
+.admin-main-box{
+    margin: 2% !important;
+    position: relative;
 }
 
 .info .restaurant-image {
@@ -92,4 +104,10 @@
 
 .info-text{
     font-weight: 100 !important;
+}
+
+@media (max-width: 599px){
+    .admin-img {
+        display: none !important;
+    }   
 }
