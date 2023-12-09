@@ -6,7 +6,7 @@
 }
 
 .comment-text {
-    margin-bottom: 5% !important; 
+    margin-bottom: 3% !important; 
     font-family: 'Montserrat', sans-serif !important;
 }
 
@@ -76,13 +76,13 @@
 
 .comment-stack {
     font-size: 102% !important;
-    margin-top: 9% !important;
+    margin-top: 4% !important;
     font-weight: bold !important;
     font-family: 'Montserrat', sans-serif !important;
 }
 
 .comment-hr {
-    margin-right: -8%;
+    margin-right: -10%;
     margin-bottom: 3% !important;
 }
 
@@ -109,8 +109,6 @@
     margin-left: 10%;
 }
 
-
-
 .comment-details-div {
   height: 258px ;
   padding-right: 15%;
@@ -121,7 +119,6 @@
   overflow-y: scroll;
   overflow-x: hidden;
   padding-top: 0%;
-  
   font-family: 'Montserrat', sans-serif !important;
 }
 
