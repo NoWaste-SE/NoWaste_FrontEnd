@@ -49,6 +49,7 @@ export default function OrderPage(){
     const [showMap, setShowMap] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [thereis, setThereis] = useState(false);
 
     useEffect(() =>{
         axios.get(
@@ -87,15 +88,23 @@ export default function OrderPage(){
             }}
         )
         .then((response) => {
-            setStatus(response.data[0].status);
-            setShoppingCard(response.data[0]);
-            setOrderItems(response.data[0].orderItems);
-            setPrices(response.data[0].Subtotal_Grandtotal_discount);
-            setOrderId(response.data[0].id);
+            if(response.data.length != 0)
+            {
+                console.log("here");
+                setThereis(true);
+                console.log(response.data);
+                setStatus(response.data[0].status);
+                setShoppingCard(response.data[0]);
+                setOrderItems(response.data[0].orderItems);
+                setPrices(response.data[0].Subtotal_Grandtotal_discount);
+                setOrderId(response.data[0].id);
+            }
+            console.log("here2");
             setLoading(false);
         })
         .catch((error) => {
-            console.log(error.response);
+            // console.log(error);
+            console.log("errorrrrr");
             setLoading(true);
         });
     },[]);
@@ -191,6 +200,7 @@ export default function OrderPage(){
     return(
         <ThemeProvider theme={theme}>
             <HeaderCustomer />
+            {thereis ? (
             <div 
                 className={`container ${blurBackground ? 'blur-background' : ''}`}
             >
@@ -446,6 +456,26 @@ export default function OrderPage(){
                     </Grid>
                 </Grid>
             </div>
+            ) : (
+            loading ? (
+                <PulseLoader
+                type="bars"
+                color="black"
+                speedMultiplier={1}
+                className="spinner-orderpage-whole"
+                />
+            ) : 
+            (
+                <div 
+                    className="no-order-message-container"
+                >
+                    <h2 
+                        className="no-order-message-order-page"
+                    >
+                        There is not any order!
+                    </h2>
+                </div>
+            ))}
             <Footer />
         </ThemeProvider>
     )
