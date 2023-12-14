@@ -317,21 +317,21 @@ const RestaurantView = (props: Props) => {
         setAddressCopied(false);
     };
 
-    useEffect(() => {
-        axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${id}/${customer_id}/order/`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            setOrder_id(response.data.id);
-            localStorage.setItem("order_id", order_id);
-        })
-    })
+    // useEffect(() => {
+    //     axios.get(
+    //         `http://188.121.124.63/restaurant/restaurant_view/${id}/${customer_id}/order/`,
+    //         {headers: {
+    //             'Content-Type' : 'application/json',
+    //             "Access-Control-Allow-Origin" : "*",
+    //             "Access-Control-Allow-Methods" : "PUT,PATCH",
+    //             'Authorization' : "Bearer " + token.slice(1,-1)   
+    //         }}
+    //     )
+    //     .then((response) => {
+    //         setOrder_id(response.data.id);
+    //         localStorage.setItem("order_id", order_id);
+    //     })
+    // })
 
     useEffect(()=>{
         axios.get(

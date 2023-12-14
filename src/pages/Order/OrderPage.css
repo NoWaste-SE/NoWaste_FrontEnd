@@ -202,3 +202,23 @@
 .blur-background {
     filter: blur(4px);
 }  
+
+.no-order-message-container {
+    margin-top: 12%;
+    margin-bottom: 15%;
+    height: 200px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-order-message-order-page {
+    margin-top: 12%;
+    margin-bottom: 15%;
+    height: 200px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
