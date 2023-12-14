@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PersonIcon from '@mui/icons-material/Person';
 import SendIcon from '@mui/icons-material/Send';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useHistory } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -57,6 +58,7 @@ export default function Admin() {
     const token = localStorage.getItem('token');
     const [value, setValue] = useState(0);
     const ref = React.useRef(null);
+    const history = useHistory();
 
     useEffect(() => {
         axios.get(
@@ -184,6 +186,22 @@ export default function Admin() {
     }, [alertMessage, alertSeverity]);
     
 
+
+    const handleClickLogOut = () => {
+        localStorage.removeItem("token");
+        axios.get(
+            `http://188.121.124.63/user/logout/`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then((response) => console.log(response.data) )
+        .catch((error) => console.log(error.response) );
+        history.push("/");
+    };
 
     function SeeManagers(props) {
         return(
@@ -416,7 +434,7 @@ export default function Admin() {
                             />
                         </Grid>
                         <Grid item md={12} sm={12} xs={12} style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-                            <Fab variant="extended" className="admin-logout">
+                            <Fab variant="extended" className="admin-logout" onClick={handleClickLogOut} >
                                 <LogoutIcon sx={{ mr: 1 }} />
                                 Logout
                             </Fab>
