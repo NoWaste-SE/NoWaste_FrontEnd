@@ -88,9 +88,9 @@ export default function OrderPage(){
             }}
         )
         .then((response) => {
-            console.log(response.data[0]);
-            if(response.data[0] != {})
+            if(response.data.length != 0)
             {
+                console.log("here");
                 setThereis(true);
                 console.log(response.data);
                 setStatus(response.data[0].status);
@@ -99,9 +99,12 @@ export default function OrderPage(){
                 setPrices(response.data[0].Subtotal_Grandtotal_discount);
                 setOrderId(response.data[0].id);
             }
+            console.log("here2");
             setLoading(false);
         })
         .catch((error) => {
+            // console.log(error);
+            console.log("errorrrrr");
             setLoading(true);
         });
     },[]);
@@ -197,7 +200,7 @@ export default function OrderPage(){
     return(
         <ThemeProvider theme={theme}>
             <HeaderCustomer />
-            {thereis ?(
+            {thereis ? (
             <div 
                 className={`container ${blurBackground ? 'blur-background' : ''}`}
             >
@@ -453,7 +456,15 @@ export default function OrderPage(){
                     </Grid>
                 </Grid>
             </div>
-            ) :
+            ) : (
+            loading ? (
+                <PulseLoader
+                type="bars"
+                color="black"
+                speedMultiplier={1}
+                className="spinner-orderpage-whole"
+                />
+            ) : 
             (
                 <div 
                     className="no-order-message-container"
@@ -464,7 +475,7 @@ export default function OrderPage(){
                         There is not any order!
                     </h2>
                 </div>
-            )}
+            ))}
             <Footer />
         </ThemeProvider>
     )

@@ -105,7 +105,7 @@ function ShoppingCard() {
                             <span 
                                 className="shopping-card-price"
                             >
-                                ${order.name_and_price.price} 
+                                ${order.quantity * order.name_and_price.price} 
                             </span>
                         </Typography>
                         {index !== restaurant.orderDetails.orderItems.length - 1 && <div className="line"></div>}
