@@ -204,7 +204,7 @@ export default function Dashboard(){
 
         const commentPromise = 
             axios.post(
-                `http://188.121.124.63/restaurant/comment/user_id/${id}/restaurant_id/${restaurantId}/`,
+                `http://188.121.124.63/restaurant/comment/restaurant_id/${restaurantId}/`,
                 userDataComment,
                 {headers: {
                     'Content-Type' : 'application/json',
