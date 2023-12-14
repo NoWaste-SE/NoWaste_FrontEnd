@@ -9,11 +9,13 @@ function ShoppingCard() {
     const token = localStorage.getItem("token");
     const [loading, setLoading] = useState(true);
     const [allOrders, setAllOrders] = useState([]);
+    const [uuid, setUuid] = useState("");
+    const userid = localStorage.getItem("id");
     const history = useHistory();
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/user/orders/`, 
+            `http://188.121.124.63/restaurant/cart/${userid}`, 
             {headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -22,7 +24,7 @@ function ShoppingCard() {
             }}
         )
         .then((response) => {
-            console.log(response);
+            console.log(response.data);
             setAllOrders(response.data);
             setLoading(false);
         })
@@ -36,7 +38,35 @@ function ShoppingCard() {
         history.push(`/restaurant-view/${id}/`);
     }
 
-    const handleDeleteShopping = () => {  
+    const handleDeleteShopping = (id) => {  
+        axios.get(
+            `http://188.121.124.63/restaurant/restaurant_view/${id}/${userid}/order/`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "PUT,PATCH",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then((response) => {
+            setUuid(response.data.id);
+            axios.delete(
+                `http://188.121.124.63/restaurant/restaurant_view/${id}/${userid}/order/${uuid}`, 
+                {headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'Delete',
+                    'Authorization': 'Bearer ' + token.slice(1, -1),
+                }}
+            )
+            .then((response) => {
+                console.log(response);
+                window.location.reload(false);
+            })
+            .catch((error) => {
+                console.log(error);
+            });        
+        })
     }
     return (
         <>
@@ -101,7 +131,7 @@ function ShoppingCard() {
                             </button>
                             <button 
                                 className="action-button-shopping-card button-2"
-                                onClick={handleDeleteShopping}
+                                onClick={() => handleDeleteShopping(restaurant.restaurant.id)}
                             >
                                 Delete
                             </button>

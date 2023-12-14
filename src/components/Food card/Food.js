@@ -83,6 +83,7 @@ const Food = (props) => {
             }}
         )
         .then((response) => {
+            console.log("done");
             setRemainder(response.data.new_remainder);
         })
         .catch((error) => console.log(error.response) );
