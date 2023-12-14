@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Box, Button, createTheme, Divider, Grid, Icon, InputAdornment, MenuItem, TextField, ThemeProvider, Typography, withStyles,CssBaseline ,BottomNavigation ,BottomNavigationAction ,Paper ,List ,ListItem ,ListItemAvatar ,ListItemText} from "@material-ui/core";
+import { Avatar, Box, Button, createTheme, Divider, Grid, Icon, InputAdornment, MenuItem, TextField, ThemeProvider, Typography, withStyles,CssBaseline ,BottomNavigation ,BottomNavigationAction ,Paper ,List ,ListItem ,ListItemAvatar ,ListItemText,NavigationIcon ,Fab } from "@material-ui/core";
 import './Admin.css';
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PersonIcon from '@mui/icons-material/Person';
 import SendIcon from '@mui/icons-material/Send';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const theme = createTheme({
     palette: {
@@ -200,9 +201,9 @@ export default function Admin() {
                             className="manager-details"
                             key={index}
                         >
-                            <Grid container spacing={2}>
-                                <Grid item md={3}
-                                    className="info"
+                            <Grid container style={{marginTop:'2%'}}>
+                                <Grid item md={3} sm={3} xs={3}
+                                    className="admin-info-avatar"
                                 >
                                     <Avatar
                                         src={manager.manager_image}
@@ -210,8 +211,8 @@ export default function Admin() {
                                         style={{ backgroundColor: avatarColors[index] }}
                                     />                                            
                                 </Grid>
-                                <Grid item md={9}
-                                    className="info"
+                                <Grid item md={9} sm={9} xs={9}
+                                    className="admin-info"
                                 >
                                     <Typography className="info-text">
                                         <span className="info-label">Manager Name:</span>{" "}
@@ -330,7 +331,7 @@ export default function Admin() {
                         >
                             <Grid container spacing={3}>
                                 <Grid item md={8} sm={12}
-                                    className="info"
+                                    className="admin-info"
                                 >
                                     <Typography className="info-text">
                                         <span className="info-label">Name:</span>{" "}
@@ -352,7 +353,7 @@ export default function Admin() {
                                     </Button>
                                 </Grid>
                                 <Grid item md={2}
-                                    className="info"
+                                    className="admin-info"
                                 >
                                     <Button
                                         className="request-button accept"
@@ -407,11 +408,19 @@ export default function Admin() {
                             </Paper>
                         </Box>
                     </Grid>
-                    <Grid item md={6} sm={12} style={{display:'flex',justifyContent:'center',alignItems:'center'}} className='admin-img'>
-                        <img 
-                            style={{width: '60%'}}
-                            src="/admin.png"   
-                        />
+                    <Grid container item md={6} sm={12} xs={12}>
+                        <Grid item md={12} sm={12} xs={12} style={{display:'flex',justifyContent:'center',alignItems:'center'}} className='admin-img'>
+                            <img 
+                                style={{width: '60%'}}
+                                src="/admin.png"   
+                            />
+                        </Grid>
+                        <Grid item md={12} sm={12} xs={12} style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                            <Fab variant="extended" className="admin-logout">
+                                <LogoutIcon sx={{ mr: 1 }} />
+                                Logout
+                            </Fab>
+                        </Grid>
                     </Grid>
                 </Grid>
                 
