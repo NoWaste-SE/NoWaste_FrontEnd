@@ -1335,6 +1335,7 @@ function EditRestaurant(props){
                                                                                 }
                                                                             >
                                                                                 Upload the second food image
+                                                                            </Button>
                                                                         </label>
                                                                         <Button 
                                                                             className="upload-button" 
