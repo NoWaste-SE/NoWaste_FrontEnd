@@ -322,7 +322,7 @@ const HomepageCustomer = () => {
         });
     };
 
-    const handleClickNewest = () => {      //
+    const handleClickNewest = () => {     
         const fromR = valueR[0].toFixed(1);
         const toR = valueR[1].toFixed(1);
         const fromD = valueD[0] * 0.01;
@@ -765,6 +765,9 @@ const HomepageCustomer = () => {
                                             rate={restaurant[0].rate} 
                                             discount={restaurant[0].discount} 
                                             id={restaurant[0].id} 
+                                            number={restaurant[0].number}
+                                            address={restaurant[0].address}
+                                            restaurant_image={restaurant[0].restaurant_image}
                                             description={restaurant[0].description} 
                                             isSingleResult={true}
                                         />
@@ -793,6 +796,9 @@ const HomepageCustomer = () => {
                                             rate={fields.fields[0].rate} 
                                             discount={fields.fields[0].discount}
                                             id={fields.fields[0].id} 
+                                            number={fields.fields[0].number}
+                                            address={fields.fields[0].address}
+                                            restaurant_image={fields.fields[0].restaurant_image}
                                             description={fields.fields[0].description} 
                                             isSingleResult={true}
                                         />
