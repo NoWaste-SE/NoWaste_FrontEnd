@@ -740,25 +740,9 @@ function EditRestaurant(props){
                                     >
                                         {firstChar}
                                     </Avatar>
-                                    <Typography 
-                                        className="text-above-upload"
-                                    >
-                                        JPG or PNG no larger than 5 MB
-                                    </Typography>
-                                    {open && 
-                                        <Alert 
-                                            severity="error" 
-                                            open={open} 
-                                            onClose={handleClose} 
-                                            className="image-alert" 
-                                            variant="outlined" 
-                                        >
-                                            File size is too large.
-                                        </Alert>
-                                    } 
                                     <input
                                         accept="image/*"
-                                        id="profile-image-input-restaurant"
+                                        id="photoInput"
                                         type="file"
                                         hidden      
                                         MAX_FILE_SIZE={MAX_FILE_SIZE}   
@@ -772,18 +756,12 @@ function EditRestaurant(props){
                                         }}                   
                                     />
                                     <label 
-                                        htmlFor="profile-image-input-restaurant" 
+                                        htmlFor="photoInput" 
                                         className="input-label"
                                     >
                                         <UploadButton
                                             title={"Uplaod new image"}
                                         />
-                                        {/* <Button 
-                                            className="upload-button" 
-                                            component="span"
-                                        >
-                                            Upload new image
-                                        </Button> */}
                                     </label>
                                 </Box>
                             </Grid>
@@ -832,7 +810,7 @@ function EditRestaurant(props){
                                         <SubmitButton
                                             onClick={showCroppedImage}
                                             variant={"contained"}
-                                            title={"Apply"}
+                                            title={"Apply cutting"}
                                             customWidth={"auto"}
                                         />
                                     </div>
