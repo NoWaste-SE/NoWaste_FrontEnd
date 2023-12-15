@@ -122,14 +122,14 @@ function ShoppingCard() {
                             <SubmitButton
                                 variant={"contained"}
                                 type={"submit"}
-                                onClick={() => handleContinueShopping(restaurant.restaurant.id)}
+                                onClick={() => handleContinueShopping(restaurant.restaurantDetails.id)}
                                 title={"Continue"}
                                 customWidth={"auto"}
                             />
                             <CancelButton
                                 variant={"contained"}
                                 type={"submit"}
-                                onClick={handleDeleteShopping}
+                                onClick={() => handleDeleteShopping(restaurant.restaurantDetails.id, restaurant.orderDetails.id)}
                                 title={"Delete"}
                                 customWidth={"auto"}
                             />
