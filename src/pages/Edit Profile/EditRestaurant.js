@@ -665,6 +665,14 @@ function EditRestaurant(props){
         });
     };
 
+    const handlepic1delete = () =>{
+        setFoodPicture(null);
+    };
+
+    const handlepic2delete = () =>{
+        setFoodPicture2(null);
+    };
+
     const handleOpenAdd = (e) => {
         setOpenAdd(!openAdd);
     };
@@ -1098,6 +1106,14 @@ function EditRestaurant(props){
                                                                 >
                                                                     Upload the first food image
                                                                 </Button>
+                                                                <Button 
+                                                                    className="upload-button" 
+                                                                    component="span"
+                                                                    onClick={handlepic1delete}
+                                                                    disabled={foodPicture2}
+                                                                >
+                                                                    Delete the first food image
+                                                                </Button>
                                                             </label>
                                                         </Grid>
                                                         <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
@@ -1127,6 +1143,14 @@ function EditRestaurant(props){
                                                                     disabled={!foodPicture}
                                                                 >
                                                                     Upload the second food image
+                                                                </Button>
+                                                                <Button 
+                                                                    className="upload-button" 
+                                                                    component="span"
+                                                                    onClick={handlepic2delete}
+                                                                    disabled={!foodPicture}
+                                                                >
+                                                                    Delete the second food image
                                                                 </Button>
                                                             </label>
                                                         </Grid>
