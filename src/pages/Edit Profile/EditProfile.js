@@ -24,6 +24,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import PulseLoader from "react-spinners/PulseLoader";
+import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
 
 const style = {
     position: "absolute",
@@ -537,12 +538,9 @@ function Edit(props){
                                     htmlFor="contained-button-file-customer" 
                                     className="input-label"
                                 >
-                                    <Button 
-                                        className="upload-button" 
-                                        component="span"
-                                    >
-                                        Upload new image
-                                    </Button>
+                                    <UploadButton
+                                        title={"Upload new image"}
+                                    />
                                 </label>
                             </Box>
                         </Grid>
@@ -581,23 +579,20 @@ function Edit(props){
                                 />
                                 <div
                                     className="crop-buttons"
+                                    style={{marginTop: '100px'}}
                                 >
-                                    <Button
-                                        onClick={showCroppedImage}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="save"
-                                    >
-                                        Apply 
-                                    </Button>
-                                    <Button
+                                    <CancelButton
                                         onClick={onClose}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="discard"
-                                    >
-                                        Discard
-                                    </Button>
+                                        variant={"contained"}
+                                        title={"Discard"}
+                                        customWidth={"auto"}
+                                    />
+                                    <SubmitButton
+                                        onClick={showCroppedImage}
+                                        variant={"contained"}
+                                        title={"Apply"}
+                                        customWidth={"auto"}
+                                    />
                                 </div>
                             </Box>
                         </Modal>
@@ -965,40 +960,38 @@ function Edit(props){
                                 <Grid container spacing={2} 
                                     className="edit-button-grid" 
                                     wrap="nowrap"
+                                    alignItems="center"
                                 >
                                     <Grid item>
-                                        <Button 
-                                            className="edit-button" 
-                                            id="change-pass"
-                                            variant="contained" 
-                                            onClick={() => setShow(prev => !prev)}
-                                        >
-                                            Change password 
-                                        </Button>
+                                        <SubmitButton
+                                            variant={"contained"}
+                                            type={"submit"}
+                                            onClick={()=>setShow(prev => !prev)}
+                                            title={"Change password"}
+                                            customWidth={"auto"}
+                                        />
                                     </Grid>
-                                    <Grid item container lg={5} md={6} sm={12}
+                                    <Grid item container lg={6} md={6} sm={12}
                                         justifyContent="flex-end"
+                                        alignItems="center"
                                     >
-                                        <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="discard"
-                                                variant="contained" 
+                                        <Grid item > 
+                                            <CancelButton 
+                                                variant={"contained"} 
+                                                type={"submit"}
                                                 onClick={handleDiscard}
-                                            >
-                                                Discard
-                                            </Button>
+                                                title={"Discard"}
+                                            />
                                         </Grid>
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button"  
-                                                id="save"
-                                                variant="contained" 
-                                                onClick={handleUpdate}
+                                            <SubmitButton 
+                                                variant={"contained"}
+                                                type={"submit"}
                                                 disabled={!validInputs}
-                                            >
-                                                Save changes
-                                            </Button>
+                                                onClick={handleUpdate}
+                                                title={"Save changes"}
+                                                customWidth={"auto"}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </Grid>

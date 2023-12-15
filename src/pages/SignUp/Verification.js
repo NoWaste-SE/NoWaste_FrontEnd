@@ -5,6 +5,7 @@ import './Login-Signup.css'
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Alert } from "@mui/material";
+import { CancelButton } from "../../components/CustomButtons/CustomButtons";
 
 const theme = createTheme({
     palette: {
@@ -214,7 +215,15 @@ export default function Verification(){
                                     ),
                                 }}
                             />
-                            <Button 
+                            <CancelButton
+                                variant={"contained"}
+                                type={"submit"}
+                                disabled={!validInputs}
+                                onClick={handleSubmit}
+                                title={"Verify code"}
+                                customWidth={"70%"}
+                            />
+                            {/* <Button 
                                 variant="contained" 
                                 type="submit" 
                                 color="primary"
@@ -225,7 +234,7 @@ export default function Verification(){
                                 style={{ marginTop: '-5px'}}
                             >
                                 Verify code
-                            </Button>
+                            </Button> */}
                         </form>
                     </Box>
                 </Container>
