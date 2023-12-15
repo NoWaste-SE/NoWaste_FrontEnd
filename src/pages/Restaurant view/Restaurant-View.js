@@ -30,7 +30,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import ChatIcon from '@mui/icons-material/Chat';
-
+import { CustomRestaurantCard } from '../../components/Custom Restaurant Card/CustomRestaurantCard';
 
 const useStyles = makeStyles({
     ul: {
@@ -180,6 +180,7 @@ const RestaurantView = (props: Props) => {
     };
 
     useEffect(()=>{
+        console.log(restaurant);
         console.log("restaurant is :" + restaurant);
         console.log("manager id is: ");
         setManagerId(restaurant.manager_id);
@@ -194,9 +195,6 @@ const RestaurantView = (props: Props) => {
         }
     }, []);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     const breakpoints = {
         default: 3,
@@ -239,6 +237,7 @@ const RestaurantView = (props: Props) => {
                     setNameRestaurant(response.data.name);
                     setRateValue(response.data.rate);
                     setDate_Of_Res(response.data.date_of_establishment.split('-'));
+                    // console.log(response.data.date_of_establishment.split('-'));
                     const is_in_list = list_fav.includes(response.data.name);
                     is_in_list ? (setColor(!color)) : setColor(color);
                 })
@@ -371,7 +370,16 @@ const RestaurantView = (props: Props) => {
                     className='restaurant-view'
                 >
                     <Grid item md={3}>
-                        <Card 
+                        <CustomRestaurantCard 
+                            restaurant={restaurant}
+                            color={color} 
+                            handleCloseComments={handleCloseComments}
+                            handleOpenComments={handleOpenComments}
+                            openComments={openComments}
+                            handleFavorite={handleFavorite}
+                            establishment_date={date_of_res[0]}
+                        />
+                        {/* <Card 
                             sx={{ borderStyle: 'none'}} 
                             className='card-restaurant-view'
                         >
@@ -621,7 +629,7 @@ const RestaurantView = (props: Props) => {
                                     </Box>
                                 </CardContent>
                             </Collapse>
-                        </Card>
+                        </Card> */}
                         <Button 
                             onClick={handlePayment} 
                             variant="contained"

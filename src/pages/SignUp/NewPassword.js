@@ -6,6 +6,7 @@ import {useHistory } from "react-router-dom";
 import './Login-Signup.css'
 import axios from "axios";
 import { Alert } from "@mui/material";
+import { CancelButton } from "../../components/CustomButtons/CustomButtons";
 
 const theme = createTheme({
     palette: {
@@ -201,7 +202,15 @@ export default function NewPassword(){
                                     )
                                 }}
                             />
-                            <Button 
+                            <CancelButton
+                                variant={"contained"}
+                                type={"submit"}
+                                disabled={!validInputs}
+                                onClick={handleSubmit}
+                                title={"Save"}
+                                customWidth={"70%"}
+                            />
+                            {/* <Button 
                                 variant="contained"
                                 type="submit"
                                 required
@@ -211,7 +220,7 @@ export default function NewPassword(){
                                 onClick={handleSubmit}
                             >
                                 Save
-                            </Button>
+                            </Button> */}
                         </form>
                     </Box>
                 </Container>

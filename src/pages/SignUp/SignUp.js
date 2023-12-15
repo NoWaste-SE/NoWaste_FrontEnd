@@ -9,6 +9,7 @@ import axios from "axios";
 import Checkbox from '@mui/material/Checkbox';
 import { SpinningBubbles } from "react-loading";
 import { Alert} from "@mui/material";
+import { CancelButton } from "../../components/CustomButtons/CustomButtons";
 
 const theme = createTheme({
     palette: {
@@ -329,7 +330,19 @@ export default function SignUp(){
                                     </Typography>
                                 }   
                             />
-                            <Button 
+                            {/* <Grid 
+                                style={{width:'80%', display:'flex', alignItems: 'center'}}
+                            > */}
+                                <CancelButton
+                                    variant={"contained"}
+                                    type={"submit"}
+                                    disabled={!validInputs}
+                                    onClick={handleSubmit}
+                                    title={"Sign up"}
+                                    customWidth={"70%"}
+                                />
+                            {/* </Grid> */}
+                            {/* <Button 
                                 variant="contained" 
                                 type="submit" 
                                 color="primary"
@@ -339,7 +352,7 @@ export default function SignUp(){
                                 onClick={handleSubmit}
                             >
                                 Sign up
-                            </Button>
+                            </Button> */}
                         </form> 
                         <Typography
                             className="already"

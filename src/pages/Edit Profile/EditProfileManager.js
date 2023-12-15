@@ -17,6 +17,7 @@ import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import Modal from '@mui/material/Modal';
 import PulseLoader from "react-spinners/PulseLoader";
+import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
 
 const style = {
     position: "absolute",
@@ -416,12 +417,9 @@ const EditProfileManager = (props) => {
                                     htmlFor="contained-button-file-manager" 
                                     className="input-label"
                                 >
-                                    <Button 
-                                        className="upload-button" 
-                                        component="span"
-                                    >
-                                        Upload new image
-                                    </Button>
+                                    <UploadButton
+                                        title={"Upload new image"}
+                                    />
                                 </label>
                             </Box>
                         </Grid>
@@ -457,22 +455,17 @@ const EditProfileManager = (props) => {
                                 <div
                                     className="crop-buttons"
                                 >
-                                    <Button
-                                        onClick={showCroppedImage}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="save"
-                                    >
-                                        Apply
-                                    </Button>
-                                    <Button
+                                    <CancelButton
                                         onClick={onClose}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="discard"
-                                    >
-                                        Discard
-                                    </Button>
+                                        variant={"contained"}
+                                        title={"Discard"}
+                                        customWidth={"auto"}
+                                    />
+                                    <SubmitButton
+                                        onClick={showCroppedImage}
+                                        variant={"contained"}
+                                        title={"Apply"}
+                                    />
                                 </div>
                             </Box>
                         </Modal>
@@ -678,38 +671,33 @@ const EditProfileManager = (props) => {
                                     wrap="nowrap"
                                 >
                                     <Grid item>
-                                        <Button 
-                                            className="edit-button" 
-                                            id="change-pass"
-                                            variant="contained" 
-                                            onClick={() => setShow(prev => !prev)}
-                                        >
-                                            Change password 
-                                        </Button>
+                                        <SubmitButton
+                                            variant={"contained"}
+                                            type={"submit"}
+                                            onClick={()=>setShow(prev => !prev)}
+                                            title={"Change password"}
+                                        />
                                     </Grid>
                                     <Grid item container lg={5} md={6} sm={12}
                                         justifyContent="flex-end"
+                                        alignItems="center"
                                     >
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="discard"
-                                                variant="contained" 
+                                            <CancelButton 
+                                                variant={"contained"} 
+                                                type={"submit"}
                                                 onClick={handleDiscard}
-                                            >
-                                                Discard
-                                            </Button>
+                                                title={"Discard"}
+                                            />
                                         </Grid>
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="save"
-                                                variant="contained" 
-                                                onClick={handleUpdate}
+                                            <SubmitButton 
+                                                variant={"contained"}
+                                                type={"submit"}
                                                 disabled={!validInputs}
-                                            >
-                                                Save changes
-                                            </Button>
+                                                onClick={handleUpdate}
+                                                title={"Save changes"}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </Grid>
