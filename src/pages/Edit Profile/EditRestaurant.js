@@ -1106,15 +1106,15 @@ function EditRestaurant(props){
                                                                 >
                                                                     Upload the first food image
                                                                 </Button>
-                                                                <Button 
-                                                                    className="upload-button" 
-                                                                    component="span"
-                                                                    onClick={handlepic1delete}
-                                                                    disabled={foodPicture2}
-                                                                >
-                                                                    Delete the first food image
-                                                                </Button>
                                                             </label>
+                                                            <Button 
+                                                                className="upload-button" 
+                                                                component="span"
+                                                                onClick={handlepic1delete}
+                                                                disabled={!foodPicture || foodPicture2}
+                                                            >
+                                                                Delete this image
+                                                            </Button>
                                                         </Grid>
                                                         <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
                                                             
@@ -1144,17 +1144,16 @@ function EditRestaurant(props){
                                                                 >
                                                                     Upload the second food image
                                                                 </Button>
-                                                                <Button 
-                                                                    className="upload-button" 
-                                                                    component="span"
-                                                                    onClick={handlepic2delete}
-                                                                    disabled={!foodPicture}
-                                                                >
-                                                                    Delete the second food image
-                                                                </Button>
                                                             </label>
+                                                            <Button 
+                                                                className="upload-button" 
+                                                                component="span"
+                                                                onClick={handlepic2delete}
+                                                                disabled={!foodPicture || !foodPicture2}
+                                                            >
+                                                                Delete this image
+                                                            </Button>
                                                         </Grid>
-
                                                     </Grid>
                                                     <TextField
                                                         label="Name"
@@ -1351,6 +1350,16 @@ function EditRestaurant(props){
                                                                                 Upload the first food image
                                                                             </Button>
                                                                         </label>
+                                                                        <Button 
+                                                                            className="upload-button" 
+                                                                            component="span"
+                                                                            onClick={handlepic1delete}
+                                                                            disabled={!foodPicture || foodPicture2 ||                                                                                     
+                                                                                foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                            }
+                                                                        >
+                                                                            Delete this image
+                                                                        </Button>
                                                                     </Grid>
                                                                     <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
                                                                         
@@ -1376,16 +1385,24 @@ function EditRestaurant(props){
                                                                             <Button 
                                                                                 className="upload-button" 
                                                                                 component="span"
-                                                                                disabled={foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')}
+                                                                                disabled={!foodPicture ||
+                                                                                    foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                }
                                                                             >
                                                                                 Upload the second food image
                                                                             </Button>
                                                                         </label>
+                                                                        <Button 
+                                                                            className="upload-button" 
+                                                                            component="span"
+                                                                            onClick={handlepic2delete}
+                                                                            disabled={!foodPicture || !foodPicture2}
+                                                                        >
+                                                                            Delete this image
+                                                                        </Button>
                                                                     </Grid>
 
                                                                 </Grid>
-                                                                
-                                                                
                                                                 <TextField
                                                                     label="Name"
                                                                     variant="outlined"
