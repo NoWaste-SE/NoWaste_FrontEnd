@@ -503,25 +503,9 @@ function Edit(props){
                                 >
                                     {firstChar}
                                 </Avatar>
-                                <Typography 
-                                    className="text-above-upload"
-                                >
-                                    JPG or PNG no larger than 5 MB
-                                </Typography>
-                                {openImg && 
-                                    <Alert 
-                                        className="image-alert" 
-                                        variant="outlined" 
-                                        severity="error" 
-                                        open={openImg} 
-                                        onClose={handleCloseImg} 
-                                    >
-                                        File size is too large.
-                                    </Alert>
-                                }
                                 <input
                                     accept="image/*"
-                                    id="contained-button-file-customer"
+                                    id="photoInput"
                                     type="file"
                                     hidden      
                                     MAX_FILE_SIZE={MAX_FILE_SIZE}  
@@ -535,7 +519,7 @@ function Edit(props){
                                     }}                 
                                 />
                                 <label 
-                                    htmlFor="contained-button-file-customer" 
+                                    htmlFor="photoInput" 
                                     className="input-label"
                                 >
                                     <UploadButton
@@ -578,8 +562,7 @@ function Edit(props){
                                     id="bottom"
                                 />
                                 <div
-                                    className="crop-buttons"
-                                    style={{marginTop: '100px'}}
+                                    className='crop-buttons'
                                 >
                                     <CancelButton
                                         onClick={onClose}
@@ -590,7 +573,7 @@ function Edit(props){
                                     <SubmitButton
                                         onClick={showCroppedImage}
                                         variant={"contained"}
-                                        title={"Apply"}
+                                        title={"Apply cutting"}
                                         customWidth={"auto"}
                                     />
                                 </div>
