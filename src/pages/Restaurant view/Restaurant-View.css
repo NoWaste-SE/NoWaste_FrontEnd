@@ -86,6 +86,12 @@
     object-fit: contain;
 }
 
+.payment {
+    width: 120% !important;
+    display: flex;
+    justify-content: center;
+}
+
 @media(max-width: 360px) {
     .css-1y40yz5-MuiGrid-root {
         margin-left: -7% !important;
