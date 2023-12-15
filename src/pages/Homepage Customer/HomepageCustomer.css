@@ -24,9 +24,7 @@
     justify-content: center !important;
     align-items: center !important;
     margin: auto !important;
-    margin-top: 50% !important;
-    margin-right: -200% !important;
-
+    margin-top: 20% !important;
 }
 
 .grid-homepage-customer {
@@ -159,4 +157,22 @@
 
 .formcontrol-sorting {
     width: 100% !important;
+}
+
+.recent-title{
+    color: #797979;
+    font-size: large !important;
+    margin-top: 1% !important;
+    margin-left: 5% !important;
+    margin-bottom: 1% !important;
+}
+
+.recent-divider{
+    width: 80%;
+    margin-top: 5%;
+    margin-bottom: 3%;
+    height: 1.3px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(to right, #ffa600, #e74c3c);
 }
