@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddPagination from '../../components/Pagination/Pagination';
 import Pagination from '@mui/material/Pagination';
 import PulseLoader from "react-spinners/PulseLoader";
+import { SubmitButton, CancelButton } from '../../components/CustomButtons/CustomButtons';
 
 const useStyles = makeStyles({
     ul: {
@@ -364,25 +365,21 @@ function HomepageRestaurant(props){
                                 className="new-restaurant-button-grid" 
                                 wrap="nowrap"
                             >
-                                <Grid item style={{paddingLeft: '20px'}}>
-                                    <Button 
-                                        className="add-restaurant-button" 
-                                        id="cancel" 
-                                        variant="contained" 
+                                <Grid item>
+                                    <CancelButton
+                                        variant={"contained"}
+                                        type={"submit"}
                                         onClick={handleCancel}
-                                    >
-                                        Cancel
-                                    </Button>
+                                        title={"Cancel"}
+                                    />
                                 </Grid>
-                                <Grid item style={{textAlign:"center"}}>
-                                    <Button 
-                                        className="add-restaurant-button" 
-                                        id="add" 
-                                        variant="contained" 
+                                <Grid item>
+                                    <SubmitButton
+                                        variant={"contained"}
+                                        type={"submit"}
                                         onClick={handleAdd}
-                                    >
-                                        Add
-                                    </Button>
+                                        title={"Add"}
+                                    />
                                 </Grid>
                             </Grid>
                         </Box>
@@ -458,19 +455,16 @@ function HomepageRestaurant(props){
                                                                 style={{marginTop: '2px'}}
                                                             />
                                                         </Grid>
-                                                        <Grid item  
-                                                            alignItems="center" style={{ marginBottom: "15px", width: "auto", marginLeft: "10px"}}
-                                                        >
-                                                            <Button
-                                                                variant='contained'
-                                                                className='delete-restaurant-button'
-                                                                onClick={(e) =>{
+                                                        <Grid item>
+                                                            <CancelButton
+                                                                variant={"contained"}
+                                                                type={"submit"}
+                                                                onClick={(e) => {
                                                                     e.stopPropagation();
-                                                                    handleDelete(res)}
-                                                                } 
-                                                            >
-                                                                Delete
-                                                            </Button>
+                                                                    handleDelete(res)
+                                                                }}
+                                                                title={"Delete"}
+                                                            />
                                                         </Grid>
                                                     </CardContent>
                                                 </Grid>
