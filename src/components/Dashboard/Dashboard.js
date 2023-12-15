@@ -204,11 +204,13 @@ export default function Dashboard(){
 
         const commentPromise = 
             axios.post(
-                `http://188.121.124.63/restaurant/comment/user_id/${id}/restaurant_id/${restaurantId}/`,
+                `http://188.121.124.63/restaurant/comment/restaurant_id/${restaurantId}/`,
                 userDataComment,
                 {headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Token ${token.slice(1, -1)}`
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
         );
 
@@ -217,8 +219,10 @@ export default function Dashboard(){
                 `http://188.121.124.63/user/rate-restaurant/`,
                 userDataRate,
                 {headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Token ${token.slice(1, -1)}`
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
         );
 

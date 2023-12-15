@@ -14,7 +14,6 @@ import BackToTop from '../../components/Back to top/BackToTop';
 import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams } from "react-router-dom";
 import HeaderCustomer from '../../components/Header/HeaderCustomer';
-import ShowComments from '../../components/Comment/ShowComments';
 import MdPhone from '@mui/icons-material/Phone';
 import PlaceIcon from '@mui/icons-material/Place';
 import DoneIcon from '@mui/icons-material/Done';
@@ -32,6 +31,7 @@ import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import ChatIcon from '@mui/icons-material/Chat';
 import { CustomRestaurantCard } from '../../components/Custom Restaurant Card/CustomRestaurantCard';
 import { UploadButton } from '../../components/CustomButtons/CustomButtons';
+import ShowComments from '../../components/Comment/ShowComments';
 
 const useStyles = makeStyles({
     ul: {
@@ -159,25 +159,17 @@ const RestaurantView = (props: Props) => {
     };
 
     const handleClickOnDownloadExel = () => {
-        fetch(`http://188.121.124.63/restaurant/excel/customer/${managerId}/${customer_id}/order-history`, {
-            method: 'GET',
-            headers: {
+        axios.get(
+            `http://188.121.124.63/restaurant/excel/customer/${managerId}/${customer_id}/order-history`,
+            {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET",
-            },
-            })
-            .then((response) => response.blob())
-            .then((blob) => {
-                const url = window.URL.createObjectURL(new Blob([blob]));
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'orders-history.xlsx';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            })
-            .catch((error) => console.error('Error downloading file:', error));
+            }}
+        )
+        .catch((error) => {
+            console.log(error.response);
+        });
     };
 
     useEffect(()=>{
@@ -317,39 +309,39 @@ const RestaurantView = (props: Props) => {
         setAddressCopied(false);
     };
 
-    useEffect(() => {
-        axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${id}/${customer_id}/order/`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            setOrder_id(response.data.id);
-            localStorage.setItem("order_id", order_id);
-        })
-    })
+    // useEffect(() => {
+    //     axios.get(
+    //         `http://188.121.124.63/restaurant/restaurant_view/${id}/${customer_id}/order/`,
+    //         {headers: {
+    //             'Content-Type' : 'application/json',
+    //             "Access-Control-Allow-Origin" : "*",
+    //             "Access-Control-Allow-Methods" : "PUT,PATCH",
+    //             'Authorization' : "Bearer " + token.slice(1,-1)   
+    //         }}
+    //     )
+    //     .then((response) => {
+    //         setOrder_id(response.data.id);
+    //         localStorage.setItem("order_id", order_id);
+    //     })
+    // })
 
-    useEffect(()=>{
-        axios.get(
-            `http://188.121.124.63/restaurant/restaurant_id/${id}/comments`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET,PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            setComments(response.data);
-        })
-        .catch((error) => {
-            console.log(error.response);
-        });
-    },[])
+    // useEffect(()=>{
+    //     axios.get(
+    //         `http://188.121.124.63/restaurant/restaurant_id/${id}/comments`,
+    //         {headers: {
+    //             'Content-Type' : 'application/json',
+    //             "Access-Control-Allow-Origin" : "*",
+    //             "Access-Control-Allow-Methods" : "GET,PUT,PATCH",
+    //             'Authorization' : "Bearer " + token.slice(1,-1)   
+    //         }}
+    //     )
+    //     .then((response) => {
+    //         setComments(response.data);
+    //     })
+    //     .catch((error) => {
+    //         console.log(error.response);
+    //     });
+    // },[])
 
     const handlePayment = () => {
         history.push('/order-page/' + id);
@@ -363,7 +355,7 @@ const RestaurantView = (props: Props) => {
                 type="bars"
                 color="black"
                 speedMultiplier={1}
-                className="spinner-restaurant-view"
+                className="spinner"
                 />
             ) : (
             <>

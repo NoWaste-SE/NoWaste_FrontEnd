@@ -156,7 +156,7 @@ export default function Login(){
             setList_of_favorites_res(response.list_of_favorites_res);
             if (response.role === "customer")
                 history.push("/homepage-customer");
-            else if (response.data.role === "admin")
+            else if (response.role === "admin")
                 history.push("/admin");
             else
                 history.push("/homepage-restaurant");

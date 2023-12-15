@@ -3,7 +3,7 @@
     height: auto !important;
 }
 
-.admin-container .title {
+.adimin-title {
     width: 100% !important;
     margin: 3vw auto;
     font-weight: bold !important;
@@ -32,22 +32,41 @@
     margin: 10% auto !important;
 }
 
-.manager-details .info {
+.manager-details{
     margin: 2% auto !important;
     font-size: larger !important;
 }
 
 .manager-details .restaurants {
-    text-align: right !important;
+    text-align: left !important;
     color: #797979;
 }
 
-.info .restaurant-image {
+.admin-box{
+    max-height: 87vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px
+}
+
+.admin-main-box{
+    margin: 2% !important;
+    position: relative;
+}
+
+.admin-info .restaurant-image {
     width: 8vw !important;
     height: 6vw !important;
 }
 
-.info .restaurant-box {
+.admin-info-avatar{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+}
+
+.admin-info .restaurant-box {
     width: 28vw !important;
     height: auto;
     padding: 10px !important;
@@ -92,4 +111,16 @@
 
 .info-text{
     font-weight: 100 !important;
+}
+
+.admin-logout{
+    background-color: #e68371 !important;
+    margin-top: 2% !important;
+    margin-bottom: 2% !important;
+}
+
+@media (max-width: 599px){
+    .admin-img {
+        display: none !important;
+    }   
 }
