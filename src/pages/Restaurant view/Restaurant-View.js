@@ -371,6 +371,7 @@ const RestaurantView = (props: Props) => {
                             openComments={openComments}
                             handleFavorite={handleFavorite}
                             establishment_date={date_of_res[0]}
+                            id={id}
                         />
                         <div className='payment'>
                             <UploadButton

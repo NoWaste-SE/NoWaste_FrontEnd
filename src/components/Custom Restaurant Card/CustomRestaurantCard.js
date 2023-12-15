@@ -12,6 +12,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import * as MU from '@mui/material';
 import './CustomRestaurantCard.css';
 import '../Comment/ShowComments.css';
+import ShowComments from '../Comment/ShowComments';
 // import '../../pages/Restaurant view/Restaurant-View.css';
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -155,116 +156,7 @@ const CustomRestaurantCard = (props) => {
                         >
                             Comments
                         </h2>
-                        <div 
-                            className="comment-details-div"
-                        >
-                            <Stack 
-                                direction="row" 
-                                spacing={2} 
-                            >
-                                <Avatar 
-                                    style={{backgroundColor: "#c7c7c7"}}
-                                    className='comment-avatar'
-                                >
-                                    H
-                                </Avatar>
-                                <Stack 
-                                    direction="column" 
-                                    spacing={2} 
-                                >
-                                    <Typography 
-                                        variant="h6" 
-                                        className='comment-stack'
-                                    >
-                                        Helia Vafaei
-                                    </Typography>
-                                    <h8 
-                                        className='comment-date'
-                                    >
-                                        2023-07-06
-                                    </h8>
-                                </Stack>
-                            </Stack>
-                            <Typography 
-                                className='comment-text' 
-                                id="modal-modal-description" 
-                            >
-                                Very nice !
-                            </Typography>
-                            <hr 
-                                className='comment-hr' 
-                            />
-                            <Stack 
-                                direction="row" 
-                                spacing={2} 
-                            >
-                                <Avatar 
-                                    style={{backgroundColor: "#c7c7c7"}}
-                                    className='comment-avatar'
-                                >
-                                    H
-                                </Avatar>
-                                <Stack 
-                                    direction="column" 
-                                    spacing={2} 
-                                >
-                                    <Typography 
-                                        variant="h6" 
-                                        className='comment-stack'
-                                    >
-                                        Setareh Babajani
-                                    </Typography>
-                                    <h8 
-                                        className='comment-date'
-                                    >
-                                        2023-09-10
-                                    </h8>
-                                </Stack>
-                            </Stack>
-                            <Typography 
-                                className='comment-text' 
-                                id="modal-modal-description" 
-                            >
-                                I recommend it...
-                            </Typography>
-                            <hr className='comment-hr'></hr>
-                            <Stack 
-                                direction="row" 
-                                spacing={2} 
-                            >
-                                <Avatar 
-                                    style={{backgroundColor: "#c7c7c7"}}
-                                    className='comment-avatar'
-                                >
-                                    H
-                                </Avatar>
-                                <Stack 
-                                    direction="column" 
-                                    spacing={2} 
-                                >
-                                    <Typography 
-                                        variant="h6" 
-                                        className='comment-stack'
-                                    >
-                                        Hanieh Asadi
-                                    </Typography>
-                                    <h8 
-                                        className='comment-date'
-                                    >
-                                        2023-08-01
-                                    </h8>
-                                </Stack>
-                            </Stack>
-                            <Typography 
-                                className='comment-text' 
-                                id="modal-modal-description" 
-                            >
-                                The best restaurant ever.
-                            </Typography>
-                            <hr 
-                                className='comment-hr' 
-                            />
-                        </div>
+                        <ShowComments id = {props.id}/>
                         <Button 
                             onClick={props.handleCloseComments} 
                             variant="contained"
