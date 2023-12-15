@@ -25,6 +25,7 @@ import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import PulseLoader from "react-spinners/PulseLoader";
 import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
+import { CustomEditFood } from "../../components/Custom Edit Food/CustomEditFood";
 
 const style = {
     position: "absolute",
@@ -1227,9 +1228,16 @@ function EditRestaurant(props){
                                                 <Box 
                                                     className="menu-box"
                                                 >
-                                                    {menu && menu.map((res, index) => (
+                                                    {menu && menu.map((food, index) => (
                                                         <div>
-                                                            <Box 
+                                                            <CustomEditFood
+                                                                food={food}
+                                                                secondImage={showSecondImage}
+                                                                onMouseEnter={() => setShowSecondImage(food.id)}
+                                                                onMouseLeave={() => setShowSecondImage(null)}
+                                                                onClickEdit={() => handleOpenEdit(food.id)}
+                                                            />
+                                                            {/* <Box 
                                                                 className="food-box"
                                                             >
                                                                 <Grid container spacing={4}>
@@ -1279,7 +1287,7 @@ function EditRestaurant(props){
                                                                         />
                                                                     </Grid>
                                                                 </Grid>
-                                                            </Box>
+                                                            </Box> */}
                                                             <StyledDialog 
                                                                 open={openEdit} 
                                                                 classes={{ paper: classes.dialogRoot }} 
