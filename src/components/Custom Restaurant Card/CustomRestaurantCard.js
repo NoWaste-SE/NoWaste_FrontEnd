@@ -157,6 +157,7 @@ const CustomRestaurantCard = (props) => {
                             Comments
                         </h2>
                         <ShowComments id = {props.id}/>
+                        
                         <Button 
                             onClick={props.handleCloseComments} 
                             variant="contained"

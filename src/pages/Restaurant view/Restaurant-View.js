@@ -31,7 +31,6 @@ import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import ChatIcon from '@mui/icons-material/Chat';
 import { CustomRestaurantCard } from '../../components/Custom Restaurant Card/CustomRestaurantCard';
 import { UploadButton } from '../../components/CustomButtons/CustomButtons';
-import ShowComments from '../../components/Comment/ShowComments';
 
 const useStyles = makeStyles({
     ul: {
