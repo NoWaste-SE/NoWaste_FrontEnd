@@ -73,32 +73,6 @@
   width: 100% !important;
 }
 
-.action-button-shopping-card {
-  padding: 8px 16px !important;
-  cursor: pointer;
-  margin: 0 8px !important;
-  justify-content: space-between;
-  margin-bottom: 3% !important;
-  text-transform: none;
-  font-size: 14px;
-  font-weight: bold !important;
-  font-family: 'Montserrat', sans-serif !important;
-  border-radius: 70px !important;
-  border: none !important;
-}
-
-.action-button-shopping-card:hover {
-  transform: scale(1.01);
-}
-
-.button-1 {
-  background-color: #ffa600;
-}
-
-.button-2 {
-  background-color: #e74c3c;
-}
-
 .no-order-message-container {
   margin-top: 12%;
   margin-bottom: 15%;

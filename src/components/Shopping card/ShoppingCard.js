@@ -4,6 +4,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./ShoppingCard.css";
+import { SubmitButton, CancelButton } from "../CustomButtons/CustomButtons";
 
 function ShoppingCard() {
     const token = localStorage.getItem("token");
@@ -93,18 +94,32 @@ function ShoppingCard() {
                         <Grid item xs={12} 
                             className="buttons-container-shopping-card"
                         >
-                            <button 
+                            <SubmitButton
+                                variant={"contained"}
+                                type={"submit"}
+                                onClick={() => handleContinueShopping(restaurant.restaurant.id)}
+                                title={"Continue"}
+                                customWidth={"auto"}
+                            />
+                            <CancelButton
+                                variant={"contained"}
+                                type={"submit"}
+                                onClick={handleDeleteShopping}
+                                title={"Delete"}
+                                customWidth={"auto"}
+                            />
+                            {/* <button 
                                 className="action-button-shopping-card button-1" 
                                 onClick={() => handleContinueShopping(restaurant.restaurant.id)}
                             >
                                 Continue
-                            </button>
-                            <button 
+                            </button> */}
+                            {/* <button 
                                 className="action-button-shopping-card button-2"
                                 onClick={handleDeleteShopping}
                             >
                                 Delete
-                            </button>
+                            </button> */}
                         </Grid>
                     </Grid>
                 </Grid>
