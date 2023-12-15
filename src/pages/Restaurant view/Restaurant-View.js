@@ -29,8 +29,9 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import ChatIcon from '@mui/icons-material/Chat';
+import { CustomRestaurantCard } from '../../components/Custom Restaurant Card/CustomRestaurantCard';
+import { UploadButton } from '../../components/CustomButtons/CustomButtons';
 import ShowComments from '../../components/Comment/ShowComments';
-
 
 const useStyles = makeStyles({
     ul: {
@@ -172,6 +173,7 @@ const RestaurantView = (props: Props) => {
     };
 
     useEffect(()=>{
+        console.log(restaurant);
         console.log("restaurant is :" + restaurant);
         console.log("manager id is: ");
         setManagerId(restaurant.manager_id);
@@ -186,9 +188,6 @@ const RestaurantView = (props: Props) => {
         }
     }, []);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     const breakpoints = {
         default: 3,
@@ -231,6 +230,7 @@ const RestaurantView = (props: Props) => {
                     setNameRestaurant(response.data.name);
                     setRateValue(response.data.rate);
                     setDate_Of_Res(response.data.date_of_establishment.split('-'));
+                    // console.log(response.data.date_of_establishment.split('-'));
                     const is_in_list = list_fav.includes(response.data.name);
                     is_in_list ? (setColor(!color)) : setColor(color);
                 })
@@ -363,155 +363,24 @@ const RestaurantView = (props: Props) => {
                     className='restaurant-view'
                 >
                     <Grid item md={3}>
-                        <Card 
-                            sx={{ borderStyle: 'none'}} 
-                            className='card-restaurant-view'
-                        >
-                            <Grid container spacing={2} 
-                                className='restaurant-card-grid'
-                            >
-                                <Grid item>
-                                    <CardHeader 
-                                        className="restaurant-header"
-                                        avatar={
-                                            <Avatar 
-                                                style={{backgroundColor: "#f21b1b"}}
-                                                aria-label="recipe"
-                                            >
-                                                {restaurant?.name ? restaurant.name.charAt(0) : "UD"}
-                                            </Avatar>
-                                        }
-                                        title= {restaurant.name}
-                                        subheader={date_of_res[0]}
-                                    />
-                                </Grid>
-                                <Grid item lg={1}>
-                                    <BottomNavigation>
-                                        <BottomNavigationAction 
-                                            value="favorites"
-                                            icon={ 
-                                                color ? 
-                                                <FavoriteIcon 
-                                                    className='favorite-restaurant-view' 
-                                                    sx={{ color: 'red'}} 
-                                                    onClick={handleFavorite} 
-                                                /> :
-                                                <FavoriteBorderIcon 
-                                                    className='favorite-restaurant-view' 
-                                                    sx={{ color: 'inherit' }} 
-                                                    onClick={handleFavorite} 
-                                                />
-                                            }
-                                        />
-                                    </BottomNavigation>
-                                </Grid>
-                            </Grid>
-                            <CardMedia
-                                component="img"
-                                src={restaurant.restaurant_image}
-                                alt="RestaurantImage"
+                        <CustomRestaurantCard 
+                            restaurant={restaurant}
+                            color={color} 
+                            handleCloseComments={handleCloseComments}
+                            handleOpenComments={handleOpenComments}
+                            openComments={openComments}
+                            handleFavorite={handleFavorite}
+                            establishment_date={date_of_res[0]}
+                            id={id}
+                        />
+                        <div className='payment'>
+                            <UploadButton
+                                variant={"contained"}
+                                type={"submit"}
+                                onClick={handlePayment}
+                                title={"Payment"}
                             />
-                            <CardContent>
-                                <Typography 
-                                    variant="body2" 
-                                    className='restaurant-description' 
-                                >
-                                    {restaurant.description}
-                                </Typography>
-                                <Typography 
-                                    className='see-comment' 
-                                    onClick={handleOpenComments} 
-                                    style={{ display: 'flex', alignItems: 'center' }}
-                                >
-                                    See Comments 
-                                    <ChevronRightIcon 
-                                        style={{ marginLeft: '1px' }} 
-                                    />
-                                </Typography>
-                                <Modal
-                                    open={openComments} 
-                                    onClose={handleCloseComments}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                >
-                                    <Box 
-                                        sx={style} 
-                                        className="comment-box"
-                                    >
-                                        <h2 
-                                            className='title-show-comments'
-                                        >
-                                            Comments
-                                        </h2>
-                                        <ShowComments id = {id}/>
-                                        <Button 
-                                            onClick={handleCloseComments} 
-                                            variant="contained"
-                                            className='close-comment'
-                                        >
-                                            Close
-                                        </Button>
-                                    </Box>
-                                </Modal>
-                            </CardContent>
-                            <CardActions 
-                                disableSpacing
-                            >
-                                <Rating 
-                                    name="restaurant rate" 
-                                    value={rateValue} 
-                                    precision={0.5} 
-                                    readOnly 
-                                />
-                                <ExpandMore
-                                    expand={expanded}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </ExpandMore>
-                            </CardActions>
-                            <Collapse 
-                                in={expanded} 
-                                timeout="auto" 
-                                unmountOnExit
-                            >
-                                <CardContent>
-                                    <Box 
-                                        className='info' 
-                                        paragraph
-                                    >
-                                        <Chip
-                                            icon={<MdPhone />}
-                                            sx={{mb:1}}
-                                            onClick={handlePhoneChip}       
-                                            label={phoneCopied ? "Copied!" : restaurant.number}
-                                            clickable
-                                            className={phoneCopied ? "copied" : ""}
-                                            onDelete={phoneCopied ? handlePhoneCopied : null}
-                                            deleteIcon={<DoneIcon />}
-                                        />
-                                        <Chip
-                                            icon={<PlaceIcon />}
-                                            onClick={handleAddressChip}
-                                            label={addressCopied ? "Copied!" : restaurant.address}
-                                            clickable
-                                            className={addressCopied ? "copied" : ""}
-                                            onDelete={addressCopied ? handleAddressCopied : null}
-                                            deleteIcon={<DoneIcon />}
-                                        />
-                                    </Box>
-                                </CardContent>
-                            </Collapse>
-                        </Card>
-                        <Button 
-                            onClick={handlePayment} 
-                            variant="contained"
-                            id='comment-submit'
-                        >
-                            Payment
-                        </Button>
+                        </div>
                     </Grid>
                     <Grid item md={9}>
                         {menu && 
@@ -577,13 +446,13 @@ const RestaurantView = (props: Props) => {
                     </SpeedDial>
                     {checkChat &&
                         <Chat 
-                        reciever={managerId} 
-                        sender={customer_id} 
-                        restaurant={restaurant}
-                        placement={placement}
-                        open={open}
-                        setOpen={setOpen}
-                        anchorEl={anchorEl}
+                            reciever={managerId} 
+                            sender={customer_id} 
+                            restaurant={restaurant}
+                            placement={placement}
+                            open={open}
+                            setOpen={setOpen}
+                            anchorEl={anchorEl}
                         />
                     }
                 </Box>

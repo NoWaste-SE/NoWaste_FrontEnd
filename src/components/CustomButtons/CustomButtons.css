@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.submit-button {
+    margin: 4% 10px !important;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFA600 !important;
+    border-radius: 70px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 14px;
+    font-weight: bold !important;
+}
+
+.cancel-button {
+    margin: 4% 1% !important;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(244, 102, 70) !important;
+    border-radius: 70px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 14px;
+    font-weight: bold !important;
+}
+
+.submit-button:hover, .cancel-button:hover {
+    transform: scale(1.02);
+}
+
+.upload-button {
+    margin: 6% 1% !important;
+    width: 70% !important;
+    background: linear-gradient(to right, #FFA600, #E74C3C);
+    text-transform: none !important;
+    font-size: 14px;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    /* margin-bottom: 30px !important; */
+    border-radius: 70px !important;
+}
+
+.upload-button:hover {
+    transform: scale(1.01);
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
