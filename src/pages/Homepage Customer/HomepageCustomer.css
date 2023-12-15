@@ -133,18 +133,6 @@
     height: 0 !important;
 }
 
-.submit {
-    margin: 20px !important;
-    background-color: #FFA600 !important;
-    border-radius: 70px !important;
-    width: 80% !important;
-    font-size: 13px !important;
-}
-
-.submit:hover {
-    background-color: #ffa600d7 !important;
-}
-
 .search-homepage-customer {
     border-radius: 4px;
     width: 80%;

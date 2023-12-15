@@ -8,6 +8,7 @@ import axios from "axios";
 import './Login-Signup.css'
 import { Alert } from "@mui/material";
 import AuthContext from "../../Context/AuthContext";
+import { CancelButton } from "../../components/CustomButtons/CustomButtons";
 
 const theme = createTheme({
     palette: {
@@ -281,7 +282,15 @@ export default function Login(){
                                     Forgot password?
                                 </Typography>
                             </Link>
-                            <Button 
+                            <CancelButton
+                                variant={"contained"}
+                                type={"submit"}
+                                disabled={!validInputs}
+                                onClick={handleSubmit}
+                                title={"Login"}
+                                customWidth={"70%"}
+                            />
+                            {/* <Button 
                                 variant="contained" 
                                 type="submit" 
                                 className="field"
@@ -290,7 +299,7 @@ export default function Login(){
                                 disabled={!validInputs}
                             >
                                 Login
-                            </Button>
+                            </Button> */}
                         </form> 
                         {!adminLogin? (
                             <Typography 

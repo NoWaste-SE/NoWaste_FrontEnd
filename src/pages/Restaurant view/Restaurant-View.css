@@ -18,30 +18,10 @@
     width: 100% !important;
 }
 
-.restaurant-card-grid {
-    justify-content: space-between;
-    align-items: center;
-    width : 98% !important;
-    display: flex;
-}
-.restaurant-description {
-    color: #6d6c6c !important;
-}
-
 .logo {
     margin-left: 0;
     width: 7% !important;
     height: auto;
-}
-
-.restaurant-header .MuiCardHeader-title {
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: bold;
-}
-
-.restaurant-header .MuiCardHeader-subheader {
-    font-size: small;
-    font-family: 'Montserrat', sans-serif !important;
 }
 
 .css-8u9tfx-MuiButtonBase-root-MuiBottomNavigationAction-root{
@@ -58,48 +38,6 @@
 .toolbar-restaurant-view .icon-restaurant-view {
     display: flex !important;
     align-items: center !important;
-}
-
-.card-restaurant-view {
-    height: auto;
-    width: 90%;
-    border: none;
-    position: relative;
-    border-radius: 3% !important;
-    margin-left: 15%;
-    margin-right: 40%;
-    box-shadow: rgb(38, 57, 77)  0px 20px 50px -10px !important;
-}
-
-.favorite-restaurant-view:hover {
-    transform: scale(1.08);
-}
-
-.see-comment {
-    color: #484646;
-    margin-top: 2% !important;
-    text-decoration:underline;
-    font-size: small !important;
-    cursor: pointer;
-}
-
-.MuiChip-root {
-    background-color: rgb(255, 255, 255) !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
-.MuiChip-root:hover {
-    background-color: rgba(206, 198, 198, 0.394) !important;
-}
-
-.info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.MuiChip-root.copied {
-    background-color: #3abe2058 !important;
-    animation: wiggle 0.4s ease-in-out;
 }
 
 @keyframes wiggle {
@@ -148,24 +86,17 @@
     object-fit: contain;
 }
 
+.payment {
+    width: 120% !important;
+    display: flex;
+    justify-content: center;
+}
+
 @media(max-width: 360px) {
-    .card-restaurant-view {
-        margin-top: 5%;
-        margin-left: 8%;
-        width: 80%;
-    }
     .css-1y40yz5-MuiGrid-root {
         margin-left: -7% !important;
     }
 }  
-
-@media(min-width: 360px) and (max-width: 890px) {
-    .card-restaurant-view {
-        margin-top: 5% !important;
-        margin-left: 8% !important;
-        width: 80% !important;
-    }
-}
 
 @media(min-width: 360px) and (max-width: 420px) {
     .css-1y40yz5-MuiGrid-root {
@@ -198,25 +129,14 @@
 }
 
 @media(min-width: 775px) and (max-width: 890px) {
-    .css-1y40yz5-MuiGrid-root 
-    {
+    .css-1y40yz5-MuiGrid-root {
         margin-left: 51% !important;
     }
 }
 
 @media(min-width: 890px) and (max-width: 899px){
-    .card-restaurant-view {
-        margin-top: 1% !important;
-        margin-left: 2% !important;
-        width: 36% !important;
-    }
-
     .css-1y40yz5-MuiGrid-root {
         margin-left: 9% !important;
-    }
-
-    .field-show-comment {
-        margin-left: 11% !important;
     }
 }
 
@@ -229,17 +149,5 @@
 
     .css-1y40yz5-MuiGrid-root {
         margin-left: 30% !important;
-    }
-}
-
-@media(min-width: 930px) and (max-width: 990px) {
-    .field-show-comment {
-        margin-left: 43% !important;
-    }
-}
-
-@media(min-width: 990px) and (max-width: 1170px) {
-    .field-show-comment {
-        margin-left: 44% !important;
     }
 }
