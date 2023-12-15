@@ -579,6 +579,7 @@ function Edit(props){
                                 />
                                 <div
                                     className="crop-buttons"
+                                    style={{marginTop: '100px'}}
                                 >
                                     <CancelButton
                                         onClick={onClose}
@@ -590,6 +591,7 @@ function Edit(props){
                                         onClick={showCroppedImage}
                                         variant={"contained"}
                                         title={"Apply"}
+                                        customWidth={"auto"}
                                     />
                                 </div>
                             </Box>
@@ -966,6 +968,7 @@ function Edit(props){
                                             type={"submit"}
                                             onClick={()=>setShow(prev => !prev)}
                                             title={"Change password"}
+                                            customWidth={"auto"}
                                         />
                                     </Grid>
                                     <Grid item container lg={6} md={6} sm={12}
@@ -987,6 +990,7 @@ function Edit(props){
                                                 disabled={!validInputs}
                                                 onClick={handleUpdate}
                                                 title={"Save changes"}
+                                                customWidth={"auto"}
                                             />
                                         </Grid>
                                     </Grid>

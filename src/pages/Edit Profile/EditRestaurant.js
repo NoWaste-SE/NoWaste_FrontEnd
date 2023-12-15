@@ -824,6 +824,7 @@ function EditRestaurant(props){
                                             onClick={showCroppedImage}
                                             variant={"contained"}
                                             title={"Apply"}
+                                            customWidth={"auto"}
                                         />
                                     </div>
                                 </Box>
@@ -1035,6 +1036,7 @@ function EditRestaurant(props){
                                                 type={"submit"}
                                                 onClick={handleOpenMenu}
                                                 title={"Show menu"}
+                                                customWidth={"auto"}
                                             />
                                         }
                                         {!openMenu && 
@@ -1217,6 +1219,7 @@ function EditRestaurant(props){
                                                                 type={"submit"}
                                                                 onClick={hanldeAddNewFood}
                                                                 title={"Add"}
+                                                                customWidth={"auto"}
                                                             />
                                                         </Grid>
                                                     </Grid>
@@ -1272,6 +1275,7 @@ function EditRestaurant(props){
                                                                             type={"submit"}
                                                                             onClick={() => handleOpenEdit(res.id)}
                                                                             title={"Edit"}
+                                                                            customWidth={"auto"}
                                                                         />
                                                                     </Grid>
                                                                 </Grid>
@@ -1440,6 +1444,7 @@ function EditRestaurant(props){
                                                                                 type={"submit"}
                                                                                 onClick={() => handleEditThisFood()}
                                                                                 title={"Apply"}
+                                                                                customWidth={"auto"}
                                                                             />
                                                                         </Grid>
                                                                     </Grid>
@@ -1481,6 +1486,7 @@ function EditRestaurant(props){
                                                     onClick={handleUpdate}
                                                     disabled={!validInputs}
                                                     title={"Save changes"}
+                                                    customWidth={"auto"}
                                                 />
                                             </Grid>
                                         </Grid>

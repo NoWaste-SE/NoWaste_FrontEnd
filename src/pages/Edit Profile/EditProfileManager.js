@@ -465,6 +465,7 @@ const EditProfileManager = (props) => {
                                         onClick={showCroppedImage}
                                         variant={"contained"}
                                         title={"Apply"}
+                                        customWidth={"auto"}
                                     />
                                 </div>
                             </Box>
@@ -676,6 +677,7 @@ const EditProfileManager = (props) => {
                                             type={"submit"}
                                             onClick={()=>setShow(prev => !prev)}
                                             title={"Change password"}
+                                            customWidth={"auto"}
                                         />
                                     </Grid>
                                     <Grid item container lg={5} md={6} sm={12}
@@ -697,6 +699,7 @@ const EditProfileManager = (props) => {
                                                 disabled={!validInputs}
                                                 onClick={handleUpdate}
                                                 title={"Save changes"}
+                                                customWidth={"auto"}
                                             />
                                         </Grid>
                                     </Grid>

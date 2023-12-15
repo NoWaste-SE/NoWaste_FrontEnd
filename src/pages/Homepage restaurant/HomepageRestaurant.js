@@ -379,6 +379,7 @@ function HomepageRestaurant(props){
                                         type={"submit"}
                                         onClick={handleAdd}
                                         title={"Add"}
+                                        customWidth={"auto"}
                                     />
                                 </Grid>
                             </Grid>
@@ -464,6 +465,7 @@ function HomepageRestaurant(props){
                                                                     handleDelete(res)
                                                                 }}
                                                                 title={"Delete"}
+                                                                customWidth={"auto"}
                                                             />
                                                         </Grid>
                                                     </CardContent>
