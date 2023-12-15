@@ -1295,6 +1295,7 @@ function EditRestaurant(props){
                                                                                 title={"Upload the first food image"}
                                                                             />
                                                                         </label>
+                                                                        
                                                                         <Button 
                                                                             className="upload-button" 
                                                                             component="span"
@@ -1334,6 +1335,7 @@ function EditRestaurant(props){
                                                                                 }
                                                                             >
                                                                                 Upload the second food image
+                                                                            </Button>
                                                                         </label>
                                                                         <Button 
                                                                             className="upload-button" 
