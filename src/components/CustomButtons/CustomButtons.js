@@ -9,6 +9,7 @@ const SubmitButton = (props) => {
             className="submit-button"
             disabled={props.disabled}
             onClick={props.onClick}
+            style={{ width: props.customWidth || '100%' }}
         >
             {props.title}
         </Button>

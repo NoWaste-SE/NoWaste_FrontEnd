@@ -14,6 +14,7 @@ import RestaurantCard from '../../components/Restaurant card/RestaurantCard';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import AddPagination from '../../components/Pagination/Pagination'
 import PulseLoader from "react-spinners/PulseLoader";
+import { SubmitButton } from '../../components/CustomButtons/CustomButtons';
 
 const theme = createTheme({
     palette: {
@@ -579,12 +580,13 @@ const HomepageCustomer = () => {
                                 Foreign
                             </ToggleButton>
                         </ToggleButtonGroup>
-                        <Button 
-                            className='submit' 
-                            onClick={handleClickApplyFilter} 
-                        >
-                            Apply
-                        </Button>          
+                        <SubmitButton
+                            variant={"contained"}
+                            type={"submit"}
+                            onClick={handleClickApplyFilter}
+                            title={"Apply"}  
+                            customWidth={"90%"}                          
+                        />         
                     </Box>
                 </Grid>
                 <Grid item lg={9} md={9}>
