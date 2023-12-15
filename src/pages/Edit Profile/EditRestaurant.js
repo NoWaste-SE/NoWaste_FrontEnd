@@ -667,6 +667,14 @@ function EditRestaurant(props){
         });
     };
 
+    const handlepic1delete = () =>{
+        setFoodPicture(null);
+    };
+
+    const handlepic2delete = () =>{
+        setFoodPicture2(null);
+    };
+
     const handleOpenAdd = (e) => {
         setOpenAdd(!openAdd);
     };
@@ -1097,6 +1105,14 @@ function EditRestaurant(props){
                                                                     title={"Upload the first food image"}
                                                                 />
                                                             </label>
+                                                            <Button 
+                                                                className="upload-button" 
+                                                                component="span"
+                                                                onClick={handlepic1delete}
+                                                                disabled={!foodPicture || foodPicture2}
+                                                            >
+                                                                Delete this image
+                                                            </Button>
                                                         </Grid>
                                                         <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
                                                             
@@ -1124,8 +1140,15 @@ function EditRestaurant(props){
                                                                     disabled={!foodPrice}
                                                                 />
                                                             </label>
+                                                            <Button 
+                                                                className="upload-button" 
+                                                                component="span"
+                                                                onClick={handlepic2delete}
+                                                                disabled={!foodPicture || !foodPicture2}
+                                                            >
+                                                                Delete this image
+                                                            </Button>
                                                         </Grid>
-
                                                     </Grid>
                                                     <TextField
                                                         label="Name"
@@ -1272,6 +1295,16 @@ function EditRestaurant(props){
                                                                                 title={"Upload the first food image"}
                                                                             />
                                                                         </label>
+                                                                        <Button 
+                                                                            className="upload-button" 
+                                                                            component="span"
+                                                                            onClick={handlepic1delete}
+                                                                            disabled={!foodPicture || foodPicture2 ||                                                                                     
+                                                                                foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                            }
+                                                                        >
+                                                                            Delete this image
+                                                                        </Button>
                                                                     </Grid>
                                                                     <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
                                                                         <Avatar
@@ -1293,11 +1326,23 @@ function EditRestaurant(props){
                                                                             htmlFor="edit-food-image-input2" 
                                                                             className="food-image-button"
                                                                         >
-                                                                            <UploadButton
-                                                                                title={"Upload the second food image"}
-                                                                                disabled={foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')}
-                                                                            />
+                                                                            <Button 
+                                                                                className="upload-button" 
+                                                                                component="span"
+                                                                                disabled={!foodPicture ||
+                                                                                    foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                }
+                                                                            >
+                                                                                Upload the second food image
                                                                         </label>
+                                                                        <Button 
+                                                                            className="upload-button" 
+                                                                            component="span"
+                                                                            onClick={handlepic2delete}
+                                                                            disabled={!foodPicture || !foodPicture2}
+                                                                        >
+                                                                            Delete this image
+                                                                        </Button>
                                                                     </Grid>
 
                                                                 </Grid>
