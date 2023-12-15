@@ -1237,57 +1237,6 @@ function EditRestaurant(props){
                                                                 onMouseLeave={() => setShowSecondImage(null)}
                                                                 onClickEdit={() => handleOpenEdit(food.id)}
                                                             />
-                                                            {/* <Box 
-                                                                className="food-box"
-                                                            >
-                                                                <Grid container spacing={4}>
-                                                                    <Grid item lg={3} md={3} sm={3} >
-                                                                        <div
-                                                                            className="food-image-container"
-                                                                            onMouseEnter={() => setShowSecondImage(res.id)}
-                                                                            onMouseLeave={() => setShowSecondImage(null)}
-                                                                        >
-                                                                            <img
-                                                                                src={showSecondImage === res.id && res.food_pic2!=null ? res.food_pic2 : res.food_pic}
-                                                                                className="food-image"
-                                                                            />
-                                                                        </div>
-                                                                    </Grid>
-                                                                    <Grid item lg={5} md={5} sm={4} className='edit-food-grid'>
-                                                                        <Typography 
-                                                                            className="food-name"
-                                                                        >
-                                                                            {res.name}
-                                                                        </Typography>
-                                                                        <Typography 
-                                                                            className="food-ingredient"
-                                                                        >
-                                                                            {res.ingredients}
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid item lg={2} md={2} sm={2} className='edit-food-grid'>
-                                                                        <Typography 
-                                                                            className="food-price-menu"
-                                                                        >
-                                                                            {res.price}$
-                                                                        </Typography>
-                                                                        <Typography 
-                                                                            className="food-remain-number"
-                                                                        >
-                                                                            {res.remainder} remain
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid item lg={2} md={2} sm={3} className='edit-food-grid'>
-                                                                        <SubmitButton
-                                                                            variant={"contained"}
-                                                                            type={"submit"}
-                                                                            onClick={() => handleOpenEdit(res.id)}
-                                                                            title={"Edit"}
-                                                                            customWidth={"auto"}
-                                                                        />
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </Box> */}
                                                             <StyledDialog 
                                                                 open={openEdit} 
                                                                 classes={{ paper: classes.dialogRoot }} 
