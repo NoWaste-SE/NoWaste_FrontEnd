@@ -1350,6 +1350,7 @@ function EditRestaurant(props){
                                                                                 Upload the first food image
                                                                             </Button>
                                                                         </label>
+                                                                        
                                                                         <Button 
                                                                             className="upload-button" 
                                                                             component="span"
