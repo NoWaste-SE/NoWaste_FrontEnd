@@ -49,7 +49,7 @@
     margin: -100px auto 50px !important;
 }
 
-.about-us-member .link {
+.link {
     display: block;
     margin-top: -25%;
     text-align: center;
@@ -57,7 +57,7 @@
     text-decoration: none;
 }
 
-.about-us-member .link:hover {
+.link:hover {
     color: #FFA600 !important;
     text-decoration: none !important; 
 }
@@ -66,8 +66,9 @@
     width: 100%;
     height: 40%;
     clip-path: ellipse(30% 30%);
+    /* clip-path: ellipse(30% 30% at 59% 47%) */
 }
 
-.niyayesh {
-    clip-path: ellipse(30% 29%) !important;
+.img-melika{
+    clip-path: ellipse(30% 38% at 59% 47%) !important;
 }

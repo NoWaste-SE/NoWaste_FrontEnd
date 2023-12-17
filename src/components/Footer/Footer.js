@@ -3,8 +3,13 @@ import { MDBFooter, MDBContainer, MDBRow, MDBCol, MDBIcon } from 'mdb-react-ui-k
 // import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import './Footer.scss';
+import {useHistory } from "react-router-dom";
 
 const Footer = () => {
+    const history = useHistory();
+    const handleAboutUs = () => {
+        history.push('./about-us');
+    };
     return (
         
         <MDBFooter 
@@ -47,7 +52,8 @@ const Footer = () => {
                             </h6>
                             <p>
                                 <a 
-                                    href='http://localhost:3000/AboutUs' 
+                                    onClick={handleAboutUs} 
+                                    style={{ cursor: 'pointer' }}
                                     className='text-reset'
                                 >
                                     About us
@@ -124,9 +130,9 @@ const Footer = () => {
                 © 2023 Copyright: &nbsp;
                 <a 
                     className='text-reset fw-bold' 
-                    href='http://localhost:3000/'
+                    href='http://nowaste39.ir/'
                 >
-                    NoWaste.ir
+                    nowaste39.ir
                 </a>
             </div>
         </MDBFooter>

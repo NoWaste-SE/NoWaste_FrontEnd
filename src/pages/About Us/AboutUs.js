@@ -177,7 +177,7 @@ const AboutUs = () => {
                 >
                     <img 
                         src='/AboutUs/haniye.jpg' 
-                        alt='Haniye asadi'
+                        alt="Haniye As'adi"
                     />
                     <a 
                         href='https://github.com/HaniyeAsadi' 
@@ -218,6 +218,20 @@ const AboutUs = () => {
                     className='about-us-member'
                 >
                     <img 
+                        src='/AboutUs/niayesh.jpg' 
+                        alt='Niayesh Khani'
+                    />
+                    <a 
+                        href='https://github.com/niayesh-khani' 
+                        className='link'
+                    >
+                        Niayesh Khani (Front-end)
+                    </a>
+                </Grid>
+                <Grid item lg={4} md={4} sm={6} 
+                    className='about-us-member'
+                >
+                    <img 
                         src='/AboutUs/negin.jpg' 
                         alt='Negin Haghighi'
                     />
@@ -246,7 +260,7 @@ const AboutUs = () => {
                     className='about-us-member'
                 >
                     <img 
-                        src='/AboutUs/Melika.jpg' 
+                        src='/AboutUs/melika.jpg' 
                         alt='Melika Mohamadi Fakhar'
                     />
                     <a 
@@ -254,21 +268,6 @@ const AboutUs = () => {
                         className='link'
                     >
                         Melika Mohamadi Fakhar (Back-end)
-                    </a>
-                </Grid>
-                <Grid item lg={4} md={4} sm={6} 
-                    className='about-us-member'
-                >
-                    <img 
-                        src='/AboutUs/niayesh.jpg' 
-                        alt='Setareh Babajani'
-                        className='niyayesh'
-                    />
-                    <a 
-                        href='https://github.com/niayesh-khani' 
-                        className='link'
-                    >
-                        Niayesh Khani (Front-end)
                     </a>
                 </Grid>
             </Grid>
