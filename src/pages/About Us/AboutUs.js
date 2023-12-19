@@ -172,8 +172,9 @@ const AboutUs = () => {
                 About Team
             </Typography>
             <Grid container className='about-us-grid'>
-                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
+                <Grid item md={4} sm={4} xs={2} className='about-us-member'>
                     <img 
+                        className='about-us-img'
                         src='/AboutUs/haniye.jpg' 
                         alt="Haniye As'adi"
                     />
@@ -188,6 +189,7 @@ const AboutUs = () => {
                     <img 
                         src='/AboutUs/helia.png' 
                         alt='Helia Vafaei'
+                        className='about-us-img'
                     />
                     <a 
                         href='https://github.com/helia-vafaei' 
@@ -200,6 +202,7 @@ const AboutUs = () => {
                     <img 
                         src='/AboutUs/setareh.jpg' 
                         alt='Setareh Babajani'
+                        className='about-us-img'
                     />
                     <a 
                         href='https://github.com/setarehbabajani' 
@@ -208,10 +211,11 @@ const AboutUs = () => {
                         Setareh Babajani (Front-end)
                     </a>
                 </Grid>
-                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
+                <Grid item md={4} sm={4} xs={6}>
                     <img 
                         src='/AboutUs/niayesh.jpg' 
                         alt='Niayesh Khani'
+                        className='about-us-img'
                     />
                     <a 
                         href='https://github.com/niayesh-khani' 
@@ -220,10 +224,11 @@ const AboutUs = () => {
                         Niayesh Khani (Front-end)
                     </a>
                 </Grid>
-                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
+                <Grid item md={4} sm={4} xs={6}>
                     <img 
                         src='/AboutUs/negin.jpg' 
                         alt='Negin Haghighi'
+                        className='about-us-img'
                     />
                     <a 
                         href='https://github.com/haghighy' 
@@ -232,10 +237,11 @@ const AboutUs = () => {
                         Negin Haghighi (Back-end)
                     </a>
                 </Grid>
-                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
+                <Grid item md={4} sm={4} xs={6}>
                     <img 
                         src='/AboutUs/golbarg.jpg' 
                         alt='Golbarg Sepehara'
+                        className='about-us-img'
                     />
                     <a 
                         href='https://github.com/golbara/' 
@@ -244,10 +250,11 @@ const AboutUs = () => {
                         Golbarg Sepehara (Back-end)
                     </a>
                 </Grid>
-                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
+                <Grid item md={4} sm={4} xs={6}>
                     <img 
                         src='/AboutUs/melika.jpg' 
                         alt='Melika Mohamadi Fakhar'
+                        className='about-us-img'
                     />
                     <a 
                         href='https://github.com/melikamohamadifakhar' 
