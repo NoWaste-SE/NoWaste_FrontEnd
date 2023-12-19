@@ -8,7 +8,7 @@
 }
 
 .about-us-description {
-    display: flex;
+    display: flex !important;
     justify-content: space-around !important; 
     margin: 0 5vw !important;
     width: auto !important;
@@ -45,13 +45,17 @@
 }
 
 .about-us-member {
-    height: 100% !important;
-    margin: -100px auto 50px !important;
+    margin-top: -7% !important;
+}
+
+.about-us-member img{
+    width: 100%;
+    clip-path: ellipse(30% 30%);
 }
 
 .link {
     display: block;
-    margin-top: -25%;
+    margin-top: -20%;
     text-align: center;
     color: #000;
     text-decoration: none;
@@ -62,13 +66,8 @@
     text-decoration: none !important; 
 }
 
-.about-us-member img {
-    width: 100%;
-    height: 40%;
-    clip-path: ellipse(30% 30%);
-    /* clip-path: ellipse(30% 30% at 59% 47%) */
-}
-
-.img-melika{
-    clip-path: ellipse(30% 38% at 59% 47%) !important;
+.about-us-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

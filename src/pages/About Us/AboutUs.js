@@ -171,10 +171,8 @@ const AboutUs = () => {
             >
                 About Team
             </Typography>
-            <Grid container spacing={3} style={{width: '100%', paddingBottom: '-50px'}}>
-                <Grid item lg={4} md={4} sm={6} 
-                    className='about-us-member'
-                >
+            <Grid container className='about-us-grid'>
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
                     <img 
                         src='/AboutUs/haniye.jpg' 
                         alt="Haniye As'adi"
@@ -186,9 +184,7 @@ const AboutUs = () => {
                         Haniye As'adi (Front-end)
                     </a>
                 </Grid>
-                <Grid item lg={4} md={4} sm={6}
-                    className='about-us-member'
-                >
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
                     <img 
                         src='/AboutUs/helia.png' 
                         alt='Helia Vafaei'
@@ -200,9 +196,7 @@ const AboutUs = () => {
                         Helia Vafaei (Front-end)
                     </a>
                 </Grid>
-                <Grid item lg={4} md={4} sm={6} 
-                    className='about-us-member'
-                >
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
                     <img 
                         src='/AboutUs/setareh.jpg' 
                         alt='Setareh Babajani'
@@ -214,9 +208,7 @@ const AboutUs = () => {
                         Setareh Babajani (Front-end)
                     </a>
                 </Grid>
-                <Grid item lg={4} md={4} sm={6} 
-                    className='about-us-member'
-                >
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
                     <img 
                         src='/AboutUs/niayesh.jpg' 
                         alt='Niayesh Khani'
@@ -228,9 +220,7 @@ const AboutUs = () => {
                         Niayesh Khani (Front-end)
                     </a>
                 </Grid>
-                <Grid item lg={4} md={4} sm={6} 
-                    className='about-us-member'
-                >
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
                     <img 
                         src='/AboutUs/negin.jpg' 
                         alt='Negin Haghighi'
@@ -242,9 +232,7 @@ const AboutUs = () => {
                         Negin Haghighi (Back-end)
                     </a>
                 </Grid>
-                <Grid item lg={4} md={4} sm={6} 
-                    className='about-us-member'
-                >
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
                     <img 
                         src='/AboutUs/golbarg.jpg' 
                         alt='Golbarg Sepehara'
@@ -256,9 +244,7 @@ const AboutUs = () => {
                         Golbarg Sepehara (Back-end)
                     </a>
                 </Grid>
-                <Grid item lg={4} md={4} sm={6} 
-                    className='about-us-member'
-                >
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
                     <img 
                         src='/AboutUs/melika.jpg' 
                         alt='Melika Mohamadi Fakhar'

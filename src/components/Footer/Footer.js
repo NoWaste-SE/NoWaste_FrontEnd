@@ -33,7 +33,7 @@ const Footer = () => {
                                 className='text-uppercase fw-bold mb-4'
                             >
                                 <MDBIcon 
-                                    icon="gem" 
+                                    icon="utensils" 
                                     className="me-3" 
                                 />
                                 NoWaste
