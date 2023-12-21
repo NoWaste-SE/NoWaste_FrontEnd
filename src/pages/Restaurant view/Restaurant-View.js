@@ -157,18 +157,26 @@ const RestaurantView = (props: Props) => {
         setCheckChat(true);
     };
 
-    const handleClickOnDownloadExel = () => {
-        axios.get(
-            `http://188.121.124.63/restaurant/excel/customer/${managerId}/${customer_id}/order-history`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET",
-            }}
-        )
-        .catch((error) => {
-            console.log(error.response);
-        });
+    const handleClickOnDownloadExel = (nameRestaurant) => {
+        fetch(`http://188.121.124.63/restaurant/excel/customer/${managerId}/${customer_id}/order-history`, {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Methods" : "GET",
+        },
+        })
+        .then((response) => response.blob())
+        .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = nameRestaurant + '-orders-history.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch((error) => console.error('Error downloading file:', error));
     };
 
     useEffect(()=>{
@@ -434,7 +442,7 @@ const RestaurantView = (props: Props) => {
                             key='exel'
                             icon={<SimCardDownloadIcon/>}
                             tooltipTitle='Download Excel Order History'
-                            onClick={handleClickOnDownloadExel}   
+                            onClick={() => handleClickOnDownloadExel(nameRestaurant)}   
                         />
                         <SpeedDialAction
                             key='chat'
