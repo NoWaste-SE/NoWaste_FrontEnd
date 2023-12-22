@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, createTheme, Grid, Icon, IconButton, Tooltip , MenuItem, ThemeProvider, Typography, withStyles } from "@material-ui/core";
 import '../../pages/Edit Profile/EditProfile.css';
 import HeaderCustomer from '../Header/HeaderCustomer';
+import { ToastContainer, toast } from 'react-toastify';
 // import '../../pages/Edit Profile/EditRestaurant.css';
 import 'react-phone-input-2/lib/style.css';
 import axios from "axios";
@@ -65,7 +66,12 @@ export default function Dashboard(){
     const [restaurantId, setRestaurantId] = useState('');
     const [restaurantName, setRestaurantName] = useState('');
     const [text, setText] = useState('');
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('');
 
+    const handleReloadPage = () => {
+        window.location.reload();
+    };
 
     const handleSort = (field) => {
         const newSortConfig = { field, direction: 'asc' };
@@ -227,17 +233,58 @@ export default function Dashboard(){
         );
 
         Promise.all([commentPromise, ratingPromise])
-            .then((responses) => {
-                const commentResponse = responses[0];
-                const ratingResponse = responses[1];
-                window.location.reload(false);
-            })
-            .catch((error) => {
-                if (error.response) {
-                    console.log(error.response);
-                }
-            });
+        .then((responses) => {
+            const commentResponse = responses[0];
+            const ratingResponse = responses[1];
+            setAlertMessage("Thank you for sharing your thoughts with us! 😊");
+            setAlertSeverity("success");
+            window.location.reload(false);
+        })
+        .catch((error) => {
+            if (error.response) {
+                setAlertMessage("Sorry, your comment can not be submitted due to inappropriate content. Please double check your comments and try again.");
+                setAlertSeverity("warning");
+                console.log(error.response);
+            } else if (error.request) {
+                setAlertMessage("Network error! Please try again later.");
+                setAlertSeverity("error");
+            } else {
+                setAlertMessage("A problem has been occured! Please try again later.");
+                setAlertSeverity("error");
+            }
+        });
     };
+
+    useEffect(() => {
+        if(alertMessage !== "" && alertSeverity !== "") {
+            if(alertSeverity === "success"){
+                toast.success(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Success",
+                            autoClose: 7000,
+                            pauseOnHover: true,
+                            onClose: handleReloadPage
+                        });
+            } else if (alertSeverity === "warning") {
+                toast.warning(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Warning",
+                            autoClose: 7000,
+                            pauseOnHover: true,
+                            onClose: handleReloadPage
+                        });
+            } else {
+                toast.error(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Error",
+                            autoClose: 3000,
+                            pauseOnHover: true
+                        });
+            }
+            setAlertMessage("");
+            setAlertSeverity("");
+        }
+    }, [alertMessage, alertSeverity]);
 
     const handleStatus = (status) => {
         if(status === "InProgress")
