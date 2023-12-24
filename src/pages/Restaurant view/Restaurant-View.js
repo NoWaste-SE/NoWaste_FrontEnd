@@ -149,6 +149,7 @@ const RestaurantView = (props: Props) => {
     const [open, setOpen] = useState(false);
     const [placement, setPlacement] = useState();
     const [checkChat, setCheckChat] = useState(false);
+    const [showSecondImage, setShowSecondImage] = useState(null);
 
     const handleClickChat = (newPlacement) => (event) => {
         setAnchorEl(event.currentTarget);
@@ -391,7 +392,12 @@ const RestaurantView = (props: Props) => {
                                 >
                                 {_DATA.currentData().map((food, index) => (
                                     <div key={index} className="my-masonry-grid_column" style={{ width: index % 3 === 0 ? '100%' : '' }}>
-                                        <Food food={food} />
+                                        <Food
+                                            food={food} 
+                                            secondImage={showSecondImage}
+                                            onMouseEnter={() => setShowSecondImage(food.id)}
+                                            onMouseLeave={() => setShowSecondImage(null)}
+                                        />
                                     </div>
                                 ))}
                                 </Masonry>
