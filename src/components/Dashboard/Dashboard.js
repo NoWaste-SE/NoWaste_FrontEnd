@@ -177,7 +177,20 @@ export default function Dashboard(){
         if (row.status === 'Completed') {
             setRestaurantId(row.restaurant_id);
             setRestaurantName(row.name);
-            console.log(row.restaurant_id);
+            axios.get(
+                `http://188.121.124.63/restaurant/comment/restaurant_id/${row.restaurant_id}/`,
+                {headers: {
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                }}
+            )
+            .then((response) => {
+                setText(response.data.comment);
+            })
+            .catch(error => console.log(error));
+            // console.log(row.restaurant_id);
             setIsModalOpen(true);
         }
     };
@@ -236,13 +249,13 @@ export default function Dashboard(){
         .then((responses) => {
             const commentResponse = responses[0];
             const ratingResponse = responses[1];
+            console.log("Comment submitted");
             setAlertMessage("Thank you for sharing your thoughts with us! 😊");
             setAlertSeverity("success");
-            window.location.reload(false);
         })
         .catch((error) => {
             if (error.response) {
-                setAlertMessage("Sorry, your comment can not be submitted due to inappropriate content. Please double check your comments and try again.");
+                setAlertMessage("Sorry, your comment can not be submitted due to inappropriate content. Please double check your comment and try again.");
                 setAlertSeverity("warning");
                 console.log(error.response);
             } else if (error.request) {
@@ -262,16 +275,14 @@ export default function Dashboard(){
                             position: toast.POSITION.BOTTOM_LEFT,
                             title: "Success",
                             autoClose: 7000,
-                            pauseOnHover: true,
-                            onClose: handleReloadPage
+                            pauseOnHover: true
                         });
             } else if (alertSeverity === "warning") {
                 toast.warning(alertMessage, {
                             position: toast.POSITION.BOTTOM_LEFT,
                             title: "Warning",
                             autoClose: 7000,
-                            pauseOnHover: true,
-                            onClose: handleReloadPage
+                            pauseOnHover: true
                         });
             } else {
                 toast.error(alertMessage, {
@@ -345,6 +356,9 @@ export default function Dashboard(){
             <div 
                 className="dashboard-back"
             >
+                <div>
+                    <ToastContainer />
+                </div>
                 <HeaderCustomer />
                 <h1 
                     className='dashboard-title'
@@ -579,7 +593,8 @@ export default function Dashboard(){
                             onChange={(event, newValue) => setValue(newValue)}
                         />
                         <textarea 
-                            className='dashboard-textarea' 
+                            className='dashboard-textarea'
+                            value={text} 
                             onChange={handleAddtext}
                         />
                         <Stack 
