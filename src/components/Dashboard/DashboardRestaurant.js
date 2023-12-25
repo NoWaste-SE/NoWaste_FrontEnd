@@ -87,11 +87,12 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                // 'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
             setOrderHistory(response.data);
+            console.log(response.data);
             setLoading(false);
         })
         .catch((error) => {

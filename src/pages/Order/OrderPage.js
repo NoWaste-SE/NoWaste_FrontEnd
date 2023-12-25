@@ -92,9 +92,9 @@ export default function OrderPage(){
             {
                 console.log("here");
                 setThereis(true);
-                console.log(response.data);
+                console.log(response.data[0]);
                 setStatus(response.data[0].status);
-                setShoppingCard(response.data[0]);
+                setShoppingCard(response.data[0].restaurantDetails);
                 setOrderItems(response.data[0].orderItems);
                 setPrices(response.data[0].Subtotal_Grandtotal_discount);
                 setOrderId(response.data[0].id);
@@ -382,7 +382,7 @@ export default function OrderPage(){
                                             <PlaceIcon 
                                                 className="icon-order-page" 
                                             />
-                                            {shoppingCard.userAddress}
+                                            {shoppingCard.address}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={1.5}>
