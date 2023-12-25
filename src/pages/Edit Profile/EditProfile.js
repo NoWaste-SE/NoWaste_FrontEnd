@@ -119,24 +119,22 @@ function Edit(props){
 
     const showCroppedImage = useCallback(async () => {
         try {
-          setOpenImg(false);
-          const croppedImage = await getCroppedImg(
-            URL.createObjectURL(img),
-            croppedAreaPixels,
-            0
+            setOpenImg(false);
+            const croppedImage = await getCroppedImg(
+                URL.createObjectURL(img),
+                croppedAreaPixels,
+                0
         );
-        console.log("befoooooore", croppedImage);
         setCroppedImage(croppedImage);
         setUpdate({...update, customer_img: croppedImage});
-        console.log("This is cropppppp:",croppedImage);
         } catch (e) {
-          console.error(e);
+            console.error(e);
         }
-      }, [croppedAreaPixels]);
+    }, [croppedAreaPixels]);
 
-      const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
-      }, []);
+    }, []);
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
