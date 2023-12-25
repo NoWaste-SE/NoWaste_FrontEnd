@@ -181,7 +181,7 @@ function EditRestaurant(props){
             setCroppedImage(croppedImage);
             setUpdate({...update, restaurant_image: croppedImage});
         } catch (e) {
-          console.error(e);
+            console.error(e);
         }
     }, [croppedAreaPixels]);
 
@@ -191,7 +191,6 @@ function EditRestaurant(props){
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
-        setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         document.getElementById("photoInput").value = null;
@@ -505,6 +504,7 @@ function EditRestaurant(props){
         )
         .then((response) => {
             setData(response.data);
+            setCroppedImage(response.data.restaurant_image);
             setLoading(false);
         })
         .catch((error) => {
