@@ -351,7 +351,7 @@ const RestaurantView = (props: Props) => {
     // },[])
 
     const handlePayment = () => {
-        history.push('/order-page/' + id);
+        history.push("/order-page/" + id);
     };
     
     return (
