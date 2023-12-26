@@ -592,7 +592,7 @@ function Edit(props){
                                     Account Details 
                                 </Typography>
                                 <Grid container spacing={2}>
-                                    {openNetwork && 
+                                    {/* {openNetwork && 
                                         <Grid item lg={12} sm={12} md={12}>
                                             {openNetwork && 
                                                 <Alert 
@@ -604,7 +604,7 @@ function Edit(props){
                                                 </Alert>
                                             }
                                         </Grid> 
-                                    }
+                                    } */}
                                     {openWrongPass && 
                                         <Grid item lg={12} sm={12} md={12}>
                                             {openWrongPass && 

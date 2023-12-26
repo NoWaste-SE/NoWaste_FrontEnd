@@ -172,59 +172,7 @@ const AboutUs = () => {
                 About Team
             </Typography>
             <Grid container className='about-us-grid'>
-                <Grid item md={4} sm={4} xs={2} className='about-us-member'>
-                    <img 
-                        className='about-us-img'
-                        src='/AboutUs/haniye.jpg' 
-                        alt="Haniye As'adi"
-                    />
-                    <a 
-                        href='https://github.com/HaniyeAsadi' 
-                        className='link'
-                    >
-                        Haniye As'adi (Front-end)
-                    </a>
-                </Grid>
-                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
-                    <img 
-                        src='/AboutUs/helia.png' 
-                        alt='Helia Vafaei'
-                        className='about-us-img'
-                    />
-                    <a 
-                        href='https://github.com/helia-vafaei' 
-                        className='link'
-                    >
-                        Helia Vafaei (Front-end)
-                    </a>
-                </Grid>
-                <Grid item md={4} sm={4} xs={6} className='about-us-member'>
-                    <img 
-                        src='/AboutUs/setareh.jpg' 
-                        alt='Setareh Babajani'
-                        className='about-us-img'
-                    />
-                    <a 
-                        href='https://github.com/setarehbabajani' 
-                        className='link'
-                    >
-                        Setareh Babajani (Front-end)
-                    </a>
-                </Grid>
-                <Grid item md={4} sm={4} xs={6}>
-                    <img 
-                        src='/AboutUs/niayesh.jpg' 
-                        alt='Niayesh Khani'
-                        className='about-us-img'
-                    />
-                    <a 
-                        href='https://github.com/niayesh-khani' 
-                        className='link'
-                    >
-                        Niayesh Khani (Front-end)
-                    </a>
-                </Grid>
-                <Grid item md={4} sm={4} xs={6}>
+            <Grid item md={4} sm={4} xs={6} className='about-us-member'>    
                     <img 
                         src='/AboutUs/negin.jpg' 
                         alt='Negin Haghighi'
@@ -237,7 +185,7 @@ const AboutUs = () => {
                         Negin Haghighi (Back-end)
                     </a>
                 </Grid>
-                <Grid item md={4} sm={4} xs={6}>
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>       
                     <img 
                         src='/AboutUs/golbarg.jpg' 
                         alt='Golbarg Sepehara'
@@ -250,7 +198,7 @@ const AboutUs = () => {
                         Golbarg Sepehara (Back-end)
                     </a>
                 </Grid>
-                <Grid item md={4} sm={4} xs={6}>
+                <Grid item md={4} sm={4} xs={6} className='about-us-member'>    
                     <img 
                         src='/AboutUs/melika.jpg' 
                         alt='Melika Mohamadi Fakhar'
@@ -263,6 +211,59 @@ const AboutUs = () => {
                         Melika Mohamadi Fakhar (Back-end)
                     </a>
                 </Grid>
+                <Grid item md={4} sm={4} xs={2} >
+                    <img 
+                        className='about-us-img'
+                        src='/AboutUs/haniye.jpg' 
+                        alt="Haniye As'adi"
+                    />
+                    <a 
+                        href='https://github.com/HaniyeAsadi' 
+                        className='link'
+                    >
+                        Haniye As'adi (Front-end)
+                    </a>
+                </Grid>
+                <Grid item md={4} sm={4} xs={6}>
+                    <img 
+                        src='/AboutUs/helia.png' 
+                        alt='Helia Vafaei'
+                        className='about-us-img'
+                    />
+                    <a 
+                        href='https://github.com/helia-vafaei' 
+                        className='link'
+                    >
+                        Helia Vafaei (Front-end)
+                    </a>
+                </Grid>
+                <Grid item md={4} sm={4} xs={6}>
+                    <img 
+                        src='/AboutUs/setareh.jpg' 
+                        alt='Setareh Babajani'
+                        className='about-us-img'
+                    />
+                    <a 
+                        href='https://github.com/setarehbabajani' 
+                        className='link'
+                    >
+                        Setareh Babajani (Front-end)
+                    </a>
+                </Grid>
+                <Grid item md={4} sm={4} xs={6}>   
+                    <img 
+                        src='/AboutUs/niayesh.jpg' 
+                        alt='Niayesh Khani'
+                        className='about-us-img'
+                    />
+                    <a 
+                        href='https://github.com/niayesh-khani' 
+                        className='link'
+                    >
+                        Niayesh Khani (Front-end)
+                    </a>
+                </Grid>
+                
             </Grid>
             <Footer/>
         </div> 
