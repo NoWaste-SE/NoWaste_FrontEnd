@@ -142,7 +142,7 @@ export default function Login(){
             password: password,
             email: email
         };
-        // axios.post("http://188.121.124.63/user/login/", 
+        // axios.post("http://188.121.124.63:8000/user/login/", 
         //             userData, 
         //             {headers:{"Content-Type" : "application/json"}}
         // )

@@ -101,7 +101,7 @@ function App() {
           <Route path = "/dashboard-restaurant">
               <DashboardRestaurant />
           </Route>
-          <Route path="/AboutUs">
+          <Route path="/about-us">
               <AboutUs />
           </Route>
           <Route path="/chats">

@@ -14,7 +14,7 @@ describe('Footer Component', () => {
         expect(screen.getByText(/Useful links/i)).toBeTruthy();
         expect(screen.getByText(/Contact/i)).toBeTruthy();
         expect(screen.getByText(/Follow us/i)).toBeTruthy();
-        expect(screen.getByText(/NoWaste.ir/i)).toBeTruthy();
+        expect(screen.getByText(/nowaste39.ir/i)).toBeTruthy();
     });
 
     test('renders social media links in footer', () => {

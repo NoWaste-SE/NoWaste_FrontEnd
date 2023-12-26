@@ -38,7 +38,7 @@ const HeaderCustomer = memo(() => {
     const handleClickLogOut = () => {
         localStorage.removeItem("token");
         axios.get(
-            `http://188.121.124.63/user/logout/`,
+            `http://188.121.124.63:8000/user/logout/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -86,7 +86,7 @@ const HeaderCustomer = memo(() => {
             amount: selectedAmount
         };
         axios.post(
-            "http://188.121.124.63/user/charge-wallet/", 
+            "http://188.121.124.63:8000/user/charge-wallet/", 
             userData,
             {headers: {
                 'Content-Type' : 'application/json',

@@ -139,7 +139,7 @@ export default function ForgotPass(){
         const userData = {
             email: email
         };
-        axios.post("http://188.121.124.63/user/forgot-password/", 
+        axios.post("http://188.121.124.63:8000/user/forgot-password/", 
             userData, 
             {headers:{"Content-Type" : "application/json"}}
         )
@@ -168,7 +168,7 @@ export default function ForgotPass(){
             code: newPassword,
             email: email
         };
-        axios.post("http://188.121.124.63/user/fp-verify/", 
+        axios.post("http://188.121.124.63:8000/user/fp-verify/", 
             userData, 
             {headers:{"Content-Type" : "application/json"}}
         )

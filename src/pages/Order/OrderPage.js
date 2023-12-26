@@ -53,7 +53,7 @@ export default function OrderPage(){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/${id}/lat_long/` , 
+            `http://188.121.124.63:8000/user/${id}/lat_long/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -79,7 +79,7 @@ export default function OrderPage(){
 
     useEffect(()=>{
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -136,7 +136,7 @@ export default function OrderPage(){
             status: "InProgress"
         };
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/${orderId}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/${orderId}/`, 
             userStatus,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -152,7 +152,7 @@ export default function OrderPage(){
             };
             if(paymentMethod === "wallet"){
                 axios.post(
-                    "http://188.121.124.63/user/withdraw-wallet/", 
+                    "http://188.121.124.63:8000/user/withdraw-wallet/", 
                     userData, 
                     {headers: {
                         'Content-Type' : 'application/json',
