@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import "./ShowComments.css";
 import { createTheme } from '@material-ui/core';
 import { Avatar, Grid, ThemeProvider } from '@mui/material';
+import Chip from '@mui/material/Chip';
 import { deepOrange, deepPurple,grey } from '@mui/material/colors';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
@@ -39,7 +40,7 @@ const ShowComments = (props) => {
 
     useEffect(()=>{
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_id/${id}/comments`,
+            `http://188.121.124.63:8000/restaurant/restaurant_id/${id}/comments`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -105,6 +106,8 @@ const ShowComments = (props) => {
                                 >
                                     {res.text}
                                 </Typography>
+                                <Chip label="Pizza" variant='outlined' className='comment-order-detail'/>
+                                <Chip label="Pizza" variant='outlined' className='comment-order-detail'/>
                                 <hr 
                                     className='comment-hr'
                                 />
