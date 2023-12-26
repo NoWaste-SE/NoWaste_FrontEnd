@@ -19,6 +19,7 @@ import AddPagination from '../../components/Pagination/Pagination';
 import Pagination from '@mui/material/Pagination';
 import PulseLoader from "react-spinners/PulseLoader";
 import { SubmitButton, CancelButton } from '../../components/CustomButtons/CustomButtons';
+import Footer from '../../components/Footer/Footer';
 
 const useStyles = makeStyles({
     ul: {
@@ -505,6 +506,7 @@ function HomepageRestaurant(props){
                 </Box>
             </>
             )}
+            <Footer/>
         </ThemeProvider>
     );
 }
