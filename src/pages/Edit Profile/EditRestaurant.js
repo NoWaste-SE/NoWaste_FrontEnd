@@ -363,15 +363,13 @@ function EditRestaurant(props){
         setDiscount(data.discount * 100);
         setDescription(data.description);
         const arr = data?.address?data?.address.split(","):[];
-        setCountry(arr[2] || '');
+        setCountry(arr[0] || '');
         setCity(arr[1] || '');
-        setAddress(arr[0] || '');
+        setAddress(arr[2] || '');
     }, [data]);
 
     useEffect(() => {
-        const temp = address + ',' + city + ',' + country;
-        console.log("city is : ");
-        console.log(city);
+        const temp = country + ',' + city + ',' + address;
         console.log(temp);
         setUpdate({...update, address : temp})
     }, [country, city, address]);
@@ -503,6 +501,7 @@ function EditRestaurant(props){
             }}
         )
         .then((response) => {
+            console.log(response.data);
             setData(response.data);
             setCroppedImage(response.data.restaurant_image);
             setLoading(false);
