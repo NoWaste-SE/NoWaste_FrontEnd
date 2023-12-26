@@ -16,7 +16,7 @@ function ShoppingCard() {
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/cart/${userid}`, 
+            `http://188.121.124.63:8000/restaurant/cart/${userid}`, 
             {headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -48,7 +48,7 @@ function ShoppingCard() {
 
     const handleDeleteShopping = (idR, uuid) => {  
             axios.delete(
-                `http://188.121.124.63/restaurant/restaurant_view/${idR}/${userid}/order/${uuid}`, 
+                `http://188.121.124.63:8000/restaurant/restaurant_view/${idR}/${userid}/order/${uuid}`, 
                 {headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',

@@ -62,7 +62,7 @@ export default function Admin() {
 
     useEffect(() => {
         axios.get(
-            'http://188.121.124.63/user/admin-profile/',
+            'http://188.121.124.63:8000/user/admin-profile/',
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -98,7 +98,7 @@ export default function Admin() {
     };
 
     const handleReject = (id) => {
-        axios.get(`http://188.121.124.63/user/temp-manager-reject/${id}`,
+        axios.get(`http://188.121.124.63:8000/user/temp-manager-reject/${id}`,
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -126,7 +126,7 @@ export default function Admin() {
             name: name,
             email: email
         };
-        axios.post(`http://188.121.124.63/user/temp-manager-confirm/`,
+        axios.post(`http://188.121.124.63:8000/user/temp-manager-confirm/`,
             userData,
             {headers :{
                 'Content-Type' : 'application/json',

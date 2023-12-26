@@ -39,7 +39,7 @@ const ShowComments = (props) => {
 
     useEffect(()=>{
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_id/${id}/comments`,
+            `http://188.121.124.63:8000/restaurant/restaurant_id/${id}/comments`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",

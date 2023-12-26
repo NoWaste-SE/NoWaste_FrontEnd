@@ -180,7 +180,7 @@ const EditProfileManager = (props) => {
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${id}/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${id}/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -288,7 +288,7 @@ const EditProfileManager = (props) => {
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
-            `http://188.121.124.63/restaurant/managers/${id}`, update,
+            `http://188.121.124.63:8000/restaurant/managers/${id}`, update,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -315,7 +315,7 @@ const EditProfileManager = (props) => {
         {
             e.preventDefault();
             axios.patch(
-                `http://188.121.124.63/user/change_password/${id}/`, {"old_password": password, "password": newPassword, "password2": confirmPassword},
+                `http://188.121.124.63:8000/user/change_password/${id}/`, {"old_password": password, "password": newPassword, "password2": confirmPassword},
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",

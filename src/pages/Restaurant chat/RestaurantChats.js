@@ -74,7 +74,7 @@ const Chat = () => {
 
     useEffectOnce(() => {
         const client_1 = new WebSocket(
-            `ws://188.121.124.63:4000/chat/room/${room_name}/`
+            `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
         );
         client_1.onopen = messageOnOpen;
 
@@ -103,7 +103,7 @@ const Chat = () => {
         if(client && client.readyState === WebSocket.OPEN){
             client.close();
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -115,7 +115,7 @@ const Chat = () => {
         } 
         if(client && client.readyState === WebSocket.CLOSED){
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -129,7 +129,7 @@ const Chat = () => {
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/chat/${id}/`,
+            `http://188.121.124.63:8000/chat/${id}/`,
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -171,7 +171,7 @@ const Chat = () => {
         setCurrentUserId(userId);
         
         axios.get(
-            `http://188.121.124.63/chat/room/${userId}/${id}`
+            `http://188.121.124.63:8000/chat/room/${userId}/${id}`
         )
         .then((response) => {
             setData(response.data);

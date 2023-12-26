@@ -116,7 +116,7 @@ export default function Verification(){
             role: JSON.parse(localStorage.getItem("role")),
             password: JSON.parse(localStorage.getItem("password"))
         };
-        axios.post("http://188.121.124.63/user/verify-email/", 
+        axios.post("http://188.121.124.63:8000/user/verify-email/", 
                     userData, 
                     {headers:{"Content-Type" : "application/json"}}
         )

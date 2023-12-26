@@ -273,7 +273,7 @@ function EditRestaurant(props){
     const handleOpenMenu = () => {
         setOpenMenu(!openMenu);
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -289,7 +289,7 @@ function EditRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/all-countries/` , 
+            `http://188.121.124.63:8000/user/all-countries/` , 
             {headers :{
                 'Content-Type' : 'application/json'
             }}
@@ -303,7 +303,7 @@ function EditRestaurant(props){
     //geting the lt and lng of map
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/${idR}/lat_long` , 
+            `http://188.121.124.63:8000/restaurant/${idR}/lat_long` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -324,7 +324,7 @@ function EditRestaurant(props){
             name: country
         };
         axios.post(
-            "http://188.121.124.63/user/cities-of-country/", 
+            "http://188.121.124.63:8000/user/cities-of-country/", 
             userData, 
             {headers:{
                 "Content-Type" : "application/json"
@@ -495,7 +495,7 @@ function EditRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -518,7 +518,7 @@ function EditRestaurant(props){
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/`, update,
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/`, update,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -547,7 +547,7 @@ function EditRestaurant(props){
 
     const handleDeleteRestaurant = () => {
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/`
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/`
         )
         .then(() => {
             history.push("/homepage-restaurant");
@@ -557,7 +557,7 @@ function EditRestaurant(props){
 
     const handleDelete = (res) => {
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -579,7 +579,7 @@ function EditRestaurant(props){
         setIdFood(e);
         setOpenEdit(!openEdit);
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${e}/`,
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${e}/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -608,7 +608,7 @@ function EditRestaurant(props){
         };
 
         axios.put(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
             editData,
             {headers: {
                 'Content-Type' : 'application/json',
@@ -640,7 +640,7 @@ function EditRestaurant(props){
         };
 
         axios.post(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/`, 
             userData, 
             {headers:{
                 "Content-Type" : "application/json", 
