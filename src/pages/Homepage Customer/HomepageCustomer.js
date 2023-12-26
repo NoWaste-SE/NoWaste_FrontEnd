@@ -277,7 +277,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-rate&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-rate&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -303,7 +303,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-discount&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-discount&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -329,7 +329,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -355,7 +355,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
