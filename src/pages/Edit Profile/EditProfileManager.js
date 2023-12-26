@@ -467,7 +467,7 @@ const EditProfileManager = (props) => {
                                     Account Details 
                                 </Typography>
                                 <Grid container spacing={2}>
-                                    {openNetwork && 
+                                    {/* {openNetwork && 
                                         <Grid item lg={12} sm={12} md={12}>
                                             {openNetwork && 
                                                 <Alert 
@@ -479,7 +479,7 @@ const EditProfileManager = (props) => {
                                                 </Alert>
                                             }
                                         </Grid> 
-                                    }
+                                    } */}
                                     {openWrongPass && 
                                         <Grid item lg={12} sm={12} md={12}>
                                                 {openWrongPass && 
