@@ -262,7 +262,7 @@ function Edit(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/customer_profile/${id}/` , 
+            `http://188.121.124.63:8000/user/customer_profile/${id}/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -283,7 +283,7 @@ function Edit(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/all-countries/` , 
+            `http://188.121.124.63:8000/user/all-countries/` , 
             {headers :{
                 'Content-Type' : 'application/json'
             }}
@@ -298,7 +298,7 @@ function Edit(props){
     //getting the lt and lng of map
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/${id}/lat_long/`, 
+            `http://188.121.124.63:8000/user/${id}/lat_long/`, 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -319,7 +319,7 @@ function Edit(props){
             name: country
         };
         axios.post(
-            "http://188.121.124.63/user/cities-of-country/", 
+            "http://188.121.124.63:8000/user/cities-of-country/", 
             userData, 
             {headers:{"Content-Type" : "application/json"}}
         )
@@ -401,7 +401,7 @@ function Edit(props){
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
-            `http://188.121.124.63/user/customer_profile/${id}/`, update,
+            `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -427,7 +427,7 @@ function Edit(props){
         {
             e.preventDefault();
             axios.patch(
-                `http://188.121.124.63/user/change_password/${id}/`, 
+                `http://188.121.124.63:8000/user/change_password/${id}/`, 
                 {"old_password": password, "password": newPassword, "password2": confirmPassword},
                 {headers: {
                     'Content-Type' : 'application/json',

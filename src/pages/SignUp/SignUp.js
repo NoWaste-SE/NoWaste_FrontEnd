@@ -142,7 +142,7 @@ export default function SignUp(){
             name: fullname,
             email: email
         };
-        axios.post("http://188.121.124.63/user/signup/", 
+        axios.post("http://188.121.124.63:8000/user/signup/", 
                     userData, 
                     {headers:{"Content-Type" : "application/json"}}
         )

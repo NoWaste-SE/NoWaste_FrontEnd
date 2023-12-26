@@ -44,7 +44,7 @@ const Chat = (props) => {
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/chat/room/${customer_id}/${manager_id}/`
+            `http://188.121.124.63:8000/chat/room/${customer_id}/${manager_id}/`
         )
         .then((response) => {
             setData(response.data);
@@ -135,7 +135,7 @@ const Chat = (props) => {
 
     useEffectOnce(() => {
         const client_1 = new WebSocket(
-            `ws://188.121.124.63:4000/chat/room/${room_name}/`
+            `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
         );
         client_1.onopen = messageOnOpen;
         client_1.onmessage = messageOnMessage;
@@ -148,7 +148,7 @@ const Chat = (props) => {
         if(client && client.readyState === WebSocket.OPEN){
             client.close();
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -160,7 +160,7 @@ const Chat = (props) => {
         } 
         if(client && client.readyState === WebSocket.CLOSED){
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;

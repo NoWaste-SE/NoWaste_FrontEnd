@@ -65,7 +65,7 @@ export default function NewPassword(){
             email: JSON.parse(localStorage.getItem('email'))
         };
 
-        axios.post("http://188.121.124.63/user/fp-newpassword/", 
+        axios.post("http://188.121.124.63:8000/user/fp-newpassword/", 
                     userData, 
                     {headers:{"Content-Type" : "application/json"}}
         )
