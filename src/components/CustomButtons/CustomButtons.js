@@ -37,6 +37,7 @@ const UploadButton = (props) => {
             className="upload-button"
             component="span"
             disabled={props.disabled}
+            onClick={props.onClick}
         >
             {props.title}
         </Button>

@@ -119,27 +119,26 @@ function Edit(props){
 
     const showCroppedImage = useCallback(async () => {
         try {
-          setOpenImg(false);
-          const croppedImage = await getCroppedImg(
-            URL.createObjectURL(img),
-            croppedAreaPixels,
-            0
+            setOpenImg(false);
+            const croppedImage = await getCroppedImg(
+                URL.createObjectURL(img),
+                croppedAreaPixels,
+                0
         );
         setCroppedImage(croppedImage);
         setUpdate({...update, customer_img: croppedImage});
-        console.log(croppedImage);
         } catch (e) {
-          console.error(e);
+            console.error(e);
         }
-      }, [croppedAreaPixels]);
+    }, [croppedAreaPixels]);
 
-      const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
-      }, []);
+    }, []);
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
-        setCroppedImage(null);
+        // setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         const photoInput = document.getElementById("photoInput");
@@ -271,8 +270,9 @@ function Edit(props){
             }}
         )
         .then((response) => {
-            console.log(response);
+            console.log(response.data);
             setData(response.data);
+            setCroppedImage(response.data.customer_img);
             setLoading(false);
         })
         .catch((error) => {
@@ -352,23 +352,23 @@ function Edit(props){
         setOpen(false);
     };
 
-    const handleProfileImg = (e) => {
-        const file = e.target.files[0];
-        const fileSize = file.size;
-        if(fileSize > MAX_FILE_SIZE){
-            setOpen(true);
-            e.target.value = null;
-            setProfileImg(null);
-            return;
-        } else{
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                setProfileImg(reader.result);
-                setUpdate({...update, customer_img: reader.result});
-            };
-        }
-    };
+    // const handleProfileImg = (e) => {
+    //     const file = e.target.files[0];
+    //     const fileSize = file.size;
+    //     if(fileSize > MAX_FILE_SIZE){
+    //         setOpen(true);
+    //         e.target.value = null;
+    //         setProfileImg(null);
+    //         return;
+    //     } else{
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file);
+    //         reader.onloadend = () => {
+    //             setProfileImg(reader.result);
+    //             setUpdate({...update, customer_img: reader.result});
+    //         };
+    //     }
+    // };
     
     useEffect(() => {
         let valid = !fullnameError && !newPasswordError && newPasswordMatch

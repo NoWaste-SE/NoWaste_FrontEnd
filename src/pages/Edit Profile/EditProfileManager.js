@@ -109,7 +109,7 @@ const EditProfileManager = (props) => {
             setUpdate({...update, manager_image: croppedImage});
             console.log(croppedImage);
             } catch (e) {
-            console.error(e);
+                console.error(e);
             }
         }, [croppedAreaPixels]);
 
@@ -119,7 +119,6 @@ const EditProfileManager = (props) => {
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
-        setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         const photoInput = document.getElementById("photoInput");
@@ -191,6 +190,7 @@ const EditProfileManager = (props) => {
         .then((response) => {
             setData(response.data);
             setData(response.data);
+            setCroppedImage(response.data.manager_img);
             setLoading(false);
         })
         .catch((error) => {
