@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     const loginUser = async (values) => {
         try{
-            const {data} = await axios.post("http://188.121.124.63/user/login/", values, {
+            const {data} = await axios.post("http://188.121.124.63:8000/user/login/", values, {
                 headers: { "Content-Type": "application/json" },
             });
             console.log(data)
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         console.log("refresh token is:", refresh_Token);
         try {
             const {data} = await axios.post(
-                "http://188.121.124.63/api/token/refresh/",sendingData
+                "http://188.121.124.63:8000/api/token/refresh/",sendingData
             );
             const newAccessToken = data.access;
 

@@ -158,7 +158,7 @@ const RestaurantView = (props: Props) => {
     };
 
     const handleClickOnDownloadExel = (nameRestaurant) => {
-        fetch(`http://188.121.124.63/restaurant/excel/customer/${managerId}/${customer_id}/order-history`, {
+        fetch(`http://188.121.124.63:8000/restaurant/excel/customer/${managerId}/${customer_id}/order-history`, {
         method: 'GET',
         headers: {
             'Content-Type' : 'application/json',
@@ -204,7 +204,7 @@ const RestaurantView = (props: Props) => {
 
     React.useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${id}/food/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${id}/food/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -223,7 +223,7 @@ const RestaurantView = (props: Props) => {
         const fetchData = async () => {
             try {
                 axios.get(
-                    `http://188.121.124.63/restaurant/restaurant_view/${id}/`,
+                    `http://188.121.124.63:8000/restaurant/restaurant_view/${id}/`,
                     {headers: {
                         'Content-Type' : 'application/json',
                         "Access-Control-Allow-Origin" : "*",
@@ -265,7 +265,7 @@ const RestaurantView = (props: Props) => {
         };  
 
         axios.post(
-            "http://188.121.124.63/user/favorite-restaurant/", 
+            "http://188.121.124.63:8000/user/favorite-restaurant/", 
             userData,
             {headers: {
                 'Content-Type' : 'application/json',
@@ -318,7 +318,7 @@ const RestaurantView = (props: Props) => {
 
     // useEffect(() => {
     //     axios.get(
-    //         `http://188.121.124.63/restaurant/restaurant_view/${id}/${customer_id}/order/`,
+    //         `http://188.121.124.63:8000/restaurant/restaurant_view/${id}/${customer_id}/order/`,
     //         {headers: {
     //             'Content-Type' : 'application/json',
     //             "Access-Control-Allow-Origin" : "*",
@@ -334,7 +334,7 @@ const RestaurantView = (props: Props) => {
 
     // useEffect(()=>{
     //     axios.get(
-    //         `http://188.121.124.63/restaurant/restaurant_id/${id}/comments`,
+    //         `http://188.121.124.63:8000/restaurant/restaurant_id/${id}/comments`,
     //         {headers: {
     //             'Content-Type' : 'application/json',
     //             "Access-Control-Allow-Origin" : "*",

@@ -87,7 +87,7 @@ function HomepageRestaurant(props){
     const handleDelete = (res) => {
         console.log("i'm here to delete.");
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${id}/restaurants/${res.id}/`,
+            `http://188.121.124.63:8000/restaurant/managers/${id}/restaurants/${res.id}/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -146,7 +146,7 @@ function HomepageRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${id}/restaurants/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${id}/restaurants/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -213,7 +213,7 @@ function HomepageRestaurant(props){
             description: newDescription
         };
         axios.post(
-            `http://188.121.124.63/restaurant/managers/${id}/restaurants/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${id}/restaurants/`, 
             userData, 
             {headers: {
                 'Content-Type' : 'application/json',

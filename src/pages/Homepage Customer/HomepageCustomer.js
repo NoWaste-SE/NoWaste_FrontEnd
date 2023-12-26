@@ -101,7 +101,7 @@ const HomepageCustomer = () => {
     useEffect(()=>{
         console.log(token);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -121,7 +121,7 @@ const HomepageCustomer = () => {
 
     useEffect(()=>{
         axios.get(
-            `http://188.121.124.63/restaurant/recently-viewed/`,
+            `http://188.121.124.63:8000/restaurant/recently-viewed/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -160,7 +160,7 @@ const HomepageCustomer = () => {
         if (mysearch) {
             setLoading(true);
             axios.get(
-                `http://188.121.124.63/restaurant/restaurant-search/?search=${mysearch}`,
+                `http://188.121.124.63:8000/restaurant/restaurant-search/?search=${mysearch}`,
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
@@ -179,7 +179,7 @@ const HomepageCustomer = () => {
         } else {
             setLoading(true);
             axios.get(
-                `http://188.121.124.63/restaurant/restaurant-search/`,
+                `http://188.121.124.63:8000/restaurant/restaurant-search/`,
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
@@ -205,7 +205,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?type=${type}&discount__gte=${fromD}&discount__lte=${toD}&rate__lte=${toR}&rate__gte=${fromR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?type=${type}&discount__gte=${fromD}&discount__lte=${toD}&rate__lte=${toR}&rate__gte=${fromR}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -277,7 +277,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-rate&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-rate&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -303,7 +303,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-discount&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-discount&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -329,7 +329,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -355,7 +355,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -379,7 +379,7 @@ const HomepageCustomer = () => {
         const long = localStorage.getItem("long");
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/nearest_restaurant?origins=${lat},${long}`,
+            `http://188.121.124.63:8000/restaurant/nearest_restaurant?origins=${lat},${long}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",

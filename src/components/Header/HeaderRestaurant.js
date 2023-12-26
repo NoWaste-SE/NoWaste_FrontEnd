@@ -26,7 +26,7 @@ const HeaderRestaurant = memo(() => {
     const handleClickLogOut = () => {
         localStorage.removeItem("token");
         axios.get(
-            `http://188.121.124.63/user/logout/`,
+            `http://188.121.124.63:8000/user/logout/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",

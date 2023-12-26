@@ -54,7 +54,7 @@ const Food = (props) => {
 
     const handleRemoveFromCartClick2 = () => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${resid}/${userid}/order/remove_from_order/${food.id}/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${resid}/${userid}/order/remove_from_order/${food.id}/`,
             {headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -74,7 +74,7 @@ const Food = (props) => {
 
     const handleAddToCartClick2 = () => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${resid}/${userid}/order/add_to_order/${food.id}/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${resid}/${userid}/order/add_to_order/${food.id}/`,
             { headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -103,7 +103,7 @@ const Food = (props) => {
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${resid}/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${resid}/`,
             {headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
