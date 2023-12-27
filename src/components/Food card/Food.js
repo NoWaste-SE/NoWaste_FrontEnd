@@ -40,7 +40,6 @@ const Food = (props) => {
     const token = localStorage.getItem("token");
     const order_id = localStorage.getItem("order_id");
     const resid = food.restaurant_id;
-    const [isHovered, setIsHovered] = useState(false);
     const [remainder, setRemainder] = useState("");
 
     const handleChange = (e) => {
@@ -118,10 +117,6 @@ const Food = (props) => {
         .catch((error) => console.log(error));
     }, []);
 
-    const handleChangeFood = () => {
-      setIsHovered(!isHovered);
-    };
-
     return (
         <div>
             <Card sx={{ borderRadius: 2 }} className="card-food">
@@ -129,11 +124,10 @@ const Food = (props) => {
                     <CardMedia
                         component="img"
                         sx={{ height: 140 }}
-                        className={isHovered ? "food-image" : ""}
-                        image={isHovered && food.food_pic2 ? food.food_pic2 : food.food_pic}
+                        src={props.secondImage === props.food.id && props.food.food_pic2!=null ? props.food.food_pic2 : props.food.food_pic}
                         title={food.Type}
-                        onMouseEnter={handleChangeFood}
-                        onMouseLeave={handleChangeFood}
+                        onMouseEnter={props.onMouseEnter}
+                        onMouseLeave={props.onMouseLeave}
                     />
                     <CardContent 
                         sx={{ height: 25 }} 
