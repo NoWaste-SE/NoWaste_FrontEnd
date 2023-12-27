@@ -120,7 +120,6 @@ const Food = (props) => {
     return (
         <div>
             <Card sx={{ borderRadius: 2 }} className="card-food">
-                <CardActionArea>
                     <CardMedia
                         component="img"
                         sx={{ height: 140 }}
@@ -152,7 +151,6 @@ const Food = (props) => {
                             remaining: {remainder}
                         </Typography>
                     </CardContent>
-                </CardActionArea>
                 <CardActions>
                     <Grid container 
                         spacing={3.5} 
