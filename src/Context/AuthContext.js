@@ -28,15 +28,12 @@ export const AuthProvider = ({ children }) => {
     );
 
     const [loading, setloading] = useState(true);
-    console.log("first refresh token", refresh_Token);
-    console.log(JSON.parse(localStorage.getItem("refresh_token")));
 
     const loginUser = async (values) => {
         try{
             const {data} = await axios.post("http://188.121.124.63:8000/user/login/", values, {
                 headers: { "Content-Type": "application/json" },
             });
-            console.log(data)
             setAuthTokens(data.access_token);
             setUser(data)
             setRefresh_Token(data.refresh_token);
@@ -69,14 +66,14 @@ export const AuthProvider = ({ children }) => {
             refresh: refresh_Token
         };
         
-        console.log("refresh token is:", refresh_Token);
+        // console.log("refresh token is:", refresh_Token);
         try {
             const {data} = await axios.post(
                 "http://188.121.124.63:8000/api/token/refresh/",sendingData
             );
             const newAccessToken = data.access;
 
-            console.log("Token refresh successful - New access token: " + newAccessToken);
+            // console.log("Token refresh successful - New access token: " + newAccessToken);
             setAuthTokens(newAccessToken);
             localStorage.setItem("token", JSON.stringify(newAccessToken));
         }

@@ -99,7 +99,6 @@ const HomepageCustomer = () => {
     const [showrecent, setShowRecent] = useState(false);
 
     useEffect(()=>{
-        console.log(token);
         axios.get(
             `http://188.121.124.63:8000/restaurant/restaurant-search/`,
             {headers: {
