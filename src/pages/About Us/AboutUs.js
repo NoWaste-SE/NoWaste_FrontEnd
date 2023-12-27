@@ -180,7 +180,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/haghighy' 
-                        className='link'
+                        className='link-aboutus-aboutus'
                     >
                         Negin Haghighi (Back-end)
                     </a>
@@ -193,7 +193,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/golbara/' 
-                        className='link'
+                        className='link-aboutus'
                     >
                         Golbarg Sepehara (Back-end)
                     </a>
@@ -206,7 +206,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/melikamohamadifakhar' 
-                        className='link'
+                        className='link-aboutus'
                     >
                         Melika Mohamadi Fakhar (Back-end)
                     </a>
@@ -219,7 +219,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/HaniyeAsadi' 
-                        className='link'
+                        className='link-aboutus'
                     >
                         Haniye As'adi (Front-end)
                     </a>
@@ -232,7 +232,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/helia-vafaei' 
-                        className='link'
+                        className='link-aboutus'
                     >
                         Helia Vafaei (Front-end)
                     </a>
@@ -245,7 +245,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/setarehbabajani' 
-                        className='link'
+                        className='link-aboutus'
                     >
                         Setareh Babajani (Front-end)
                     </a>
@@ -258,7 +258,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/niayesh-khani' 
-                        className='link'
+                        className='link-aboutus'
                     >
                         Niayesh Khani (Front-end)
                     </a>
