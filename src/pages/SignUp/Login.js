@@ -1,10 +1,9 @@
-import { Box, Button, Container, createTheme, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
+import { Box, Container, createTheme, Icon, IconButton, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import LockIcon from '@mui/icons-material/Lock';
 import EmailIcon from '@mui/icons-material/Email';
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
 import './Login-Signup.css'
 import { Alert } from "@mui/material";
 import AuthContext from "../../Context/AuthContext";
@@ -77,56 +76,54 @@ export default function Login(){
         setHeight(); 
         window.addEventListener('resize', setHeight);
         window.onpopstate = () => {
-          setHeight();
+            setHeight();
         };
         return () => {
-          window.removeEventListener('resize', setHeight);
-          window.onpopstate = null;
+            window.removeEventListener('resize', setHeight);
+            window.onpopstate = null;
         };
     }, []);
 
     useEffect(() => {
         localStorage.setItem('token', JSON.stringify(token));
-        console.log(token);
     }, [token]);
 
     useEffect(() => {
-    localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
+        localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
     }, [refresh_token]);
 
     useEffect(() => {
         localStorage.setItem('email', JSON.stringify(email));
-        console.log(email);
     }, [email]);
 
     useEffect(() => {
         localStorage.setItem('id', JSON.stringify(id));
-        console.log(id);
     }, [id]);
 
     useEffect(() => {
         localStorage.setItem('wallet_balance', JSON.stringify(wallet_balance));
-        console.log(wallet_balance);
     }, [wallet_balance]);
 
     useEffect(() => {
         localStorage.setItem('role', JSON.stringify(role));
-        console.log(role);
     }, [role]);
 
     useEffect(() => {
         localStorage.setItem('list_of_favorites_res', JSON.stringify(list_of_favorites_res));
-        console.log(list_of_favorites_res);
     }, [list_of_favorites_res]);
 
     const handleClose = () => {
-        setOpen(false);
         setHeight();
     };
+
     const handleCloseNetwork = () => {
         setOpenNetwork(false);
         setHeight();
     };
+
+    useEffect(() => {
+        setHeight();
+    }, [adminLogin]);
 
     useEffect(() => {
         setHeight();
@@ -142,10 +139,6 @@ export default function Login(){
             password: password,
             email: email
         };
-        // axios.post("http://188.121.124.63:8000/user/login/", 
-        //             userData, 
-        //             {headers:{"Content-Type" : "application/json"}}
-        // )
         loginUser(userData)
         .then((response) => {
             setToken(response.access_token);
@@ -175,7 +168,7 @@ export default function Login(){
     return ( 
         <ThemeProvider theme={theme}>
             <div className="root">
-            <Container className={`container ${adminLogin ? 'admin-login' : ''}`}>
+                <Container className={`container ${adminLogin ? 'admin-login' : ''}`}>
                     <img
                         className="background"
                         src="/Signup-Login.jpg"
@@ -267,16 +260,6 @@ export default function Login(){
                                     )
                                 }}
                             />
-                            {/* <FormControlLabel className="remember"
-                                control={<Checkbox 
-                                    sx={{color: '#f18b72', '&.Mui-checked': {color: '#f18b72'},}}
-                                    />}
-                                    label={
-                                        <Typography className = 'text'>
-                                            Remember me
-                                        </Typography>
-                                    }
-                            /> */}
                             <Link to="/forgot-password" >
                                 <Typography className="forgetpassword" >
                                     Forgot password?
@@ -290,42 +273,31 @@ export default function Login(){
                                 title={"Login"}
                                 customWidth={"70%"}
                             />
-                            {/* <Button 
-                                variant="contained" 
-                                type="submit" 
-                                className="field"
-                                id="submit"
-                                onClick={handleSubmit}
-                                disabled={!validInputs}
-                            >
-                                Login
-                            </Button> */}
                         </form> 
                         {!adminLogin? (
-                            <Typography 
-                                className="already"
-                            >
-                                Don't have an account? <Link to="/sign-up" className="link">Sign up</Link>
-                            </Typography>
+                            <>
+                                <Typography 
+                                    className="already"
+                                >
+                                    Don't have an account?&nbsp;
+                                    <Link to="/sign-up" 
+                                        className="link"
+                                    >
+                                        Sign up
+                                    </Link>
+                                </Typography>
+                                <Typography 
+                                    className="are-you-admin-text"
+                                    onClick={() => setAdminLogin(!adminLogin)}
+                                >
+                                    Are you admin?
+                                </Typography>
+                            </>
                         ) : (
                             <Typography 
-                            className="already"
-                            >
-                                {/* Don't have an account? <Link to="/sign-up" className="link">Sign up</Link> */}
-                            </Typography>
-                        )}
-                        {!adminLogin? (
-                                <Typography 
                                 className="are-you-admin-text"
                                 onClick={() => setAdminLogin(!adminLogin)}
                             >
-                                Are you admin?
-                            </Typography>
-                        ):(
-                            <Typography 
-                            className="are-you-admin-text"
-                            onClick={() => setAdminLogin(!adminLogin)}
-                        >
                                 Login as user
                             </Typography>
                         )}

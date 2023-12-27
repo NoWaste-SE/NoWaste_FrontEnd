@@ -53,7 +53,7 @@
     clip-path: ellipse(30% 30%);
 }
 
-.link {
+.link-aboutus {
     display: block;
     margin-top: -20%;
     text-align: center;
@@ -61,7 +61,7 @@
     text-decoration: none;
 }
 
-.link:hover {
+.link-aboutus:hover {
     color: #FFA600 !important;
     text-decoration: none !important; 
 }

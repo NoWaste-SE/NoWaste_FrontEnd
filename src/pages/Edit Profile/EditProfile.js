@@ -400,29 +400,31 @@ function Edit(props){
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        axios.patch(
-            `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then(()=> {
-            setAlertMessage("Profile updated successfully!");
-            setAlertSeverity("success");
-        })
-        .catch((error) => {
-            if (error.request) {
-                setAlertMessage("Network error! Please try again later.");
-                setAlertSeverity("error");
-            } else {
-                setAlertMessage("A problem has been occured! Please try again later.");
-                setAlertSeverity("error");
-            }
-        });
-
+        if(update) {
+            axios.patch(
+                `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
+                {headers: {
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "GET,PATCH",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                }}
+            )
+            .then(()=> {
+                setAlertMessage("Profile updated successfully!");
+                setAlertSeverity("success");
+            })
+            .catch((error) => {
+                if (error.request) {
+                    setAlertMessage("Network error! Please try again later.");
+                    setAlertSeverity("error");
+                } else {
+                    setAlertMessage("A problem has been occured! Please try again later.");
+                    setAlertSeverity("error");
+                }
+            });
+        
+        }
         if(newPassword && password && confirmPassword)
         {
             e.preventDefault();
@@ -436,13 +438,16 @@ function Edit(props){
                     'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
             )
-            .then(()=> {
-                window.location.reload(false);
+            .then((response)=> {
+                console.log(response);
+                // window.location.reload(false);
             })
             .catch((error) => {
                 if (error.response) {
+                    console.log(error.response)
                     setOpenWrongPass(true);
                 } else if (error.request){
+                    console.log(error.request);
                     setOpenNetwork(true);
                 }
             });
