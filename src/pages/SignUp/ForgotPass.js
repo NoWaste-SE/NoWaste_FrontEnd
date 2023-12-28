@@ -10,6 +10,7 @@ import './Login-Signup.css'
 import { Alert } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CancelButton } from "../../components/CustomButtons/CustomButtons";
 
 const theme = createTheme({
     palette: {
@@ -138,7 +139,7 @@ export default function ForgotPass(){
         const userData = {
             email: email
         };
-        axios.post("http://188.121.124.63/user/forgot-password/", 
+        axios.post("http://188.121.124.63:8000/user/forgot-password/", 
             userData, 
             {headers:{"Content-Type" : "application/json"}}
         )
@@ -167,7 +168,7 @@ export default function ForgotPass(){
             code: newPassword,
             email: email
         };
-        axios.post("http://188.121.124.63/user/fp-verify/", 
+        axios.post("http://188.121.124.63:8000/user/fp-verify/", 
             userData, 
             {headers:{"Content-Type" : "application/json"}}
         )
@@ -308,7 +309,15 @@ export default function ForgotPass(){
                                     )
                                 }}
                             />
-                            <Button 
+                            <CancelButton
+                                variant={"contained"}
+                                type={"submit"}
+                                disabled={!validInputs}
+                                onClick={handleSubmit}
+                                title={"Continue"}
+                                customWidth={"70%"}
+                            />
+                            {/* <Button 
                                 variant="contained" 
                                 type="submit" 
                                 color="primary"
@@ -318,7 +327,7 @@ export default function ForgotPass(){
                                 disabled={!validInputs}
                             >
                                 Continue
-                            </Button>
+                            </Button> */}
                         </form> 
                         <Typography 
                             className="already"

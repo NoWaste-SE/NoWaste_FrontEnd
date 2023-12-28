@@ -99,7 +99,7 @@ export default function Dashboard(){
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/customer/${id}/orderview/`, 
+            `http://188.121.124.63:8000/restaurant/customer/${id}/orderview/`, 
             {headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -204,21 +204,25 @@ export default function Dashboard(){
 
         const commentPromise = 
             axios.post(
-                `http://188.121.124.63/restaurant/comment/user_id/${id}/restaurant_id/${restaurantId}/`,
+                `http://188.121.124.63:8000/restaurant/comment/restaurant_id/${restaurantId}/`,
                 userDataComment,
                 {headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Token ${token.slice(1, -1)}`
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
         );
 
         const ratingPromise = 
             axios.post(
-                `http://188.121.124.63/user/rate-restaurant/`,
+                `http://188.121.124.63:8000/user/rate-restaurant/`,
                 userDataRate,
                 {headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Token ${token.slice(1, -1)}`
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
         );
 
@@ -248,7 +252,7 @@ export default function Dashboard(){
             status:"Cancled"
         }
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
             userData,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -268,7 +272,7 @@ export default function Dashboard(){
     }
 
     const handleClickOnDownloadExel = () => {
-        fetch(`http://188.121.124.63/restaurant/excel/customer/${id}/order-history`, {
+        fetch(`http://188.121.124.63:8000/restaurant/excel/customer/${id}/order-history`, {
         method: 'GET',
         headers: {
             'Content-Type' : 'application/json',

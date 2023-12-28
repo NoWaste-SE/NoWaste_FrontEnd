@@ -1,4 +1,4 @@
-import { Box, Button, Container, createTheme, FormControlLabel, Grid, Icon, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
+import { Box, Container, createTheme, FormControlLabel, Icon, InputAdornment, TextField, ThemeProvider, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
@@ -7,8 +7,8 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import './Login-Signup.css';
 import axios from "axios";
 import Checkbox from '@mui/material/Checkbox';
-import { SpinningBubbles } from "react-loading";
 import { Alert} from "@mui/material";
+import { CancelButton } from "../../components/CustomButtons/CustomButtons";
 
 const theme = createTheme({
     palette: {
@@ -99,7 +99,13 @@ export default function SignUp(){
 
     useEffect(() => {
         setPasswordMatch(password === confirmPassword);
-    }, [password, confirmPassword]);
+    }, [confirmPassword]);
+
+    useEffect(() => {
+        if(confirmPassword.length > 0){
+            setPasswordMatch(password === confirmPassword);
+        }
+    }, [password]);
 
     useEffect(() => {
         let isValid = !fullnameError && !emailError && !passwordError && passwordMatch 
@@ -141,7 +147,7 @@ export default function SignUp(){
             name: fullname,
             email: email
         };
-        axios.post("http://188.121.124.63/user/signup/", 
+        axios.post("http://188.121.124.63:8000/user/signup/", 
                     userData, 
                     {headers:{"Content-Type" : "application/json"}}
         )
@@ -280,7 +286,7 @@ export default function SignUp(){
                                         {passwordError && 'Password must be mixture of letters and numbers.'}
                                     </div>
                                 }
-                                type= {showPassword ? 'text' : 'password'}
+                                type= {'password'}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -329,22 +335,24 @@ export default function SignUp(){
                                     </Typography>
                                 }   
                             />
-                            <Button 
-                                variant="contained" 
-                                type="submit" 
-                                color="primary"
-                                className="field"
-                                id="submit"
+                            <CancelButton
+                                variant={"contained"}
+                                type={"submit"}
                                 disabled={!validInputs}
                                 onClick={handleSubmit}
-                            >
-                                Sign up
-                            </Button>
+                                title={"Sign up"}
+                                customWidth={"70%"}
+                            />
                         </form> 
                         <Typography
                             className="already"
                         >
-                            Already have an account? <Link to="/login" className="link">Log in</Link>
+                            Already have an account?&nbsp;
+                            <Link to="/login" 
+                                className="link"
+                            >
+                                Log in
+                            </Link>
                         </Typography>
                     </Box>
                 </Container>

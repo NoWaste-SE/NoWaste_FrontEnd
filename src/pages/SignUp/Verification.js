@@ -5,6 +5,7 @@ import './Login-Signup.css'
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Alert } from "@mui/material";
+import { CancelButton } from "../../components/CustomButtons/CustomButtons";
 
 const theme = createTheme({
     palette: {
@@ -30,6 +31,11 @@ const theme = createTheme({
 export default function Verification(){
     const [code, setCode] = useState('');
     const [codeError, setCodeError] = useState(false);
+    const [token, setToken] = useState('');
+    const [refresh_token, setRefresh_token] = useState('');
+    const [id, setId] = useState('');
+    const [role, setRole] = useState('');
+    const [list_of_favorites_res, setList_of_favorites_res] = useState('');
     const [email, setEmail] = useState([]);
     const [validInputs, setValidInputs] = useState(false);
     const [open, setOpen] = useState(null);
@@ -49,6 +55,15 @@ export default function Verification(){
         let isValid = !codeError;
         setValidInputs(isValid);
     }, [code]);
+
+    useEffect(() => {
+        localStorage.setItem('id', JSON.stringify(id));
+        localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
+        localStorage.setItem('list_of_favorites_res', JSON.stringify(list_of_favorites_res));
+        localStorage.setItem('role', JSON.stringify(role));
+    }, [id, token, refresh_token, list_of_favorites_res, role]);
+    
 
     function setHeight() {
         const box = document.querySelector('.box');
@@ -101,12 +116,20 @@ export default function Verification(){
             role: JSON.parse(localStorage.getItem("role")),
             password: JSON.parse(localStorage.getItem("password"))
         };
-        axios.post("http://188.121.124.63/user/verify-email/", 
+        axios.post("http://188.121.124.63:8000/user/verify-email/", 
                     userData, 
                     {headers:{"Content-Type" : "application/json"}}
         )
-        .then(() => {
-            history.push("/homepage-customer");
+        .then((response) => {
+            setToken(response.data.access_token);
+            setRefresh_token(response.data.refresh_token);
+            setId(response.data.id);
+            setList_of_favorites_res(response.data.list_of_favorites_res);
+            setRole(response.data.role);
+            if (response.data.role === "customer")
+                history.push("/homepage-customer");
+            else
+                history.push("/homepage-restaurant");
         })
         .catch((error) => {
             if (error.response) {
@@ -192,7 +215,15 @@ export default function Verification(){
                                     ),
                                 }}
                             />
-                            <Button 
+                            <CancelButton
+                                variant={"contained"}
+                                type={"submit"}
+                                disabled={!validInputs}
+                                onClick={handleSubmit}
+                                title={"Verify code"}
+                                customWidth={"70%"}
+                            />
+                            {/* <Button 
                                 variant="contained" 
                                 type="submit" 
                                 color="primary"
@@ -203,7 +234,7 @@ export default function Verification(){
                                 style={{ marginTop: '-5px'}}
                             >
                                 Verify code
-                            </Button>
+                            </Button> */}
                         </form>
                     </Box>
                 </Container>

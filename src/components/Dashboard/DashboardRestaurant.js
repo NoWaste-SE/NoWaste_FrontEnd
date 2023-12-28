@@ -82,16 +82,17 @@ export default function DashboardRestaurant(){
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/${id}/orderview/`,
+            `http://188.121.124.63:8000/restaurant/${id}/orderview/`,
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                // 'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token.slice(1,-1)
             }}
         )
         .then((response) => {
             setOrderHistory(response.data);
+            console.log(response.data);
             setLoading(false);
         })
         .catch((error) => {
@@ -176,7 +177,7 @@ export default function DashboardRestaurant(){
             status:"Cancled"
         };
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
             userData,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -200,7 +201,7 @@ export default function DashboardRestaurant(){
             status:"InProgress"
         }
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
             userData,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -221,7 +222,7 @@ export default function DashboardRestaurant(){
 
     const handleClickOnDownloadExel = () => {
         axios.get(
-            `http://188.121.124.63/restaurant/excel/manager/${id}/order-history`,
+            `http://188.121.124.63:8000/restaurant/excel/manager/${id}/order-history`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",

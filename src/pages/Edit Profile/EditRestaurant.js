@@ -24,6 +24,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import PulseLoader from "react-spinners/PulseLoader";
+import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
+import { CustomEditFood } from "../../components/Custom Edit Food/CustomEditFood";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const style = {
     position: "absolute",
@@ -179,7 +183,7 @@ function EditRestaurant(props){
             setCroppedImage(croppedImage);
             setUpdate({...update, restaurant_image: croppedImage});
         } catch (e) {
-          console.error(e);
+            console.error(e);
         }
     }, [croppedAreaPixels]);
 
@@ -189,7 +193,6 @@ function EditRestaurant(props){
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
-        setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         document.getElementById("photoInput").value = null;
@@ -271,7 +274,7 @@ function EditRestaurant(props){
     const handleOpenMenu = () => {
         setOpenMenu(!openMenu);
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -287,7 +290,7 @@ function EditRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/all-countries/` , 
+            `http://188.121.124.63:8000/user/all-countries/` , 
             {headers :{
                 'Content-Type' : 'application/json'
             }}
@@ -301,7 +304,7 @@ function EditRestaurant(props){
     //geting the lt and lng of map
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/${idR}/lat_long` , 
+            `http://188.121.124.63:8000/restaurant/${idR}/lat_long` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -322,7 +325,7 @@ function EditRestaurant(props){
             name: country
         };
         axios.post(
-            "http://188.121.124.63/user/cities-of-country/", 
+            "http://188.121.124.63:8000/user/cities-of-country/", 
             userData, 
             {headers:{
                 "Content-Type" : "application/json"
@@ -362,15 +365,13 @@ function EditRestaurant(props){
         setDiscount(data.discount * 100);
         setDescription(data.description);
         const arr = data?.address?data?.address.split(","):[];
-        setCountry(arr[2] || '');
+        setCountry(arr[0] || '');
         setCity(arr[1] || '');
-        setAddress(arr[0] || '');
+        setAddress(arr[2] || '');
     }, [data]);
 
     useEffect(() => {
-        const temp = address + ',' + city + ',' + country;
-        console.log("city is : ");
-        console.log(city);
+        const temp = country + ',' + city + ',' + address;
         console.log(temp);
         setUpdate({...update, address : temp})
     }, [country, city, address]);
@@ -493,7 +494,7 @@ function EditRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -502,7 +503,9 @@ function EditRestaurant(props){
             }}
         )
         .then((response) => {
+            console.log(response.data);
             setData(response.data);
+            setCroppedImage(response.data.restaurant_image);
             setLoading(false);
         })
         .catch((error) => {
@@ -516,7 +519,7 @@ function EditRestaurant(props){
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/`, update,
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/`, update,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -545,7 +548,7 @@ function EditRestaurant(props){
 
     const handleDeleteRestaurant = () => {
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/`
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/`
         )
         .then(() => {
             history.push("/homepage-restaurant");
@@ -555,7 +558,7 @@ function EditRestaurant(props){
 
     const handleDelete = (res) => {
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -577,7 +580,7 @@ function EditRestaurant(props){
         setIdFood(e);
         setOpenEdit(!openEdit);
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${e}/`,
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${e}/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -606,7 +609,7 @@ function EditRestaurant(props){
         };
 
         axios.put(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
             editData,
             {headers: {
                 'Content-Type' : 'application/json',
@@ -638,7 +641,7 @@ function EditRestaurant(props){
         };
 
         axios.post(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/`, 
             userData, 
             {headers:{
                 "Content-Type" : "application/json", 
@@ -663,6 +666,14 @@ function EditRestaurant(props){
                 setAlertSeverity("error");
             }
         });
+    };
+
+    const handlepic1delete = () =>{
+        setFoodPicture(null);
+    };
+
+    const handlepic2delete = () =>{
+        setFoodPicture2(null);
     };
 
     const handleOpenAdd = (e) => {
@@ -730,25 +741,9 @@ function EditRestaurant(props){
                                     >
                                         {firstChar}
                                     </Avatar>
-                                    <Typography 
-                                        className="text-above-upload"
-                                    >
-                                        JPG or PNG no larger than 5 MB
-                                    </Typography>
-                                    {open && 
-                                        <Alert 
-                                            severity="error" 
-                                            open={open} 
-                                            onClose={handleClose} 
-                                            className="image-alert" 
-                                            variant="outlined" 
-                                        >
-                                            File size is too large.
-                                        </Alert>
-                                    } 
                                     <input
                                         accept="image/*"
-                                        id="profile-image-input-restaurant"
+                                        id="photoInput"
                                         type="file"
                                         hidden      
                                         MAX_FILE_SIZE={MAX_FILE_SIZE}   
@@ -762,15 +757,12 @@ function EditRestaurant(props){
                                         }}                   
                                     />
                                     <label 
-                                        htmlFor="profile-image-input-restaurant" 
+                                        htmlFor="photoInput" 
                                         className="input-label"
                                     >
-                                        <Button 
-                                            className="upload-button" 
-                                            component="span"
-                                        >
-                                            Upload new image
-                                        </Button>
+                                        <UploadButton
+                                            title={"Uplaod new image"}
+                                        />
                                     </label>
                                 </Box>
                             </Grid>
@@ -810,22 +802,18 @@ function EditRestaurant(props){
                                     <div
                                         className="crop-buttons"
                                     >
-                                        <Button
-                                            onClick={showCroppedImage}
-                                            variant="contained"
-                                            className="edit-button crop"
-                                            id="save"
-                                        >
-                                            Apply
-                                        </Button>
-                                        <Button
+                                        <CancelButton
                                             onClick={onClose}
-                                            variant="contained"
-                                            className="edit-button crop"
-                                            id="discard"
-                                        >
-                                            Discard
-                                        </Button>
+                                            variant={"contained"}
+                                            title={"Discard"}
+                                            customWidth={"auto"}
+                                        />
+                                        <SubmitButton
+                                            onClick={showCroppedImage}
+                                            variant={"contained"}
+                                            title={"Apply cutting"}
+                                            customWidth={"auto"}
+                                        />
                                     </div>
                                 </Box>
                             </Modal>
@@ -1030,17 +1018,17 @@ function EditRestaurant(props){
                                             onChange={handleDescription}
                                             InputLabelProps={{ shrink: true }}  
                                         />
-                                        {openMenu && 
-                                            <Button 
-                                                color="secondary"
+                                        {openMenu &&
+                                            <SubmitButton
+                                                variant={"contained"}
+                                                type={"submit"}
                                                 onClick={handleOpenMenu}
-                                                className="showmenu-button edit-button"
-                                            >
-                                                Show Menu
-                                            </Button>
+                                                title={"Show menu"}
+                                                customWidth={"auto"}
+                                            />
                                         }
                                         {!openMenu && 
-                                            <div>
+                                            <div style={{width:'100%'}}>
                                                 <Grid container spacing={1}
                                                     className="menu" 
                                                 >
@@ -1066,71 +1054,71 @@ function EditRestaurant(props){
                                                     classes={{ paper: classes.dialogRoot }} 
                                                     onClose={handleOpenAdd}
                                                 >
-                                                    <DialogTitle 
-                                                        className="edit-title"
+                                                    <Typography 
+                                                        className="edit-add-food-title"
                                                     >
                                                         Add Food
-                                                    </DialogTitle>
-                                                    <Grid container spacing={2}>
+                                                    </Typography>
+                                                    <Grid container spacing={0}>
                                                         <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                            <Avatar
-                                                            className="food-avatar"
-                                                            style={{backgroundColor: color}}
-                                                            src={foodPicture}
-                                                            >
-                                                                F
-                                                            </Avatar>
-                                                            <input
-                                                                accept="image/*"
-                                                                id="food-image-input"
-                                                                type="file"
-                                                                onChange={handleFoodPicture}
-                                                                hidden      
-                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                            />
-                                                            <label 
-                                                                htmlFor="food-image-input" 
-                                                                className="food-image-button"
-                                                            >
-                                                                <Button 
-                                                                    className="upload-button" 
-                                                                    component="span"
+                                                            <div class="upload-box" style={{ backgroundImage: `url('${foodPicture}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                                                                <input
+                                                                    accept="image/*"
+                                                                    id="food-image-input"
+                                                                    type="file"
+                                                                    onChange={handleFoodPicture}
+                                                                    hidden      
+                                                                    MAX_FILE_SIZE={MAX_FILE_SIZE}   
+                                                                />
+                                                                <label 
+                                                                    htmlFor="food-image-input" 
                                                                 >
-                                                                    Upload the first food image
-                                                                </Button>
-                                                            </label>
+                                                                        <AddCircleIcon className="add-circle-icon"/>
+                                                                        <Typography>Upload First Image</Typography>
+                                                                </label>
+                                                                {foodPicture && (
+                                                                    <IconButton
+                                                                        className="delete-image"
+                                                                        style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                        onClick={handlepic1delete}
+                                                                        disabled={!foodPicture || foodPicture2}                
+                                                                    >
+                                                                        <DeleteIcon/>
+                                                                    </IconButton>
+                                                                )}
+                                                            </div>
                                                         </Grid>
                                                         <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                            
-                                                            <Avatar
-                                                            className="food-avatar"
-                                                            style={{backgroundColor: color}}
-                                                            src={foodPicture2}
-                                                            >
-                                                                F
-                                                            </Avatar>
-                                                            <input
-                                                                accept="image/*"
-                                                                id="food-image-input2"
-                                                                type="file"
-                                                                onChange={handleFoodPicture2}
-                                                                hidden      
-                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                            />
-                                                            <label 
-                                                                htmlFor="food-image-input2" 
-                                                                className="food-image-button"
-                                                            >
-                                                                <Button 
-                                                                    className="upload-button" 
-                                                                    component="span"
-                                                                    disabled={!foodPicture}
+                                                            <div class="upload-box" style={{ backgroundImage: `url('${foodPicture2}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                                                                <input
+                                                                    accept="image/*"
+                                                                    id="food-image-input2"
+                                                                    type="file"
+                                                                    onChange={handleFoodPicture2}
+                                                                    hidden      
+                                                                    MAX_FILE_SIZE={MAX_FILE_SIZE} 
+                                                                    disabled={!foodPicture} 
+                                                                />
+                                                                <label 
+                                                                    htmlFor="food-image-input2" 
+                                                                    style={{ cursor: !foodPicture ? 'auto' : 'pointer' }}
+                                                                    title={!foodPicture ? 'Upload the first image to enable this option.' : ''}              
                                                                 >
-                                                                    Upload the second food image
-                                                                </Button>
-                                                            </label>
+                                                                    <AddCircleIcon className="add-circle-icon"/>
+                                                                    <Typography>Upload Second Image</Typography>
+                                                                </label>
+                                                                {foodPicture2 && (
+                                                                    <IconButton
+                                                                        className="delete-image"
+                                                                        style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                        onClick={handlepic2delete}
+                                                                        disabled={!foodPicture || !foodPicture2}
+                                                                    >
+                                                                        <DeleteIcon/>
+                                                                    </IconButton>
+                                                                )}
+                                                            </div>
                                                         </Grid>
-
                                                     </Grid>
                                                     <TextField
                                                         label="Name"
@@ -1212,83 +1200,36 @@ function EditRestaurant(props){
                                                         className="food-button-grid"
                                                     >
                                                         <Grid item>
-                                                            <Button 
-                                                                className="edit-button" 
-                                                                id="discard"
-                                                                variant="contained"
+                                                            <CancelButton
+                                                                variant={"contained"}
+                                                                type={"submit"}
                                                                 onClick={handleOpenAdd}
-                                                            >
-                                                                Cancel
-                                                            </Button>
+                                                                title={"Cancel"}
+                                                            />
                                                         </Grid>
                                                         <Grid item lg={2} md={2} sm={2}>
-                                                            <Button 
-                                                                className="edit-button" 
-                                                                id="save" 
-                                                                variant="contained" 
+                                                            <SubmitButton
+                                                                variant={"contained"}
+                                                                type={"submit"}
                                                                 onClick={hanldeAddNewFood}
-                                                            >
-                                                                Add
-                                                            </Button>
+                                                                title={"Add"}
+                                                                customWidth={"auto"}
+                                                            />
                                                         </Grid>
                                                     </Grid>
                                                 </StyledDialog>
                                                 <Box 
                                                     className="menu-box"
                                                 >
-                                                    {menu && menu.map((res, index) => (
+                                                    {menu && menu.map((food, index) => (
                                                         <div>
-                                                            <Box 
-                                                                className="food-box"
-                                                            >
-                                                                <Grid container spacing={4}>
-                                                                    <Grid item lg={3} md={3} sm={3} >
-                                                                        <div
-                                                                            className="food-image-container"
-                                                                            onMouseEnter={() => setShowSecondImage(res.id)}
-                                                                            onMouseLeave={() => setShowSecondImage(null)}
-                                                                        >
-                                                                            <img
-                                                                                src={showSecondImage === res.id && res.food_pic2!=null ? res.food_pic2 : res.food_pic}
-                                                                                className="food-image"
-                                                                            />
-                                                                        </div>
-                                                                    </Grid>
-                                                                    <Grid item lg={5} md={5} sm={4} className='edit-food-grid'>
-                                                                        <Typography 
-                                                                            className="food-name"
-                                                                        >
-                                                                            {res.name}
-                                                                        </Typography>
-                                                                        <Typography 
-                                                                            className="food-ingredient"
-                                                                        >
-                                                                            {res.ingredients}
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid item lg={2} md={2} sm={2} className='edit-food-grid'>
-                                                                        <Typography 
-                                                                            className="food-price-menu"
-                                                                        >
-                                                                            {res.price}$
-                                                                        </Typography>
-                                                                        <Typography 
-                                                                            className="food-remain-number"
-                                                                        >
-                                                                            {res.remainder} remain
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid item lg={2} md={2} sm={3} className='edit-food-grid'>
-                                                                        <Button 
-                                                                            className="food-edit" 
-                                                                            id="food-edit-button" 
-                                                                            onClick={() => handleOpenEdit(res.id)}
-                                                                        >
-                                                                            Edit
-                                                                        </Button>
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </Box>
+                                                            <CustomEditFood
+                                                                food={food}
+                                                                secondImage={showSecondImage}
+                                                                onMouseEnter={() => setShowSecondImage(food.id)}
+                                                                onMouseLeave={() => setShowSecondImage(null)}
+                                                                onClickEdit={() => handleOpenEdit(food.id)}
+                                                            />
                                                             <StyledDialog 
                                                                 open={openEdit} 
                                                                 classes={{ paper: classes.dialogRoot }} 
@@ -1299,69 +1240,74 @@ function EditRestaurant(props){
                                                                 >
                                                                     Edit Food
                                                                 </DialogTitle>
-                                                                <Grid container spacing={2}>
+                                                                <Grid container spacing={0}>
                                                                     <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                                        <Avatar
-                                                                        className="food-avatar"
-                                                                        style={{backgroundColor: color}}
-                                                                        src={foodPicture}
-                                                                        >
-                                                                            F
-                                                                        </Avatar>
-                                                                        <input
-                                                                            accept="image/*"
-                                                                            id="edit-food-image-input"
-                                                                            type="file"
-                                                                            onChange={handleFoodPicture}
-                                                                            hidden      
-                                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                                        />
-                                                                        <label 
-                                                                            htmlFor="edit-food-image-input" 
-                                                                            className="food-image-button"
-                                                                        >
-                                                                            <Button 
-                                                                                className="upload-button" 
-                                                                                component="span"
+                                                                        <div class="upload-box" style={{ backgroundImage: `url('${foodPicture}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                                                                            <input
+                                                                                accept="image/*"
+                                                                                id="edit-food-image-input"
+                                                                                type="file"
+                                                                                onChange={handleFoodPicture}
+                                                                                hidden      
+                                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}   
+                                                                            />
+                                                                            <label 
+                                                                                htmlFor="edit-food-image-input" 
                                                                             >
-                                                                                Upload the first food image
-                                                                            </Button>
-                                                                        </label>
+                                                                                <AddCircleIcon className="add-circle-icon"/>
+                                                                                <Typography>Upload First Image</Typography>
+                                                                            </label>
+                                                                            { (foodPicture &&
+                                                                                !foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                && !foodPicture2
+                                                                                ) && (
+                                                                                <IconButton
+                                                                                    className="delete-image"
+                                                                                    style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                                    onClick={handlepic1delete}
+                                                                                    disabled={!foodPicture || foodPicture2}                
+                                                                                >
+                                                                                    <DeleteIcon/>
+                                                                                </IconButton>
+                                                                            )}
+                                                                        </div>
                                                                     </Grid>
                                                                     <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                                        
-                                                                        <Avatar
-                                                                        className="food-avatar"
-                                                                        style={{backgroundColor: color}}
-                                                                        src={foodPicture2}
-                                                                        >
-                                                                            F
-                                                                        </Avatar>
-                                                                        <input
-                                                                            accept="image/*"
-                                                                            id="edit-food-image-input2"
-                                                                            type="file"
-                                                                            onChange={handleFoodPicture2}
-                                                                            hidden      
-                                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                                        />
-                                                                        <label 
-                                                                            htmlFor="edit-food-image-input2" 
-                                                                            className="food-image-button"
-                                                                        >
-                                                                            <Button 
-                                                                                className="upload-button" 
-                                                                                component="span"
-                                                                                disabled={foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')}
+                                                                        <div class="upload-box" style={{ backgroundImage: `url('${foodPicture2}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                                                                            <input
+                                                                                accept="image/*"
+                                                                                id="edit-food-image-input2"
+                                                                                type="file"
+                                                                                onChange={handleFoodPicture2}
+                                                                                hidden      
+                                                                                MAX_FILE_SIZE={MAX_FILE_SIZE} 
+                                                                                disabled={!foodPicture ||
+                                                                                    foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                }
+                                                                            />
+                                                                            <label 
+                                                                                htmlFor="edit-food-image-input2" 
+                                                                                style={{ cursor: !foodPicture ||
+                                                                                    foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                    ? 'auto' : 'pointer' }}
+                                                                                title={!foodPicture ? 'Upload the first image to enable this option.' : ''}              
                                                                             >
-                                                                                Upload the second food image
-                                                                            </Button>
-                                                                        </label>
+                                                                                <AddCircleIcon className="add-circle-icon"/>
+                                                                                <Typography>Upload Second Image</Typography>
+                                                                            </label>
+                                                                            {foodPicture2 && (
+                                                                                <IconButton
+                                                                                    className="delete-image"
+                                                                                    style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                                    onClick={handlepic2delete}
+                                                                                    disabled={!foodPicture || !foodPicture2}
+                                                                                >
+                                                                                    <DeleteIcon/>
+                                                                                </IconButton>
+                                                                            )}
+                                                                        </div>
                                                                     </Grid>
-
                                                                 </Grid>
-                                                                
-                                                                
                                                                 <TextField
                                                                     label="Name"
                                                                     variant="outlined"
@@ -1440,35 +1386,30 @@ function EditRestaurant(props){
                                                                     className="food-button-grid"
                                                                 >
                                                                     <Grid item>
-                                                                        <Button 
-                                                                            className="edit-button" 
-                                                                            id="discard" 
-                                                                            variant="contained"
+                                                                        <CancelButton 
+                                                                            variant={"contained"} 
+                                                                            type={"submit"}
                                                                             onClick={handleDelete}
-                                                                        >
-                                                                            Delete
-                                                                        </Button>
+                                                                            title={"delete"}
+                                                                        />
                                                                     </Grid>
                                                                     <Grid item container lg={5} md={5} sm={8}>
-                                                                        <Grid item >
-                                                                            <Button 
-                                                                                className="edit-button" 
-                                                                                id="discard"
-                                                                                variant="contained"
+                                                                        <Grid item>
+                                                                            <CancelButton 
+                                                                                variant={"contained"} 
+                                                                                type={"submit"}
                                                                                 onClick={handleOpenEdit}
-                                                                            >
-                                                                                Cancel
-                                                                            </Button>
+                                                                                title={"Cancel"}
+                                                                            />
                                                                         </Grid>
                                                                         <Grid item>
-                                                                            <Button 
-                                                                                className="edit-button" 
-                                                                                id="save"
-                                                                                variant="contained" 
+                                                                            <SubmitButton 
+                                                                                variant={"contained"}
+                                                                                type={"submit"}
                                                                                 onClick={() => handleEditThisFood()}
-                                                                            >
-                                                                                Apply
-                                                                            </Button>
+                                                                                title={"Apply"}
+                                                                                customWidth={"auto"}
+                                                                            />
                                                                         </Grid>
                                                                     </Grid>
                                                                 </Grid>
@@ -1483,39 +1424,34 @@ function EditRestaurant(props){
                                         wrap="nowrap"
                                     >
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="discard"
-                                                variant="contained" 
+                                            <CancelButton
+                                                variant={"contained"}
+                                                type={"submit"}
                                                 onClick={handleDeleteRestaurant}
-                                            >
-                                                Delete restaurant
-                                            </Button>              
-                                                        
+                                                title={"Delete restaurant"}
+                                            />
                                         </Grid>  
                                         <Grid item container lg={5} md={6} sm={12} 
                                             justifyContent="flex-end"
+                                            alignItems="center"
                                         >
-                                            <Grid item >
-                                                <Button 
-                                                    className="edit-button" 
-                                                    id="discard"
-                                                    variant="contained" 
+                                            <Grid item>
+                                                <CancelButton
+                                                    variant={"contained"}
+                                                    type={"submit"}
                                                     onClick={handleDiscard}
-                                                >
-                                                    Discard
-                                                </Button>
+                                                    title={"Discard"}
+                                                />
                                             </Grid>
                                             <Grid item>
-                                                <Button 
-                                                    className="edit-button" 
-                                                    id="save"
-                                                    variant="contained" 
+                                                <SubmitButton
+                                                    variant={"contained"}
+                                                    type={"submit"}
                                                     onClick={handleUpdate}
                                                     disabled={!validInputs}
-                                                >
-                                                    Save changes
-                                                </Button>
+                                                    title={"Save changes"}
+                                                    customWidth={"auto"}
+                                                />
                                             </Grid>
                                         </Grid>
                                     </Grid>

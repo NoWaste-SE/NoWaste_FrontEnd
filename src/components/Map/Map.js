@@ -63,8 +63,8 @@ function Map(props) {
           };
 
         const url = type === "customer"
-            ? `http://188.121.124.63/user/${id}/lat_long/`
-            : `http://188.121.124.63/restaurant/${id}/lat_long`;
+            ? `http://188.121.124.63:8000/user/${id}/lat_long/`
+            : `http://188.121.124.63:8000/restaurant/${id}/lat_long`;
         if(type === "customer") {
             axios.patch(
                 url, 
@@ -73,7 +73,7 @@ function Map(props) {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'GET,PATCH',
-                    'Authorization': 'Token ' + token.slice(1, -1)
+                    'Authorization': 'Bearer ' + token.slice(1, -1)
                 }}
             )
             .then((response) => {

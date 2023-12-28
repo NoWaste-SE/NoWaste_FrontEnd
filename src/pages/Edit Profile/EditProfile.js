@@ -24,6 +24,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import PulseLoader from "react-spinners/PulseLoader";
+import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
 
 const style = {
     position: "absolute",
@@ -118,27 +119,26 @@ function Edit(props){
 
     const showCroppedImage = useCallback(async () => {
         try {
-          setOpenImg(false);
-          const croppedImage = await getCroppedImg(
-            URL.createObjectURL(img),
-            croppedAreaPixels,
-            0
+            setOpenImg(false);
+            const croppedImage = await getCroppedImg(
+                URL.createObjectURL(img),
+                croppedAreaPixels,
+                0
         );
         setCroppedImage(croppedImage);
         setUpdate({...update, customer_img: croppedImage});
-        console.log(croppedImage);
         } catch (e) {
-          console.error(e);
+            console.error(e);
         }
-      }, [croppedAreaPixels]);
+    }, [croppedAreaPixels]);
 
-      const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
-      }, []);
+    }, []);
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
-        setCroppedImage(null);
+        // setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         const photoInput = document.getElementById("photoInput");
@@ -261,7 +261,7 @@ function Edit(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/customer_profile/${id}/` , 
+            `http://188.121.124.63:8000/user/customer_profile/${id}/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -270,8 +270,9 @@ function Edit(props){
             }}
         )
         .then((response) => {
-            console.log(response);
+            console.log(response.data);
             setData(response.data);
+            setCroppedImage(response.data.customer_img);
             setLoading(false);
         })
         .catch((error) => {
@@ -282,7 +283,7 @@ function Edit(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/all-countries/` , 
+            `http://188.121.124.63:8000/user/all-countries/` , 
             {headers :{
                 'Content-Type' : 'application/json'
             }}
@@ -297,7 +298,7 @@ function Edit(props){
     //getting the lt and lng of map
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/${id}/lat_long/`, 
+            `http://188.121.124.63:8000/user/${id}/lat_long/`, 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -318,7 +319,7 @@ function Edit(props){
             name: country
         };
         axios.post(
-            "http://188.121.124.63/user/cities-of-country/", 
+            "http://188.121.124.63:8000/user/cities-of-country/", 
             userData, 
             {headers:{"Content-Type" : "application/json"}}
         )
@@ -351,23 +352,23 @@ function Edit(props){
         setOpen(false);
     };
 
-    const handleProfileImg = (e) => {
-        const file = e.target.files[0];
-        const fileSize = file.size;
-        if(fileSize > MAX_FILE_SIZE){
-            setOpen(true);
-            e.target.value = null;
-            setProfileImg(null);
-            return;
-        } else{
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                setProfileImg(reader.result);
-                setUpdate({...update, customer_img: reader.result});
-            };
-        }
-    };
+    // const handleProfileImg = (e) => {
+    //     const file = e.target.files[0];
+    //     const fileSize = file.size;
+    //     if(fileSize > MAX_FILE_SIZE){
+    //         setOpen(true);
+    //         e.target.value = null;
+    //         setProfileImg(null);
+    //         return;
+    //     } else{
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file);
+    //         reader.onloadend = () => {
+    //             setProfileImg(reader.result);
+    //             setUpdate({...update, customer_img: reader.result});
+    //         };
+    //     }
+    // };
     
     useEffect(() => {
         let valid = !fullnameError && !newPasswordError && newPasswordMatch
@@ -399,34 +400,36 @@ function Edit(props){
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        axios.patch(
-            `http://188.121.124.63/user/customer_profile/${id}/`, update,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then(()=> {
-            setAlertMessage("Profile updated successfully!");
-            setAlertSeverity("success");
-        })
-        .catch((error) => {
-            if (error.request) {
-                setAlertMessage("Network error! Please try again later.");
-                setAlertSeverity("error");
-            } else {
-                setAlertMessage("A problem has been occured! Please try again later.");
-                setAlertSeverity("error");
-            }
-        });
-
+        if(update) {
+            axios.patch(
+                `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
+                {headers: {
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "GET,PATCH",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                }}
+            )
+            .then(()=> {
+                setAlertMessage("Profile updated successfully!");
+                setAlertSeverity("success");
+            })
+            .catch((error) => {
+                if (error.request) {
+                    setAlertMessage("Network error! Please try again later.");
+                    setAlertSeverity("error");
+                } else {
+                    setAlertMessage("A problem has been occured! Please try again later.");
+                    setAlertSeverity("error");
+                }
+            });
+        
+        }
         if(newPassword && password && confirmPassword)
         {
             e.preventDefault();
             axios.patch(
-                `http://188.121.124.63/user/change_password/${id}/`, 
+                `http://188.121.124.63:8000/user/change_password/${id}/`, 
                 {"old_password": password, "password": newPassword, "password2": confirmPassword},
                 {headers: {
                     'Content-Type' : 'application/json',
@@ -435,13 +438,16 @@ function Edit(props){
                     'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
             )
-            .then(()=> {
-                window.location.reload(false);
+            .then((response)=> {
+                console.log(response);
+                // window.location.reload(false);
             })
             .catch((error) => {
                 if (error.response) {
+                    console.log(error.response)
                     setOpenWrongPass(true);
                 } else if (error.request){
+                    console.log(error.request);
                     setOpenNetwork(true);
                 }
             });
@@ -502,25 +508,9 @@ function Edit(props){
                                 >
                                     {firstChar}
                                 </Avatar>
-                                <Typography 
-                                    className="text-above-upload"
-                                >
-                                    JPG or PNG no larger than 5 MB
-                                </Typography>
-                                {openImg && 
-                                    <Alert 
-                                        className="image-alert" 
-                                        variant="outlined" 
-                                        severity="error" 
-                                        open={openImg} 
-                                        onClose={handleCloseImg} 
-                                    >
-                                        File size is too large.
-                                    </Alert>
-                                }
                                 <input
                                     accept="image/*"
-                                    id="contained-button-file-customer"
+                                    id="photoInput"
                                     type="file"
                                     hidden      
                                     MAX_FILE_SIZE={MAX_FILE_SIZE}  
@@ -534,15 +524,12 @@ function Edit(props){
                                     }}                 
                                 />
                                 <label 
-                                    htmlFor="contained-button-file-customer" 
+                                    htmlFor="photoInput" 
                                     className="input-label"
                                 >
-                                    <Button 
-                                        className="upload-button" 
-                                        component="span"
-                                    >
-                                        Upload new image
-                                    </Button>
+                                    <UploadButton
+                                        title={"Upload new image"}
+                                    />
                                 </label>
                             </Box>
                         </Grid>
@@ -580,24 +567,20 @@ function Edit(props){
                                     id="bottom"
                                 />
                                 <div
-                                    className="crop-buttons"
+                                    className='crop-buttons'
                                 >
-                                    <Button
-                                        onClick={showCroppedImage}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="save"
-                                    >
-                                        Apply 
-                                    </Button>
-                                    <Button
+                                    <CancelButton
                                         onClick={onClose}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="discard"
-                                    >
-                                        Discard
-                                    </Button>
+                                        variant={"contained"}
+                                        title={"Discard"}
+                                        customWidth={"auto"}
+                                    />
+                                    <SubmitButton
+                                        onClick={showCroppedImage}
+                                        variant={"contained"}
+                                        title={"Apply cutting"}
+                                        customWidth={"auto"}
+                                    />
                                 </div>
                             </Box>
                         </Modal>
@@ -614,7 +597,7 @@ function Edit(props){
                                     Account Details 
                                 </Typography>
                                 <Grid container spacing={2}>
-                                    {openNetwork && 
+                                    {/* {openNetwork && 
                                         <Grid item lg={12} sm={12} md={12}>
                                             {openNetwork && 
                                                 <Alert 
@@ -626,7 +609,7 @@ function Edit(props){
                                                 </Alert>
                                             }
                                         </Grid> 
-                                    }
+                                    } */}
                                     {openWrongPass && 
                                         <Grid item lg={12} sm={12} md={12}>
                                             {openWrongPass && 
@@ -965,40 +948,38 @@ function Edit(props){
                                 <Grid container spacing={2} 
                                     className="edit-button-grid" 
                                     wrap="nowrap"
+                                    alignItems="center"
                                 >
                                     <Grid item>
-                                        <Button 
-                                            className="edit-button" 
-                                            id="change-pass"
-                                            variant="contained" 
-                                            onClick={() => setShow(prev => !prev)}
-                                        >
-                                            Change password 
-                                        </Button>
+                                        <SubmitButton
+                                            variant={"contained"}
+                                            type={"submit"}
+                                            onClick={()=>setShow(prev => !prev)}
+                                            title={"Change password"}
+                                            customWidth={"auto"}
+                                        />
                                     </Grid>
-                                    <Grid item container lg={5} md={6} sm={12}
+                                    <Grid item container lg={6} md={6} sm={12}
                                         justifyContent="flex-end"
+                                        alignItems="center"
                                     >
-                                        <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="discard"
-                                                variant="contained" 
+                                        <Grid item > 
+                                            <CancelButton 
+                                                variant={"contained"} 
+                                                type={"submit"}
                                                 onClick={handleDiscard}
-                                            >
-                                                Discard
-                                            </Button>
+                                                title={"Discard"}
+                                            />
                                         </Grid>
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button"  
-                                                id="save"
-                                                variant="contained" 
-                                                onClick={handleUpdate}
+                                            <SubmitButton 
+                                                variant={"contained"}
+                                                type={"submit"}
                                                 disabled={!validInputs}
-                                            >
-                                                Save changes
-                                            </Button>
+                                                onClick={handleUpdate}
+                                                title={"Save changes"}
+                                                customWidth={"auto"}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </Grid>

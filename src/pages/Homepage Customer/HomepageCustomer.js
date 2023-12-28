@@ -14,6 +14,7 @@ import RestaurantCard from '../../components/Restaurant card/RestaurantCard';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import AddPagination from '../../components/Pagination/Pagination'
 import PulseLoader from "react-spinners/PulseLoader";
+import { SubmitButton } from '../../components/CustomButtons/CustomButtons';
 
 const theme = createTheme({
     palette: {
@@ -94,11 +95,12 @@ const HomepageCustomer = () => {
     const [mysearch, setMySearch] = useState('');
     const _DATA_FILD = AddPagination(fields, PER_PAGE);
     const [loading, setLoading] = useState(false);
+    const [recentres, setRecentRes] = useState([]);
+    const [showrecent, setShowRecent] = useState(false);
 
     useEffect(()=>{
-        console.log(token);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -116,6 +118,34 @@ const HomepageCustomer = () => {
         });
     },[]);
 
+    useEffect(()=>{
+        axios.get(
+            `http://188.121.124.63:8000/restaurant/recently-viewed/`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "PUT,PATCH",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then((response) => {
+            setRecentRes(response.data);
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.log(error.response);
+            setLoading(true);
+        });
+    },[]);
+
+    useEffect(() => {
+        if (recentres.length >= 1) {
+          setShowRecent(true);
+        } else {
+          setShowRecent(false);
+        }
+     }, [recentres]);
+
     const handlePaginationRestaurant = (e, p) => {
         setPage(p);
         _DATA.jump(p);
@@ -129,7 +159,7 @@ const HomepageCustomer = () => {
         if (mysearch) {
             setLoading(true);
             axios.get(
-                `http://188.121.124.63/restaurant/restaurant-search/?search=${mysearch}`,
+                `http://188.121.124.63:8000/restaurant/restaurant-search/?search=${mysearch}`,
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
@@ -148,7 +178,7 @@ const HomepageCustomer = () => {
         } else {
             setLoading(true);
             axios.get(
-                `http://188.121.124.63/restaurant/restaurant-search/`,
+                `http://188.121.124.63:8000/restaurant/restaurant-search/`,
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
@@ -174,7 +204,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?type=${type}&discount__gte=${fromD}&discount__lte=${toD}&rate__lte=${toR}&rate__gte=${fromR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?type=${type}&discount__gte=${fromD}&discount__lte=${toD}&rate__lte=${toR}&rate__gte=${fromR}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -246,7 +276,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-rate&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-rate&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -272,7 +302,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-discount&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-discount&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -291,14 +321,14 @@ const HomepageCustomer = () => {
         });
     };
 
-    const handleClickNewest = () => {      //
+    const handleClickNewest = () => {     
         const fromR = valueR[0].toFixed(1);
         const toR = valueR[1].toFixed(1);
         const fromD = valueD[0] * 0.01;
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=-date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -324,7 +354,7 @@ const HomepageCustomer = () => {
         const toD = valueD[1] * 0.01;
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}`,
+            `http://188.121.124.63:8000/restaurant/restaurant-search/?discount__gte=${fromD}&discount__lte=${toD}&ordering=date_of_establishment&rate__gte=${fromR}&rate__lte=${toR}&type=${type}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -348,7 +378,7 @@ const HomepageCustomer = () => {
         const long = localStorage.getItem("long");
         setLoading(true);
         axios.get(
-            `http://188.121.124.63/restaurant/nearest_restaurant?origins=${lat},${long}`,
+            `http://188.121.124.63:8000/restaurant/nearest_restaurant?origins=${lat},${long}`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -579,12 +609,13 @@ const HomepageCustomer = () => {
                                 Foreign
                             </ToggleButton>
                         </ToggleButtonGroup>
-                        <Button 
-                            className='submit' 
-                            onClick={handleClickApplyFilter} 
-                        >
-                            Apply
-                        </Button>          
+                        <SubmitButton
+                            variant={"contained"}
+                            type={"submit"}
+                            onClick={handleClickApplyFilter}
+                            title={"Apply"}  
+                            customWidth={"90%"}                          
+                        />         
                     </Box>
                 </Grid>
                 <Grid item lg={9} md={9}>
@@ -660,25 +691,82 @@ const HomepageCustomer = () => {
                             </Grid>
                         </Grid>
                     </Grid>
+                    {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="spinner-homepage-customer"
+                        />
+                    ) : (
+                    <>
+                    {showrecent && (
+                        <div>
+                            <Grid container spacing={3}>
+                                <Grid item md={12}>
+                                    <Typography className="recent-title">You've recently viewed:</Typography>
+                                    <Masonry
+                                        breakpointCols={breakpoints}
+                                    > 
+                                        {recentres.length === 0 ? 
+                                            (
+                                                <p>No recent restaurants found.</p>
+
+                                            ) : recentres.length === 1? (
+                                                <div 
+                                                    style={{ width:'100%', marginLeft:"-6%"}}
+                                                >
+                                                <RestaurantCard 
+                                                    name={recentres[0].restaurant.name}
+                                                    rate={recentres[0].restaurant.rate} 
+                                                    discount={recentres[0].restaurant.discount} 
+                                                    id={recentres[0].restaurant.id} 
+                                                    description={recentres[0].restaurant.description} 
+                                                    isSingleResult={true}
+                                                    address={recentres[0].restaurant.address} 
+                                                    restaurant_image={recentres[0].restaurant.restaurant_image}
+                                                    number={recentres[0].restaurant.number}
+                                                />
+                                                </div>
+                                            ) : (
+                                                recentres.map((res, index) => (
+                                                <div 
+                                                    key={index} 
+                                                    style={{ width: index % 3 === 0 ? '100%' : '' }}
+                                                >
+                                                    <RestaurantCard 
+                                                        name={res.restaurant.name} 
+                                                        rate={res.restaurant.rate} 
+                                                        discount={res.restaurant.discount} 
+                                                        id={res.restaurant.id} 
+                                                        number={res.restaurant.number} 
+                                                        address={res.restaurant.address} 
+                                                        restaurant_image={res.restaurant.restaurant_image}
+                                                    />
+                                                </div>
+                                            )))
+                                        }
+                                    </Masonry>
+                                </Grid>
+                            </Grid>
+                            <hr className="recent-divider"/>
+                        </div>
+                    )}
                     <Grid container spacing={3}>
                         <Grid item md={12}>
                             <Masonry
                                 breakpointCols={breakpoints}
                             > 
-                                {loading ? (
-                                    <PulseLoader
-                                    type="bars"
-                                    color="black"
-                                    speedMultiplier={1}
-                                    className="spinner-homepage-customer"
-                                    />
-                                ) : restaurant.length===1 ? 
+                                {restaurant.length===1 ? 
                                     (
                                         <RestaurantCard 
                                             name={restaurant[0].name} 
                                             rate={restaurant[0].rate} 
                                             discount={restaurant[0].discount} 
                                             id={restaurant[0].id} 
+                                            number={restaurant[0].number}
+                                            address={restaurant[0].address}
+                                            restaurant_image={restaurant[0].restaurant_image}
                                             description={restaurant[0].description} 
                                             isSingleResult={true}
                                         />
@@ -707,6 +795,9 @@ const HomepageCustomer = () => {
                                             rate={fields.fields[0].rate} 
                                             discount={fields.fields[0].discount}
                                             id={fields.fields[0].id} 
+                                            number={fields.fields[0].number}
+                                            address={fields.fields[0].address}
+                                            restaurant_image={fields.fields[0].restaurant_image}
                                             description={fields.fields[0].description} 
                                             isSingleResult={true}
                                         />
@@ -730,6 +821,8 @@ const HomepageCustomer = () => {
                             </Masonry>
                         </Grid>
                     </Grid>
+                    </>
+                    )}
                 </Grid>
             <BackToTop/>
             </Grid>

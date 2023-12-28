@@ -54,11 +54,6 @@
     animation: fade-in 1s ease-in-out !important;
 }
 
-.food-image:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s;
-}
-
 .food-h5 {
     width: 1.7rem;
     text-align: center;

@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import "./ShowComments.css";
 import { createTheme } from '@material-ui/core';
 import { Avatar, Grid, ThemeProvider } from '@mui/material';
 import { deepOrange, deepPurple,grey } from '@mui/material/colors';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
-// import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const theme = createTheme({
     palette: {
@@ -35,17 +31,15 @@ const style = {
     p: 4,
 };
 
-export default function ShowComments() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+const ShowComments = (props) => {
     const [comments, setComments] = useState([]); 
-    const {id} = useParams(); 
+    const {id} = props
     const token = localStorage.getItem('token');
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_id/${id}/comments`,
+            `http://188.121.124.63:8000/restaurant/restaurant_id/${id}/comments`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -55,106 +49,80 @@ export default function ShowComments() {
         )
         .then((response) => {
             setComments(response.data);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error.response);
+            setLoading(true);
         });
     },[]);
 
     return (
         <ThemeProvider theme={theme}>
-            <div>
-                <Button 
-                    onClick={handleOpen} 
-                    variant="contained"
-                    id='comment-submit'
-                >
-                    Comments
-                </Button>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    
-                    <Box sx={style} 
-                        className="comment-box"
-                    >
-                        <h2 
-                            className='title-show-comments'
-                        >
-                            Users Comments
-                        </h2>
-
+            <div 
+                className="comment-details-div"
+            >
+                {loading ? (
+                    <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="spinner-shopping-card"
+                    />
+                ) : (
+                    comments ? 
+                        (comments.map((res,index)=>(
+                            <div>
+                                <Stack 
+                                    direction="row" spacing={2} 
+                                >
+                                    <Avatar 
+                                        sx={{ bgcolor: grey[900] }}
+                                        className='comment-avatar'
+                                    >
+                                        {res.writer_username[0]}
+                                    </Avatar>
+                                    <Stack 
+                                        direction="column" spacing={2} 
+                                    >
+                                        <Typography 
+                                            variant="h6" 
+                                            className='comment-stack'
+                                        >
+                                            {res.writer_username}
+                                        </Typography>
+                                        <h8 
+                                            className='comment-date'
+                                        >
+                                            {res.created_at_date}
+                                        </h8>
+                                    </Stack>
+                                </Stack>
+                                <Typography 
+                                    className='comment-text' 
+                                    id="modal-modal-description" 
+                                    sx={{ mt: 2 }}
+                                >
+                                    {res.text}
+                                </Typography>
+                                <hr 
+                                    className='comment-hr'
+                                />
+                            </div>
+                        )))
+                        :(
                         <div 
-                            className="comment-details-div"
+                            className="no-comment-message-container"
                         >
-                            {comments && comments.length > 0 ? (
-                                <div>
-                                    {comments.map((res,index)=>(
-                                        <div>
-                                            <Stack 
-                                                direction="row" spacing={2} 
-                                            >
-                                                <Avatar 
-                                                    sx={{ bgcolor: grey[900] }}
-                                                    className='comment-avatar'
-                                                >
-                                                    {res.writer_username[0]}
-                                                </Avatar>
-                                                <Stack 
-                                                    direction="column" spacing={2} 
-                                                >
-                                                    <Typography 
-                                                        variant="h6" 
-                                                        className='comment-stack'
-                                                    >
-                                                        {res.writer_username}
-                                                    </Typography>
-                                                    <h8 
-                                                        className='comment-date'
-                                                    >
-                                                        {res.created_at_date}
-                                                    </h8>
-                                                </Stack>
-                                            </Stack>
-                                            <Typography 
-                                                className='comment-text' 
-                                                id="modal-modal-description" 
-                                                sx={{ mt: 2 }}
-                                            >
-                                                {res.text}
-                                            </Typography>
-                                            <hr 
-                                                className='comment-hr'
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                                ) :
-                                (
-                                    <div 
-                                        className="no-comment-message-container"
-                                    >
-                                    <h2 
-                                        className="no-comment-message"
-                                    >
-                                        No comment is available.
-                                    </h2>
-                                    </div>
-                                )}
+                            <h2 
+                                className="no-comment-message"
+                            >
+                                No comment is available.
+                            </h2>
                         </div>
-                        <Button 
-                            onClick={handleClose} 
-                            variant="contained"
-                            className='close-comment'
-                        >
-                            Close
-                        </Button>
-                    </Box>             
-                </Modal>
+                        ))}
             </div>
         </ThemeProvider>
     );
 }
+export default ShowComments;

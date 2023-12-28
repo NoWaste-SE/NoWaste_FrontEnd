@@ -38,7 +38,7 @@ const HeaderCustomer = memo(() => {
     const handleClickLogOut = () => {
         localStorage.removeItem("token");
         axios.get(
-            `http://188.121.124.63/user/logout/`,
+            `http://188.121.124.63:8000/user/logout/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -86,7 +86,7 @@ const HeaderCustomer = memo(() => {
             amount: selectedAmount
         };
         axios.post(
-            "http://188.121.124.63/user/charge-wallet/", 
+            "http://188.121.124.63:8000/user/charge-wallet/", 
             userData,
             {headers: {
                 'Content-Type' : 'application/json',
@@ -137,7 +137,7 @@ const HeaderCustomer = memo(() => {
             className={`container ${blurBackground ? 'blur-background' : ''}`}
         >
             <AppBar 
-                sx={{position:"sticky", width:'fixed', padding: '0'}} 
+                sx={{position:"sticky", width:'fixed', padding: '0 !important', zIndex: '0', top: '0'}} 
                 className="header"
             >
                 <Toolbar 
@@ -208,6 +208,7 @@ const HeaderCustomer = memo(() => {
                                         overflow: 'visible',
                                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                                         mt: 1,
+                                        ml: 0.5,
                                         '& .MuiAvatar-root': {
                                             width: 32,
                                             height: 32,
@@ -219,7 +220,7 @@ const HeaderCustomer = memo(() => {
                                             display: 'block',
                                             position: 'absolute',
                                             top: 0,
-                                            right: 12,
+                                            right: 9,
                                             width: 11,
                                             height: 10,
                                             bgcolor: 'background.paper',
