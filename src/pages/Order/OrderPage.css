@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+.spinner-orderpage-whole{
+    color: black !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: auto !important;
+    margin-top: 15% !important;
+    margin-bottom: 15% !important;
+}
+
 .MuiTypography-body1 {
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 600 !important;

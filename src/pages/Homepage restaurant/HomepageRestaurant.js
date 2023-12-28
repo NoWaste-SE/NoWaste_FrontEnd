@@ -247,7 +247,7 @@ function HomepageRestaurant(props){
                 type="bars"
                 color="black"
                 speedMultiplier={1}
-                className="spinner-restaurant-view"
+                className="spinner-homepage-restaurant"
                 />
             ) : (
             <>
