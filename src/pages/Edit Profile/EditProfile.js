@@ -399,8 +399,38 @@ function Edit(props){
     const firstChar = data?.name?data.name.charAt(0) : "UN";
 
     const handleUpdate = (e) => {
-        e.preventDefault();
-        if(update) {
+        if(newPassword && password && confirmPassword)
+        {
+            console.log("HEREEEEEEEEEEEEEE change pass");
+            e.preventDefault();
+            axios.patch(
+                `http://188.121.124.63:8000/user/change_password/${id}/`, 
+                {"old_password": password, "password": newPassword, "password2": confirmPassword},
+                {headers: {
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "PUT,PATCH",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                }}
+            )
+            .then(()=> {
+                console.log("Ahsant");
+                window.location.reload(false);
+            })
+            .catch((error) => {
+                if (error.response) {
+                    setOpenWrongPass(true);
+                } else if (error.request){
+                    setOpenNetwork(true);
+                }
+            });
+        }
+
+        console.log(update);
+
+        if(update)
+        {
+            console.log("HEREEEE field");
             axios.patch(
                 `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
                 {headers: {
@@ -413,45 +443,17 @@ function Edit(props){
             .then(()=> {
                 setAlertMessage("Profile updated successfully!");
                 setAlertSeverity("success");
-            })
-            .catch((error) => {
-                if (error.request) {
-                    setAlertMessage("Network error! Please try again later.");
-                    setAlertSeverity("error");
-                } else {
-                    setAlertMessage("A problem has been occured! Please try again later.");
-                    setAlertSeverity("error");
-                }
-            });
-        
-        }
-        if(newPassword && password && confirmPassword)
-        {
-            e.preventDefault();
-            axios.patch(
-                `http://188.121.124.63:8000/user/change_password/${id}/`, 
-                {"old_password": password, "password": newPassword, "password2": confirmPassword},
-                {headers: {
-                    'Content-Type' : 'application/json',
-                    "Access-Control-Allow-Origin" : "*",
-                    "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
-                }}
-            )
-            .then((response)=> {
-                console.log(response);
-                // window.location.reload(false);
+                window.location.reload(false);
             })
             .catch((error) => {
                 if (error.response) {
-                    console.log(error.response)
                     setOpenWrongPass(true);
                 } else if (error.request){
-                    console.log(error.request);
                     setOpenNetwork(true);
                 }
             });
         }
+
     };
 
     const handleDiscard = () => {
