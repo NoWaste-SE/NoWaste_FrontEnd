@@ -399,32 +399,9 @@ function Edit(props){
     const firstChar = data?.name?data.name.charAt(0) : "UN";
 
     const handleUpdate = (e) => {
-        e.preventDefault();
-        axios.patch(
-            `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then(()=> {
-            setAlertMessage("Profile updated successfully!");
-            setAlertSeverity("success");
-        })
-        .catch((error) => {
-            if (error.request) {
-                setAlertMessage("Network error! Please try again later.");
-                setAlertSeverity("error");
-            } else {
-                setAlertMessage("A problem has been occured! Please try again later.");
-                setAlertSeverity("error");
-            }
-        });
-
         if(newPassword && password && confirmPassword)
         {
+            console.log("HEREEEEEEEEEEEEEE");
             e.preventDefault();
             axios.patch(
                 `http://188.121.124.63:8000/user/change_password/${id}/`, 
@@ -437,6 +414,7 @@ function Edit(props){
                 }}
             )
             .then(()=> {
+                console.log("Ahsant");
                 window.location.reload(false);
             })
             .catch((error) => {
@@ -447,6 +425,36 @@ function Edit(props){
                 }
             });
         }
+
+        console.log(update);
+
+        if(update)
+        {
+            console.log("HEREREEEE field");
+            axios.patch(
+                `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
+                {headers: {
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "GET,PATCH",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                }}
+            )
+            .then(()=> {
+                setAlertMessage("Profile updated successfully!");
+                setAlertSeverity("success");
+            })
+            .catch((error) => {
+                if (error.request) {
+                    setAlertMessage("Network error! Please try again later.");
+                    setAlertSeverity("error");
+                } else {
+                    setAlertMessage("A problem has been occured! Please try again later.");
+                    setAlertSeverity("error");
+                }
+            });
+        }
+
     };
 
     const handleDiscard = () => {
