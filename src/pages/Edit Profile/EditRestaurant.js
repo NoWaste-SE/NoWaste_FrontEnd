@@ -409,35 +409,39 @@ function EditRestaurant(props){
 
     const handleFoodPicture = (e) => {
         const file1 = e.target.files[0];
-        const fileSize1 = file1.size;
-        if(fileSize1 > MAX_FILE_SIZE){
-            e.target.value = null;
-            setFoodPicture(null);
-            return;
-        } else {
-            const reader1 = new FileReader();
-            reader1.readAsDataURL(file1);
-            reader1.onloadend = () => {
-                setFoodPicture(reader1.result);
-                setUpdateFoodPic({...updateFoodPic, food_pic: reader1.result});
-            };
+        if (file1) {
+            const fileSize1 = file1.size;
+            if(fileSize1 > MAX_FILE_SIZE){
+                e.target.value = null;
+                setFoodPicture(null);
+                return;
+            } else {
+                const reader1 = new FileReader();
+                reader1.readAsDataURL(file1);
+                reader1.onloadend = () => {
+                    setFoodPicture(reader1.result);
+                    setUpdateFoodPic({...updateFoodPic, food_pic: reader1.result});
+                };
+            }
         }
     };
 
     const handleFoodPicture2 = (e) => {
         const file1 = e.target.files[0];
-        const fileSize1 = file1.size;
-        if(fileSize1 > MAX_FILE_SIZE){
-            e.target.value = null;
-            setFoodPicture2(null);
-            return;
-        } else {
-            const reader1 = new FileReader();
-            reader1.readAsDataURL(file1);
-            reader1.onloadend = () => {
-                setFoodPicture2(reader1.result);
-                setUpdateFoodPic2({...updateFoodPic2, food_pic2: reader1.result});
-            };
+        if (file1){
+            const fileSize1 = file1.size;
+            if(fileSize1 > MAX_FILE_SIZE){
+                e.target.value = null;
+                setFoodPicture2(null);
+                return;
+            } else {
+                const reader1 = new FileReader();
+                reader1.readAsDataURL(file1);
+                reader1.onloadend = () => {
+                    setFoodPicture2(reader1.result);
+                    setUpdateFoodPic2({...updateFoodPic2, food_pic2: reader1.result});
+                };
+            }
         }
     };
 
@@ -1076,7 +1080,7 @@ function EditRestaurant(props){
                                                                         <AddCircleIcon className="add-circle-icon"/>
                                                                         <Typography>Upload First Image</Typography>
                                                                 </label>
-                                                                {foodPicture && (
+                                                                {(foodPicture && !foodPicture2) && (
                                                                     <IconButton
                                                                         className="delete-image"
                                                                         style={{ position: 'absolute', bottom: 2, right: 2 }}
