@@ -26,6 +26,8 @@ import Cropper from "react-easy-crop";
 import PulseLoader from "react-spinners/PulseLoader";
 import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
 import { CustomEditFood } from "../../components/Custom Edit Food/CustomEditFood";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const style = {
     position: "absolute",
@@ -1052,79 +1054,70 @@ function EditRestaurant(props){
                                                     classes={{ paper: classes.dialogRoot }} 
                                                     onClose={handleOpenAdd}
                                                 >
-                                                    <DialogTitle 
-                                                        className="edit-title"
+                                                    <Typography 
+                                                        className="edit-add-food-title"
                                                     >
                                                         Add Food
-                                                    </DialogTitle>
-                                                    <Grid container spacing={2}>
+                                                    </Typography>
+                                                    <Grid container spacing={0}>
                                                         <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                            <Avatar
-                                                            className="food-avatar"
-                                                            style={{backgroundColor: color}}
-                                                            src={foodPicture}
-                                                            >
-                                                                F
-                                                            </Avatar>
-                                                            <input
-                                                                accept="image/*"
-                                                                id="food-image-input"
-                                                                type="file"
-                                                                onChange={handleFoodPicture}
-                                                                hidden      
-                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                            />
-                                                            <label 
-                                                                htmlFor="food-image-input" 
-                                                                className="food-image-button"
-                                                            >
-                                                                <UploadButton
-                                                                    title={"Upload the first food image"}
+                                                            <div class="upload-box" style={{ backgroundImage: `url('${foodPicture}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                                                                <input
+                                                                    accept="image/*"
+                                                                    id="food-image-input"
+                                                                    type="file"
+                                                                    onChange={handleFoodPicture}
+                                                                    hidden      
+                                                                    MAX_FILE_SIZE={MAX_FILE_SIZE}   
                                                                 />
-                                                            </label>
-                                                            <Button 
-                                                                className="upload-button" 
-                                                                component="span"
-                                                                onClick={handlepic1delete}
-                                                                disabled={!foodPicture || foodPicture2}
-                                                            >
-                                                                Delete this image
-                                                            </Button>
+                                                                <label 
+                                                                    htmlFor="food-image-input" 
+                                                                >
+                                                                        <AddCircleIcon className="add-circle-icon"/>
+                                                                        <Typography>Upload First Image</Typography>
+                                                                </label>
+                                                                {foodPicture && (
+                                                                    <IconButton
+                                                                        className="delete-image"
+                                                                        style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                        onClick={handlepic1delete}
+                                                                        disabled={!foodPicture || foodPicture2}                
+                                                                    >
+                                                                        <DeleteIcon/>
+                                                                    </IconButton>
+                                                                )}
+                                                            </div>
                                                         </Grid>
                                                         <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                            
-                                                            <Avatar
-                                                            className="food-avatar"
-                                                            style={{backgroundColor: color}}
-                                                            src={foodPicture2}
-                                                            >
-                                                                F
-                                                            </Avatar>
-                                                            <input
-                                                                accept="image/*"
-                                                                id="food-image-input2"
-                                                                type="file"
-                                                                onChange={handleFoodPicture2}
-                                                                hidden      
-                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                            />
-                                                            <label 
-                                                                htmlFor="food-image-input2" 
-                                                                className="food-image-button"
-                                                            >
-                                                                <UploadButton
-                                                                    title={"Upload the second food image"}
-                                                                    disabled={!foodPrice}
+                                                            <div class="upload-box" style={{ backgroundImage: `url('${foodPicture2}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                                                                <input
+                                                                    accept="image/*"
+                                                                    id="food-image-input2"
+                                                                    type="file"
+                                                                    onChange={handleFoodPicture2}
+                                                                    hidden      
+                                                                    MAX_FILE_SIZE={MAX_FILE_SIZE} 
+                                                                    disabled={!foodPicture} 
                                                                 />
-                                                            </label>
-                                                            <Button 
-                                                                className="upload-button" 
-                                                                component="span"
-                                                                onClick={handlepic2delete}
-                                                                disabled={!foodPicture || !foodPicture2}
-                                                            >
-                                                                Delete this image
-                                                            </Button>
+                                                                <label 
+                                                                    htmlFor="food-image-input2" 
+                                                                    style={{ cursor: !foodPicture ? 'auto' : 'pointer' }}
+                                                                    title={!foodPicture ? 'Upload the first image to enable this option.' : ''}              
+                                                                >
+                                                                    <AddCircleIcon className="add-circle-icon"/>
+                                                                    <Typography>Upload Second Image</Typography>
+                                                                </label>
+                                                                {foodPicture2 && (
+                                                                    <IconButton
+                                                                        className="delete-image"
+                                                                        style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                        onClick={handlepic2delete}
+                                                                        disabled={!foodPicture || !foodPicture2}
+                                                                    >
+                                                                        <DeleteIcon/>
+                                                                    </IconButton>
+                                                                )}
+                                                            </div>
                                                         </Grid>
                                                     </Grid>
                                                     <TextField
@@ -1247,83 +1240,73 @@ function EditRestaurant(props){
                                                                 >
                                                                     Edit Food
                                                                 </DialogTitle>
-                                                                <Grid container spacing={2}>
+                                                                <Grid container spacing={0}>
                                                                     <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                                        <Avatar
-                                                                        className="food-avatar"
-                                                                        style={{backgroundColor: color}}
-                                                                        src={foodPicture}
-                                                                        >
-                                                                            F
-                                                                        </Avatar>
-                                                                        <input
-                                                                            accept="image/*"
-                                                                            id="edit-food-image-input"
-                                                                            type="file"
-                                                                            onChange={handleFoodPicture}
-                                                                            hidden      
-                                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                                        />
-                                                                        <label 
-                                                                            htmlFor="edit-food-image-input" 
-                                                                            className="food-image-button"
-                                                                        >
-                                                                            <UploadButton
-                                                                                title={"Upload the first food image"}
+                                                                        <div class="upload-box" style={{ backgroundImage: `url('${foodPicture}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                                                                            <input
+                                                                                accept="image/*"
+                                                                                id="edit-food-image-input"
+                                                                                type="file"
+                                                                                onChange={handleFoodPicture}
+                                                                                hidden      
+                                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}   
                                                                             />
-                                                                        </label>
-                                                                        
-                                                                        <Button 
-                                                                            className="upload-button" 
-                                                                            component="span"
-                                                                            onClick={handlepic1delete}
-                                                                            disabled={!foodPicture || foodPicture2 ||                                                                                     
-                                                                                foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-                                                                            }
-                                                                        >
-                                                                            Delete this image
-                                                                        </Button>
+                                                                            <label 
+                                                                                htmlFor="edit-food-image-input" 
+                                                                            >
+                                                                                <AddCircleIcon className="add-circle-icon"/>
+                                                                                <Typography>Upload First Image</Typography>
+                                                                            </label>
+                                                                            { (foodPicture &&
+                                                                                !foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                && !foodPicture2
+                                                                                ) && (
+                                                                                <IconButton
+                                                                                    className="delete-image"
+                                                                                    style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                                    onClick={handlepic1delete}
+                                                                                    disabled={!foodPicture || foodPicture2}                
+                                                                                >
+                                                                                    <DeleteIcon/>
+                                                                                </IconButton>
+                                                                            )}
+                                                                        </div>
                                                                     </Grid>
                                                                     <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                                        <Avatar
-                                                                        className="food-avatar"
-                                                                        style={{backgroundColor: color}}
-                                                                        src={foodPicture2}
-                                                                        >
-                                                                            F
-                                                                        </Avatar>
-                                                                        <input
-                                                                            accept="image/*"
-                                                                            id="edit-food-image-input2"
-                                                                            type="file"
-                                                                            onChange={handleFoodPicture2}
-                                                                            hidden      
-                                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                                        />
-                                                                        <label 
-                                                                            htmlFor="edit-food-image-input2" 
-                                                                            className="food-image-button"
-                                                                        >
-                                                                            <Button 
-                                                                                className="upload-button" 
-                                                                                component="span"
+                                                                        <div class="upload-box" style={{ backgroundImage: `url('${foodPicture2}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                                                                            <input
+                                                                                accept="image/*"
+                                                                                id="edit-food-image-input2"
+                                                                                type="file"
+                                                                                onChange={handleFoodPicture2}
+                                                                                hidden      
+                                                                                MAX_FILE_SIZE={MAX_FILE_SIZE} 
                                                                                 disabled={!foodPicture ||
                                                                                     foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
                                                                                 }
+                                                                            />
+                                                                            <label 
+                                                                                htmlFor="edit-food-image-input2" 
+                                                                                style={{ cursor: !foodPicture ||
+                                                                                    foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                    ? 'auto' : 'pointer' }}
+                                                                                title={!foodPicture ? 'Upload the first image to enable this option.' : ''}              
                                                                             >
-                                                                                Upload the second food image
-                                                                            </Button>
-                                                                        </label>
-                                                                        <Button 
-                                                                            className="upload-button" 
-                                                                            component="span"
-                                                                            onClick={handlepic2delete}
-                                                                            disabled={!foodPicture || !foodPicture2}
-                                                                        >
-                                                                            Delete this image
-                                                                        </Button>
+                                                                                <AddCircleIcon className="add-circle-icon"/>
+                                                                                <Typography>Upload Second Image</Typography>
+                                                                            </label>
+                                                                            {foodPicture2 && (
+                                                                                <IconButton
+                                                                                    className="delete-image"
+                                                                                    style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                                    onClick={handlepic2delete}
+                                                                                    disabled={!foodPicture || !foodPicture2}
+                                                                                >
+                                                                                    <DeleteIcon/>
+                                                                                </IconButton>
+                                                                            )}
+                                                                        </div>
                                                                     </Grid>
-
                                                                 </Grid>
                                                                 <TextField
                                                                     label="Name"

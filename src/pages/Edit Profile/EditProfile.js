@@ -401,7 +401,7 @@ function Edit(props){
     const handleUpdate = (e) => {
         if(newPassword && password && confirmPassword)
         {
-            console.log("HEREEEEEEEEEEEEEE");
+            console.log("HEREEEEEEEEEEEEEE change pass");
             e.preventDefault();
             axios.patch(
                 `http://188.121.124.63:8000/user/change_password/${id}/`, 
@@ -430,7 +430,7 @@ function Edit(props){
 
         if(update)
         {
-            console.log("HEREREEEE field");
+            console.log("HEREEEE field");
             axios.patch(
                 `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
                 {headers: {
@@ -443,14 +443,13 @@ function Edit(props){
             .then(()=> {
                 setAlertMessage("Profile updated successfully!");
                 setAlertSeverity("success");
+                window.location.reload(false);
             })
             .catch((error) => {
-                if (error.request) {
-                    setAlertMessage("Network error! Please try again later.");
-                    setAlertSeverity("error");
-                } else {
-                    setAlertMessage("A problem has been occured! Please try again later.");
-                    setAlertSeverity("error");
+                if (error.response) {
+                    setOpenWrongPass(true);
+                } else if (error.request){
+                    setOpenNetwork(true);
                 }
             });
         }
