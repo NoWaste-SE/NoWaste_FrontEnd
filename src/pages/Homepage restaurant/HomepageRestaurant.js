@@ -17,6 +17,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddPagination from '../../components/Pagination/Pagination';
 import Pagination from '@mui/material/Pagination';
+import PulseLoader from "react-spinners/PulseLoader";
+import { SubmitButton, CancelButton } from '../../components/CustomButtons/CustomButtons';
+import Footer from '../../components/Footer/Footer';
 
 const useStyles = makeStyles({
     ul: {
@@ -76,6 +79,7 @@ function HomepageRestaurant(props){
     const [page, setPage] = useState(1);
     const PER_PAGE = 6;
     const _DATA = AddPagination(restaurants, PER_PAGE);
+    const [loading, setLoading] = useState(true);
 
     const handleShow = (res) => {
         history.push(`edit-restaurant/${id}/restaurants/${res.id}`);
@@ -84,7 +88,7 @@ function HomepageRestaurant(props){
     const handleDelete = (res) => {
         console.log("i'm here to delete.");
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${id}/restaurants/${res.id}/`,
+            `http://188.121.124.63:8000/restaurant/managers/${id}/restaurants/${res.id}/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -143,7 +147,7 @@ function HomepageRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${id}/restaurants/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${id}/restaurants/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -153,8 +157,13 @@ function HomepageRestaurant(props){
         )
         .then((response) => {
             setRestaurants(response.data);
+            setLoading(false);
+
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            setLoading(true);
+        });
     },[]);
 
     const handlePagination = (e, p) => {
@@ -205,7 +214,7 @@ function HomepageRestaurant(props){
             description: newDescription
         };
         axios.post(
-            `http://188.121.124.63/restaurant/managers/${id}/restaurants/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${id}/restaurants/`, 
             userData, 
             {headers: {
                 'Content-Type' : 'application/json',
@@ -233,264 +242,271 @@ function HomepageRestaurant(props){
     return ( 
         <ThemeProvider theme={theme}>
             <HeaderRestaurant />
-            <h1 
-                className='home-res-title'
-            >
-                My Restaurants
-            </h1>
-            <div>
-                <div>
-                    <ToastContainer />
-                </div>
-                <Fab 
-                    className='add-restaurant'
-                    aria-label="add"
-                    onClick={handleOpenModal}>
-                    <AddBusinessIcon />
-                </Fab>
-                <Modal
-                    open={openModal}
-                    onClose={handleCloseModal}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box
-                        className="add_res_box" 
-                    >
-                        <div 
-                            className='add-title'
-                        >
-                            <Typography 
-                                variant='h5'
-                            >
-                                Add new restaurant
-                            </Typography>
-                        </div>
-                        <TextField 
-                            label="Name"
-                            variant="outlined"
-                            color="secondary"
-                            onChange={handleAddName}
-                            className='add-restaurant-field'
-                        />
-                        <TextField 
-                            label="Address"
-                            variant="outlined"
-                            color="secondary"
-                            onChange={handleAddAddress}
-                            multiline
-                            className='add-restaurant-field'
-                        />
-                        <PhoneInput
-                            label="Phone number"
-                            defaultCountry="ir"
-                            color="secondary"
-                            InputLabelProps={{ shrink: true }} 
-                            className="phone-input add-restaurant-field"
-                            inputClass={classes.field}
-                            variant="outlined"
-                            onChange={handleAddPhone}
-                            inputProps={{
-                                maxLength: 13
-                            }}
-                        />
-                        <Grid container spacing={2}>
-                            <Grid item lg={6} md={6} sm={12} xs={12}>
-                                <TextField 
-                                    label="Discount"
-                                    variant="outlined"
-                                    color="secondary"
-                                    onChange={handleAddDiscount}
-                                    className='add-restaurant-field'
-                                />
-                            </Grid> 
-                            <Grid item lg={6} md={6} sm={12} xs={12}>
-                                <TextField
-                                    select
-                                    label="Type of restaurant"
-                                    color="secondary"
-                                    variant="outlined"
-                                    className='add-restaurant-field'
-                                    onChange={handleType}
-                                >
-                                    <MenuItem 
-                                        value="select" 
-                                        disabled
-                                    >
-                                        <em>
-                                            Select type
-                                        </em>
-                                    </MenuItem>
-                                    <MenuItem 
-                                        value="Iranian"
-                                    >
-                                        Iranian
-                                    </MenuItem>
-                                    <MenuItem 
-                                        value="Foreign"
-                                    >
-                                        Foreign
-                                    </MenuItem>
-                                </TextField>
-                            </Grid>
-                        </Grid>
-                        <TextField
-                            label="Description"
-                            variant="outlined"
-                            color="secondary"
-                            multiline
-                            rows={2}
-                            maxRows={3}
-                            onChange={handleDescription}
-                            className='add-restaurant-field'
-                        /> 
-                        <Grid container spacing={2} 
-                            className="new-restaurant-button-grid" 
-                            wrap="nowrap"
-                        >
-                            <Grid item style={{paddingLeft: '20px'}}>
-                                <Button 
-                                    className="add-restaurant-button" 
-                                    id="cancel" 
-                                    variant="contained" 
-                                    onClick={handleCancel}
-                                >
-                                    Cancel
-                                </Button>
-                            </Grid>
-                            <Grid item style={{textAlign:"center"}}>
-                                <Button 
-                                    className="add-restaurant-button" 
-                                    id="add" 
-                                    variant="contained" 
-                                    onClick={handleAdd}
-                                >
-                                    Add
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Modal>
-            </div>      
-            {restaurants && restaurants.length > 0 ? 
-                ( 
-                    <Masonry 
-                        breakpointCols={breakpoints}
-                    >
-                        {_DATA.currentData() && _DATA.currentData().map((res, index) => (
-                            <div 
-                                key={index} 
-                                onClick={() => handleEdit(res)}
-                            >
-                                <Card 
-                                    className='homepage-restaurant-card-restaurant' 
-                                >
-                                    <CardActionArea >
-                                        <Grid container>
-                                            <Grid item md={6} sm={12} xs={12} className='homepage-restaurant-grid'>
-                                                <CardMedia
-                                                    component="img"
-                                                    className='homepage-restaurant-card'
-                                                    image={res.restaurant_image}
-                                                />
-                                            </Grid>
-                                            <Grid container item md={6} sm={12} xs={12} className='homepage-restaurant-grid'>
-                                                <CardContent 
-                                                    className='home-restaurant-animation'
-                                                >
-                                                    <Grid item>
-                                                        <Typography 
-                                                            className='restaurant-name-hemepage-restaurant' 
-                                                            gutterBottom
-                                                        >
-                                                            {res.name}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item
-                                                        className='restaurant-phone'
-                                                    >
-                                                        <Chip
-                                                            icon={<MdPhone sx={{ fontSize: 20 }}/>}
-                                                            sx={{mb:1, fontSize: "15px"}}
-                                                            label={res.number}
-                                                        />
-                                                    </Grid>
-                                                    <Grid item
-                                                        className='restaurant-address'
-                                                    >
-                                                        <Chip
-                                                            className='home-page-rs-add'
-                                                            icon={<PlaceIcon sx={{ fontSize: 20 }}/>}
-                                                            sx={{fontSize: "15px",width:"161px"}}
-                                                            label={res.address}
-                                                        />
-                                                    </Grid>
-                                                    <Grid item  
-                                                        alignItems="center" style={{ marginBottom: "15px", width: "auto", marginLeft: "10px"}}
-                                                    >
-                                                        <Typography 
-                                                            style={{marginTop:'2.5%' }}
-                                                        >
-                                                            {res.rate}
-                                                        </Typography>    
-                                                        <Rating 
-                                                            name="half-rating" 
-                                                            defaultValue={res.rate} 
-                                                            precision={0.1} 
-                                                            size="small" 
-                                                            readOnly 
-                                                            style={{marginTop: '2px'}}
-                                                        />
-                                                    </Grid>
-                                                    <Grid item  
-                                                        alignItems="center" style={{ marginBottom: "15px", width: "auto", marginLeft: "10px"}}
-                                                    >
-                                                        <Button
-                                                            variant='contained'
-                                                            className='delete-restaurant-button'
-                                                            onClick={(e) =>{
-                                                                e.stopPropagation();
-                                                                handleDelete(res)}
-                                                            } 
-                                                        >
-                                                            Delete
-                                                        </Button>
-                                                    </Grid>
-                                                </CardContent>
-                                            </Grid>
-                                        </Grid>
-                                    </CardActionArea>
-                                </Card>
-                            </div>
-                        ))}
-                    </Masonry>
-                ) : (
-                    <div 
-                        className="no-menu-message-container"
-                    >
-                        <img 
-                            src='/oops!.png' 
-                            alt="No menu available" 
-                            className="food-image-restaurant-view" 
-                        />
-                        <Typography 
-                            className="no-menu-message"
-                        >
-                            No restaurant is added yet.
-                        </Typography>
-                    </div>        
-                )
-            }     
-            <Box 
-                className="homepage-restaurant-pagination"
-            >
-                <Pagination 
-                    count={Math.ceil(restaurants.length / PER_PAGE)} 
-                    onChange={handlePagination} 
-                    variant="outlined" 
-                    classes={{ ul: classesStyle.ul }} 
+            {loading ? (
+            <PulseLoader
+                type="bars"
+                color="black"
+                speedMultiplier={1}
+                className="spinner-homepage-restaurant"
                 />
-            </Box>
+            ) : (
+            <>
+                <h1 
+                    className='home-res-title'
+                >
+                    My Restaurants
+                </h1>
+                <div>
+                    <div>
+                        <ToastContainer />
+                    </div>
+                    <Fab 
+                        className='add-restaurant'
+                        aria-label="add"
+                        onClick={handleOpenModal}>
+                        <AddBusinessIcon />
+                    </Fab>
+                    <Modal
+                        open={openModal}
+                        onClose={handleCloseModal}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box
+                            className="add_res_box" 
+                        >
+                            <div 
+                                className='add-title'
+                            >
+                                <Typography 
+                                    variant='h5'
+                                >
+                                    Add new restaurant
+                                </Typography>
+                            </div>
+                            <TextField 
+                                label="Name"
+                                variant="outlined"
+                                color="secondary"
+                                onChange={handleAddName}
+                                className='add-restaurant-field'
+                            />
+                            <TextField 
+                                label="Address"
+                                variant="outlined"
+                                color="secondary"
+                                onChange={handleAddAddress}
+                                multiline
+                                className='add-restaurant-field'
+                            />
+                            <PhoneInput
+                                label="Phone number"
+                                defaultCountry="ir"
+                                color="secondary"
+                                InputLabelProps={{ shrink: true }} 
+                                className="phone-input add-restaurant-field"
+                                inputClass={classes.field}
+                                variant="outlined"
+                                onChange={handleAddPhone}
+                                inputProps={{
+                                    maxLength: 13
+                                }}
+                            />
+                            <Grid container spacing={2}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
+                                    <TextField 
+                                        label="Discount"
+                                        variant="outlined"
+                                        color="secondary"
+                                        onChange={handleAddDiscount}
+                                        className='add-restaurant-field'
+                                    />
+                                </Grid> 
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
+                                    <TextField
+                                        select
+                                        label="Type of restaurant"
+                                        color="secondary"
+                                        variant="outlined"
+                                        className='add-restaurant-field'
+                                        onChange={handleType}
+                                    >
+                                        <MenuItem 
+                                            value="select" 
+                                            disabled
+                                        >
+                                            <em>
+                                                Select type
+                                            </em>
+                                        </MenuItem>
+                                        <MenuItem 
+                                            value="Iranian"
+                                        >
+                                            Iranian
+                                        </MenuItem>
+                                        <MenuItem 
+                                            value="Foreign"
+                                        >
+                                            Foreign
+                                        </MenuItem>
+                                    </TextField>
+                                </Grid>
+                            </Grid>
+                            <TextField
+                                label="Description"
+                                variant="outlined"
+                                color="secondary"
+                                multiline
+                                rows={2}
+                                maxRows={3}
+                                onChange={handleDescription}
+                                className='add-restaurant-field'
+                            /> 
+                            <Grid container spacing={2} 
+                                className="new-restaurant-button-grid" 
+                                wrap="nowrap"
+                            >
+                                <Grid item>
+                                    <CancelButton
+                                        variant={"contained"}
+                                        type={"submit"}
+                                        onClick={handleCancel}
+                                        title={"Cancel"}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <SubmitButton
+                                        variant={"contained"}
+                                        type={"submit"}
+                                        onClick={handleAdd}
+                                        title={"Add"}
+                                        customWidth={"auto"}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Modal>
+                </div>      
+                {restaurants && restaurants.length > 0 ? 
+                    ( 
+                        <Masonry 
+                            breakpointCols={breakpoints}
+                        >
+                            {_DATA.currentData() && _DATA.currentData().map((res, index) => (
+                                <div 
+                                    key={index} 
+                                    onClick={() => handleEdit(res)}
+                                >
+                                    <Card 
+                                        className='homepage-restaurant-card-restaurant' 
+                                    >
+                                        <CardActionArea >
+                                            <Grid container>
+                                                <Grid item md={6} sm={12} xs={12} className='homepage-restaurant-grid'>
+                                                    <CardMedia
+                                                        component="img"
+                                                        className='homepage-restaurant-card'
+                                                        image={res.restaurant_image}
+                                                    />
+                                                </Grid>
+                                                <Grid container item md={6} sm={12} xs={12} className='homepage-restaurant-grid'>
+                                                    <CardContent 
+                                                        className='home-restaurant-animation'
+                                                    >
+                                                        <Grid item>
+                                                            <Typography 
+                                                                className='restaurant-name-hemepage-restaurant' 
+                                                                gutterBottom
+                                                            >
+                                                                {res.name}
+                                                            </Typography>
+                                                        </Grid>
+                                                        <Grid item
+                                                            className='restaurant-phone'
+                                                        >
+                                                            <Chip
+                                                                icon={<MdPhone sx={{ fontSize: 20 }}/>}
+                                                                sx={{mb:1, fontSize: "15px"}}
+                                                                label={res.number}
+                                                            />
+                                                        </Grid>
+                                                        <Grid item
+                                                            className='restaurant-address'
+                                                        >
+                                                            <Chip
+                                                                className='home-page-rs-add'
+                                                                icon={<PlaceIcon sx={{ fontSize: 20 }}/>}
+                                                                sx={{fontSize: "15px",width:"161px"}}
+                                                                label={res.address}
+                                                            />
+                                                        </Grid>
+                                                        <Grid item  
+                                                            alignItems="center" style={{ marginBottom: "15px", width: "auto", marginLeft: "10px"}}
+                                                        >
+                                                            <Typography 
+                                                                style={{marginTop:'2.5%' }}
+                                                            >
+                                                                {res.rate}
+                                                            </Typography>    
+                                                            <Rating 
+                                                                name="half-rating" 
+                                                                defaultValue={res.rate} 
+                                                                precision={0.1} 
+                                                                size="small" 
+                                                                readOnly 
+                                                                style={{marginTop: '2px'}}
+                                                            />
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <CancelButton
+                                                                variant={"contained"}
+                                                                type={"submit"}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    handleDelete(res)
+                                                                }}
+                                                                title={"Delete"}
+                                                                customWidth={"auto"}
+                                                            />
+                                                        </Grid>
+                                                    </CardContent>
+                                                </Grid>
+                                            </Grid>
+                                        </CardActionArea>
+                                    </Card>
+                                </div>
+                            ))}
+                        </Masonry>
+                    ) : (
+                        <div 
+                            className="no-menu-message-container"
+                        >
+                            <img 
+                                src='/oops!.png' 
+                                alt="No menu available" 
+                                className="food-image-restaurant-view" 
+                            />
+                            <Typography 
+                                className="no-menu-message"
+                            >
+                                No restaurant is added yet.
+                            </Typography>
+                        </div>        
+                    )
+                }     
+                <Box 
+                    className="homepage-restaurant-pagination"
+                >
+                    <Pagination 
+                        count={Math.ceil(restaurants.length / PER_PAGE)} 
+                        onChange={handlePagination} 
+                        variant="outlined" 
+                        classes={{ ul: classesStyle.ul }} 
+                    />
+                </Box>
+            </>
+            )}
+            <Footer/>
         </ThemeProvider>
     );
 }

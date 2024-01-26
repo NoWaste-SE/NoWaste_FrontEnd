@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, createTheme, Grid, Icon, IconButton, Tooltip , MenuItem, ThemeProvider, Typography, withStyles } from "@material-ui/core";
 import '../../pages/Edit Profile/EditProfile.css';
 import HeaderCustomer from '../Header/HeaderCustomer';
+import { ToastContainer, toast } from 'react-toastify';
 // import '../../pages/Edit Profile/EditRestaurant.css';
 import 'react-phone-input-2/lib/style.css';
 import axios from "axios";
@@ -47,7 +48,7 @@ function createData(name, order, price, date, status, restaurant_id, order_id) {
 export default function Dashboard(){
     const history = useHistory();
     const favoriteRestaurant = JSON.parse(localStorage.getItem('list_of_favorites_res'));
-    const id = localStorage.getItem('id');
+    const id = JSON.parse(localStorage.getItem('id'));
     const token = localStorage.getItem('token');
     const [orderHistory, setOrderHistory] = useState();
     const [value, setValue] = React.useState(0);
@@ -65,7 +66,12 @@ export default function Dashboard(){
     const [restaurantId, setRestaurantId] = useState('');
     const [restaurantName, setRestaurantName] = useState('');
     const [text, setText] = useState('');
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertSeverity, setAlertSeverity] = useState('');
 
+    const handleReloadPage = () => {
+        window.location.reload();
+    };
 
     const handleSort = (field) => {
         const newSortConfig = { field, direction: 'asc' };
@@ -99,7 +105,7 @@ export default function Dashboard(){
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/customer/${id}/orderview/`, 
+            `http://188.121.124.63:8000/restaurant/customer/${id}/orderview/`, 
             {headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -171,7 +177,20 @@ export default function Dashboard(){
         if (row.status === 'Completed') {
             setRestaurantId(row.restaurant_id);
             setRestaurantName(row.name);
-            console.log(row.restaurant_id);
+            axios.get(
+                `http://188.121.124.63/restaurant/comment/restaurant_id/${row.restaurant_id}/`,
+                {headers: {
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                }}
+            )
+            .then((response) => {
+                setText(response.data.comment);
+            })
+            .catch(error => console.log(error));
+            // console.log(row.restaurant_id);
             setIsModalOpen(true);
         }
     };
@@ -204,36 +223,79 @@ export default function Dashboard(){
 
         const commentPromise = 
             axios.post(
-                `http://188.121.124.63/restaurant/comment/user_id/${id}/restaurant_id/${restaurantId}/`,
+                `http://188.121.124.63:8000/restaurant/comment/restaurant_id/${restaurantId}/`,
                 userDataComment,
                 {headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Token ${token.slice(1, -1)}`
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
         );
 
         const ratingPromise = 
             axios.post(
-                `http://188.121.124.63/user/rate-restaurant/`,
+                `http://188.121.124.63:8000/user/rate-restaurant/`,
                 userDataRate,
                 {headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Token ${token.slice(1, -1)}`
+                    'Content-Type' : 'application/json',
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Methods" : "POST",
+                    'Authorization' : "Bearer " + token.slice(1,-1)   
                 }}
         );
 
         Promise.all([commentPromise, ratingPromise])
-            .then((responses) => {
-                const commentResponse = responses[0];
-                const ratingResponse = responses[1];
-                window.location.reload(false);
-            })
-            .catch((error) => {
-                if (error.response) {
-                    console.log(error.response);
-                }
-            });
+        .then((responses) => {
+            const commentResponse = responses[0];
+            const ratingResponse = responses[1];
+            console.log("Comment submitted");
+            setAlertMessage("Thank you for sharing your thoughts with us! 😊");
+            setAlertSeverity("success");
+        })
+        .catch((error) => {
+            if (error.response) {
+                setAlertMessage("Sorry, your comment can not be submitted due to inappropriate content. Please double check your comment and try again.");
+                setAlertSeverity("warning");
+                console.log(error.response);
+            } else if (error.request) {
+                setAlertMessage("Network error! Please try again later.");
+                setAlertSeverity("error");
+            } else {
+                setAlertMessage("A problem has been occured! Please try again later.");
+                setAlertSeverity("error");
+            }
+        });
     };
+
+    useEffect(() => {
+        if(alertMessage !== "" && alertSeverity !== "") {
+            if(alertSeverity === "success"){
+                toast.success(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Success",
+                            autoClose: 7000,
+                            pauseOnHover: true
+                        });
+            } else if (alertSeverity === "warning") {
+                toast.warning(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Warning",
+                            autoClose: 7000,
+                            pauseOnHover: true
+                        });
+            } else {
+                toast.error(alertMessage, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                            title: "Error",
+                            autoClose: 3000,
+                            pauseOnHover: true
+                        });
+            }
+            setAlertMessage("");
+            setAlertSeverity("");
+        }
+    }, [alertMessage, alertSeverity]);
 
     const handleStatus = (status) => {
         if(status === "InProgress")
@@ -248,7 +310,7 @@ export default function Dashboard(){
             status:"Cancled"
         }
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
             userData,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -268,21 +330,25 @@ export default function Dashboard(){
     }
 
     const handleClickOnDownloadExel = () => {
-        axios.get(
-            `http://188.121.124.63/restaurant/excel/customer/${restaurantId}/${id}/order-history`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            console.log(response.data);
+        fetch(`http://188.121.124.63:8000/restaurant/excel/customer/${id}/order-history`, {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Methods" : "GET",
+        },
         })
-        .catch((error) => {
-            console.log(error.response);
-        });
+        .then((response) => response.blob())
+        .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'orders-history.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch((error) => console.error('Error downloading file:', error));
     };
 
     return (
@@ -290,216 +356,219 @@ export default function Dashboard(){
             <div 
                 className="dashboard-back"
             >
+                <div>
+                    <ToastContainer />
+                </div>
                 <HeaderCustomer />
                 <h1 
                     className='dashboard-title'
                 >
                     Dashboard
                 </h1>
-                <Grid container spacing={2} 
-                    className="dashboard-grid"
-                >
-                    <Grid item lg={4} md={4} sm={4} xs={12}>
-                        <Box 
-                            className="dashboard-box" 
-                            id="favorite-restaurants-box"
-                        >
-                            <Typography
-                                variant="h5" 
-                                color="textPrimary"
-                                gutterBottom
-                                className="dashboard-title-manager"
-                            >
-                                Favorite Restaurants
-                            </Typography>
-                            {favoriteRestaurant && favoriteRestaurant.map((res, index) => (
-                                <Box 
-                                    className="dashboard-restaurant-box" 
-                                >
-                                    <Grid container spacing={2}>
-                                        <Grid item lg={6} md={6} sm={4} xs={4} >
-                                            <img 
-                                                src={res.restaurant_image} 
-                                                className="favorite-restaurant-image"
-                                                onClick={() => handleShowFavoriteRestaurant(res.id)}
-                                            />
-                                        </Grid>
-                                        <Grid item lg={6} md={6} sm={8} xs={8}>
-                                            <Typography 
-                                                className="dashboard-restaurant-name"
-                                            >
-                                                {res.name}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Box>
-                            ))}
-                        </Box>
-                    </Grid>
-                    {loading ? (
+                {loading ? (
                         <PulseLoader
                         type="bars"
                         color="black"
                         speedMultiplier={1}
                         className="spinner-dashboard"
-                        
                         />
-                    ) : (
-                    <Grid item lg={8} md={8} sm={8} xs={12}>
-                        <Box 
-                            className="dashboard-box" 
-                            id="order-history-box"
-                        >
-                            <Typography
-                                variant="h5" 
-                                color="textPrimary"
-                                gutterBottom
-                                className="dashboard-title-manager"
+                ) : (
+                    <Grid container spacing={2} 
+                        className="dashboard-grid"
+                    >
+                        <Grid item lg={4} md={4} sm={4} xs={12}>
+                            <Box 
+                                className="dashboard-box" 
+                                id="favorite-restaurants-box"
                             >
-                                Order History
-                            </Typography>
-                            <TableContainer component={Paper}>
-                                <Table 
-                                    sx={{ minWidth: 650 }} 
-                                    aria-label="simple table"
+                                <Typography
+                                    variant="h5" 
+                                    color="textPrimary"
+                                    gutterBottom
+                                    className="dashboard-title-manager"
                                 >
-                                    <TableHead>
-                                    <TableRow>
-                                        <TableCell 
-                                            onClick={() => handleSort('name')}
+                                    Favorite Restaurants
+                                </Typography>
+                                {favoriteRestaurant && favoriteRestaurant.map((res, index) => (
+                                    <Box 
+                                        className="dashboard-restaurant-box" 
+                                    >
+                                        <Grid container spacing={2}>
+                                            <Grid item lg={6} md={6} sm={4} xs={4} >
+                                                <img 
+                                                    src={res.restaurant_image} 
+                                                    className="favorite-restaurant-image"
+                                                    onClick={() => handleShowFavoriteRestaurant(res.id)}
+                                                />
+                                            </Grid>
+                                            <Grid item lg={6} md={6} sm={8} xs={8}>
+                                                <Typography 
+                                                    className="dashboard-restaurant-name"
+                                                >
+                                                    {res.name}
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Grid>
+                        <Grid item lg={8} md={8} sm={8} xs={12}>
+                            <Box 
+                                className="dashboard-box" 
+                                id="order-history-box"
+                            >
+                                <Grid container alignItems="center" justify="center">
+                                    <Grid item md={11} xs={10} >
+                                        <Typography
+                                            variant="h5"
+                                            color="textPrimary"
+                                            gutterBottom
+                                            className="dashboard-title-manager"
                                         >
-                                            Restaurant name
-                                            {sortConfig.field === 'name' && (
-                                                <>
-                                                    {sortConfig.direction === 'asc' ? (
-                                                        <KeyboardArrowUp 
-                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
-                                                        />
-                                                    ) : (
-                                                        <KeyboardArrowDown 
-                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
-                                                        />
-                                                    )}
-                                                </>
-                                            )}
-                                        </TableCell>
-                                        <TableCell 
-                                            align="left"
+                                            Order history
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item md={1} xs={2} style={{ textAlign: 'right' }}>
+                                        <IconButton
+                                            size='large'
+                                            onClick={handleClickOnDownloadExel}
+                                            color="inherit"
+                                            title='Download Excel Order History'
                                         >
-                                            Order
-                                        </TableCell>
-                                        <TableCell 
-                                            align="left" 
-                                            onClick={() => handleSort('price')}
-                                        >
-                                            Price
-                                            {sortConfig.field === 'price' && (
-                                                <>
-                                                    {sortConfig.direction === 'asc' ? (
-                                                        <KeyboardArrowUp 
-                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
-                                                        />
-                                                    ) : (
-                                                        <KeyboardArrowDown 
-                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }}
-                                                        />
-                                                    )}
-                                                </>
-                                            )}
-                                        </TableCell>
-                                        <TableCell 
-                                            align="left"
-                                        >
-                                            Date
-                                        </TableCell>
-                                        <TableCell 
-                                            align="left" 
-                                            onClick={() => handleSort('status')}
-                                        >
-                                            Status
-                                            {sortConfig.field === 'status' && (
-                                                <>
-                                                    {sortConfig.direction === 'asc' ? (
-                                                        <KeyboardArrowUp 
-                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
-                                                        />
-                                                    ) : (
-                                                        <KeyboardArrowDown 
-                                                            style={{ fontSize: '16px', verticalAlign: 'middle' }} 
-                                                        />
-                                                    )}
-                                                </>
-                                            )}
-                                        </TableCell>
-                                        <TableCell 
-                                            align="left"
-                                        >
-                                            Download excel
-                                        </TableCell>
-                                    </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {sortedData.map((row) => (
-                                            <TableRow 
-                                            key={row.order_id}
-                                                tabIndex={-1}
-                                                style={{backgroundColor: getRowColor(row.status)}}
+                                            <SimCardDownloadIcon fontSize="large"/>
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
+                                <TableContainer component={Paper}>
+                                    <Table 
+                                        sx={{ minWidth: 650 }} 
+                                        aria-label="simple table"
+                                    >
+                                        <TableHead>
+                                        <TableRow>
+                                            <TableCell 
+                                                onClick={() => handleSort('name')}
                                             >
-                                                <TableCell component="th" scope="row">
-                                                    {row.name}
-                                                </TableCell>
-                                                <TableCell align="left">{row.order}</TableCell>
-                                                <TableCell align="left">{row.price}</TableCell>
-                                                <TableCell align="left">{row.date}</TableCell>
-                                                <TableCell align="left">
-                                                    {handleStatus(row.status)}
-                                                    {showCancelIcon(row.status) && 
-                                                        <IconButton 
-                                                            onClick={() => handleCancleOrdering(row.order_id, row.restaurant_id)} 
-                                                            title="Cancel order"
-                                                        >
-                                                            <ClearIcon 
-                                                                style={{color:'red'}}
+                                                Restaurant name
+                                                {sortConfig.field === 'name' && (
+                                                    <>
+                                                        {sortConfig.direction === 'asc' ? (
+                                                            <KeyboardArrowUp 
+                                                                style={{ fontSize: '16px', verticalAlign: 'middle' }} 
                                                             />
-                                                        </IconButton>
-                                                    }
-                                                    {row.status === 'Completed' && (
-                                                        <Tooltip title="Add Comment">
+                                                        ) : (
+                                                            <KeyboardArrowDown 
+                                                                style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                            />
+                                                        )}
+                                                    </>
+                                                )}
+                                            </TableCell>
+                                            <TableCell 
+                                                align="left"
+                                            >
+                                                Order
+                                            </TableCell>
+                                            <TableCell 
+                                                align="left" 
+                                                onClick={() => handleSort('price')}
+                                            >
+                                                Price
+                                                {sortConfig.field === 'price' && (
+                                                    <>
+                                                        {sortConfig.direction === 'asc' ? (
+                                                            <KeyboardArrowUp 
+                                                                style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                            />
+                                                        ) : (
+                                                            <KeyboardArrowDown 
+                                                                style={{ fontSize: '16px', verticalAlign: 'middle' }}
+                                                            />
+                                                        )}
+                                                    </>
+                                                )}
+                                            </TableCell>
+                                            <TableCell 
+                                                align="left"
+                                            >
+                                                Date
+                                            </TableCell>
+                                            <TableCell 
+                                                align="left" 
+                                                onClick={() => handleSort('status')}
+                                            >
+                                                Status
+                                                {sortConfig.field === 'status' && (
+                                                    <>
+                                                        {sortConfig.direction === 'asc' ? (
+                                                            <KeyboardArrowUp 
+                                                                style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                            />
+                                                        ) : (
+                                                            <KeyboardArrowDown 
+                                                                style={{ fontSize: '16px', verticalAlign: 'middle' }} 
+                                                            />
+                                                        )}
+                                                    </>
+                                                )}
+                                            </TableCell>
+                                        </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {sortedData.map((row) => (
+                                                <TableRow 
+                                                key={row.order_id}
+                                                    tabIndex={-1}
+                                                    style={{backgroundColor: getRowColor(row.status)}}
+                                                >
+                                                    <TableCell component="th" scope="row">
+                                                        {row.name}
+                                                    </TableCell>
+                                                    <TableCell align="left">{row.order}</TableCell>
+                                                    <TableCell align="left">{row.price}</TableCell>
+                                                    <TableCell align="left">{row.date}</TableCell>
+                                                    <TableCell align="left">
+                                                        {handleStatus(row.status)}
+                                                        {showCancelIcon(row.status) && 
                                                             <IconButton 
-                                                                onClick={(e) => handleRowClick(row)}
+                                                                onClick={() => handleCancleOrdering(row.order_id, row.restaurant_id)} 
+                                                                title="Cancel order"
                                                             >
-                                                                <CommentIcon />
+                                                                <ClearIcon 
+                                                                    style={{color:'red'}}
+                                                                />
                                                             </IconButton>
-                                                        </Tooltip>
-                                                    )}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    <IconButton
-                                                        onClick={handleClickOnDownloadExel}
-                                                        color="inherit"
-                                                    >
-                                                        <SimCardDownloadIcon fontSize="normal"/>
-                                                    </IconButton>
-                                                </TableCell>
-                                            </TableRow>
-                                            ))}
-                                    </TableBody>
-                                </Table>
-                                <div 
-                                    style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}
-                                >
-                                    <Pagination 
-                                        count={totalPages} 
-                                        page={currentPage} 
-                                        onChange={(event, page) => setCurrentPage(page)} 
-                                        shape="rounded"
-                                    />
-                                </div>
-                            </TableContainer>
-                        </Box>
+                                                        }
+                                                        {row.status === 'Completed' && (
+                                                            <Tooltip title="Add Comment">
+                                                                <IconButton 
+                                                                    onClick={(e) => handleRowClick(row)}
+                                                                >
+                                                                    <CommentIcon />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        )}
+                                                    </TableCell>
+                                                </TableRow>
+                                                ))}
+                                        </TableBody>
+                                    </Table>
+                                    <div 
+                                        style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}
+                                    >
+                                        <Pagination 
+                                            count={totalPages} 
+                                            page={currentPage} 
+                                            onChange={(event, page) => setCurrentPage(page)} 
+                                            shape="rounded"
+                                        />
+                                    </div>
+                                </TableContainer>
+                            </Box>
+                        </Grid>
                     </Grid>
-                    )}
-                </Grid>
+                )}
                 <Modal 
                     open={isModalOpen} 
                     onClose={() => setIsModalOpen(false)} 
@@ -524,7 +593,8 @@ export default function Dashboard(){
                             onChange={(event, newValue) => setValue(newValue)}
                         />
                         <textarea 
-                            className='dashboard-textarea' 
+                            className='dashboard-textarea'
+                            value={text} 
                             onChange={handleAddtext}
                         />
                         <Stack 

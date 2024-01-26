@@ -10,6 +10,8 @@
     justify-content: center ;
     align-items: center ;
     margin: auto !important;
+    margin-top: 20% !important;
+    margin-bottom: 20% !important;
 }
 
 .edit-back {
@@ -39,6 +41,55 @@
     width: 90%;
     font-weight: bold !important;
     font-family: 'Montserrat', sans-serif !important;
+    text-align: center !important;
+}
+
+.edit-add-food-title{
+    font-size: 21px !important;
+    text-align: center !important;
+    padding: 2.65%;
+    font-weight: bold;
+}
+
+.upload-box {
+    align-items: center;
+    margin-bottom: 20px;
+    border: 5px dashed #e9ecef; 
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+}
+    
+.upload-box label {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 35% 18% 35% 18%;
+    color: #c3c4c5;
+
+}
+
+.image-text{
+    display: flex;
+    font-size: 9px;
+    color: #c3c4c5;
+}
+
+.delete-image{
+    color: white !important;
+    background-color: #E74C3C !important;
+}
+
+.add-circle-icon{
+    font-size: 230% !important;
+    color: #c3c4c5;
 }
 
 .edit-root {
@@ -121,67 +172,11 @@
     margin-bottom: 15px !important;
 }
 
-.upload-button {
-    width: 70%;
-    background: linear-gradient(to right, #FFA600, #E74C3C);
-    text-transform: none !important;
-    font-size: smaller !important;
-    font-weight: bold !important;
-    font-family: 'Montserrat', sans-serif !important;
-    margin-bottom: 30px !important;
-    border-radius: 70px !important;
-}
-
-.upload-button:hover {
-    transform: scale(1.01);
-    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
-}
-
 .edit-button-grid {
     justify-content: space-between;
     width: 100% !important;
     margin-top: 1% !important;
     margin-bottom: 2% !important;
-}
-
-.edit-field-wrapper {
-    transition: height 0.5s ease-out;
-    overflow: hidden;
-}
-
-.edit-button {
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 15% !important;
-    text-transform: none;
-    font-size: 14px;
-    font-weight: bold !important;
-    font-family: 'Montserrat', sans-serif !important;
-    border-radius: 70px !important;
-}
-
-#discard {
-    background-color: #E74C3C !important;
-}
-
-.edit-discard-button {
-    background-color: #E74C3C !important;
-}
-
-.edit-discard-button:hover {
-    transform: scale(1.01);
-}
-
-#save, #change-pass {
-    background-color: #FFA600 !important;
-}
-
-.edit-save-changepass-button {
-    background-color: #FFA600 !important;
-}
-
-.edit-save-changepass-button:hover {
-    transform: scale(1.01);
 }
 
 .showmenu-button {
@@ -215,40 +210,6 @@
     font-family: 'Montserrat', sans-serif !important;
 }
 
-.food-image-button {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    width: 80% !important;
-    margin: 10px -30px 0px;
-}
-
-.food-box {
-    margin: 20px auto !important;
-    background-color: rgb(255, 255, 255);
-    height: auto !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 96% !important;
-    border-radius: 5px;
-}
-
-.upload-button {
-    width: 70% !important;
-    background: linear-gradient(to right, #FFA600, #E74C3C);
-    text-transform: none !important;
-    font-size: smaller !important;
-    font-weight: bold !important;
-    font-family: 'Montserrat', sans-serif !important;
-    margin-bottom: 30px !important;
-    border-radius: 70px !important;
-}
-
-.upload-button:hover {
-    transform: scale(1.01);
-}
 
 .hidemenu-button {
     width: 30%;
@@ -272,30 +233,6 @@
     justify-content: center !important;
     flex-direction: column;
     background-color: rgba(117, 115, 111, 0.05);
-}
-
-.food-image {
-    width: 90% !important;
-    height: 90px !important;
-    margin-top: 4px;
-    margin-left: 3px;
-    border-radius: 7px !important;
-    margin-bottom: 3px;
-}
-
-.food-name {
-    width: 100% !important;
-    font-size: 25px !important;
-}
-
-.food-price-menu {
-    font-size: 25px !important;
-}
-
-.food-ingredient, .food-remain-number {
-    font-size: 13px !important;
-    color: #524b4a;
-    width: 100% !important;
 }
 
 .food-edit {
@@ -345,7 +282,7 @@
     display: flex;
     flex-direction: row;
     position: absolute;
-    bottom: 5px !important;
+    bottom: -9% !important;
     justify-content: center !important;
     align-items: center !important;
     left: 50% !important;
@@ -412,10 +349,6 @@
     .item.address {
         margin-top: 10px !important;
     }
-
-    /* .edit-title {
-        margin-top: 40% !important;
-    } */
 }
 
 @media(min-width: 628px) and (max-width: 960px){

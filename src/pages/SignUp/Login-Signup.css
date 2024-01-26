@@ -15,6 +15,7 @@
 
 .container {
     position: relative;
+    transition: all 0.5s ease;
 } 
 
 .background {
@@ -24,6 +25,7 @@
     margin-top: 0%;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    transition: all 0.5s ease;
 }
 
 .box {
@@ -143,7 +145,7 @@
 
 .link {
     text-decoration:none;
-    color: #E74C3C;
+    color: #E74C3C; 
 }
 
 .link:hover, a:active {
@@ -154,9 +156,11 @@
     height: 2em;
     font-size: 1em;
 }
+
 .form {
     text-align: center;
 }
+
 .verification-detail {
     width: 80% !important;
     display: flex;
@@ -209,7 +213,37 @@
     }
 }
 
+.admin-login {
+    transform: translateX(-30.5%);
+}
 
+.admin-login .background {
+    transform: translateX(260%);
+    margin-left: 0%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.admin-login .box{
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.admin-login .text#login {
+    margin: 6.5% auto !important;
+}
+.are-you-admin-text{
+    color: #797979;
+    font-size: 0.8em !important;
+    font-family: 'Montserrat', sans-serif !important;
+    text-align: center;
+    margin: 1% auto 5% !important;
+    cursor: pointer;
+}
 
 @media(max-width: 414px) {
     .background {

@@ -17,6 +17,7 @@ import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
 import Modal from '@mui/material/Modal';
 import PulseLoader from "react-spinners/PulseLoader";
+import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
 
 const style = {
     position: "absolute",
@@ -108,7 +109,7 @@ const EditProfileManager = (props) => {
             setUpdate({...update, manager_image: croppedImage});
             console.log(croppedImage);
             } catch (e) {
-            console.error(e);
+                console.error(e);
             }
         }, [croppedAreaPixels]);
 
@@ -118,7 +119,6 @@ const EditProfileManager = (props) => {
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
-        setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         const photoInput = document.getElementById("photoInput");
@@ -179,7 +179,7 @@ const EditProfileManager = (props) => {
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${id}/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${id}/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -190,6 +190,7 @@ const EditProfileManager = (props) => {
         .then((response) => {
             setData(response.data);
             setData(response.data);
+            setCroppedImage(response.data.manager_img);
             setLoading(false);
         })
         .catch((error) => {
@@ -287,7 +288,7 @@ const EditProfileManager = (props) => {
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
-            `http://188.121.124.63/restaurant/managers/${id}`, update,
+            `http://188.121.124.63:8000/restaurant/managers/${id}`, update,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -314,7 +315,7 @@ const EditProfileManager = (props) => {
         {
             e.preventDefault();
             axios.patch(
-                `http://188.121.124.63/user/change_password/${id}/`, {"old_password": password, "password": newPassword, "password2": confirmPassword},
+                `http://188.121.124.63:8000/user/change_password/${id}/`, {"old_password": password, "password": newPassword, "password2": confirmPassword},
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
@@ -381,25 +382,9 @@ const EditProfileManager = (props) => {
                                 >
                                     {firstChar}
                                 </Avatar>
-                                <Typography 
-                                    className="text-above-upload"
-                                >
-                                    JPG or PNG no larger than 5 MB
-                                </Typography>
-                                {open && 
-                                    <Alert 
-                                        className="image-alert" 
-                                        variant="outlined" 
-                                        severity="error" 
-                                        open={open} 
-                                        onClose={handleClose} 
-                                    >
-                                        File size is too large.
-                                    </Alert>
-                                }
                                 <input
                                     accept="image/*"
-                                    id="contained-button-file-manager"
+                                    id="photoInput"
                                     type="file"
                                     hidden      
                                     MAX_FILE_SIZE={MAX_FILE_SIZE}    
@@ -413,15 +398,12 @@ const EditProfileManager = (props) => {
                                     }}                  
                                 />
                                 <label 
-                                    htmlFor="contained-button-file-manager" 
+                                    htmlFor="photoInput" 
                                     className="input-label"
                                 >
-                                    <Button 
-                                        className="upload-button" 
-                                        component="span"
-                                    >
-                                        Upload new image
-                                    </Button>
+                                    <UploadButton
+                                        title={"Upload new image"}
+                                    />
                                 </label>
                             </Box>
                         </Grid>
@@ -457,22 +439,18 @@ const EditProfileManager = (props) => {
                                 <div
                                     className="crop-buttons"
                                 >
-                                    <Button
-                                        onClick={showCroppedImage}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="save"
-                                    >
-                                        Apply
-                                    </Button>
-                                    <Button
+                                    <CancelButton
                                         onClick={onClose}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="discard"
-                                    >
-                                        Discard
-                                    </Button>
+                                        variant={"contained"}
+                                        title={"Discard"}
+                                        customWidth={"auto"}
+                                    />
+                                    <SubmitButton
+                                        onClick={showCroppedImage}
+                                        variant={"contained"}
+                                        title={"Apply cutting"}
+                                        customWidth={"auto"}
+                                    />
                                 </div>
                             </Box>
                         </Modal>
@@ -489,7 +467,7 @@ const EditProfileManager = (props) => {
                                     Account Details 
                                 </Typography>
                                 <Grid container spacing={2}>
-                                    {openNetwork && 
+                                    {/* {openNetwork && 
                                         <Grid item lg={12} sm={12} md={12}>
                                             {openNetwork && 
                                                 <Alert 
@@ -501,7 +479,7 @@ const EditProfileManager = (props) => {
                                                 </Alert>
                                             }
                                         </Grid> 
-                                    }
+                                    } */}
                                     {openWrongPass && 
                                         <Grid item lg={12} sm={12} md={12}>
                                                 {openWrongPass && 
@@ -678,38 +656,35 @@ const EditProfileManager = (props) => {
                                     wrap="nowrap"
                                 >
                                     <Grid item>
-                                        <Button 
-                                            className="edit-button" 
-                                            id="change-pass"
-                                            variant="contained" 
-                                            onClick={() => setShow(prev => !prev)}
-                                        >
-                                            Change password 
-                                        </Button>
+                                        <SubmitButton
+                                            variant={"contained"}
+                                            type={"submit"}
+                                            onClick={()=>setShow(prev => !prev)}
+                                            title={"Change password"}
+                                            customWidth={"auto"}
+                                        />
                                     </Grid>
                                     <Grid item container lg={5} md={6} sm={12}
                                         justifyContent="flex-end"
+                                        alignItems="center"
                                     >
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="discard"
-                                                variant="contained" 
+                                            <CancelButton 
+                                                variant={"contained"} 
+                                                type={"submit"}
                                                 onClick={handleDiscard}
-                                            >
-                                                Discard
-                                            </Button>
+                                                title={"Discard"}
+                                            />
                                         </Grid>
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="save"
-                                                variant="contained" 
-                                                onClick={handleUpdate}
+                                            <SubmitButton 
+                                                variant={"contained"}
+                                                type={"submit"}
                                                 disabled={!validInputs}
-                                            >
-                                                Save changes
-                                            </Button>
+                                                onClick={handleUpdate}
+                                                title={"Save changes"}
+                                                customWidth={"auto"}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </Grid>

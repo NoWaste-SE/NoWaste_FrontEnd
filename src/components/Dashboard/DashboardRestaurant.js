@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 import PulseLoader from "react-spinners/PulseLoader";
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 
 const theme = createTheme({
     palette: {
@@ -81,7 +82,7 @@ export default function DashboardRestaurant(){
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/${id}/orderview/`,
+            `http://188.121.124.63:8000/restaurant/${id}/orderview/`,
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -91,6 +92,7 @@ export default function DashboardRestaurant(){
         )
         .then((response) => {
             setOrderHistory(response.data);
+            console.log(response.data);
             setLoading(false);
         })
         .catch((error) => {
@@ -175,7 +177,7 @@ export default function DashboardRestaurant(){
             status:"Cancled"
         };
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
             userData,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -199,7 +201,7 @@ export default function DashboardRestaurant(){
             status:"InProgress"
         }
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
             userData,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -218,6 +220,20 @@ export default function DashboardRestaurant(){
         }); 
     }
 
+    const handleClickOnDownloadExel = () => {
+        axios.get(
+            `http://188.121.124.63:8000/restaurant/excel/manager/${id}/order-history`,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET",
+            }}
+        )
+        .catch((error) => {
+            console.log(error.response);
+        });
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <div 
@@ -234,8 +250,7 @@ export default function DashboardRestaurant(){
                     type="bars"
                     color="black"
                     speedMultiplier={1}
-                    className="dashboard-spinner-manager"
-                    
+                    className="spinner-dashboard"
                     />
                 ) : (
                 <Grid container spacing={2} 
@@ -245,15 +260,30 @@ export default function DashboardRestaurant(){
                         <Box 
                             className="dashboard-box" 
                             id="order-history-box"
+                            
                         >
-                            <Typography
-                                variant="h5" 
-                                color="textPrimary"
-                                gutterBottom
-                                className="dashboard-title-manager"
-                            >
-                                Order history
-                            </Typography>
+                            <Grid container alignItems="center" justify="center">
+                                <Grid item md={11} xs={10} >
+                                    <Typography
+                                        variant="h5"
+                                        color="textPrimary"
+                                        gutterBottom
+                                        className="dashboard-title-manager"
+                                    >
+                                        Order history
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={1} xs={2} style={{ textAlign: 'right' }}>
+                                    <IconButton
+                                        size='large'
+                                        onClick={handleClickOnDownloadExel}
+                                        color="inherit"
+                                        title='Download Excel Order History'
+                                    >
+                                        <SimCardDownloadIcon fontSize="large"/>
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
                             <TableContainer component={Paper}>
                                 <Table 
                                     sx={{ minWidth: 650 }} 

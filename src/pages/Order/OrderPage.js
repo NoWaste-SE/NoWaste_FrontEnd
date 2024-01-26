@@ -49,10 +49,11 @@ export default function OrderPage(){
     const [showMap, setShowMap] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [thereis, setThereis] = useState(false);
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/${id}/lat_long/` , 
+            `http://188.121.124.63:8000/user/${id}/lat_long/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -78,7 +79,7 @@ export default function OrderPage(){
 
     useEffect(()=>{
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -87,15 +88,23 @@ export default function OrderPage(){
             }}
         )
         .then((response) => {
-            setStatus(response.data[0].status);
-            setShoppingCard(response.data[0]);
-            setOrderItems(response.data[0].orderItems);
-            setPrices(response.data[0].Subtotal_Grandtotal_discount);
-            setOrderId(response.data[0].id);
+            if(response.data.length != 0)
+            {
+                console.log("here");
+                setThereis(true);
+                console.log(response.data[0]);
+                setStatus(response.data[0].status);
+                setShoppingCard(response.data[0].restaurantDetails);
+                setOrderItems(response.data[0].orderItems);
+                setPrices(response.data[0].Subtotal_Grandtotal_discount);
+                setOrderId(response.data[0].id);
+            }
+            console.log("here2");
             setLoading(false);
         })
         .catch((error) => {
-            console.log(error.response);
+            // console.log(error);
+            console.log("errorrrrr");
             setLoading(true);
         });
     },[]);
@@ -127,7 +136,7 @@ export default function OrderPage(){
             status: "InProgress"
         };
         axios.put(
-            `http://188.121.124.63/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/${orderId}/`, 
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${IdOfRestaurant}/${userId}/order/${orderId}/`, 
             userStatus,
             {headers :{
                 'Content-Type' : 'application/json',
@@ -143,7 +152,7 @@ export default function OrderPage(){
             };
             if(paymentMethod === "wallet"){
                 axios.post(
-                    "http://188.121.124.63/user/withdraw-wallet/", 
+                    "http://188.121.124.63:8000/user/withdraw-wallet/", 
                     userData, 
                     {headers: {
                         'Content-Type' : 'application/json',
@@ -191,6 +200,7 @@ export default function OrderPage(){
     return(
         <ThemeProvider theme={theme}>
             <HeaderCustomer />
+            {thereis ? (
             <div 
                 className={`container ${blurBackground ? 'blur-background' : ''}`}
             >
@@ -204,6 +214,7 @@ export default function OrderPage(){
                         color="black"
                         speedMultiplier={1}
                         className="spinner-orderpage"
+                        
                         />
                     ) : (
                     <Grid item lg={4} md={4} sm={12}>
@@ -371,7 +382,7 @@ export default function OrderPage(){
                                             <PlaceIcon 
                                                 className="icon-order-page" 
                                             />
-                                            {shoppingCard.userAddress}
+                                            {shoppingCard.address}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={1.5}>
@@ -445,6 +456,26 @@ export default function OrderPage(){
                     </Grid>
                 </Grid>
             </div>
+            ) : (
+            loading ? (
+                <PulseLoader
+                type="bars"
+                color="black"
+                speedMultiplier={1}
+                className="spinner-orderpage-whole"
+                />
+            ) : 
+            (
+                <div 
+                    className="no-order-message-container"
+                >
+                    <h2 
+                        className="no-order-message-order-page"
+                    >
+                        There is not any order!
+                    </h2>
+                </div>
+            ))}
             <Footer />
         </ThemeProvider>
     )

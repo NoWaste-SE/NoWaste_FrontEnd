@@ -1,0 +1,95 @@
+.shopping-card-restaurant-box {
+    margin: 7px auto!important; 
+    margin-left: 10px !important;
+    margin-bottom: 7px auto !important;
+    /* background-color: rgba(240, 235, 235, 0.502); */
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px, rgba(0, 0, 0, 0.05) 0px -5px 10px, rgba(0, 0, 0, 0.01) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 0px 0px;
+    height: auto !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    width: 97% !important;
+    position:  relative !important;
+}
+  
+.shopping-card-image {
+  width: 90% !important;
+  height: 100px !important;
+  margin-top: 13% !important;
+  margin-left: 2% !important;
+  border-radius: 7px !important;
+}
+
+.shopping-card-name {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: bolder !important;
+  font-family: 'Montserrat', sans-serif !important;
+  padding: 8px 5px !important; 
+  border-radius: 10px !important; 
+  margin-bottom: 1% !important; 
+  margin-top: 15px !important;
+}
+
+
+.shopping-card-order {
+  font-weight: bold !important;
+  margin-bottom: 8px;
+  font-family: 'Montserrat', sans-serif !important;
+  position: relative;
+  margin-right: 5px !important;
+}
+
+.shopping-card-price {
+  font-weight: bold !important;
+  font-family: 'Montserrat', sans-serif !important;
+  margin-right: 1% !important;
+  position: absolute !important;
+  right: 0;
+}
+
+.line {
+  border-bottom: 2px solid rgb(206, 203, 203); 
+  margin-top: 5px !important;
+  width: 98% !important;
+}
+
+.spinner-shopping-card {
+  display: flex !important;
+  text-align: center !important;
+  justify-content: center !important;
+  align-content: center !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
+.buttons-container-shopping-card {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 1% !important;
+  margin-bottom: 0% !important;
+  width: 100% !important;
+}
+
+.no-order-message-container {
+  margin-top: 12%;
+  margin-bottom: 15%;
+  height: 200px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-order-message {
+  color: #6d6c6c;
+  font-family: 'Montserrat', sans-serif !important;
+  text-align: center;
+  margin-top: 0.3px;
+}
+
+.shopping-card-quantity {
+  color: #8a8686 !important;
+}

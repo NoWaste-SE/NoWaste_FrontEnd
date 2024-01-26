@@ -23,6 +23,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import getCroppedImg from "../../components/Crop/cropImage";
 import Cropper from "react-easy-crop";
+import PulseLoader from "react-spinners/PulseLoader";
+import { CancelButton, SubmitButton, UploadButton } from "../../components/CustomButtons/CustomButtons";
+import { CustomEditFood } from "../../components/Custom Edit Food/CustomEditFood";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const style = {
     position: "absolute",
@@ -165,7 +170,8 @@ function EditRestaurant(props){
     const [showMap, setShowMap] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
     const [showSecondImage, setShowSecondImage] = useState(null);
-    
+    const [loading, setLoading] = useState(true);
+
     const showCroppedImage = useCallback(async () => {
         try {
             setOpenImg(false);
@@ -177,7 +183,7 @@ function EditRestaurant(props){
             setCroppedImage(croppedImage);
             setUpdate({...update, restaurant_image: croppedImage});
         } catch (e) {
-          console.error(e);
+            console.error(e);
         }
     }, [croppedAreaPixels]);
 
@@ -187,7 +193,6 @@ function EditRestaurant(props){
     
     const onClose = useCallback(() => {
         setCroppedAreaPixels(null);
-        setCroppedImage(null);
         setOpenImg(false);
         setImg(undefined);
         document.getElementById("photoInput").value = null;
@@ -269,7 +274,7 @@ function EditRestaurant(props){
     const handleOpenMenu = () => {
         setOpenMenu(!openMenu);
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -285,7 +290,7 @@ function EditRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/user/all-countries/` , 
+            `http://188.121.124.63:8000/user/all-countries/` , 
             {headers :{
                 'Content-Type' : 'application/json'
             }}
@@ -299,7 +304,7 @@ function EditRestaurant(props){
     //geting the lt and lng of map
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/${idR}/lat_long` , 
+            `http://188.121.124.63:8000/restaurant/${idR}/lat_long` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -320,7 +325,7 @@ function EditRestaurant(props){
             name: country
         };
         axios.post(
-            "http://188.121.124.63/user/cities-of-country/", 
+            "http://188.121.124.63:8000/user/cities-of-country/", 
             userData, 
             {headers:{
                 "Content-Type" : "application/json"
@@ -360,15 +365,13 @@ function EditRestaurant(props){
         setDiscount(data.discount * 100);
         setDescription(data.description);
         const arr = data?.address?data?.address.split(","):[];
-        setCountry(arr[2] || '');
+        setCountry(arr[0] || '');
         setCity(arr[1] || '');
-        setAddress(arr[0] || '');
+        setAddress(arr[2] || '');
     }, [data]);
 
     useEffect(() => {
-        const temp = address + ',' + city + ',' + country;
-        console.log("city is : ");
-        console.log(city);
+        const temp = country + ',' + city + ',' + address;
         console.log(temp);
         setUpdate({...update, address : temp})
     }, [country, city, address]);
@@ -406,35 +409,39 @@ function EditRestaurant(props){
 
     const handleFoodPicture = (e) => {
         const file1 = e.target.files[0];
-        const fileSize1 = file1.size;
-        if(fileSize1 > MAX_FILE_SIZE){
-            e.target.value = null;
-            setFoodPicture(null);
-            return;
-        } else {
-            const reader1 = new FileReader();
-            reader1.readAsDataURL(file1);
-            reader1.onloadend = () => {
-                setFoodPicture(reader1.result);
-                setUpdateFoodPic({...updateFoodPic, food_pic: reader1.result});
-            };
+        if (file1) {
+            const fileSize1 = file1.size;
+            if(fileSize1 > MAX_FILE_SIZE){
+                e.target.value = null;
+                setFoodPicture(null);
+                return;
+            } else {
+                const reader1 = new FileReader();
+                reader1.readAsDataURL(file1);
+                reader1.onloadend = () => {
+                    setFoodPicture(reader1.result);
+                    setUpdateFoodPic({...updateFoodPic, food_pic: reader1.result});
+                };
+            }
         }
     };
 
     const handleFoodPicture2 = (e) => {
         const file1 = e.target.files[0];
-        const fileSize1 = file1.size;
-        if(fileSize1 > MAX_FILE_SIZE){
-            e.target.value = null;
-            setFoodPicture2(null);
-            return;
-        } else {
-            const reader1 = new FileReader();
-            reader1.readAsDataURL(file1);
-            reader1.onloadend = () => {
-                setFoodPicture2(reader1.result);
-                setUpdateFoodPic2({...updateFoodPic2, food_pic2: reader1.result});
-            };
+        if (file1){
+            const fileSize1 = file1.size;
+            if(fileSize1 > MAX_FILE_SIZE){
+                e.target.value = null;
+                setFoodPicture2(null);
+                return;
+            } else {
+                const reader1 = new FileReader();
+                reader1.readAsDataURL(file1);
+                reader1.onloadend = () => {
+                    setFoodPicture2(reader1.result);
+                    setUpdateFoodPic2({...updateFoodPic2, food_pic2: reader1.result});
+                };
+            }
         }
     };
 
@@ -491,7 +498,7 @@ function EditRestaurant(props){
 
     useEffect(() =>{
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/` , 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/` , 
             {headers :{
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -500,9 +507,15 @@ function EditRestaurant(props){
             }}
         )
         .then((response) => {
-            setData(response.data)
+            console.log(response.data);
+            setData(response.data);
+            setCroppedImage(response.data.restaurant_image);
+            setLoading(false);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            setLoading(true);
+        })
     },[]);
 
     const firstChar = data?.name?data.name.charAt(0) : "UN";
@@ -510,7 +523,7 @@ function EditRestaurant(props){
     const handleUpdate = (e) => {
         e.preventDefault();
         axios.patch(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/`, update,
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/`, update,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -539,7 +552,7 @@ function EditRestaurant(props){
 
     const handleDeleteRestaurant = () => {
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/`
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/`
         )
         .then(() => {
             history.push("/homepage-restaurant");
@@ -549,7 +562,7 @@ function EditRestaurant(props){
 
     const handleDelete = (res) => {
         axios.delete(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -571,7 +584,7 @@ function EditRestaurant(props){
         setIdFood(e);
         setOpenEdit(!openEdit);
         axios.get(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${e}/`,
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${e}/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -600,7 +613,7 @@ function EditRestaurant(props){
         };
 
         axios.put(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/${idFood}/`, 
             editData,
             {headers: {
                 'Content-Type' : 'application/json',
@@ -632,7 +645,7 @@ function EditRestaurant(props){
         };
 
         axios.post(
-            `http://188.121.124.63/restaurant/managers/${idM}/restaurants/${idR}/food/`, 
+            `http://188.121.124.63:8000/restaurant/managers/${idM}/restaurants/${idR}/food/`, 
             userData, 
             {headers:{
                 "Content-Type" : "application/json", 
@@ -657,6 +670,14 @@ function EditRestaurant(props){
                 setAlertSeverity("error");
             }
         });
+    };
+
+    const handlepic1delete = () =>{
+        setFoodPicture(null);
+    };
+
+    const handlepic2delete = () =>{
+        setFoodPicture2(null);
     };
 
     const handleOpenAdd = (e) => {
@@ -687,827 +708,762 @@ function EditRestaurant(props){
                 className="edit-back"
             >
                 <HeaderRestaurant/>
-                <div 
-                    className={`container ${blurBackground ? 'blur-background' : ''}`}
-                >
-                    <div >
-                        <ToastContainer />
-                    </div>
-                    <Grid container spacing={2} 
-                        className="edit-grid"
+                {loading ? (
+                        <PulseLoader
+                        type="bars"
+                        color="black"
+                        speedMultiplier={1}
+                        className="edit-spinner"
+                        
+                        />
+                ) : (
+                    <div 
+                        className={`container ${blurBackground ? 'blur-background' : ''}`}
                     >
-                        <Grid item md={3} sm={12} xs={12}>
-                            <Box 
-                                className="edit-box"
-                            >
-                                <Typography 
-                                    variant="h5" 
-                                    color="textPrimary"
-                                    gutterBottom
-                                    className="edit-title"
-                                >
-                                    Profile Picture
-                                </Typography>
-                                <Avatar
-                                    className="edit-avatar"
-                                    style={{backgroundColor: color, fontSize:"40px"}}
-                                    src={croppedImage}
-                                >
-                                    {firstChar}
-                                </Avatar>
-                                <Typography 
-                                    className="text-above-upload"
-                                >
-                                    JPG or PNG no larger than 5 MB
-                                </Typography>
-                                {open && 
-                                    <Alert 
-                                        severity="error" 
-                                        open={open} 
-                                        onClose={handleClose} 
-                                        className="image-alert" 
-                                        variant="outlined" 
-                                    >
-                                        File size is too large.
-                                    </Alert>
-                                } 
-                                <input
-                                    accept="image/*"
-                                    id="profile-image-input-restaurant"
-                                    type="file"
-                                    hidden      
-                                    MAX_FILE_SIZE={MAX_FILE_SIZE}   
-                                    onClick={(e) => {
-                                        onClose();
-                                    }}
-                                    onChange={(e) => {
-                                        const [file] = e.target.files;
-                                        setImg(file);
-                                        setOpenImg(true);
-                                    }}                   
-                                />
-                                <label 
-                                    htmlFor="profile-image-input-restaurant" 
-                                    className="input-label"
-                                >
-                                    <Button 
-                                        className="upload-button" 
-                                        component="span"
-                                    >
-                                        Upload new image
-                                    </Button>
-                                </label>
-                            </Box>
-                        </Grid>
-                        <Modal
-                            open={openImg}
-                            onClose={handleCloseImg}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                            sx={{ margin: 10 }}
+                        <div >
+                            <ToastContainer />
+                        </div>
+                        <Grid container spacing={2} 
+                            className="edit-grid"
                         >
-                            <Box sx={style}>
-                                <div 
-                                    className="App"
+                            <Grid item md={3} sm={12} xs={12}>
+                                <Box 
+                                    className="edit-box"
                                 >
-                                    <div 
-                                        className="crop-container"
+                                    <Typography 
+                                        variant="h5" 
+                                        color="textPrimary"
+                                        gutterBottom
+                                        className="edit-title"
                                     >
-                                        <Cropper
-                                            image={img ? URL.createObjectURL(img) : null}
-                                            crop={crop}
-                                            zoom={zoom}
-                                            aspect={1}
-                                            onCropChange={setCrop}
-                                            onCropComplete={onCropComplete}
-                                            onZoomChange={setZoom}
+                                        Profile Picture
+                                    </Typography>
+                                    <Avatar
+                                        className="edit-avatar"
+                                        style={{backgroundColor: color, fontSize:"40px"}}
+                                        src={croppedImage}
+                                    >
+                                        {firstChar}
+                                    </Avatar>
+                                    <input
+                                        accept="image/*"
+                                        id="photoInput"
+                                        type="file"
+                                        hidden      
+                                        MAX_FILE_SIZE={MAX_FILE_SIZE}   
+                                        onClick={(e) => {
+                                            onClose();
+                                        }}
+                                        onChange={(e) => {
+                                            const [file] = e.target.files;
+                                            setImg(file);
+                                            setOpenImg(true);
+                                        }}                   
+                                    />
+                                    <label 
+                                        htmlFor="photoInput" 
+                                        className="input-label"
+                                    >
+                                        <UploadButton
+                                            title={"Uplaod new image"}
+                                        />
+                                    </label>
+                                </Box>
+                            </Grid>
+                            <Modal
+                                open={openImg}
+                                onClose={handleCloseImg}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                                sx={{ margin: 10 }}
+                            >
+                                <Box sx={style}>
+                                    <div 
+                                        className="App"
+                                    >
+                                        <div 
+                                            className="crop-container"
+                                        >
+                                            <Cropper
+                                                image={img ? URL.createObjectURL(img) : null}
+                                                crop={crop}
+                                                zoom={zoom}
+                                                aspect={1}
+                                                onCropChange={setCrop}
+                                                onCropComplete={onCropComplete}
+                                                onZoomChange={setZoom}
+                                            />
+                                        </div>
+                                    </div>
+                                    <Divider
+                                        className="crop-divider"
+                                        id="top"
+                                    />
+                                    <Divider
+                                        className="crop-divider"
+                                        id="bottom"
+                                    />
+                                    <div
+                                        className="crop-buttons"
+                                    >
+                                        <CancelButton
+                                            onClick={onClose}
+                                            variant={"contained"}
+                                            title={"Discard"}
+                                            customWidth={"auto"}
+                                        />
+                                        <SubmitButton
+                                            onClick={showCroppedImage}
+                                            variant={"contained"}
+                                            title={"Apply cutting"}
+                                            customWidth={"auto"}
                                         />
                                     </div>
-                                </div>
-                                <Divider
-                                    className="crop-divider"
-                                    id="top"
-                                />
-                                <Divider
-                                    className="crop-divider"
-                                    id="bottom"
-                                />
-                                <div
-                                    className="crop-buttons"
+                                </Box>
+                            </Modal>
+                            <Grid item md={9} sm={12} xs={12}>
+                                <Box 
+                                    className="edit-box"
                                 >
-                                    <Button
-                                        onClick={showCroppedImage}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="save"
+                                    <Typography 
+                                        variant="h5" 
+                                        color="textPrimary"
+                                        gutterBottom
+                                        className="edit-title"
                                     >
-                                        Apply
-                                    </Button>
-                                    <Button
-                                        onClick={onClose}
-                                        variant="contained"
-                                        className="edit-button crop"
-                                        id="discard"
+                                        Restaurant Details 
+                                    </Typography>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <TextField
+                                                label="Restaurant name"
+                                                variant="outlined"
+                                                color="secondary"
+                                                value={fullname}
+                                                onChange={handleFullname}
+                                                className="item"
+                                                error={fullnameError}
+                                                InputLabelProps={{ shrink: true }} 
+                                                helperText={
+                                                    <div className="edit-error">
+                                                        {fullnameError && 'Name should have at most 256 characters.'}
+                                                    </div>
+                                                }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <PhoneInput
+                                                label="Phone number"
+                                                value={data.number}
+                                                defaultCountry="ir"
+                                                color="secondary"
+                                                onChange={handlePhoneChange}
+                                                InputLabelProps={{ shrink: true }} 
+                                                className="phone-input item"
+                                                variant="outlined"
+                                                inputProps={{
+                                                    maxLength: 13
+                                                }}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container spacing={2} className="edit-field">
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <LocalizationProvider 
+                                                dateAdapter={AdapterDayjs}
+                                                InputLabelProps={{ shrink: true }}
+                                            >
+                                                <DemoContainer components={['DatePicker']} >
+                                                    <DatePicker
+                                                        label="Establishment date"
+                                                        views={['year', 'month', 'day']}
+                                                        sx={{width: '100%'}}
+                                                        maxDate={dayjs()}
+                                                        onChange={handleEstablishdate}
+                                                        value={doe ? dayjs(doe) : null }
+                                                    />
+                                                </DemoContainer>
+                                            </LocalizationProvider>
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} md={6} lg={6}>
+                                            <TextField
+                                                label="Discount"
+                                                variant="outlined"
+                                                color="secondary"
+                                                value={discount}
+                                                onChange={handleDiscount}
+                                                InputLabelProps={{ shrink: true }}  
+                                                style={{marginTop: '8px'}}
+                                                className="item"
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container spacing={2} 
+                                        style={{marginTop: '10px'}}
                                     >
-                                        Discard
-                                    </Button>
-                                </div>
-                            </Box>
-                        </Modal>
-                        <Grid item md={9} sm={12} xs={12}>
-                            <Box 
-                                className="edit-box"
-                            >
-                                <Typography 
-                                    variant="h5" 
-                                    color="textPrimary"
-                                    gutterBottom
-                                    className="edit-title"
-                                >
-                                    Restaurant Details 
-                                </Typography>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={6} md={6}>
-                                        <TextField
-                                            label="Restaurant name"
-                                            variant="outlined"
-                                            color="secondary"
-                                            value={fullname}
-                                            onChange={handleFullname}
-                                            className="item"
-                                            error={fullnameError}
-                                            InputLabelProps={{ shrink: true }} 
-                                            helperText={
-                                                <div className="edit-error">
-                                                    {fullnameError && 'Name should have at most 256 characters.'}
-                                                </div>
-                                            }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={6}>
-                                        <PhoneInput
-                                            label="Phone number"
-                                            value={data.number}
-                                            defaultCountry="ir"
-                                            color="secondary"
-                                            onChange={handlePhoneChange}
-                                            InputLabelProps={{ shrink: true }} 
-                                            className="phone-input item"
-                                            variant="outlined"
-                                            inputProps={{
-                                                maxLength: 13
-                                            }}
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={2} className="edit-field">
-                                    <Grid item xs={12} sm={6} md={6}>
-                                        <LocalizationProvider 
-                                            dateAdapter={AdapterDayjs}
-                                            InputLabelProps={{ shrink: true }}
-                                        >
-                                            <DemoContainer components={['DatePicker']} >
-                                                <DatePicker
-                                                    label="Establishment date"
-                                                    views={['year', 'month', 'day']}
-                                                    sx={{width: '100%'}}
-                                                    maxDate={dayjs()}
-                                                    onChange={handleEstablishdate}
-                                                    value={doe ? dayjs(doe) : null }
-                                                />
-                                            </DemoContainer>
-                                        </LocalizationProvider>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={6} lg={6}>
-                                        <TextField
-                                            label="Discount"
-                                            variant="outlined"
-                                            color="secondary"
-                                            value={discount}
-                                            onChange={handleDiscount}
-                                            InputLabelProps={{ shrink: true }}  
-                                            style={{marginTop: '8px'}}
-                                            className="item"
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={2} 
-                                    style={{marginTop: '10px'}}
-                                >
-                                    <Grid item xs={12} sm={6} md={6}>
-                                        <TextField
-                                            label="Country"
-                                            variant="outlined"
-                                            color="secondary"
-                                            value={country}
-                                            InputLabelProps={{ shrink: true }}
-                                            className="item"
-                                            onChange={handleCountry}
-                                            select
-                                            SelectProps={{
-                                                MenuProps: {
-                                                    PaperProps: {
-                                                        style: {
-                                                            maxHeight: '290px'
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <TextField
+                                                label="Country"
+                                                variant="outlined"
+                                                color="secondary"
+                                                value={country}
+                                                InputLabelProps={{ shrink: true }}
+                                                className="item"
+                                                onChange={handleCountry}
+                                                select
+                                                SelectProps={{
+                                                    MenuProps: {
+                                                        PaperProps: {
+                                                            style: {
+                                                                maxHeight: '290px'
+                                                            },
                                                         },
                                                     },
-                                                },
-                                            }}
-                                        >
-                                            <MenuItem 
-                                                value="select" 
-                                                disabled
+                                                }}
                                             >
-                                                <em>
-                                                    Select Country
-                                                </em>
-                                            </MenuItem>
-                                            {countries && 
-                                                countries.map((c, index) => (
-                                                    <MenuItem 
-                                                        style={{height: '40px' }} 
-                                                        value={c}
-                                                    >
-                                                        {c}
-                                                    </MenuItem>
-                                                )
-                                            )} 
-                                        </TextField>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6} md={6}>
-                                        <TextField
-                                            label="City"
-                                            variant="outlined"
-                                            color="secondary"
-                                            value={city}
-                                            InputLabelProps={{ shrink: true }}
-                                            className="item"
-                                            onChange={handleCity}
-                                            select
-                                            SelectProps={{
-                                                MenuProps: {
-                                                    PaperProps: {
-                                                        style: {
-                                                            maxHeight: '290px',
+                                                <MenuItem 
+                                                    value="select" 
+                                                    disabled
+                                                >
+                                                    <em>
+                                                        Select Country
+                                                    </em>
+                                                </MenuItem>
+                                                {countries && 
+                                                    countries.map((c, index) => (
+                                                        <MenuItem 
+                                                            style={{height: '40px' }} 
+                                                            value={c}
+                                                        >
+                                                            {c}
+                                                        </MenuItem>
+                                                    )
+                                                )} 
+                                            </TextField>
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} md={6}>
+                                            <TextField
+                                                label="City"
+                                                variant="outlined"
+                                                color="secondary"
+                                                value={city}
+                                                InputLabelProps={{ shrink: true }}
+                                                className="item"
+                                                onChange={handleCity}
+                                                select
+                                                SelectProps={{
+                                                    MenuProps: {
+                                                        PaperProps: {
+                                                            style: {
+                                                                maxHeight: '290px',
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }}
-                                        > 
-                                            <MenuItem 
-                                                value="select" 
-                                                disabled
-                                            >
-                                                <em>
-                                                    Select City
-                                                </em>
-                                            </MenuItem>
-                                            {cities && 
-                                                cities.map((c, index) => (
-                                                    <MenuItem 
-                                                        style={{height: '40px' }} 
-                                                        value={c}
-                                                    >
-                                                        {c}
-                                                    </MenuItem>
-                                                )
-                                            )}
-                                        </TextField>
+                                                }}
+                                            > 
+                                                <MenuItem 
+                                                    value="select" 
+                                                    disabled
+                                                >
+                                                    <em>
+                                                        Select City
+                                                    </em>
+                                                </MenuItem>
+                                                {cities && 
+                                                    cities.map((c, index) => (
+                                                        <MenuItem 
+                                                            style={{height: '40px' }} 
+                                                            value={c}
+                                                        >
+                                                            {c}
+                                                        </MenuItem>
+                                                    )
+                                                )}
+                                            </TextField>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                    <TextField
-                                        label="Address"
-                                        variant="outlined"
-                                        color="secondary"
-                                        multiline
-                                        value = {address?address:""}
-                                        onChange={handleAddress}
-                                        className="item"
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton 
-                                                        title="choose location" 
-                                                        style={{marginLeft:"28%"}} 
-                                                        onClick={handleOpenMap}
-                                                    >
-                                                        <TravelExploreIcon />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                    />
-                                    <Modal 
-                                        open={showMap} 
-                                        onClose={handleCloseMap}
-                                    >
-                                        <Map 
-                                            location={mylocation}
-                                        />
-                                    </Modal>
-                                    <TextField
-                                        label="Description"
-                                        variant="outlined"
-                                        color="secondary"
-                                        multiline
-                                        className="item"
-                                        value={description}
-                                        onChange={handleDescription}
-                                        InputLabelProps={{ shrink: true }}  
-                                    />
-                                    {openMenu && 
-                                        <Button 
+                                        <TextField
+                                            label="Address"
+                                            variant="outlined"
                                             color="secondary"
-                                            onClick={handleOpenMenu}
-                                            className="showmenu-button edit-button"
+                                            multiline
+                                            value = {address?address:""}
+                                            onChange={handleAddress}
+                                            className="item"
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton 
+                                                            title="choose location" 
+                                                            style={{marginLeft:"28%"}} 
+                                                            onClick={handleOpenMap}
+                                                        >
+                                                            <TravelExploreIcon />
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                )
+                                            }}
+                                        />
+                                        <Modal 
+                                            open={showMap} 
+                                            onClose={handleCloseMap}
                                         >
-                                            Show Menu
-                                        </Button>
-                                    }
-                                    {!openMenu && 
-                                        <div>
-                                            <Grid container spacing={1}
-                                                className="menu" 
-                                            >
-                                                <IconButton 
-                                                    title="Add food" 
-                                                    className="add"
+                                            <Map 
+                                                location={mylocation}
+                                            />
+                                        </Modal>
+                                        <TextField
+                                            label="Description"
+                                            variant="outlined"
+                                            color="secondary"
+                                            multiline
+                                            className="item"
+                                            value={description}
+                                            onChange={handleDescription}
+                                            InputLabelProps={{ shrink: true }}  
+                                        />
+                                        {openMenu &&
+                                            <SubmitButton
+                                                variant={"contained"}
+                                                type={"submit"}
+                                                onClick={handleOpenMenu}
+                                                title={"Show menu"}
+                                                customWidth={"auto"}
+                                            />
+                                        }
+                                        {!openMenu && 
+                                            <div style={{width:'100%'}}>
+                                                <Grid container spacing={1}
+                                                    className="menu" 
                                                 >
-                                                    <AddIcon 
-                                                        onClick={handleOpenAdd}
-                                                    />
-                                                </IconButton>
-                                                <IconButton 
-                                                    title="Hide menu" 
-                                                    className="hide"
-                                                >
-                                                    <ClearIcon 
-                                                        onClick={handleOpenMenu}
-                                                    />
-                                                </IconButton>
-                                            </Grid>
-                                            <StyledDialog 
-                                                open={openAdd}  
-                                                classes={{ paper: classes.dialogRoot }} 
-                                                onClose={handleOpenAdd}
-                                            >
-                                                <DialogTitle 
-                                                    className="edit-title"
-                                                >
-                                                    Add Food
-                                                </DialogTitle>
-                                                <Grid container spacing={2}>
-                                                    <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                        <Avatar
-                                                        className="food-avatar"
-                                                        style={{backgroundColor: color}}
-                                                        src={foodPicture}
-                                                        >
-                                                            F
-                                                        </Avatar>
-                                                        <input
-                                                            accept="image/*"
-                                                            id="food-image-input"
-                                                            type="file"
-                                                            onChange={handleFoodPicture}
-                                                            hidden      
-                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                        />
-                                                        <label 
-                                                            htmlFor="food-image-input" 
-                                                            className="food-image-button"
-                                                        >
-                                                            <Button 
-                                                                className="upload-button" 
-                                                                component="span"
-                                                            >
-                                                                Upload the first food image
-                                                            </Button>
-                                                        </label>
-                                                    </Grid>
-                                                    <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                        
-                                                        <Avatar
-                                                        className="food-avatar"
-                                                        style={{backgroundColor: color}}
-                                                        src={foodPicture2}
-                                                        >
-                                                            F
-                                                        </Avatar>
-                                                        <input
-                                                            accept="image/*"
-                                                            id="food-image-input2"
-                                                            type="file"
-                                                            onChange={handleFoodPicture2}
-                                                            hidden      
-                                                            MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                        />
-                                                        <label 
-                                                            htmlFor="food-image-input2" 
-                                                            className="food-image-button"
-                                                        >
-                                                            <Button 
-                                                                className="upload-button" 
-                                                                component="span"
-                                                                disabled={!foodPicture}
-                                                            >
-                                                                Upload the second food image
-                                                            </Button>
-                                                        </label>
-                                                    </Grid>
-
-                                                </Grid>
-                                                <TextField
-                                                    label="Name"
-                                                    variant="outlined"
-                                                    color="secondary"
-                                                    className="edit-field food"
-                                                    required
-                                                    value={foodName}
-                                                    onChange={handleFoodName}
-                                                    error={foodNameError}
-                                                    helperText={
-                                                        <div className="food-error">
-                                                            {foodNameError && "Name should have at most 256 character."}
-                                                        </div>
-                                                    }
-                                                />
-                                                <TextField
-                                                    label="Ingredient"
-                                                    variant="outlined"
-                                                    color="secondary"
-                                                    multiline
-                                                    className="edit-field food"
-                                                    onChange={handleFoodIngredient}
-                                                    error={foodIngredientError}
-                                                    helperText={
-                                                        <div className="food-error">
-                                                            {foodIngredientError && "Ingredients should have at most 256 character."}
-                                                        </div>
-                                                    }
-                                                />
-                                                <Grid container spacing={2} 
-                                                    className="edit-field remain-price" 
-                                                >
-                                                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                                                        <TextField
-                                                            label="Remain amount"
-                                                            variant="outlined"
-                                                            color="secondary"
-                                                            value={remainFood}
-                                                            required
-                                                            className="remain"
-                                                            onChange={handleRemain}
-                                                            error={remainFoodError}
-                                                            helperText={
-                                                                <div className="edit-error">
-                                                                    {remainFoodError && "Remain amount must be number."}
-                                                                </div>
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                                                        <TextField
-                                                            label="Price"
-                                                            variant="outlined"
-                                                            color="secondary"
-                                                            className="price"
-                                                            required
-                                                            value={foodPrice}
-                                                            error={foodPriceError}
-                                                            onChange={handleFoodPrice}
-                                                            helperText={
-                                                                <div className="food-error">
-                                                                    {foodPriceError && "Price must be a number."}
-                                                                </div>
-                                                            }
-                                                            InputProps={{
-                                                                startAdornment: (
-                                                                    <InputAdornment 
-                                                                        position="start" 
-                                                                    >
-                                                                        $
-                                                                    </InputAdornment>
-                                                                )
-                                                            }}
-                                                        />
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid container spacing={2} 
-                                                    className="food-button-grid"
-                                                >
-                                                    <Grid item>
-                                                        <Button 
-                                                            className="edit-button" 
-                                                            id="discard"
-                                                            variant="contained"
+                                                    <IconButton 
+                                                        title="Add food" 
+                                                        className="add"
+                                                    >
+                                                        <AddIcon 
                                                             onClick={handleOpenAdd}
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </Grid>
-                                                    <Grid item lg={2} md={2} sm={2}>
-                                                        <Button 
-                                                            className="edit-button" 
-                                                            id="save" 
-                                                            variant="contained" 
-                                                            onClick={hanldeAddNewFood}
-                                                        >
-                                                            Add
-                                                        </Button>
-                                                    </Grid>
+                                                        />
+                                                    </IconButton>
+                                                    <IconButton 
+                                                        title="Hide menu" 
+                                                        className="hide"
+                                                    >
+                                                        <ClearIcon 
+                                                            onClick={handleOpenMenu}
+                                                        />
+                                                    </IconButton>
                                                 </Grid>
-                                            </StyledDialog>
-                                            <Box 
-                                                className="menu-box"
-                                            >
-                                                {menu && menu.map((res, index) => (
-                                                    <div>
-                                                        <Box 
-                                                            className="food-box"
-                                                        >
-                                                            <Grid container spacing={4}>
-                                                                <Grid item lg={3} md={3} sm={3} >
-                                                                    <div
-                                                                        className="food-image-container"
-                                                                        onMouseEnter={() => setShowSecondImage(res.id)}
-                                                                        onMouseLeave={() => setShowSecondImage(null)}
+                                                <StyledDialog 
+                                                    open={openAdd}  
+                                                    classes={{ paper: classes.dialogRoot }} 
+                                                    onClose={handleOpenAdd}
+                                                >
+                                                    <Typography 
+                                                        className="edit-add-food-title"
+                                                    >
+                                                        Add Food
+                                                    </Typography>
+                                                    <Grid container spacing={0}>
+                                                        <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                            <div class="upload-box" style={{ backgroundImage: `url('${foodPicture}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                                                                <input
+                                                                    accept="image/*"
+                                                                    id="food-image-input"
+                                                                    type="file"
+                                                                    onChange={handleFoodPicture}
+                                                                    hidden      
+                                                                    MAX_FILE_SIZE={MAX_FILE_SIZE}   
+                                                                />
+                                                                <label 
+                                                                    htmlFor="food-image-input" 
+                                                                >
+                                                                        <AddCircleIcon className="add-circle-icon"/>
+                                                                        <Typography>Upload First Image</Typography>
+                                                                </label>
+                                                                {(foodPicture && !foodPicture2) && (
+                                                                    <IconButton
+                                                                        className="delete-image"
+                                                                        style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                        onClick={handlepic1delete}
+                                                                        disabled={!foodPicture || foodPicture2}                
                                                                     >
-                                                                        <img
-                                                                            src={showSecondImage === res.id && res.food_pic2!=null ? res.food_pic2 : res.food_pic}
-                                                                            className="food-image"
-                                                                        />
-                                                                    </div>
-                                                                </Grid>
-                                                                <Grid item lg={5} md={5} sm={4} className='edit-food-grid'>
-                                                                    <Typography 
-                                                                        className="food-name"
+                                                                        <DeleteIcon/>
+                                                                    </IconButton>
+                                                                )}
+                                                            </div>
+                                                        </Grid>
+                                                        <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                            <div class="upload-box" style={{ backgroundImage: `url('${foodPicture2}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                                                                <input
+                                                                    accept="image/*"
+                                                                    id="food-image-input2"
+                                                                    type="file"
+                                                                    onChange={handleFoodPicture2}
+                                                                    hidden      
+                                                                    MAX_FILE_SIZE={MAX_FILE_SIZE} 
+                                                                    disabled={!foodPicture} 
+                                                                />
+                                                                <label 
+                                                                    htmlFor="food-image-input2" 
+                                                                    style={{ cursor: !foodPicture ? 'auto' : 'pointer' }}
+                                                                    title={!foodPicture ? 'Upload the first image to enable this option.' : ''}              
+                                                                >
+                                                                    <AddCircleIcon className="add-circle-icon"/>
+                                                                    <Typography>Upload Second Image</Typography>
+                                                                </label>
+                                                                {foodPicture2 && (
+                                                                    <IconButton
+                                                                        className="delete-image"
+                                                                        style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                        onClick={handlepic2delete}
+                                                                        disabled={!foodPicture || !foodPicture2}
                                                                     >
-                                                                        {res.name}
-                                                                    </Typography>
-                                                                    <Typography 
-                                                                        className="food-ingredient"
-                                                                    >
-                                                                        {res.ingredients}
-                                                                    </Typography>
-                                                                </Grid>
-                                                                <Grid item lg={2} md={2} sm={2} className='edit-food-grid'>
-                                                                    <Typography 
-                                                                        className="food-price-menu"
-                                                                    >
-                                                                        {res.price}$
-                                                                    </Typography>
-                                                                    <Typography 
-                                                                        className="food-remain-number"
-                                                                    >
-                                                                        {res.remainder} remain
-                                                                    </Typography>
-                                                                </Grid>
-                                                                <Grid item lg={2} md={2} sm={3} className='edit-food-grid'>
-                                                                    <Button 
-                                                                        className="food-edit" 
-                                                                        id="food-edit-button" 
-                                                                        onClick={() => handleOpenEdit(res.id)}
-                                                                    >
-                                                                        Edit
-                                                                    </Button>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Box>
-                                                        <StyledDialog 
-                                                            open={openEdit} 
-                                                            classes={{ paper: classes.dialogRoot }} 
-                                                            onClose={handleOpenEdit}
-                                                        >
-                                                            <DialogTitle 
-                                                                className="edit-title"
-                                                            >
-                                                                Edit Food
-                                                            </DialogTitle>
-                                                            <Grid container spacing={2}>
-                                                                <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                                    <Avatar
-                                                                    className="food-avatar"
-                                                                    style={{backgroundColor: color}}
-                                                                    src={foodPicture}
-                                                                    >
-                                                                        F
-                                                                    </Avatar>
-                                                                    <input
-                                                                        accept="image/*"
-                                                                        id="edit-food-image-input"
-                                                                        type="file"
-                                                                        onChange={handleFoodPicture}
-                                                                        hidden      
-                                                                        MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                                    />
-                                                                    <label 
-                                                                        htmlFor="edit-food-image-input" 
-                                                                        className="food-image-button"
-                                                                    >
-                                                                        <Button 
-                                                                            className="upload-button" 
-                                                                            component="span"
-                                                                        >
-                                                                            Upload the first food image
-                                                                        </Button>
-                                                                    </label>
-                                                                </Grid>
-                                                                <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
-                                                                    
-                                                                    <Avatar
-                                                                    className="food-avatar"
-                                                                    style={{backgroundColor: color}}
-                                                                    src={foodPicture2}
-                                                                    >
-                                                                        F
-                                                                    </Avatar>
-                                                                    <input
-                                                                        accept="image/*"
-                                                                        id="edit-food-image-input2"
-                                                                        type="file"
-                                                                        onChange={handleFoodPicture2}
-                                                                        hidden      
-                                                                        MAX_FILE_SIZE={MAX_FILE_SIZE}                   
-                                                                    />
-                                                                    <label 
-                                                                        htmlFor="edit-food-image-input2" 
-                                                                        className="food-image-button"
-                                                                    >
-                                                                        <Button 
-                                                                            className="upload-button" 
-                                                                            component="span"
-                                                                            disabled={foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')}
-                                                                        >
-                                                                            Upload the second food image
-                                                                        </Button>
-                                                                    </label>
-                                                                </Grid>
-
-                                                            </Grid>
-                                                            
-                                                            
+                                                                        <DeleteIcon/>
+                                                                    </IconButton>
+                                                                )}
+                                                            </div>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <TextField
+                                                        label="Name"
+                                                        variant="outlined"
+                                                        color="secondary"
+                                                        className="edit-field food"
+                                                        required
+                                                        value={foodName}
+                                                        onChange={handleFoodName}
+                                                        error={foodNameError}
+                                                        helperText={
+                                                            <div className="food-error">
+                                                                {foodNameError && "Name should have at most 256 character."}
+                                                            </div>
+                                                        }
+                                                    />
+                                                    <TextField
+                                                        label="Ingredient"
+                                                        variant="outlined"
+                                                        color="secondary"
+                                                        multiline
+                                                        className="edit-field food"
+                                                        onChange={handleFoodIngredient}
+                                                        error={foodIngredientError}
+                                                        helperText={
+                                                            <div className="food-error">
+                                                                {foodIngredientError && "Ingredients should have at most 256 character."}
+                                                            </div>
+                                                        }
+                                                    />
+                                                    <Grid container spacing={2} 
+                                                        className="edit-field remain-price" 
+                                                    >
+                                                        <Grid item lg={6} md={6} sm={12} xs={12}>
                                                             <TextField
-                                                                label="Name"
+                                                                label="Remain amount"
                                                                 variant="outlined"
                                                                 color="secondary"
-                                                                value={foodName}
+                                                                value={remainFood}
                                                                 required
-                                                                className="edit-field food"
-                                                                onChange={handleFoodName}
-                                                                error={foodNameError}
+                                                                className="remain"
+                                                                onChange={handleRemain}
+                                                                error={remainFoodError}
                                                                 helperText={
-                                                                    <div className="food-error">
-                                                                        {foodNameError && "Name should have at most 256 character."}
+                                                                    <div className="edit-error">
+                                                                        {remainFoodError && "Remain amount must be number."}
                                                                     </div>
                                                                 }
-                                                                InputLabelProps={{ shrink: true }}
                                                             />
+                                                        </Grid>
+                                                        <Grid item lg={6} md={6} sm={12} xs={12}>
                                                             <TextField
-                                                                label="Ingredient"
+                                                                label="Price"
                                                                 variant="outlined"
                                                                 color="secondary"
-                                                                value={foodIngredient}
-                                                                multiline
-                                                                className="edit-field food"
-                                                                onChange={handleFoodIngredient}
-                                                                error={foodIngredientError}
+                                                                className="price"
+                                                                required
+                                                                value={foodPrice}
+                                                                error={foodPriceError}
+                                                                onChange={handleFoodPrice}
                                                                 helperText={
                                                                     <div className="food-error">
-                                                                        {foodIngredientError && "Ingredients should have at most 256 character."}
+                                                                        {foodPriceError && "Price must be a number."}
                                                                     </div>
                                                                 }
-                                                                InputLabelProps={{ shrink: true }}
+                                                                InputProps={{
+                                                                    startAdornment: (
+                                                                        <InputAdornment 
+                                                                            position="start" 
+                                                                        >
+                                                                            $
+                                                                        </InputAdornment>
+                                                                    )
+                                                                }}
                                                             />
-                                                            <Grid container spacing={2} 
-                                                                className="edit-field remain-price" 
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid container spacing={2} 
+                                                        className="food-button-grid"
+                                                    >
+                                                        <Grid item>
+                                                            <CancelButton
+                                                                variant={"contained"}
+                                                                type={"submit"}
+                                                                onClick={handleOpenAdd}
+                                                                title={"Cancel"}
+                                                            />
+                                                        </Grid>
+                                                        <Grid item lg={2} md={2} sm={2}>
+                                                            <SubmitButton
+                                                                variant={"contained"}
+                                                                type={"submit"}
+                                                                onClick={hanldeAddNewFood}
+                                                                title={"Add"}
+                                                                customWidth={"auto"}
+                                                            />
+                                                        </Grid>
+                                                    </Grid>
+                                                </StyledDialog>
+                                                <Box 
+                                                    className="menu-box"
+                                                >
+                                                    {menu && menu.map((food, index) => (
+                                                        <div>
+                                                            <CustomEditFood
+                                                                food={food}
+                                                                secondImage={showSecondImage}
+                                                                onMouseEnter={() => setShowSecondImage(food.id)}
+                                                                onMouseLeave={() => setShowSecondImage(null)}
+                                                                onClickEdit={() => handleOpenEdit(food.id)}
+                                                            />
+                                                            <StyledDialog 
+                                                                open={openEdit} 
+                                                                classes={{ paper: classes.dialogRoot }} 
+                                                                onClose={handleOpenEdit}
                                                             >
-                                                                <Grid item lg={6} md={6} sm={6} xs={12}>
-                                                                    <TextField
-                                                                        label="Remain amount"
-                                                                        variant="outlined"
-                                                                        color="secondary"
-                                                                        value={remainFood}
-                                                                        required
-                                                                        className="remain"
-                                                                        onChange={handleRemain}
-                                                                        error={remainFoodError}
-                                                                        helperText={
-                                                                            <div className="food-error">
-                                                                                {remainFoodError && "Remain amount must be number."}
-                                                                            </div>
-                                                                        }
-                                                                    >
-                                                                    </TextField>
-                                                                </Grid>
-                                                                <Grid item lg={6} md={6} sm={6} xs={12}>
-                                                                    <TextField
-                                                                        label="Price"
-                                                                        variant="outlined"
-                                                                        color="secondary"
-                                                                        onChange={handleFoodPrice}
-                                                                        value={foodPrice}
-                                                                        required
-                                                                        className="price"
-                                                                        InputProps={{
-                                                                            startAdornment: (
-                                                                                <InputAdornment 
-                                                                                    position="end" 
+                                                                <DialogTitle 
+                                                                    className="edit-title"
+                                                                >
+                                                                    Edit Food
+                                                                </DialogTitle>
+                                                                <Grid container spacing={0}>
+                                                                    <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                                        <div class="upload-box" style={{ backgroundImage: `url('${foodPicture}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                                                                            <input
+                                                                                accept="image/*"
+                                                                                id="edit-food-image-input"
+                                                                                type="file"
+                                                                                onChange={handleFoodPicture}
+                                                                                hidden      
+                                                                                MAX_FILE_SIZE={MAX_FILE_SIZE}   
+                                                                            />
+                                                                            <label 
+                                                                                htmlFor="edit-food-image-input" 
+                                                                            >
+                                                                                <AddCircleIcon className="add-circle-icon"/>
+                                                                                <Typography>Upload First Image</Typography>
+                                                                            </label>
+                                                                            { (foodPicture &&
+                                                                                !foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                && !foodPicture2
+                                                                                ) && (
+                                                                                <IconButton
+                                                                                    className="delete-image"
+                                                                                    style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                                    onClick={handlepic1delete}
+                                                                                    disabled={!foodPicture || foodPicture2}                
                                                                                 >
-                                                                                    $
-                                                                                </InputAdornment>
-                                                                            ),
-                                                                        }}
-                                                                    />
-                                                                </Grid>
-                                                            </Grid>
-                                                            <Grid container spacing={2} 
-                                                                className="food-button-grid"
-                                                            >
-                                                                <Grid item>
-                                                                    <Button 
-                                                                        className="edit-button" 
-                                                                        id="discard" 
-                                                                        variant="contained"
-                                                                        onClick={handleDelete}
-                                                                    >
-                                                                        Delete
-                                                                    </Button>
-                                                                </Grid>
-                                                                <Grid item container lg={5} md={5} sm={8}>
-                                                                    <Grid item >
-                                                                        <Button 
-                                                                            className="edit-button" 
-                                                                            id="discard"
-                                                                            variant="contained"
-                                                                            onClick={handleOpenEdit}
-                                                                        >
-                                                                            Cancel
-                                                                        </Button>
+                                                                                    <DeleteIcon/>
+                                                                                </IconButton>
+                                                                            )}
+                                                                        </div>
                                                                     </Grid>
+                                                                    <Grid md ={6} sm={12} xs={12} className='edit-food-grid'>
+                                                                        <div class="upload-box" style={{ backgroundImage: `url('${foodPicture2}')`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                                                                            <input
+                                                                                accept="image/*"
+                                                                                id="edit-food-image-input2"
+                                                                                type="file"
+                                                                                onChange={handleFoodPicture2}
+                                                                                hidden      
+                                                                                MAX_FILE_SIZE={MAX_FILE_SIZE} 
+                                                                                disabled={!foodPicture ||
+                                                                                    foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                }
+                                                                            />
+                                                                            <label 
+                                                                                htmlFor="edit-food-image-input2" 
+                                                                                style={{ cursor: !foodPicture ||
+                                                                                    foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+                                                                                    ? 'auto' : 'pointer' }}
+                                                                                title={!foodPicture ? 'Upload the first image to enable this option.' : ''}              
+                                                                            >
+                                                                                <AddCircleIcon className="add-circle-icon"/>
+                                                                                <Typography>Upload Second Image</Typography>
+                                                                            </label>
+                                                                            {foodPicture2 && (
+                                                                                <IconButton
+                                                                                    className="delete-image"
+                                                                                    style={{ position: 'absolute', bottom: 2, right: 2 }}
+                                                                                    onClick={handlepic2delete}
+                                                                                    disabled={!foodPicture || !foodPicture2}
+                                                                                >
+                                                                                    <DeleteIcon/>
+                                                                                </IconButton>
+                                                                            )}
+                                                                        </div>
+                                                                    </Grid>
+                                                                </Grid>
+                                                                <TextField
+                                                                    label="Name"
+                                                                    variant="outlined"
+                                                                    color="secondary"
+                                                                    value={foodName}
+                                                                    required
+                                                                    className="edit-field food"
+                                                                    onChange={handleFoodName}
+                                                                    error={foodNameError}
+                                                                    helperText={
+                                                                        <div className="food-error">
+                                                                            {foodNameError && "Name should have at most 256 character."}
+                                                                        </div>
+                                                                    }
+                                                                    InputLabelProps={{ shrink: true }}
+                                                                />
+                                                                <TextField
+                                                                    label="Ingredient"
+                                                                    variant="outlined"
+                                                                    color="secondary"
+                                                                    value={foodIngredient}
+                                                                    multiline
+                                                                    className="edit-field food"
+                                                                    onChange={handleFoodIngredient}
+                                                                    error={foodIngredientError}
+                                                                    helperText={
+                                                                        <div className="food-error">
+                                                                            {foodIngredientError && "Ingredients should have at most 256 character."}
+                                                                        </div>
+                                                                    }
+                                                                    InputLabelProps={{ shrink: true }}
+                                                                />
+                                                                <Grid container spacing={2} 
+                                                                    className="edit-field remain-price" 
+                                                                >
+                                                                    <Grid item lg={6} md={6} sm={6} xs={12}>
+                                                                        <TextField
+                                                                            label="Remain amount"
+                                                                            variant="outlined"
+                                                                            color="secondary"
+                                                                            value={remainFood}
+                                                                            required
+                                                                            className="remain"
+                                                                            onChange={handleRemain}
+                                                                            error={remainFoodError}
+                                                                            helperText={
+                                                                                <div className="food-error">
+                                                                                    {remainFoodError && "Remain amount must be number."}
+                                                                                </div>
+                                                                            }
+                                                                        >
+                                                                        </TextField>
+                                                                    </Grid>
+                                                                    <Grid item lg={6} md={6} sm={6} xs={12}>
+                                                                        <TextField
+                                                                            label="Price"
+                                                                            variant="outlined"
+                                                                            color="secondary"
+                                                                            onChange={handleFoodPrice}
+                                                                            value={foodPrice}
+                                                                            required
+                                                                            className="price"
+                                                                            InputProps={{
+                                                                                startAdornment: (
+                                                                                    <InputAdornment 
+                                                                                        position="end" 
+                                                                                    >
+                                                                                        $
+                                                                                    </InputAdornment>
+                                                                                ),
+                                                                            }}
+                                                                        />
+                                                                    </Grid>
+                                                                </Grid>
+                                                                <Grid container spacing={2} 
+                                                                    className="food-button-grid"
+                                                                >
                                                                     <Grid item>
-                                                                        <Button 
-                                                                            className="edit-button" 
-                                                                            id="save"
-                                                                            variant="contained" 
-                                                                            onClick={() => handleEditThisFood()}
-                                                                        >
-                                                                            Apply
-                                                                        </Button>
+                                                                        <CancelButton 
+                                                                            variant={"contained"} 
+                                                                            type={"submit"}
+                                                                            onClick={handleDelete}
+                                                                            title={"delete"}
+                                                                        />
+                                                                    </Grid>
+                                                                    <Grid item container lg={5} md={5} sm={8}>
+                                                                        <Grid item>
+                                                                            <CancelButton 
+                                                                                variant={"contained"} 
+                                                                                type={"submit"}
+                                                                                onClick={handleOpenEdit}
+                                                                                title={"Cancel"}
+                                                                            />
+                                                                        </Grid>
+                                                                        <Grid item>
+                                                                            <SubmitButton 
+                                                                                variant={"contained"}
+                                                                                type={"submit"}
+                                                                                onClick={() => handleEditThisFood()}
+                                                                                title={"Apply"}
+                                                                                customWidth={"auto"}
+                                                                            />
+                                                                        </Grid>
                                                                     </Grid>
                                                                 </Grid>
-                                                            </Grid>
-                                                        </StyledDialog>
-                                                    </div>
-                                                ))}
-                                            </Box>
-                                        </div>
-                                    }
-                                <Grid container spacing={2} 
-                                    className="edit-button-grid" 
-                                    wrap="nowrap"
-                                >
-                                    <Grid item>
-                                        <Button 
-                                            className="edit-button" 
-                                            id="discard"
-                                            variant="contained" 
-                                            onClick={handleDeleteRestaurant}
-                                        >
-                                            Delete restaurant
-                                        </Button>              
-                                                    
-                                    </Grid>  
-                                    <Grid item container lg={5} md={6} sm={12} 
-                                        justifyContent="flex-end"
+                                                            </StyledDialog>
+                                                        </div>
+                                                    ))}
+                                                </Box>
+                                            </div>
+                                        }
+                                    <Grid container spacing={2} 
+                                        className="edit-button-grid" 
+                                        wrap="nowrap"
                                     >
-                                        <Grid item >
-                                            <Button 
-                                                className="edit-button" 
-                                                id="discard"
-                                                variant="contained" 
-                                                onClick={handleDiscard}
-                                            >
-                                                Discard
-                                            </Button>
-                                        </Grid>
                                         <Grid item>
-                                            <Button 
-                                                className="edit-button" 
-                                                id="save"
-                                                variant="contained" 
-                                                onClick={handleUpdate}
-                                                disabled={!validInputs}
-                                            >
-                                                Save changes
-                                            </Button>
+                                            <CancelButton
+                                                variant={"contained"}
+                                                type={"submit"}
+                                                onClick={handleDeleteRestaurant}
+                                                title={"Delete restaurant"}
+                                            />
+                                        </Grid>  
+                                        <Grid item container lg={5} md={6} sm={12} 
+                                            justifyContent="flex-end"
+                                            alignItems="center"
+                                        >
+                                            <Grid item>
+                                                <CancelButton
+                                                    variant={"contained"}
+                                                    type={"submit"}
+                                                    onClick={handleDiscard}
+                                                    title={"Discard"}
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <SubmitButton
+                                                    variant={"contained"}
+                                                    type={"submit"}
+                                                    onClick={handleUpdate}
+                                                    disabled={!validInputs}
+                                                    title={"Save changes"}
+                                                    customWidth={"auto"}
+                                                />
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
-                            </Box>
-                        </Grid>
-                    </Grid> 
-                </div>
+                                </Box>
+                            </Grid>
+                        </Grid> 
+                    </div>
+                )}
                 <Footer/>
             </div>
         </ThemeProvider>

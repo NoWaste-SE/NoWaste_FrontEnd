@@ -40,7 +40,6 @@ const Food = (props) => {
     const token = localStorage.getItem("token");
     const order_id = localStorage.getItem("order_id");
     const resid = food.restaurant_id;
-    const [isHovered, setIsHovered] = useState(false);
     const [remainder, setRemainder] = useState("");
 
     const handleChange = (e) => {
@@ -54,7 +53,7 @@ const Food = (props) => {
 
     const handleRemoveFromCartClick2 = () => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${resid}/${userid}/order/remove_from_order/${food.id}/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${resid}/${userid}/order/remove_from_order/${food.id}/`,
             {headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -74,7 +73,7 @@ const Food = (props) => {
 
     const handleAddToCartClick2 = () => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${resid}/${userid}/order/add_to_order/${food.id}/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${resid}/${userid}/order/add_to_order/${food.id}/`,
             { headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -83,6 +82,7 @@ const Food = (props) => {
             }}
         )
         .then((response) => {
+            console.log("done");
             setRemainder(response.data.new_remainder);
         })
         .catch((error) => console.log(error.response) );
@@ -102,7 +102,7 @@ const Food = (props) => {
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${resid}/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${resid}/`,
             {headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -117,22 +117,16 @@ const Food = (props) => {
         .catch((error) => console.log(error));
     }, []);
 
-    const handleChangeFood = () => {
-      setIsHovered(!isHovered);
-    };
-
     return (
         <div>
             <Card sx={{ borderRadius: 2 }} className="card-food">
-                <CardActionArea>
                     <CardMedia
                         component="img"
                         sx={{ height: 140 }}
-                        className={isHovered ? "food-image" : ""}
-                        image={isHovered ? food.food_pic2 : food.food_pic}
+                        src={props.secondImage === props.food.id && props.food.food_pic2!=null ? props.food.food_pic2 : props.food.food_pic}
                         title={food.Type}
-                        onMouseEnter={handleChangeFood}
-                        onMouseLeave={handleChangeFood}
+                        onMouseEnter={props.onMouseEnter}
+                        onMouseLeave={props.onMouseLeave}
                     />
                     <CardContent 
                         sx={{ height: 25 }} 
@@ -157,7 +151,6 @@ const Food = (props) => {
                             remaining: {remainder}
                         </Typography>
                     </CardContent>
-                </CardActionArea>
                 <CardActions>
                     <Grid container 
                         spacing={3.5} 

@@ -1,27 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Courgette&family=Playball&display=swap');
 
+.spinner-homepage-restaurant{
+    color: black !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: auto !important;
+    margin-top: 15% !important;
+    margin-bottom: 15% !important;
+}
+
 .home-res-title {
     text-align: center;
     font-family: 'Montserrat', sans-serif !important;
     text-shadow: 2px 10px 10px #1f1f1f;
-}
-
-.delete-restaurant-button {
-    background-color: #E74C3C !important;
-    display: flex !important;
-    width: 80% !important;
-    margin-bottom: 15%;
-    margin: auto !important;
-    text-transform: none;
-    font-size: 12px !important;
-    font-weight: bold !important;
-    font-family: 'Montserrat', sans-serif !important;
-    border-radius: 70px !important;
-}
-
-.delete-restaurant-button:hover {
-    transform: scale(1.01);
 }
 
 .no-menu-message-container {
@@ -66,26 +59,6 @@
 .phone-input {
     color: #E74C3C !important;
     width: 100%;
-}
-
-.add-restaurant-button {
-    text-transform: none;
-    font-size: 14px;
-    font-weight: bold !important;
-    font-family: 'Montserrat', sans-serif !important;
-    border-radius: 70px !important;
-}
-
-.add-restaurant-button#cancel {
-    background-color: #E74C3C !important;
-}
-
-.add-restaurant-button#add {
-    background-color: #FFA600 !important;
-}
-
-.add-button:hover {
-    transform: scale(1.01);
 }
 
 .new-restaurant-button-grid {

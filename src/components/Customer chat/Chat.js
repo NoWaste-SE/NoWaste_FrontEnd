@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Fab from '@mui/material/Fab';
-import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import './Chat.css'
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
@@ -8,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Typography from '@mui/material/Typography';
 import SendIcon from '@mui/icons-material/Send';
-import { Grid } from '@mui/material';
+import { Grid ,IconButton } from '@mui/material';
 import List from '@mui/material/List';
 import CloseIcon from '@mui/icons-material/Close';
 import Avatar from '@mui/material/Avatar';
@@ -30,21 +29,22 @@ const theme = createTheme({
 });
 
 const Chat = (props) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [open, setOpen] = React.useState(false);
-    const [placement, setPlacement] = React.useState();
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [data, setData] = useState('');
     const [client, setClient] = useState(null);
     const manager_id = props.reciever;
     const customer_id = props.sender;
+    const open = props.open;
+    const setOpen = props.setOpen;
+    const placement = props.placement;
+    const anchorEl = props.anchorEl;
     console.log("manager id is as shw" + manager_id + " " + customer_id);
     let room_name = customer_id + "_" + manager_id;
 
     useEffect(() => {
         axios.get(
-            `http://188.121.124.63/chat/room/${customer_id}/${manager_id}/`
+            `http://188.121.124.63:8000/chat/room/${customer_id}/${manager_id}/`
         )
         .then((response) => {
             setData(response.data);
@@ -72,11 +72,15 @@ const Chat = (props) => {
         setMessages(messageArray);
     }, [data]);
     
-    const handleClick = (newPlacement) => (event) => {
-        setAnchorEl(event.currentTarget);
-        setOpen((prev) => placement !== newPlacement || !prev);
-        console.log("open is "+ open);
-        setPlacement(newPlacement);
+    // const handleClick = (newPlacement) => (event) => {
+    //     setAnchorEl(event.currentTarget);
+    //     setOpen((prev) => placement !== newPlacement || !prev);
+    //     console.log("open is "+ open);
+    //     setPlacement(newPlacement);
+    // };
+
+    const handleCloseChat = () => {
+        setOpen(false);
     };
 
     const handleMessage = (event) => {
@@ -131,7 +135,7 @@ const Chat = (props) => {
 
     useEffectOnce(() => {
         const client_1 = new WebSocket(
-            `ws://188.121.124.63:4000/chat/room/${room_name}/`
+            `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
         );
         client_1.onopen = messageOnOpen;
         client_1.onmessage = messageOnMessage;
@@ -144,7 +148,7 @@ const Chat = (props) => {
         if(client && client.readyState === WebSocket.OPEN){
             client.close();
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -156,7 +160,7 @@ const Chat = (props) => {
         } 
         if(client && client.readyState === WebSocket.CLOSED){
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -192,13 +196,25 @@ const Chat = (props) => {
                                 className="chatContainer"
                             >
                                 <Grid 
+                                    container
                                     className="chat-header"
                                 >
-                                    <h2 
-                                        className='chat-title'
-                                    >
-                                        Support chat
-                                    </h2>
+                                    <Grid item md={10}>
+                                        <h2 
+                                            className='chat-title'
+                                        >
+                                            Support chat
+                                        </h2>
+                                    </Grid>
+                                    <Grid item md={2}>
+                                        <IconButton 
+                                            onClick={handleCloseChat}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </Grid>
+                                    
+                                    
                                 </Grid>
                                 <ReactScrollToBottom 
                                     className="chatBox"
@@ -235,13 +251,6 @@ const Chat = (props) => {
                 </Fade>
             )}
             </Popper>
-            <Fab
-                style={{ backgroundColor: "#ffa600", position: "fixed", left: "20px", bottom: "20px" }}
-                aria-label="add"
-                onClick={handleClick('top')}
-            >
-                {open ? <CloseIcon /> : <HeadsetMicIcon />}
-            </Fab>
         </div>
 
         

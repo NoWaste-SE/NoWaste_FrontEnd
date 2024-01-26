@@ -8,7 +8,6 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EmailIcon from '@mui/icons-material/Email';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const HeaderRestaurant = memo(() => {
     const [auth, setAuth] = useState(true);
@@ -17,7 +16,8 @@ const HeaderRestaurant = memo(() => {
     const token = localStorage.getItem('token');
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const val = JSON.parse(localStorage.getItem('email'));    
+    const val = JSON.parse(localStorage.getItem('email'));
+    const [blurBackground, setBlurBackground] = useState(false);    
 
     const handleClickProfile = () => {
         history.push("/edit-manager");
@@ -26,7 +26,7 @@ const HeaderRestaurant = memo(() => {
     const handleClickLogOut = () => {
         localStorage.removeItem("token");
         axios.get(
-            `http://188.121.124.63/user/logout/`,
+            `http://188.121.124.63:8000/user/logout/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -63,30 +63,12 @@ const HeaderRestaurant = memo(() => {
         history.push('/chats');
     };
 
-    const handleClickOnDownloadExel = () => {
-        const manager_id = localStorage.getItem('id');
-        console.log(manager_id);
-        axios.get(
-            `http://188.121.124.63/restaurant/excel/manager/${manager_id}/order-history`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error.response);
-        });
-    };
-
     return ( 
-        <>
+        <div
+            className={`container ${blurBackground ? 'blur-background' : ''}`}
+        >
             <AppBar 
-                sx={{position:"sticky", width:'fixed', padding: '0'}} 
+                sx={{position:"sticky", width:'fixed', padding: '0 !important'}} 
                 className="header"
             >
                 <Toolbar className='header-toolbar'>
@@ -101,14 +83,6 @@ const HeaderRestaurant = memo(() => {
                     />
                     {auth && (
                         <div >
-                            <IconButton
-                                size='large'
-                                onClick={handleClickOnDownloadExel}
-                                color="inherit"
-                                title='Download excel'
-                            >
-                                <FileDownloadIcon fontSize="normal"/>
-                            </IconButton>
                             <IconButton
                                 size='large'
                                 onClick={handleClickOnChat}
@@ -151,6 +125,7 @@ const HeaderRestaurant = memo(() => {
                                         overflow: 'visible',
                                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                                         mt: 1,
+                                        ml: 0.5,
                                         '& .MuiAvatar-root': {
                                         width: 32,
                                         height: 32,
@@ -197,7 +172,7 @@ const HeaderRestaurant = memo(() => {
                     )}
                 </Toolbar>
             </AppBar>
-        </>
+        </div>
     );
 });
 

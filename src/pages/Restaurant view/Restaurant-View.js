@@ -14,7 +14,6 @@ import BackToTop from '../../components/Back to top/BackToTop';
 import Footer from '../../components/Footer/Footer';
 import { useHistory, useParams } from "react-router-dom";
 import HeaderCustomer from '../../components/Header/HeaderCustomer';
-import ShowComments from '../../components/Comment/ShowComments';
 import MdPhone from '@mui/icons-material/Phone';
 import PlaceIcon from '@mui/icons-material/Place';
 import DoneIcon from '@mui/icons-material/Done';
@@ -24,6 +23,14 @@ import { createTheme } from '@material-ui/core';
 import AddPagination from '../../components/Pagination/Pagination';
 import { makeStyles } from '@mui/styles';
 import PulseLoader from "react-spinners/PulseLoader";
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
+import ChatIcon from '@mui/icons-material/Chat';
+import { CustomRestaurantCard } from '../../components/Custom Restaurant Card/CustomRestaurantCard';
+import { UploadButton } from '../../components/CustomButtons/CustomButtons';
 
 const useStyles = makeStyles({
     ul: {
@@ -138,8 +145,43 @@ const RestaurantView = (props: Props) => {
     const [openComments, setOpenComments] = React.useState(false);
     const [comments, setComments] = useState([]); 
     const [loading, setLoading] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [placement, setPlacement] = useState();
+    const [checkChat, setCheckChat] = useState(false);
+    const [showSecondImage, setShowSecondImage] = useState(null);
+
+    const handleClickChat = (newPlacement) => (event) => {
+        setAnchorEl(event.currentTarget);
+        setOpen(true);
+        setPlacement(newPlacement);
+        setCheckChat(true);
+    };
+
+    const handleClickOnDownloadExel = (nameRestaurant) => {
+        fetch(`http://188.121.124.63:8000/restaurant/excel/customer/${managerId}/${customer_id}/order-history`, {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Methods" : "GET",
+        },
+        })
+        .then((response) => response.blob())
+        .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = nameRestaurant + '-orders-history.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch((error) => console.error('Error downloading file:', error));
+    };
 
     useEffect(()=>{
+        console.log(restaurant);
         console.log("restaurant is :" + restaurant);
         console.log("manager id is: ");
         setManagerId(restaurant.manager_id);
@@ -154,9 +196,6 @@ const RestaurantView = (props: Props) => {
         }
     }, []);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     const breakpoints = {
         default: 3,
@@ -166,7 +205,7 @@ const RestaurantView = (props: Props) => {
 
     React.useEffect(() => {
         axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${id}/food/`,
+            `http://188.121.124.63:8000/restaurant/restaurant_view/${id}/food/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -185,7 +224,7 @@ const RestaurantView = (props: Props) => {
         const fetchData = async () => {
             try {
                 axios.get(
-                    `http://188.121.124.63/restaurant/restaurant_view/${id}/`,
+                    `http://188.121.124.63:8000/restaurant/restaurant_view/${id}/`,
                     {headers: {
                         'Content-Type' : 'application/json',
                         "Access-Control-Allow-Origin" : "*",
@@ -199,6 +238,7 @@ const RestaurantView = (props: Props) => {
                     setNameRestaurant(response.data.name);
                     setRateValue(response.data.rate);
                     setDate_Of_Res(response.data.date_of_establishment.split('-'));
+                    // console.log(response.data.date_of_establishment.split('-'));
                     const is_in_list = list_fav.includes(response.data.name);
                     is_in_list ? (setColor(!color)) : setColor(color);
                 })
@@ -226,7 +266,7 @@ const RestaurantView = (props: Props) => {
         };  
 
         axios.post(
-            "http://188.121.124.63/user/favorite-restaurant/", 
+            "http://188.121.124.63:8000/user/favorite-restaurant/", 
             userData,
             {headers: {
                 'Content-Type' : 'application/json',
@@ -277,42 +317,42 @@ const RestaurantView = (props: Props) => {
         setAddressCopied(false);
     };
 
-    useEffect(() => {
-        axios.get(
-            `http://188.121.124.63/restaurant/restaurant_view/${id}/${customer_id}/order/`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            setOrder_id(response.data.id);
-            localStorage.setItem("order_id", order_id);
-        })
-    })
+    // useEffect(() => {
+    //     axios.get(
+    //         `http://188.121.124.63:8000/restaurant/restaurant_view/${id}/${customer_id}/order/`,
+    //         {headers: {
+    //             'Content-Type' : 'application/json',
+    //             "Access-Control-Allow-Origin" : "*",
+    //             "Access-Control-Allow-Methods" : "PUT,PATCH",
+    //             'Authorization' : "Bearer " + token.slice(1,-1)   
+    //         }}
+    //     )
+    //     .then((response) => {
+    //         setOrder_id(response.data.id);
+    //         localStorage.setItem("order_id", order_id);
+    //     })
+    // })
 
-    useEffect(()=>{
-        axios.get(
-            `http://188.121.124.63/restaurant/restaurant_id/${id}/comments`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET,PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            setComments(response.data);
-        })
-        .catch((error) => {
-            console.log(error.response);
-        });
-    },[])
+    // useEffect(()=>{
+    //     axios.get(
+    //         `http://188.121.124.63:8000/restaurant/restaurant_id/${id}/comments`,
+    //         {headers: {
+    //             'Content-Type' : 'application/json',
+    //             "Access-Control-Allow-Origin" : "*",
+    //             "Access-Control-Allow-Methods" : "GET,PUT,PATCH",
+    //             'Authorization' : "Bearer " + token.slice(1,-1)   
+    //         }}
+    //     )
+    //     .then((response) => {
+    //         setComments(response.data);
+    //     })
+    //     .catch((error) => {
+    //         console.log(error.response);
+    //     });
+    // },[])
 
     const handlePayment = () => {
-        history.push('/order-page/' + id);
+        history.push("/order-page/" + id);
     };
     
     return (
@@ -323,7 +363,7 @@ const RestaurantView = (props: Props) => {
                 type="bars"
                 color="black"
                 speedMultiplier={1}
-                className="spinner"
+                className="spinner-restaurant-view"
                 />
             ) : (
             <>
@@ -331,264 +371,24 @@ const RestaurantView = (props: Props) => {
                     className='restaurant-view'
                 >
                     <Grid item md={3}>
-                        <Card 
-                            sx={{ borderStyle: 'none'}} 
-                            className='card-restaurant-view'
-                        >
-                            <Grid container spacing={2} 
-                                className='restaurant-card-grid'
-                            >
-                                <Grid item>
-                                    <CardHeader 
-                                        className="restaurant-header"
-                                        avatar={
-                                            <Avatar 
-                                                style={{backgroundColor: "#f21b1b"}}
-                                                aria-label="recipe"
-                                            >
-                                                {restaurant?.name ? restaurant.name.charAt(0) : "UD"}
-                                            </Avatar>
-                                        }
-                                        title= {restaurant.name}
-                                        subheader={date_of_res[0]}
-                                    />
-                                </Grid>
-                                <Grid item lg={1}>
-                                    <BottomNavigation>
-                                        <BottomNavigationAction 
-                                            value="favorites"
-                                            icon={ 
-                                                color ? 
-                                                <FavoriteIcon 
-                                                    className='favorite-restaurant-view' 
-                                                    sx={{ color: 'red'}} 
-                                                    onClick={handleFavorite} 
-                                                /> :
-                                                <FavoriteBorderIcon 
-                                                    className='favorite-restaurant-view' 
-                                                    sx={{ color: 'inherit' }} 
-                                                    onClick={handleFavorite} 
-                                                />
-                                            }
-                                        />
-                                    </BottomNavigation>
-                                </Grid>
-                            </Grid>
-                            <CardMedia
-                                component="img"
-                                src={restaurant.restaurant_image}
-                                alt="RestaurantImage"
+                        <CustomRestaurantCard 
+                            restaurant={restaurant}
+                            color={color} 
+                            handleCloseComments={handleCloseComments}
+                            handleOpenComments={handleOpenComments}
+                            openComments={openComments}
+                            handleFavorite={handleFavorite}
+                            establishment_date={date_of_res[0]}
+                            id={id}
+                        />
+                        <div className='payment'>
+                            <UploadButton
+                                variant={"contained"}
+                                type={"submit"}
+                                onClick={handlePayment}
+                                title={"Payment"}
                             />
-                            <CardContent>
-                                <Typography 
-                                    variant="body2" 
-                                    className='restaurant-description' 
-                                >
-                                    {restaurant.description}
-                                </Typography>
-                                <Typography 
-                                    className='see-comment' 
-                                    onClick={handleOpenComments} 
-                                    style={{ display: 'flex', alignItems: 'center' }}
-                                >
-                                    See Comments 
-                                    <ChevronRightIcon 
-                                        style={{ marginLeft: '1px' }} 
-                                    />
-                                </Typography>
-                                <Modal
-                                    open={openComments} 
-                                    onClose={handleCloseComments}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                >
-                                    <Box 
-                                        sx={style} 
-                                        className="comment-box"
-                                    >
-                                        <h2 
-                                            className='title-show-comments'
-                                        >
-                                            Comments
-                                        </h2>
-                                        <div 
-                                            className="comment-details-div"
-                                        >
-                                            <Stack 
-                                                direction="row" 
-                                                spacing={2} 
-                                            >
-                                                <Avatar 
-                                                    style={{backgroundColor: "#c7c7c7"}}
-                                                    className='comment-avatar'
-                                                >
-                                                    H
-                                                </Avatar>
-                                                <Stack 
-                                                    direction="column" 
-                                                    spacing={2} 
-                                                >
-                                                    <Typography 
-                                                        variant="h6" 
-                                                        className='comment-stack'
-                                                    >
-                                                        Helia Vafaei
-                                                    </Typography>
-                                                    <h8 
-                                                        className='comment-date'
-                                                    >
-                                                        2023-07-06
-                                                    </h8>
-                                                </Stack>
-                                            </Stack>
-                                            <Typography 
-                                                className='comment-text' 
-                                                id="modal-modal-description" 
-                                            >
-                                                Very nice !
-                                            </Typography>
-                                            <hr 
-                                                className='comment-hr' 
-                                            />
-                                            <Stack 
-                                                direction="row" 
-                                                spacing={2} 
-                                            >
-                                                <Avatar 
-                                                    style={{backgroundColor: "#c7c7c7"}}
-                                                    className='comment-avatar'
-                                                >
-                                                    H
-                                                </Avatar>
-                                                <Stack 
-                                                    direction="column" 
-                                                    spacing={2} 
-                                                >
-                                                    <Typography 
-                                                        variant="h6" 
-                                                        className='comment-stack'
-                                                    >
-                                                        Setareh Babajani
-                                                    </Typography>
-                                                    <h8 
-                                                        className='comment-date'
-                                                    >
-                                                        2023-09-10
-                                                    </h8>
-                                                </Stack>
-                                            </Stack>
-                                            <Typography 
-                                                className='comment-text' 
-                                                id="modal-modal-description" 
-                                            >
-                                                I recommend it...
-                                            </Typography>
-                                            <hr className='comment-hr'></hr>
-                                            <Stack 
-                                                direction="row" 
-                                                spacing={2} 
-                                            >
-                                                <Avatar 
-                                                    style={{backgroundColor: "#c7c7c7"}}
-                                                    className='comment-avatar'
-                                                >
-                                                    H
-                                                </Avatar>
-                                                <Stack 
-                                                    direction="column" 
-                                                    spacing={2} 
-                                                >
-                                                    <Typography 
-                                                        variant="h6" 
-                                                        className='comment-stack'
-                                                    >
-                                                        Hanieh Asadi
-                                                    </Typography>
-                                                    <h8 
-                                                        className='comment-date'
-                                                    >
-                                                        2023-08-01
-                                                    </h8>
-                                                </Stack>
-                                            </Stack>
-                                            <Typography 
-                                                className='comment-text' 
-                                                id="modal-modal-description" 
-                                            >
-                                                The best restaurant ever.
-                                            </Typography>
-                                            <hr 
-                                                className='comment-hr' 
-                                            />
-                                        </div>
-                                        <Button 
-                                            onClick={handleCloseComments} 
-                                            variant="contained"
-                                            className='close-comment'
-                                        >
-                                            Close
-                                        </Button>
-                                    </Box>
-                                </Modal>
-                            </CardContent>
-                            <CardActions 
-                                disableSpacing
-                            >
-                                <Rating 
-                                    name="restaurant rate" 
-                                    value={rateValue} 
-                                    precision={0.5} 
-                                    readOnly 
-                                />
-                                <ExpandMore
-                                    expand={expanded}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </ExpandMore>
-                            </CardActions>
-                            <Collapse 
-                                in={expanded} 
-                                timeout="auto" 
-                                unmountOnExit
-                            >
-                                <CardContent>
-                                    <Box 
-                                        className='info' 
-                                        paragraph
-                                    >
-                                        <Chip
-                                            icon={<MdPhone />}
-                                            sx={{mb:1}}
-                                            onClick={handlePhoneChip}       
-                                            label={phoneCopied ? "Copied!" : restaurant.number}
-                                            clickable
-                                            className={phoneCopied ? "copied" : ""}
-                                            onDelete={phoneCopied ? handlePhoneCopied : null}
-                                            deleteIcon={<DoneIcon />}
-                                        />
-                                        <Chip
-                                            icon={<PlaceIcon />}
-                                            onClick={handleAddressChip}
-                                            label={addressCopied ? "Copied!" : restaurant.address}
-                                            clickable
-                                            className={addressCopied ? "copied" : ""}
-                                            onDelete={addressCopied ? handleAddressCopied : null}
-                                            deleteIcon={<DoneIcon />}
-                                        />
-                                    </Box>
-                                </CardContent>
-                            </Collapse>
-                        </Card>
-                        <Button 
-                            onClick={handlePayment} 
-                            variant="contained"
-                            id='comment-submit'
-                        >
-                            Payment
-                        </Button>
+                        </div>
                     </Grid>
                     <Grid item md={9}>
                         {menu && 
@@ -600,7 +400,12 @@ const RestaurantView = (props: Props) => {
                                 >
                                 {_DATA.currentData().map((food, index) => (
                                     <div key={index} className="my-masonry-grid_column" style={{ width: index % 3 === 0 ? '100%' : '' }}>
-                                        <Food food={food} />
+                                        <Food
+                                            food={food} 
+                                            secondImage={showSecondImage}
+                                            onMouseEnter={() => setShowSecondImage(food.id)}
+                                            onMouseLeave={() => setShowSecondImage(null)}
+                                        />
                                     </div>
                                 ))}
                                 </Masonry>
@@ -624,11 +429,46 @@ const RestaurantView = (props: Props) => {
                     </Grid>
                     <BackToTop/>
                 </Grid>
-                <Chat 
-                    reciever={managerId} 
-                    sender={customer_id} 
-                    restaurant={restaurant}
-                />
+                <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 , position: "fixed", left: "119px", bottom: "20px",zIndex:'1000'}}>
+                    <SpeedDial
+                        ariaLabel="SpeedDial basic example"
+                        sx={{ position: 'absolute', bottom: 16, right: 16}}
+                        icon={<SimCardDownloadIcon/>}
+                        icon={<HeadsetMicIcon/>}
+                        FabProps={{
+                            sx: {
+                                    bgcolor: '#ffa600',
+                                    '&:hover': {
+                                        bgcolor: '#ffa600',
+                                    }
+                                }
+                            }}
+                    >
+                        <SpeedDialAction
+                            key='exel'
+                            icon={<SimCardDownloadIcon/>}
+                            tooltipTitle='Download Excel Order History'
+                            onClick={() => handleClickOnDownloadExel(nameRestaurant)}   
+                        />
+                        <SpeedDialAction
+                            key='chat'
+                            icon={<ChatIcon/>}
+                            tooltipTitle='Chat with Restaurant Manager'
+                            onClick={handleClickChat('right')}   
+                        />
+                    </SpeedDial>
+                    {checkChat &&
+                        <Chat 
+                            reciever={managerId} 
+                            sender={customer_id} 
+                            restaurant={restaurant}
+                            placement={placement}
+                            open={open}
+                            setOpen={setOpen}
+                            anchorEl={anchorEl}
+                        />
+                    }
+                </Box>
                 <Box 
                     justifyContent='center' 
                     alignItems='center' 

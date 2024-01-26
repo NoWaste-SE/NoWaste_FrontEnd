@@ -12,8 +12,10 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from "axios";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import ShoppingCard from "../Shopping card/ShoppingCard"
+import axios from "axios";
 
 const HeaderCustomer = memo(() => {
     const [auth, setAuth] = useState(true);
@@ -24,6 +26,8 @@ const HeaderCustomer = memo(() => {
     const open = Boolean(anchorEl);
     const [openWallet, setOpenWallet] = useState(false);
     const [selectedAmount, setSelectedAmount] = useState(0);
+    const [showShoppingCard, setShowShoppingCard] = useState(false);
+    const [blurBackground, setBlurBackground] = useState(false);
     const val = JSON.parse(localStorage.getItem('email'));
     const [balance, setBalance] = useState(localStorage.getItem('wallet_balance') || 0);
 
@@ -34,7 +38,7 @@ const HeaderCustomer = memo(() => {
     const handleClickLogOut = () => {
         localStorage.removeItem("token");
         axios.get(
-            `http://188.121.124.63/user/logout/`,
+            `http://188.121.124.63:8000/user/logout/`,
             {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
@@ -82,12 +86,12 @@ const HeaderCustomer = memo(() => {
             amount: selectedAmount
         };
         axios.post(
-            "http://188.121.124.63/user/charge-wallet/", 
+            "http://188.121.124.63:8000/user/charge-wallet/", 
             userData,
-            {header: {
+            {headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "POST,PATCH",
+                "Access-Control-Allow-Methods" : "POST",
                 'Authorization' : "Bearer " + token.slice(1,-1)   
             }}
         )
@@ -119,31 +123,21 @@ const HeaderCustomer = memo(() => {
     const handleBackToHome = (e) => {
         history.push("/homepage-customer");
     };
-    
-    const handleClickOnDownloadExel = () => {
-        const user_id = localStorage.getItem('id');
-        console.log(user_id);
-        axios.get(
-            `http://188.121.124.63/restaurant/excel/customer/${user_id}/order-history`,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error.response);
-        });
+
+    const handleOpenShoppingCard  = () => {
+        setShowShoppingCard(true);
     };
 
+    const handleCloseShoppingCard  = () => {
+        setShowShoppingCard(false);
+    };
+    
     return ( 
-        <>
+        <div
+            className={`container ${blurBackground ? 'blur-background' : ''}`}
+        >
             <AppBar 
-                sx={{position:"sticky", width:'fixed', padding: '0'}} 
+                sx={{position:"sticky", width:'fixed', padding: '0 !important', zIndex: '0', top: '0'}} 
                 className="header"
             >
                 <Toolbar 
@@ -160,18 +154,23 @@ const HeaderCustomer = memo(() => {
                     />
                     {auth && (
                         <div>
-                            {/* <IconButton color='inherit'>
-                                <Badge badgeContent={1} color='error'>
-                                    <ShoppingCartIcon onClick={handleCart}/>
-                                </Badge>
-                            </IconButton> */}
-                            <IconButton
-                                size='large'
-                                onClick={handleClickOnDownloadExel}
-                                color="inherit"
-                                title='Download excel'
-                            >
-                                <FileDownloadIcon fontSize="normal"/>
+                            <IconButton color='inherit'>
+                                {/* <Badge badgeContent={1} color='error'> */}
+                                    <ShoppingCartIcon onClick={handleOpenShoppingCard}/>
+                                    <Modal 
+                                        open={showShoppingCard} 
+                                        onClose={handleCloseShoppingCard}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box
+                                            className="shopping-card-box" 
+                                        >
+                                            <ShoppingCard />
+                                        </Box>
+                                        
+                                    </Modal>
+                                {/* </Badge> */}
                             </IconButton>
                             <IconButton
                                 size='large'
@@ -209,6 +208,7 @@ const HeaderCustomer = memo(() => {
                                         overflow: 'visible',
                                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                                         mt: 1,
+                                        ml: 0.5,
                                         '& .MuiAvatar-root': {
                                             width: 32,
                                             height: 32,
@@ -220,7 +220,7 @@ const HeaderCustomer = memo(() => {
                                             display: 'block',
                                             position: 'absolute',
                                             top: 0,
-                                            right: 12,
+                                            right: 9,
                                             width: 11,
                                             height: 10,
                                             bgcolor: 'background.paper',
@@ -369,7 +369,7 @@ const HeaderCustomer = memo(() => {
                     )}
                 </Toolbar>
             </AppBar>
-        </>
+        </div>
     );
 });
 export default HeaderCustomer;
