@@ -19,5 +19,41 @@ describe("HomepageCustomer", () => {
     });
     const spinnerElement = screen.getByTestId("spinner-element");
     expect(spinnerElement).toBeInTheDocument();
-});
+    });
+
+    // it('renders HeaderCustomer component within HomepageCustomer', () => {
+    //     render(
+    //       <MemoryRouter>
+    //         <AuthProvider>
+    //           <HomepageCustomer />
+    //         </AuthProvider>
+    //       </MemoryRouter>
+    //     );
+    
+    //     const headerElement = screen.getByText(/HeaderCustomer/i);
+    //     expect(headerElement).toBeInTheDocument();
+    //   });
+
+    it('handles click event in ToggleButtonGroup', () => {
+        render(
+            <MemoryRouter>
+              <AuthProvider>
+                <HomepageCustomer />
+              </AuthProvider>
+            </MemoryRouter>
+          );
+        
+        // Assuming "Iranian" button is initially selected
+        const iranianButton = screen.getByText(/Iranian/i);
+        const foreignButton = screen.getByText(/Foreign/i);
+      
+        // Simulate click on "Foreign" button
+        fireEvent.click(foreignButton);
+      
+        expect(iranianButton).not.toHaveAttribute('aria-pressed', 'true');
+        expect(foreignButton).toHaveAttribute('aria-pressed', 'true');
+      });
+
+      
+
 });
