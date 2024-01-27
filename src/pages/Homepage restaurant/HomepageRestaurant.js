@@ -248,6 +248,7 @@ function HomepageRestaurant(props){
                 color="black"
                 speedMultiplier={1}
                 className="spinner-homepage-restaurant"
+                data-testid="spinner-element"
                 />
             ) : (
             <>

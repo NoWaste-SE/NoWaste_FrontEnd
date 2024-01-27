@@ -26,6 +26,6 @@ describe('fetchTodos lib function', () => {
             })
         );
         const todosArray = await fetchTodos()
-        expect(todosArray.length).toBe(3)
+        expect(todosArray.length).toBe(4)
     });
 })

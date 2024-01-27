@@ -4,6 +4,7 @@ import { render, screen, act, fireEvent, waitFor, findByLabelText, findByText, g
 import { MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import AuthContext, { AuthProvider } from '../../../Context/AuthContext';
 
 const MockedLogin = () => {
     return (
@@ -14,7 +15,13 @@ const MockedLogin = () => {
 };
 
 it("login", () => {
-    render(<MockedLogin />);
+    render(
+        <MemoryRouter>
+            <AuthProvider>
+                <Login />
+            </AuthProvider>
+        </MemoryRouter>
+    );
     const loginText = screen.findByText(/Login/i);
 
     expect(loginText).toBeInTheDocument;
@@ -23,22 +30,37 @@ it("login", () => {
 
 it('disable button when there is no input', () => {
     render(
-        <MockedLogin />
-    );
+        <MemoryRouter>
+            <AuthProvider>
+                <Login />
+            </AuthProvider>
+        </MemoryRouter>    );
     
     const buttonElement = screen.getByRole('button', { name: /Login/i });
     expect(buttonElement).toBeDisabled;
 });
 
 it("forgot password", () => {
-    render(<MockedLogin />);
+    render(
+        <MemoryRouter>
+            <AuthProvider>
+                <Login />
+            </AuthProvider>
+        </MemoryRouter>
+    );
     const forgotpassText = screen.findByText(/Forgot password?/i);
 
     expect(forgotpassText).toBeInTheDocument;
 });
 
 it("don't have account", () => {
-    render(<MockedLogin />);
+    render(
+        <MemoryRouter>
+            <AuthProvider>
+                <Login />
+            </AuthProvider>
+        </MemoryRouter>
+    );
     const haveaccountText = screen.findByText(/Don't have an account?/i);
 
     expect(haveaccountText).toBeInTheDocument;
@@ -47,15 +69,17 @@ it("don't have account", () => {
 test('Click on forgot pass', async () => {
     const history = createMemoryHistory();
     render(
-    <Router history={history}>
-        <MockedLogin />
-    </Router>
+        <MemoryRouter history={history}>
+            <AuthProvider>
+                <Login />
+            </AuthProvider>
+        </MemoryRouter>
     );
 
-    const forgotpassText = screen.getByText(/Forgot password?/i);
+    const forgotpassText = screen.getByText(/Forgot password/i);
 
     act(() => {
-    fireEvent.click(forgotpassText);
+        fireEvent.click(forgotpassText);
     });
 
     expect(history.location.pathname).toBe('/');
@@ -66,7 +90,9 @@ test('Click on sign up', async () => {
 
     render(
         <Router history={history}>
-        <MockedLogin />
+            <AuthProvider>
+                <Login />
+            </AuthProvider>
         </Router>
     );
 
@@ -76,5 +102,5 @@ test('Click on sign up', async () => {
         fireEvent.click(signupText);
     });
 
-    expect(history.location.pathname).toBe('/');
+    expect(history.location.pathname).toBe('/sign-up');
 });
