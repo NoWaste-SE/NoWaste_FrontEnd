@@ -1,9 +1,9 @@
-import AuthContext, { AuthProvider } from "../../Context/AuthContext";
+import AuthContext, { AuthProvider } from "../../../Context/AuthContext";
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import HomepageRestaurant from "./HomepageRestaurant";
+import HomepageRestaurant from "../HomepageRestaurant";
 describe("HomepageRestaurant", () => {
   it("renders the component", async () => {
     render(
@@ -13,13 +13,11 @@ describe("HomepageRestaurant", () => {
         </AuthProvider>
       </MemoryRouter>
     );
-    // await new Promise(process.nextTick);
 
     await waitFor(() => {
       const spinnerElement = screen.getByTestId("spinner-element");
     });
     const spinnerElement = screen.getByTestId("spinner-element");
     expect(spinnerElement).toBeInTheDocument();
-    // expect(screen.getByText("Log in")).toBeInTheDocument();
   });
 });

@@ -388,6 +388,7 @@ export default function Admin() {
                 color="black"
                 speedMultiplier={1}
                 className="loading"
+                data-testid="spinner-element"
                 />
             ) : (
             

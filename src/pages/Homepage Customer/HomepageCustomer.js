@@ -697,6 +697,7 @@ const HomepageCustomer = () => {
                         color="black"
                         speedMultiplier={1}
                         className="spinner-homepage-customer"
+                        data-testid="spinner-element"
                         />
                     ) : (
                     <>
