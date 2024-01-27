@@ -9,7 +9,7 @@ describe("Admin", () => {
         render(
         <MemoryRouter>
             <AuthProvider>
-            <Admin />
+                <Admin />
             </AuthProvider>
         </MemoryRouter>
     );

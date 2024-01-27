@@ -6,14 +6,6 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import AuthContext, { AuthProvider } from '../../../Context/AuthContext';
 
-const MockedLogin = () => {
-    return (
-        <MemoryRouter>
-            <Login />
-        </MemoryRouter>
-    );
-};
-
 it("login", () => {
     render(
         <MemoryRouter>
