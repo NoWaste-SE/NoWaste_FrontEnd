@@ -1,4 +1,4 @@
-import EditProfile from '../EditProfile';
+import EditProfileManager from '../EditProfileManager';
 import React from 'react';
 import { render, screen, act, fireEvent, waitFor, findByLabelText, findByText, getByTestId } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
@@ -6,12 +6,12 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import AuthContext, { AuthProvider } from '../../../Context/AuthContext';
 
-describe("edit profile", () => {
+describe("edit profile manager", () => {
     it("renders the component", async () => {
         render(
             <MemoryRouter>
                 <AuthProvider>
-                    <EditProfile />
+                    <EditProfileManager />
                 </AuthProvider>
             </MemoryRouter>
         );

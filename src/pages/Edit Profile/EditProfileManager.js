@@ -357,7 +357,7 @@ const EditProfileManager = (props) => {
                         color="black"
                         speedMultiplier={1}
                         className="edit-spinner"
-                        
+                        data-testid="spinner-element"
                         />
                     ) : ( 
                     <Grid container spacing={2} 

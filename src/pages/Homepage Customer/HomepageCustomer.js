@@ -654,6 +654,7 @@ const HomepageCustomer = () => {
                                             variant="outlined"
                                             value={sort}
                                             onChange={handleChange}
+                                            data-testid="sort-dropdown"
                                         >
                                             <MenuItem  
                                                 onClick={handleClickNewest} 

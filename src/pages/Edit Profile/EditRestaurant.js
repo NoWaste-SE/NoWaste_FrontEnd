@@ -714,7 +714,7 @@ function EditRestaurant(props){
                         color="black"
                         speedMultiplier={1}
                         className="edit-spinner"
-                        
+                        data-testid="spinner-element"
                         />
                 ) : (
                     <div 
