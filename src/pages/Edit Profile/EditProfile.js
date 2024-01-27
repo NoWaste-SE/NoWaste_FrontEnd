@@ -401,7 +401,6 @@ function Edit(props){
     const handleUpdate = (e) => {
         if(newPassword && password && confirmPassword)
         {
-            console.log("HEREEEEEEEEEEEEEE change pass");
             e.preventDefault();
             axios.patch(
                 `http://188.121.124.63:8000/user/change_password/${id}/`, 
@@ -414,7 +413,6 @@ function Edit(props){
                 }}
             )
             .then(()=> {
-                console.log("Ahsant");
                 window.location.reload(false);
             })
             .catch((error) => {
@@ -430,7 +428,6 @@ function Edit(props){
 
         if(update)
         {
-            console.log("HEREEEE field");
             axios.patch(
                 `http://188.121.124.63:8000/user/customer_profile/${id}/`, update,
                 {headers: {
