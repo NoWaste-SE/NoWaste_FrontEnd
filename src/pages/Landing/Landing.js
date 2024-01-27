@@ -46,6 +46,7 @@ export default function Landing() {
                   color='black'
                   speedMultiplier={"1"}
                   className="spinner"
+                  data-testid="spinner-element"
               />
           ) : (
               <div className="land-back">
