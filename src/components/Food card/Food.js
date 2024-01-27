@@ -58,7 +58,7 @@ const Food = (props) => {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "PUT,PATCH",
-                Authorization: "Bearer " + token.slice(1, -1),
+                Authorization: "Bearer " + token?.slice(1, -1),
             }}
         )
         .then((response) => {
@@ -78,7 +78,7 @@ const Food = (props) => {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "PUT,PATCH",
-                Authorization: "Bearer " + token.slice(1, -1)
+                Authorization: "Bearer " + token?.slice(1, -1)
             }}
         )
         .then((response) => {
@@ -107,7 +107,7 @@ const Food = (props) => {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "PUT,PATCH",
-                Authorization: "Bearer " + token.slice(1, -1)
+                Authorization: "Bearer " + token?.slice(1, -1)
             }}
         )
         .then((response) => {
