@@ -7,7 +7,7 @@ import Footer from "../../components/Footer/Footer";
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Link, useParams } from 'react-router-dom';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { Alert, Dialog } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -158,7 +158,7 @@ function EditRestaurant(props){
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     let role = localStorage.getItem("role");
-    role = role.replace(/"/g, "");
+    role = role?.replace(/"/g, "");
     const mylocation = [lat, lng, idR, role];
     const [openImg, setOpenImg] = React.useState(false);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -868,12 +868,12 @@ function EditRestaurant(props){
                                         </Grid>
                                     </Grid>
                                     <Grid container spacing={2} className="edit-field">
-                                        <Grid item xs={12} sm={6} md={6}>
+                                        <Grid item xs={12} sm={6} md={6} style={{marginTop: '8px'}}>
                                             <LocalizationProvider 
                                                 dateAdapter={AdapterDayjs}
                                                 InputLabelProps={{ shrink: true }}
                                             >
-                                                <DemoContainer components={['DatePicker']} >
+                                                {/* <DemoContainer components={['DatePicker']} > */}
                                                     <DatePicker
                                                         label="Establishment date"
                                                         views={['year', 'month', 'day']}
@@ -882,7 +882,7 @@ function EditRestaurant(props){
                                                         onChange={handleEstablishdate}
                                                         value={doe ? dayjs(doe) : null }
                                                     />
-                                                </DemoContainer>
+                                                {/* </DemoContainer> */}
                                             </LocalizationProvider>
                                         </Grid>
                                         <Grid item xs={12} sm={6} md={6} lg={6}>
