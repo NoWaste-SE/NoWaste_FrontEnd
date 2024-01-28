@@ -54,6 +54,25 @@ describe("HomepageCustomer", () => {
         expect(foreignButton).toHaveAttribute('aria-pressed', 'true');
       });
 
+    it('see texts', () => {
+        render(
+            <MemoryRouter>
+              <AuthProvider>
+                <HomepageCustomer />
+              </AuthProvider>
+            </MemoryRouter>
+          );
+        
+        const filterText = screen.getByText(/Filters/i);
+        const ratingText = screen.getByText(/Rating/i);
+        const discountText = screen.getByText(/Discount/i);
+
+        expect(filterText).toBeInTheDocument();
+        expect(ratingText).toBeInTheDocument();
+        expect(discountText).toBeInTheDocument();
+        
+      });
+
       it('handle click on sort', () => {
         render(
             <MemoryRouter>
