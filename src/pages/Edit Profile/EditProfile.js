@@ -266,7 +266,7 @@ function Edit(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -303,7 +303,7 @@ function Edit(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -410,7 +410,7 @@ function Edit(props){
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token?.slice(1,-1)   
                 }}
             )
             .then(()=> {
@@ -437,7 +437,7 @@ function Edit(props){
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "GET,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token?.slice(1,-1)   
                 }}
             )
             .then(()=> {
@@ -486,6 +486,7 @@ function Edit(props){
                         color="black"
                         speedMultiplier={1}
                         className="edit-spinner"
+                        data-testid="spinner-element"
                         />
                     ) : ( 
                     <Grid container spacing={2} 

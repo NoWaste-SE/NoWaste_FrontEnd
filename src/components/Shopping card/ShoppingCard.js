@@ -21,7 +21,7 @@ function ShoppingCard() {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET,PATCH',
-                'Authorization': 'Bearer ' + token.slice(1, -1),
+                'Authorization': 'Bearer ' + token?.slice(1, -1),
             }}
         )
         .then((response) => {
@@ -53,7 +53,7 @@ function ShoppingCard() {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'Delete',
-                    'Authorization': 'Bearer ' + token.slice(1, -1),
+                    'Authorization': 'Bearer ' + token?.slice(1, -1),
                 }}
             )
             .then((response) => {
@@ -72,6 +72,7 @@ function ShoppingCard() {
             color="black"
             speedMultiplier={1}
             className="spinner-shopping-card"
+            data-testid="spinner-element"
             />
         ) : (
         thereis ? (allOrders.map((restaurant) => (

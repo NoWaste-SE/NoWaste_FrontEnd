@@ -210,7 +210,7 @@ const RestaurantView = (props: Props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -229,7 +229,7 @@ const RestaurantView = (props: Props) => {
                         'Content-Type' : 'application/json',
                         "Access-Control-Allow-Origin" : "*",
                         "Access-Control-Allow-Methods" : "PUT,PATCH",
-                        'Authorization' : "Bearer " + token.slice(1,-1)   
+                        'Authorization' : "Bearer " + token?.slice(1,-1)   
                     }}
                 )
                 .then((response) => {
@@ -272,7 +272,7 @@ const RestaurantView = (props: Props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -324,7 +324,7 @@ const RestaurantView = (props: Props) => {
     //             'Content-Type' : 'application/json',
     //             "Access-Control-Allow-Origin" : "*",
     //             "Access-Control-Allow-Methods" : "PUT,PATCH",
-    //             'Authorization' : "Bearer " + token.slice(1,-1)   
+    //             'Authorization' : "Bearer " + token?.slice(1,-1)   
     //         }}
     //     )
     //     .then((response) => {
@@ -340,7 +340,7 @@ const RestaurantView = (props: Props) => {
     //             'Content-Type' : 'application/json',
     //             "Access-Control-Allow-Origin" : "*",
     //             "Access-Control-Allow-Methods" : "GET,PUT,PATCH",
-    //             'Authorization' : "Bearer " + token.slice(1,-1)   
+    //             'Authorization' : "Bearer " + token?.slice(1,-1)   
     //         }}
     //     )
     //     .then((response) => {
@@ -364,6 +364,7 @@ const RestaurantView = (props: Props) => {
                 color="black"
                 speedMultiplier={1}
                 className="spinner-restaurant-view"
+                data-testid="spinner-element"
                 />
             ) : (
             <>

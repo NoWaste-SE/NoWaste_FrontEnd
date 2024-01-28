@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import Footer from '../Footer';
 
 describe('Footer Component', () => {
@@ -25,15 +24,6 @@ describe('Footer Component', () => {
         expect(screen.getByTestId('instagram-link')).toBeTruthy();
     });
 
-    test('opens twitter link in a new tab', () => {
-        render(<Footer />);
-
-        const twitterLink = screen.getByTestId('twitter-link');    
-        fireEvent.click(twitterLink);
-    
-        expect(twitterLink).toHaveAttribute('href', 'https://twitter.com/NoWaste39');
-    });
-
     test('verifies styles of footer elements', () => {
         render(<Footer />);
         
@@ -46,4 +36,29 @@ describe('Footer Component', () => {
         expect(footerStyles.backgroundColor).toBe('rgba(0, 0, 0, 0.1)');
         expect(copyrightStyles.backgroundColor).toBe('rgba(0, 0, 0, 0.05)');
     });
+
+    test('displays correct copyright information in the footer', () => {
+        render(<Footer />);
+    
+        const copyrightDiv = screen.getByTestId('copyright-div');
+        expect(copyrightDiv).toHaveTextContent('© 2023 Copyright: nowaste39.ir');
+    });
+
+    test('displays correct social media links in the footer', () => {
+        render(<Footer />);
+    
+        const twitterLink = screen.getByTestId('twitter-link');
+        const instagramLink = screen.getByTestId('instagram-link');
+    
+        expect(twitterLink).toHaveAttribute('href', 'https://twitter.com/NoWaste39');
+        expect(instagramLink).toHaveAttribute('href', 'https://instagram.com/no_waste39?igshid=ZDdkNTZiNTM=');
+    });
+    
+    
+    test('displays correct contact information in the footer', () => {
+        render(<Footer />);
+        expect(screen.getByText(/IUST, Tehran, Iran/i)).toBeTruthy();
+        expect(screen.getByText(/gen39.nowaste@gmail.com/i)).toBeTruthy();
+    });
+    
 });

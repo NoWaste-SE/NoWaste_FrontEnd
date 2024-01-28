@@ -105,7 +105,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -125,7 +125,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -164,7 +164,7 @@ const HomepageCustomer = () => {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token?.slice(1,-1)   
                 }}
             )
             .then((response) => {
@@ -183,7 +183,7 @@ const HomepageCustomer = () => {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token?.slice(1,-1)   
                 }}
             )
             .then((response) => {
@@ -209,7 +209,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -281,7 +281,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -307,7 +307,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -333,7 +333,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -359,7 +359,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -383,7 +383,7 @@ const HomepageCustomer = () => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -654,6 +654,7 @@ const HomepageCustomer = () => {
                                             variant="outlined"
                                             value={sort}
                                             onChange={handleChange}
+                                            data-testid="sort-dropdown"
                                         >
                                             <MenuItem  
                                                 onClick={handleClickNewest} 
@@ -697,6 +698,7 @@ const HomepageCustomer = () => {
                         color="black"
                         speedMultiplier={1}
                         className="spinner-homepage-customer"
+                        data-testid="spinner-element"
                         />
                     ) : (
                     <>

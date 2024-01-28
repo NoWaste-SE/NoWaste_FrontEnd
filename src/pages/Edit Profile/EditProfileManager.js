@@ -184,7 +184,7 @@ const EditProfileManager = (props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -293,7 +293,7 @@ const EditProfileManager = (props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then(()=> {
@@ -320,7 +320,7 @@ const EditProfileManager = (props) => {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token?.slice(1,-1)   
                 }}
             )
             .then(()=> {
@@ -357,7 +357,7 @@ const EditProfileManager = (props) => {
                         color="black"
                         speedMultiplier={1}
                         className="edit-spinner"
-                        
+                        data-testid="spinner-element"
                         />
                     ) : ( 
                     <Grid container spacing={2} 

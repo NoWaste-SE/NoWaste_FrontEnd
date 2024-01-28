@@ -67,7 +67,7 @@ export default function Admin() {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -103,7 +103,7 @@ export default function Admin() {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }})
         .then(() => {
             console.log("rejected successfully");
@@ -132,7 +132,7 @@ export default function Admin() {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "POST,PUT",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }})
         .then(() => {
             console.log("accepted successfully");
@@ -388,6 +388,7 @@ export default function Admin() {
                 color="black"
                 speedMultiplier={1}
                 className="loading"
+                data-testid="spinner-element"
                 />
             ) : (
             

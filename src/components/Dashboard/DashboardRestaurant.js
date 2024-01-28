@@ -87,7 +87,7 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -183,7 +183,7 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -207,7 +207,7 @@ export default function DashboardRestaurant(){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -251,6 +251,7 @@ export default function DashboardRestaurant(){
                     color="black"
                     speedMultiplier={1}
                     className="spinner-dashboard"
+                    data-testid="spinner-element"
                     />
                 ) : (
                 <Grid container spacing={2} 
