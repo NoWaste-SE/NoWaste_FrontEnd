@@ -3,13 +3,14 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import Dashboard from "../Dashboard";
-describe("Dashboard", () => {
+import OrderPage from "../OrderPage";
+
+describe("OrderPage", () => {
 it("renders the component", async () => {
     render(
         <MemoryRouter>
             <AuthProvider>
-                <Dashboard />
+                <OrderPage />
             </AuthProvider>
         </MemoryRouter>
     );
@@ -19,18 +20,5 @@ it("renders the component", async () => {
     });
     const spinnerElement = screen.getByTestId("spinner-element");
     expect(spinnerElement).toBeInTheDocument();
-});
-
-it("see the text", async () => {
-    render(
-        <MemoryRouter>
-            <AuthProvider>
-                <Dashboard />
-            </AuthProvider>
-        </MemoryRouter>
-    );
-
-    const dashboardText = screen.getByText(/Dashboard/i);
-    expect(dashboardText).toBeInTheDocument();
 });
 });

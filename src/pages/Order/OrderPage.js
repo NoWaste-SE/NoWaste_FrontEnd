@@ -41,7 +41,7 @@ export default function OrderPage(){
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     let role = localStorage.getItem("role");
-    role = role.replace(/"/g, "");
+    role = role?.replace(/"/g, "");
     const id = localStorage.getItem("id");
     const mylocation = [lat, lng, parseInt(id), role];
     const restaurantId = localStorage.getItem('restaurantId');
@@ -214,7 +214,7 @@ export default function OrderPage(){
                         color="black"
                         speedMultiplier={1}
                         className="spinner-orderpage"
-                        
+                        data-testid="spinner-element"
                         />
                     ) : (
                     <Grid item lg={4} md={4} sm={12}>
