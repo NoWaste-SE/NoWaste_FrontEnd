@@ -102,6 +102,10 @@ export default function SignUp(){
     }, [confirmPassword]);
 
     useEffect(() => {
+        localStorage.setItem('role', JSON.stringify(role));
+    }, []);
+
+    useEffect(() => {
         if(confirmPassword.length > 0){
             setPasswordMatch(password === confirmPassword);
         }

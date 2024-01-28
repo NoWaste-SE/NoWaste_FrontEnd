@@ -61,7 +61,7 @@ export default function Verification(){
         localStorage.setItem('token', JSON.stringify(token));
         localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
         localStorage.setItem('list_of_favorites_res', JSON.stringify(list_of_favorites_res));
-        localStorage.setItem('role', JSON.stringify(role));
+        // localStorage.setItem('role', JSON.stringify(role));
     }, [id, token, refresh_token, list_of_favorites_res, role]);
     
 
@@ -110,12 +110,13 @@ export default function Verification(){
     const handleSubmit = (e) => {
         e.preventDefault();
         const userData = {
-            code: code,
-            email: email,
             name: JSON.parse(localStorage.getItem("fullname")),
+            password: JSON.parse(localStorage.getItem("password")),
+            email: email,
             role: JSON.parse(localStorage.getItem("role")),
-            password: JSON.parse(localStorage.getItem("password"))
+            code: code
         };
+        console.log(userData);
         axios.post("http://188.121.124.63:8000/user/verify-email/", 
                     userData, 
                     {headers:{"Content-Type" : "application/json"}}
