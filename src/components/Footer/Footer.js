@@ -108,12 +108,12 @@ const Footer = () => {
                                 <a 
                                     href='https://instagram.com/no_waste39?igshid=ZDdkNTZiNTM=' 
                                     className='me-2 text-reset'
+                                    data-testid = "instagram-link"
                                 >
                                     <MDBIcon 
                                         fab 
                                         icon="instagram" 
                                         style={{fontSize: '120%' }}  
-                                        data-testid = "instagram-link"
                                     />
                                 </a>
                                 instagram.com/no_waste39

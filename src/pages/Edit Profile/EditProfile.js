@@ -5,7 +5,7 @@ import HeaderCustomer from '../../components/Header/HeaderCustomer';
 import PhoneInput from 'material-ui-phone-number';
 import 'react-phone-input-2/lib/style.css';
 import { DatePicker } from '@mui/x-date-pickers'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
@@ -104,7 +104,7 @@ function Edit(props){
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     let role = localStorage.getItem("role");
-    role = role.replace(/"/g, "");
+    role = role?.replace(/"/g, "");
     const mylocation = [lat, lng, parseInt(id), role];
     const [openImg, setOpenImg] = React.useState(false);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -266,7 +266,7 @@ function Edit(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -303,7 +303,7 @@ function Edit(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -409,7 +409,7 @@ function Edit(props){
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "PUT,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token?.slice(1,-1)   
                 }}
             )
             .then(()=> {
@@ -434,7 +434,7 @@ function Edit(props){
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Methods" : "GET,PATCH",
-                    'Authorization' : "Bearer " + token.slice(1,-1)   
+                    'Authorization' : "Bearer " + token?.slice(1,-1)   
                 }}
             )
             .then(()=> {
@@ -483,6 +483,7 @@ function Edit(props){
                         color="black"
                         speedMultiplier={1}
                         className="edit-spinner"
+                        data-testid="spinner-element"
                         />
                     ) : ( 
                     <Grid container spacing={2} 
@@ -707,14 +708,14 @@ function Edit(props){
                                             </MenuItem>
                                         </TextField>
                                     </Grid>
-                                    <Grid item xs={12} sm={6} md={6}>
+                                    <Grid item xs={12} sm={6} md={6} style={{marginTop: '8px'}}>
                                         <LocalizationProvider 
                                             dateAdapter={AdapterDayjs} 
                                             InputLabelProps={{ shrink: true }}
                                         >
-                                            <DemoContainer 
+                                            {/* <DemoContainer 
                                                 components={['DatePicker']}
-                                            >
+                                            > */}
                                                 <DatePicker
                                                     label="Date of birth"
                                                     views={['year', 'month', 'day']}
@@ -723,7 +724,7 @@ function Edit(props){
                                                     onChange={handleBirthdate}
                                                     value={dob ? dayjs(dob) : null }
                                                 />
-                                            </DemoContainer>
+                                            {/* </DemoContainer> */}
                                         </LocalizationProvider>
                                     </Grid>
                                 </Grid>

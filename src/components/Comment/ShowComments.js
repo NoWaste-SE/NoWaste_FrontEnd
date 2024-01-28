@@ -45,7 +45,7 @@ const ShowComments = (props) => {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PUT,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -69,6 +69,7 @@ const ShowComments = (props) => {
                         color="black"
                         speedMultiplier={1}
                         className="spinner-shopping-card"
+                        data-testid="spinner-element"
                     />
                 ) : (
                     comments ? 

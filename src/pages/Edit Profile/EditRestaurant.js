@@ -7,7 +7,7 @@ import Footer from "../../components/Footer/Footer";
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Link, useParams } from 'react-router-dom';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { Alert, Dialog } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -158,7 +158,7 @@ function EditRestaurant(props){
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     let role = localStorage.getItem("role");
-    role = role.replace(/"/g, "");
+    role = role?.replace(/"/g, "");
     const mylocation = [lat, lng, idR, role];
     const [openImg, setOpenImg] = React.useState(false);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -279,7 +279,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -309,7 +309,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,POST",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -409,35 +409,39 @@ function EditRestaurant(props){
 
     const handleFoodPicture = (e) => {
         const file1 = e.target.files[0];
-        const fileSize1 = file1.size;
-        if(fileSize1 > MAX_FILE_SIZE){
-            e.target.value = null;
-            setFoodPicture(null);
-            return;
-        } else {
-            const reader1 = new FileReader();
-            reader1.readAsDataURL(file1);
-            reader1.onloadend = () => {
-                setFoodPicture(reader1.result);
-                setUpdateFoodPic({...updateFoodPic, food_pic: reader1.result});
-            };
+        if (file1) {
+            const fileSize1 = file1.size;
+            if(fileSize1 > MAX_FILE_SIZE){
+                e.target.value = null;
+                setFoodPicture(null);
+                return;
+            } else {
+                const reader1 = new FileReader();
+                reader1.readAsDataURL(file1);
+                reader1.onloadend = () => {
+                    setFoodPicture(reader1.result);
+                    setUpdateFoodPic({...updateFoodPic, food_pic: reader1.result});
+                };
+            }
         }
     };
 
     const handleFoodPicture2 = (e) => {
         const file1 = e.target.files[0];
-        const fileSize1 = file1.size;
-        if(fileSize1 > MAX_FILE_SIZE){
-            e.target.value = null;
-            setFoodPicture2(null);
-            return;
-        } else {
-            const reader1 = new FileReader();
-            reader1.readAsDataURL(file1);
-            reader1.onloadend = () => {
-                setFoodPicture2(reader1.result);
-                setUpdateFoodPic2({...updateFoodPic2, food_pic2: reader1.result});
-            };
+        if (file1){
+            const fileSize1 = file1.size;
+            if(fileSize1 > MAX_FILE_SIZE){
+                e.target.value = null;
+                setFoodPicture2(null);
+                return;
+            } else {
+                const reader1 = new FileReader();
+                reader1.readAsDataURL(file1);
+                reader1.onloadend = () => {
+                    setFoodPicture2(reader1.result);
+                    setUpdateFoodPic2({...updateFoodPic2, food_pic2: reader1.result});
+                };
+            }
         }
     };
 
@@ -499,7 +503,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH,PUT,DELETE",
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then((response) => {
@@ -524,7 +528,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then(()=> {
@@ -563,7 +567,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then(() => {
@@ -585,7 +589,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then((response) => {
@@ -615,7 +619,7 @@ function EditRestaurant(props){
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
+                'Authorization' : "Bearer " + token?.slice(1,-1)   
             }}
         )
         .then(() => {
@@ -645,7 +649,7 @@ function EditRestaurant(props){
             userData, 
             {headers:{
                 "Content-Type" : "application/json", 
-                'Authorization' : "Bearer " + token.slice(1,-1)
+                'Authorization' : "Bearer " + token?.slice(1,-1)
             }}
         )
         .then(() => {
@@ -710,7 +714,7 @@ function EditRestaurant(props){
                         color="black"
                         speedMultiplier={1}
                         className="edit-spinner"
-                        
+                        data-testid="spinner-element"
                         />
                 ) : (
                     <div 
@@ -761,7 +765,7 @@ function EditRestaurant(props){
                                         className="input-label"
                                     >
                                         <UploadButton
-                                            title={"Uplaod new image"}
+                                            title={"Upload new image"}
                                         />
                                     </label>
                                 </Box>
@@ -864,12 +868,12 @@ function EditRestaurant(props){
                                         </Grid>
                                     </Grid>
                                     <Grid container spacing={2} className="edit-field">
-                                        <Grid item xs={12} sm={6} md={6}>
+                                        <Grid item xs={12} sm={6} md={6} style={{marginTop: '8px'}}>
                                             <LocalizationProvider 
                                                 dateAdapter={AdapterDayjs}
                                                 InputLabelProps={{ shrink: true }}
                                             >
-                                                <DemoContainer components={['DatePicker']} >
+                                                {/* <DemoContainer components={['DatePicker']} > */}
                                                     <DatePicker
                                                         label="Establishment date"
                                                         views={['year', 'month', 'day']}
@@ -878,7 +882,7 @@ function EditRestaurant(props){
                                                         onChange={handleEstablishdate}
                                                         value={doe ? dayjs(doe) : null }
                                                     />
-                                                </DemoContainer>
+                                                {/* </DemoContainer> */}
                                             </LocalizationProvider>
                                         </Grid>
                                         <Grid item xs={12} sm={6} md={6} lg={6}>
@@ -1076,7 +1080,7 @@ function EditRestaurant(props){
                                                                         <AddCircleIcon className="add-circle-icon"/>
                                                                         <Typography>Upload First Image</Typography>
                                                                 </label>
-                                                                {foodPicture && (
+                                                                {(foodPicture && !foodPicture2) && (
                                                                     <IconButton
                                                                         className="delete-image"
                                                                         style={{ position: 'absolute', bottom: 2, right: 2 }}
@@ -1252,10 +1256,11 @@ function EditRestaurant(props){
                                                                                 MAX_FILE_SIZE={MAX_FILE_SIZE}   
                                                                             />
                                                                             <label 
+                                                                                className="lable2"
                                                                                 htmlFor="edit-food-image-input" 
                                                                             >
                                                                                 <AddCircleIcon className="add-circle-icon"/>
-                                                                                <Typography>Upload First Image</Typography>
+                                                                                {/* <Typography>Upload First Image</Typography> */}
                                                                             </label>
                                                                             { (foodPicture &&
                                                                                 !foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
