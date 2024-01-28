@@ -151,7 +151,7 @@ const EditProfileManager = (props) => {
     }, []);
 
     const handlePhoneChange = (value) => {
-        setUpdate({...update, phone_number : value});
+        setUpdate({...update, number : value});
         localStorage.setItem('phone', value);
         setPhone(value);
     };
@@ -188,6 +188,7 @@ const EditProfileManager = (props) => {
             }}
         )
         .then((response) => {
+            console.log(response.data);
             setData(response.data);
             setData(response.data);
             setCroppedImage(response.data.manager_img);
@@ -287,30 +288,6 @@ const EditProfileManager = (props) => {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        axios.patch(
-            `http://188.121.124.63:8000/restaurant/managers/${id}`, update,
-            {headers: {
-                'Content-Type' : 'application/json',
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Methods" : "GET,PATCH",
-                'Authorization' : "Bearer " + token.slice(1,-1)   
-            }}
-        )
-        .then(()=> {
-            setAlertMessage("Profile updated successfully!");
-            setAlertSeverity("success");
-        })
-        .catch((error) => {
-            if (error.request) {
-                setOpenNetwork(true);
-                setAlertMessage("Network error! Please try again later.");
-                setAlertSeverity("error");
-            } else {
-                setAlertMessage("A problem has been occured! Please try again later.");
-                setAlertSeverity("error");
-            }
-        });
-
         if(newPassword && password && confirmPassword)
         {
             e.preventDefault();
@@ -337,6 +314,30 @@ const EditProfileManager = (props) => {
                 }
             });
         }
+        console.log(update);
+        axios.patch(
+            `http://188.121.124.63:8000/restaurant/managers/${id}/`, update,
+            {headers: {
+                'Content-Type' : 'application/json',
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Methods" : "GET,PATCH",
+                'Authorization' : "Bearer " + token.slice(1,-1)   
+            }}
+        )
+        .then(()=> {
+            setAlertMessage("Profile updated successfully!");
+            setAlertSeverity("success");
+        })
+        .catch((error) => {
+            if (error.request) {
+                setOpenNetwork(true);
+                setAlertMessage("Network error! Please try again later.");
+                setAlertSeverity("error");
+            } else {
+                setAlertMessage("A problem has been occured! Please try again later.");
+                setAlertSeverity("error");
+            }
+        });
     };
 
     const handleDiscard = () => {
