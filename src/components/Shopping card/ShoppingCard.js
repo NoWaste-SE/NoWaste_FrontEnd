@@ -72,6 +72,7 @@ function ShoppingCard() {
             color="black"
             speedMultiplier={1}
             className="spinner-shopping-card"
+            data-testid="spinner-element"
             />
         ) : (
         thereis ? (allOrders.map((restaurant) => (

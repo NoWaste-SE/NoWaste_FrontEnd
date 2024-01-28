@@ -9,7 +9,7 @@ import AuthContext, { AuthProvider } from '../../../Context/AuthContext';
 describe("About Us", () => {
     it("renders the component", () => {
         render(
-            <MemoryRouter>+
+            <MemoryRouter>
                 <AuthProvider>
                     <AboutUs />
                 </AuthProvider>
@@ -21,7 +21,7 @@ describe("About Us", () => {
 
     it("steps button", () => {
         render(
-            <MemoryRouter>+
+            <MemoryRouter>
                 <AuthProvider>
                     <AboutUs />
                 </AuthProvider>
@@ -34,7 +34,7 @@ describe("About Us", () => {
         expect(backButton).toBeInTheDocument();
     });
 
-    it("github links", () => {
+    it("github links of Helia Vafaei", () => {
         const history = createMemoryHistory();
 
         render(

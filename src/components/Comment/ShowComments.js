@@ -69,6 +69,7 @@ const ShowComments = (props) => {
                         color="black"
                         speedMultiplier={1}
                         className="spinner-shopping-card"
+                        data-testid="spinner-element"
                     />
                 ) : (
                     comments ? 

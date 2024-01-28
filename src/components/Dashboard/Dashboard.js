@@ -371,6 +371,7 @@ export default function Dashboard(){
                         color="black"
                         speedMultiplier={1}
                         className="spinner-dashboard"
+                        data-testid="spinner-element"
                         />
                 ) : (
                     <Grid container spacing={2} 
