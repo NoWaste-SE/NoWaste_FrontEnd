@@ -3,7 +3,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import RestaurantView from "../Restaurant-view";
+import RestaurantView from "../Restaurant-View";
 describe("RestaurantView", () => {
 it("renders the component", async () => {
     render(
