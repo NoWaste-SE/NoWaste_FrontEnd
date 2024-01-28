@@ -24,37 +24,10 @@ import TokenRefreshComponent from "./components/JWT/TokenRefreshComponent";
 import { AuthProvider } from "./Context/AuthContext";
 import RouterApp from "./Router";
 function App() {
-  //   const [loading, setLoading] = useState(true);
-  //   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  //   console.log(isAuthenticated);
-
-  //   useEffect(() => {
-  //     const token = localStorage.getItem('token');
-  //     if (token && token.length > 2) {
-  //       setIsAuthenticated(true);
-  //     }
-  //     else {
-  //       setIsAuthenticated(false);
-  //     }
-
-  //     window.addEventListener('load', () => {
-  //       setLoading(false);
-  //     });
-  //   }, []);
-
   return (
-    // <div>
-    //   {loading ? (
-    //     <div >
-    //       <SpinningBubbles></SpinningBubbles>
-    //       <SpinningBubbles color="#ffffff" />
-    //     </div>
-    //   ) : (
     <Router>
       <RouterApp />
     </Router>
-    //   )}
-    // </div>
   );
 }
 
