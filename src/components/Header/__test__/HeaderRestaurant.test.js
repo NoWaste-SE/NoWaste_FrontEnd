@@ -10,4 +10,5 @@ describe('Header Component', () => {
         fireEvent.click(logo);
         expect(window.location.href).toBe('http://localhost/');
     });
+    
 });
