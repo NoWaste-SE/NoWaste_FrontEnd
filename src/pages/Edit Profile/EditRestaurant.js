@@ -765,7 +765,7 @@ function EditRestaurant(props){
                                         className="input-label"
                                     >
                                         <UploadButton
-                                            title={"Uplaod new image"}
+                                            title={"Upload new image"}
                                         />
                                     </label>
                                 </Box>
@@ -1256,10 +1256,11 @@ function EditRestaurant(props){
                                                                                 MAX_FILE_SIZE={MAX_FILE_SIZE}   
                                                                             />
                                                                             <label 
+                                                                                className="lable2"
                                                                                 htmlFor="edit-food-image-input" 
                                                                             >
                                                                                 <AddCircleIcon className="add-circle-icon"/>
-                                                                                <Typography>Upload First Image</Typography>
+                                                                                {/* <Typography>Upload First Image</Typography> */}
                                                                             </label>
                                                                             { (foodPicture &&
                                                                                 !foodPicture.includes('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
