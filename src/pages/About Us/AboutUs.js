@@ -180,7 +180,7 @@ const AboutUs = () => {
                     />
                     <a 
                         href='https://github.com/haghighy' 
-                        className='link-aboutus-aboutus'
+                        className='link-aboutus'
                     >
                         Negin Haghighi (Back-end)
                     </a>

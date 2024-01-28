@@ -20,4 +20,17 @@ it("renders the component", async () => {
     const spinnerElement = screen.getByTestId("spinner-element");
     expect(spinnerElement).toBeInTheDocument();
 });
+
+it("see the text", async () => {
+    render(
+        <MemoryRouter>
+            <AuthProvider>
+                <Dashboard />
+            </AuthProvider>
+        </MemoryRouter>
+    );
+
+    const dashboardText = screen.getByText(/Dashboard/i);
+    expect(dashboardText).toBeInTheDocument();
+});
 });
