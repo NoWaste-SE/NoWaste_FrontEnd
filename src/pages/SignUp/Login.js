@@ -143,6 +143,10 @@ export default function Login(){
         .then((response) => {
             setToken(response.access_token);
             setRefresh_token(response.refresh_token);
+            localStorage.setItem('id', JSON.stringify(response.id));
+            localStorage.setItem('wallet_balance', JSON.stringify(response.wallet_balance));
+            localStorage.setItem('role', JSON.stringify(response.role));
+            localStorage.setItem('list_of_favorites_res', JSON.stringify(response.list_of_favorites_res));
             setId(response.id);
             setWallet_balance(response.wallet_balance);
             setRole(response.role);
