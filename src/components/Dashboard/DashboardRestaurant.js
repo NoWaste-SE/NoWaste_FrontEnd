@@ -221,20 +221,20 @@ export default function DashboardRestaurant(){
     }
 
     const handleClickOnDownloadExel = () => {
-        axios.get(
-            `http://188.121.124.63:8000/restaurant/excel/manager/${id}/order-history`,
-            {headers: {
+        fetch(`http://188.121.124.63:8000/restaurant/excel/manager/${id}/order-history`, {
+            method: 'GET',
+            headers: {
                 'Content-Type' : 'application/json',
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Methods" : "GET",
-            }}
-        )
+            },
+        })
         .then((response) => response.blob())
         .then((blob) => {
             const url = window.URL.createObjectURL(new Blob([blob]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'orders-history.xlsx';
+            a.download = 'restaurant-orders-history.xlsx';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
