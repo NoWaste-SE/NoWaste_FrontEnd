@@ -39,7 +39,6 @@ const Chat = (props) => {
     const setOpen = props.setOpen;
     const placement = props.placement;
     const anchorEl = props.anchorEl;
-    console.log("manager id is as shw" + manager_id + " " + customer_id);
     let room_name = customer_id + "_" + manager_id;
 
     useEffect(() => {
@@ -55,7 +54,6 @@ const Chat = (props) => {
     }, [manager_id]);
 
     useEffect(() => {
-        console.log("here to split data");
         const messageArray = data.split("OrderedDict(").slice(1).map((item) => {
             const formattedItem = item.replace(/^\[|\]$/g, "");
             const pairs = formattedItem.split("), ");
@@ -68,16 +66,8 @@ const Chat = (props) => {
             return msg_array;
         });
         messageArray.map((item) => JSON.parse(JSON.stringify(item)));
-        console.log(messageArray);
         setMessages(messageArray);
     }, [data]);
-    
-    // const handleClick = (newPlacement) => (event) => {
-    //     setAnchorEl(event.currentTarget);
-    //     setOpen((prev) => placement !== newPlacement || !prev);
-    //     console.log("open is "+ open);
-    //     setPlacement(newPlacement);
-    // };
 
     const handleCloseChat = () => {
         setOpen(false);
@@ -98,17 +88,10 @@ const Chat = (props) => {
         const trimmedMessage = input.trim();
         if (trimmedMessage !== '') {
             const formattedDate = new Date().toISOString();
-            console.log(JSON.stringify({
-                message : input,
-                sender_id : parseInt(customer_id),
-                room_name : room_name,
-                reciever_id: manager_id,
-                date_created: formattedDate
-            }));
             client.send(
                 JSON.stringify({
                     message : input,
-                    sender_id : parseInt(customer_id),
+                    user_id : parseInt(customer_id),
                     room_name : room_name,
                     reciever_id: manager_id,
                     date_created: formattedDate
@@ -124,7 +107,7 @@ const Chat = (props) => {
 
     const messageOnMessage = (event) => {
         const message = JSON.parse(event.data);
-        message.sender = message.sender_id;
+        message.sender_id = message.user_id;
         message.date_created = new Date();
         setMessages((e) => [...e, message]);
     };
@@ -135,11 +118,10 @@ const Chat = (props) => {
 
     useEffectOnce(() => {
         const client_1 = new WebSocket(
-            `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
+            `ws://188.121.124.63:8000/ws/chat/room/${room_name}/`
         );
         client_1.onopen = messageOnOpen;
         client_1.onmessage = messageOnMessage;
-        console.log("close in 171");
         client_1.onclose = messageOnClose;
         setClient(client_1);
     });
@@ -148,7 +130,7 @@ const Chat = (props) => {
         if(client && client.readyState === WebSocket.OPEN){
             client.close();
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000/ws/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -160,7 +142,7 @@ const Chat = (props) => {
         } 
         if(client && client.readyState === WebSocket.CLOSED){
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000/ws/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -258,7 +240,7 @@ const Chat = (props) => {
 }
 const Message = ({ message }) => {
     const id = localStorage.getItem('id');
-    const isRestaurant = message.sender != id;
+    const isRestaurant = message.sender_id != id;
     const align = isRestaurant ? "flex-start" : "flex-end";
     const timeAlign = isRestaurant ? "left" : "right";
 
