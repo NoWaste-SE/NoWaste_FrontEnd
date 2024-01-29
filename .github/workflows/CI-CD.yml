@@ -49,3 +49,5 @@ jobs:
           liara env:set CI=false --api-token="$LIARA_TOKEN" --app="nowaste" --force  
           liara deploy --app="nowaste" --api-token="$LIARA_TOKEN" --no-app-logs
 
+          
+
