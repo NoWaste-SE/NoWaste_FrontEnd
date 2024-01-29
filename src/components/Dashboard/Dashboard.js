@@ -65,6 +65,7 @@ export default function Dashboard(){
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [restaurantId, setRestaurantId] = useState('');
     const [restaurantName, setRestaurantName] = useState('');
+    const [orderId, setOrderId] = useState('');
     const [text, setText] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
     const [alertSeverity, setAlertSeverity] = useState('');
@@ -177,8 +178,10 @@ export default function Dashboard(){
         if (row.status === 'Completed') {
             setRestaurantId(row.restaurant_id);
             setRestaurantName(row.name);
+            setOrderId(row.order_id);
+            console.log(row.order_id);
             axios.get(
-                `http://188.121.124.63/restaurant/comment/restaurant_id/${row.restaurant_id}/`,
+                `http://188.121.124.63:8000/restaurant/comment/restaurant_id/${row.restaurant_id}/${row.order_id}/`,
                 {headers: {
                     'Content-Type' : 'application/json',
                     "Access-Control-Allow-Origin" : "*",
@@ -187,7 +190,7 @@ export default function Dashboard(){
                 }}
             )
             .then((response) => {
-                setText(response.data.comment);
+                setText(response.data.text);
             })
             .catch(error => console.log(error));
             // console.log(row.restaurant_id);
@@ -199,7 +202,7 @@ export default function Dashboard(){
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        // width: '100',
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -223,7 +226,7 @@ export default function Dashboard(){
 
         const commentPromise = 
             axios.post(
-                `http://188.121.124.63:8000/restaurant/comment/restaurant_id/${restaurantId}/`,
+                `http://188.121.124.63:8000/restaurant/comment/restaurant_id/${restaurantId}/${orderId}/`,
                 userDataComment,
                 {headers: {
                     'Content-Type' : 'application/json',
@@ -577,7 +580,7 @@ export default function Dashboard(){
                     aria-describedby="modal-modal-description"
                 >
                     <Box 
-                        sx={style} 
+                        // sx={style} 
                         className="dashboard-comment-box"
                     >
                         <h2 

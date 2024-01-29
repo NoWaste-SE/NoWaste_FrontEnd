@@ -107,8 +107,9 @@ const ShowComments = (props) => {
                                 >
                                     {res.text}
                                 </Typography>
-                                <Chip label="Pizza" variant='outlined' className='comment-order-detail'/>
-                                <Chip label="Pizza" variant='outlined' className='comment-order-detail'/>
+                                {res.order_foods.map((food, idx) => (
+                                    <Chip label={food} variant='outlined' className='commment-order-detail' />
+                                ))}
                                 <hr 
                                     className='comment-hr'
                                 />
