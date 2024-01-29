@@ -829,7 +829,7 @@ const HomepageCustomer = () => {
             <BackToTop/>
             </Grid>
             
-            <Box justifyContent='center' alignItems='center' display='flex' sx={{margin:'20px 0px'}}>
+            <Box sx={{margin:'20px 0px'}} style={{ display: 'flex', alignItems: 'center' , justifyContent:'center'}}>
                 { restaurant.length!=0 ? <Pagination count={Math.ceil(restaurant.length / PER_PAGE)} onChange={handlePaginationRestaurant} variant="outlined" classes={{ ul: classes.ul }} /> :
                 <Pagination count={Math.ceil(fields.length / PER_PAGE)} onChange={handlePaginationFields} variant="outlined" classes={{ ul: classes.ul }} />}
             </Box>

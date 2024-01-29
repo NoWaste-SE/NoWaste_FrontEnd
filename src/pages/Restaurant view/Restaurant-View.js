@@ -470,10 +470,8 @@ const RestaurantView = (props: Props) => {
                         />
                     }
                 </Box>
-                <Box 
-                    justifyContent='center' 
-                    alignItems='center' 
-                    display='flex' 
+                <Box
+                    style={{ display: 'flex', alignItems: 'center' , justifyContent:'center'}}
                     sx={{margin:'20px 0px'}}
                 >
                     <Pagination 
