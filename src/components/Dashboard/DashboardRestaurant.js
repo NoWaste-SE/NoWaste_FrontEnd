@@ -165,11 +165,11 @@ export default function DashboardRestaurant(){
     };
 
     const showCancelIcon = (status) => {
-        return status === 'notOrdered';
+        return status === 'InProgress';
     };
 
     const showAcceptIcon = (status) => {
-        return status === 'notOrdered';
+        return status === 'InProgress';
     };
 
     const handleCancleOrdering = (Oid, Rid) => {
@@ -198,7 +198,7 @@ export default function DashboardRestaurant(){
 
     const handleAcceptOrdering = (Oid, Rid) => {
         const userData = {
-            status:"InProgress"
+            status:"Completed"
         }
         axios.put(
             `http://188.121.124.63:8000/restaurant/restaurant_view/${Rid}/${id}/order/${Oid}/`, 
