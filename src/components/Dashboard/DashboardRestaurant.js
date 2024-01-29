@@ -229,9 +229,17 @@ export default function DashboardRestaurant(){
                 "Access-Control-Allow-Methods" : "GET",
             }}
         )
-        .catch((error) => {
-            console.log(error.response);
-        });
+        .then((response) => response.blob())
+        .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'orders-history.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch((error) => console.error('Error downloading file:', error));
     };
 
     return (
