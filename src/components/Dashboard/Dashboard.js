@@ -580,7 +580,7 @@ export default function Dashboard(){
                     aria-describedby="modal-modal-description"
                 >
                     <Box 
-                        sx={style} 
+                        // sx={style} 
                         className="dashboard-comment-box"
                     >
                         <h2 

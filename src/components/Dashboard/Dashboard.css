@@ -73,6 +73,15 @@
 .dashboard-comment-box {
     border-radius: 20px;
     border: none !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 35%; */
+    background-color: #f8f8f8;
+    border: 2px solid #000;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 2%;
 }
 
 .dashboard-title-show-comments {
@@ -109,6 +118,7 @@
     resize: none;
     font-size: 132%;
     margin-bottom: 4%;
+    background-color: #f8f8f8;
 }
 
 .dashboard-rate {
