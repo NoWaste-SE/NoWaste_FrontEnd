@@ -45,7 +45,7 @@ const Chat = () => {
     const [currentUserId, setCurrentUserId] = useState(null);
     const id = localStorage.getItem("id");
     const [data, setData] = useState('');
-    const room_name = currentUserId + "_" + id;
+    let room_name = currentUserId + "_" + id;
     const [client, setClient] = useState(null);
 
     const handleKeyPress = (event) => {
@@ -62,7 +62,7 @@ const Chat = () => {
             client.send(
                 JSON.stringify({
                     message: input,
-                    sender_id: parseInt(id),
+                    user_id: parseInt(id),
                     room_name: room_name,
                     reciever_id: currentUserId,
                     date_created: formattedDate
@@ -74,7 +74,7 @@ const Chat = () => {
 
     useEffectOnce(() => {
         const client_1 = new WebSocket(
-            `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
+            `ws://188.121.124.63:8000/ws/chat/room/${room_name}/`
         );
         client_1.onopen = messageOnOpen;
 
@@ -90,7 +90,7 @@ const Chat = () => {
 
     const messageOnMessage = (event) => {
         const message = JSON.parse(event.data);
-        message.sender = message.sender_id;
+        message.sender_id = message.user_id;
         message.date_created = new Date();
         setMessages((e) => [...e, message]);
     };
@@ -100,10 +100,11 @@ const Chat = () => {
     };
 
     useEffect(() => {
+        room_name = currentUserId + "_" + id;
         if(client && client.readyState === WebSocket.OPEN){
             client.close();
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000/ws/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -115,7 +116,7 @@ const Chat = () => {
         } 
         if(client && client.readyState === WebSocket.CLOSED){
             const clientCopy = new WebSocket(
-                `ws://188.121.124.63:8000:4000/chat/room/${room_name}/`
+                `ws://188.121.124.63:8000/ws/chat/room/${room_name}/`
             );
         
             clientCopy.onopen = messageOnOpen;
@@ -332,7 +333,7 @@ const Chat = () => {
 
 const Message = ({ message }) => {
     const id = localStorage.getItem("id");
-    const isCustomer = (message.sender != id);
+    const isCustomer = (message.sender_id != id);
     const align = isCustomer ? "flex-start" : "flex-end";
     const timeAlign = isCustomer ? "left" : "right";
     return (
