@@ -167,6 +167,10 @@
     font-family: 'Montserrat, sans-serif' !important;
 }
 
+#cash-box{
+    margin-bottom: 5%;
+}
+
 .orderpage-checkbox {
     color: green !important;
     margin-top: -22% !important;

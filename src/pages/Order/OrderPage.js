@@ -431,6 +431,7 @@ export default function OrderPage(){
                             </Box>
                             <Box 
                                 className="orderpage-shopinfo-box"
+                                id="cash-box"
                             >
                                 <Grid container spacing={2}>
                                     <Grid item >
